@@ -8,8 +8,8 @@ const bodyParser = require('body-parser');
 
 // Connect to database
 mongoose.Promise = global.Promise;
-// mongoose.connect('mongodb://main:123456@ds117888.mlab.com:17888/o2o');
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://main:123456@ds117888.mlab.com:17888/o2o');
+// mongoose.connect('mongodb://localhost/test');
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
