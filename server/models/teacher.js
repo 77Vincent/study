@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
 
 const teacherSchema = new mongoose.Schema({
-  name: String,
-  gender: Boolean,
+  name: {
+    type: String,
+    required: true
+  },
+  gender: Number,
   birthday: Date,
+  bio: String, 
   create_at: {
     type: Date,
     default: Date.now
@@ -11,5 +15,4 @@ const teacherSchema = new mongoose.Schema({
 });
 
 const Teacher = mongoose.model('Teacher', teacherSchema);
-
 module.exports = Teacher;

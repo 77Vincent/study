@@ -3,6 +3,12 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  componentDidMount() {
+    fetch('/api/majors')
+      .then(res => res.json())
+      .then(majors => this.setState({ majors }));
+  }
+
   render() {
     return (
       <div className="App">

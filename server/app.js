@@ -8,12 +8,14 @@ const bodyParser = require('body-parser');
 
 // Connect to database
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://main:123456@ds117888.mlab.com:17888/o2o');
+// mongoose.connect('mongodb://main:123456@ds117888.mlab.com:17888/o2o');
+mongoose.connect('mongodb://localhost/test');
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
 // Routing
 const index = require('./routes/index');
+const majors = require('./routes/majors');
 const teachers = require('./routes/teachers');
 
 const app = express();
@@ -31,7 +33,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/teachers', teachers);
+app.use('/api/majors', majors);
+app.use('/api/teachers', teachers);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
