@@ -30,7 +30,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// No need for static file from server for now
+// app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/api/majors', majors);
