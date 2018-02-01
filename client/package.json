@@ -9,6 +9,7 @@
     "immutable": "~3.8.1",
     "isomorphic-fetch": "~2.2.1",
     "moment": "~2.20.1",
+    "normalize.css": "^7.0.0",
     "rc-queue-anim": "^1.4.1",
     "rc-tween-one": "~1.7.3",
     "react": "^16.0.0",
