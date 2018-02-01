@@ -1,22 +1,12 @@
 # Specs
 
-#### Runtime
-nodejs v.8.9.4
-
-#### Server
-express
-
-#### Client
-react v16.2.0
-
-#### Database
-mongodb
-
-#### CSS-precompiler
-sass
-
-#### Javascript
-ES6
+* Runtime ----- nodejs@v.8.9.4
+* Server ----- Express
+* Client ----- React@v16.2.0
+* Database ----- Mongodb
+* CSS-precompiler ----- sass
+* Javascript ----- ES6
+* Build tool ----- Webpack
 
 # Start 
 
