@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import fetch from 'isomorphic-fetch';
 import './index.less';
 
-export default class Welcome extends  Component{
+export default class Footer extends  Component{
   constructor(props){
     super(props);
   }
@@ -10,8 +10,8 @@ export default class Welcome extends  Component{
   }
   render(){
     return (
-      <div className='Welcome'>
-        Welcome to the website
+      <div className='Footer'>
+        <h1>Footer</h1>
       </div>
     );
   }

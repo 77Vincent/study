@@ -3,7 +3,7 @@ import {
   Route,
   IndexRoute
 } from 'react-router';
-import App from './base';
+import App from './layout';
 import Welcome from './components/Welcome';
 
 const routes = (
