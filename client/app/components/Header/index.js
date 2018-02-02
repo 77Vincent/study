@@ -18,6 +18,8 @@ export default class Header extends  Component{
           <a className='button-bold' href=''>About</a>
           <a className='button-bold' href=''>About</a>
           <a className='button-bold' href=''>About</a>
+          <a className='button-border' href=''>Sign in</a>
+          <a className='button-border' href=''>Sign up</a>
         </div>
       </div>
     );

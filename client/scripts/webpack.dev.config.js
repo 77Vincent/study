@@ -30,6 +30,10 @@ const webpackConfigDev = {
       '/api': {
         target: 'http://localhost:3001',
         changeOrigin: true
+      },
+      '/images': {
+        target: 'http://localhost:3001',
+        changeOrigin: true
       }
     }
   }
