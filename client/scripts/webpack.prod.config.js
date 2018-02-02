@@ -20,10 +20,10 @@ const webpackConfigProd = {
     new webpack.optimize.UglifyJsPlugin({ minimize: true }),
     // 分析代码
     new BundleAnalyzerPlugin({ analyzerPort: 3011 }),
-    new Copy([
-      { from: './app/images', to: './images' },
-      { from: './app/iconfont', to: './iconfont' },
-    ]),
+    // new Copy([
+    //   { from: './app/images', to: './images' },
+    //   { from: './app/iconfont', to: './iconfont' },
+    // ]),
   ],
 };
 

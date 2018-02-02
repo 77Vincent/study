@@ -1,19 +1,13 @@
-# Backend Instruction 
+## server 配置
 
-### Tech stack
+### 技术栈
++ Koa2
++ Sequelize
++ mySql
++ JWT
 
-+ Nodejs@v8.9.4
-+ Express 
-+ Mongoose
-+ MongoDB
-
-### To run
-```sh
+### 运行
 npm i
-npm run dev
-```
 
-### To build 
-```sh
-npm run build 
-```
+npm start
+

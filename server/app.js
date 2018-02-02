@@ -1,57 +1,46 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const path = require('path');
-const favicon = require('serve-favicon');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
+/////////////////MARK:必读////////////////
+//后来人，接受这个项目不要迷茫，不要彷徨
+//代码逻辑混乱，接口数据有问题，请你坚持下去
+//谨记，请勿辱骂前人
 
-// Connect to database
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://main:123456@ds117888.mlab.com:17888/o2o');
-// mongoose.connect('mongodb://localhost/test');
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
+import Koa from 'koa';
+import http from 'http';
+import convert from 'koa-convert';
+import logger from 'koa-logger';
+import cors from 'koa-cors';//跨域
+import bodyParser from 'koa-bodyparser'; //请求体JSON解析
+import onerror from 'koa-onerror'; //错误处理
+import resource from 'koa-static'; //静态资源托管
+import path from 'path'
+import routes from './routes'
 
-// Routing
-const index = require('./routes/index');
-const majors = require('./routes/majors');
-const teachers = require('./routes/teachers');
+const app = new Koa();
+onerror(app)
+app.use(convert(cors()))
+app.use(convert(logger()))
+app.use(bodyParser())
 
-const app = express();
+app.use(resource(path.join(__dirname, '../public')))
+// app.use(json({ pretty: false, param: 'pretty' }))
+app.use(async(ctx, next) => {
+  await next()
+  ctx.set('X-Powered-By', 'Koa2')
+})
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.use(async (ctx, next) => {
+	const start = new Date()
+	await next()
+	const ms = new Date() - start
+	console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+})
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
+// routes
+app.use(routes.routes(), routes.allowedMethods());
 
-app.use('/', index);
-app.use('/api/majors', majors);
-app.use('/api/teachers', teachers);
+app.on('error', (error, ctx) => {
+	console.log('奇怪的错误' + JSON.stringify(ctx.onerror))
+	console.log('server error:' + error)
+})
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  const err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+export default app;
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-module.exports = app;
