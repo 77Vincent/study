@@ -10,16 +10,40 @@ export default class Header extends  Component{
   componentDidMount(){
   }
   render(){
-    return (
-      <div className='Header clearfix container-fluid'>
-        <h1 className='title'>Website Title</h1>
+    const links = [{
+      title: 'About us',
+      href: ''
+    }, {
+      title: 'News',
+      href: ''
+    }, {
+      title: 'Forum',
+      href: ''
+    }];
 
-        <div className='nav'>
-          <a className='button-bold' href=''>About us</a>
-          <a className='button-bold' href=''>News</a>
-          <a className='button-bold' href=''>Forum</a>
-          <a className='button-border' href=''>Sign in</a>
-          <a className='button-border' href=''>Sign up</a>
+    const fns = [{
+      title: 'Sign in',
+      href: ''
+    }, {
+      title: 'Sign up',
+      href: ''
+    }];
+
+    return (
+      <div className='Header clearfix container-fluid fixed-top'>
+        <h1 className='float-left'>Website Title</h1>
+
+        <div className='float-right'>
+          {
+            links.map((item, index) => {
+              return <a key={index} className='button-bold' href={item.href}>{item.title}</a>
+            })
+          }
+          {
+            fns.map((item, index) => {
+              return <a key={index} className='button-border' href={item.href}>{item.title}</a>
+            })
+          }
         </div>
       </div>
     );

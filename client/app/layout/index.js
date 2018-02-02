@@ -12,7 +12,9 @@ export default class App extends Component {
       <div>
         <Header/>
 
-        {children}
+        <div className='main-container'>
+          {children}
+        </div>
         
         <Footer/>
       </div>
