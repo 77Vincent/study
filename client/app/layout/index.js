@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import '../../node_modules/normalize.css/normalize.css'; // CSS normalizer
+import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'; // CSS normalizer
+import './index.less';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -8,7 +9,7 @@ export default class App extends Component {
   render() {
     const { children } = this.props;
     return (
-      <div className="container">
+      <div>
         <Header/>
 
         {children}

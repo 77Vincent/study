@@ -1,6 +1,7 @@
-## frontend instruction ##
+# Frontend Instruction
 
 ### tech stack
+
 + react
 + react@16.0
 + redux@3.7.2
@@ -10,8 +11,14 @@
 + less@2.7.1
 + antd@3.1.3
 
-### run 
+### To run 
 
-+ npm i:install nodemodule
-+ npm run dev: develop locally
-+ npm run build: build code for deploy
+```sh
+npm i
+npm run dev
+```
+
+### To build 
+```sh
+npm run build 
+```

@@ -10,8 +10,8 @@ export default class Welcome extends  Component{
   }
   render(){
     return (
-      <div className='Welcome'>
-        Welcome to the website
+      <div className='Welcome container'>
+        <h1 className='slogan'>Get the right tutor you need, share the knowledge you have.</h1>
       </div>
     );
   }
