@@ -17,7 +17,7 @@ export default class Welcome extends  Component{
 
     return (
       <div className='About'>
-        about me
+        {placeholder}
       </div>
     );
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { WSAEINPROGRESS } from 'constants';
 import './index.less';
 
@@ -10,7 +10,6 @@ export default class Header extends  Component{
   componentDidMount(){
   }
   render(){
-    console.log(this)
 
     const links = [{
       title: 'About us',
