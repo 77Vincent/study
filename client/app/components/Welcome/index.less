@@ -1,31 +1,48 @@
+@import '../../layout/index.less';
+
 .Welcome {
   .intro {
-    text-align: center;
-    height: 50vh;
+    padding-top: 100px;
     background-size: cover;
     background-image: url(http://www.ccc.edu/colleges/wright/departments/PublishingImages/_MG_2731.JPG);
     position: relative;
+    padding-bottom: 100px;
+    overflow: hidden;
 
     &:before {
       content: '';
       display: block;
       position: absolute;
       width: 100%;
-      height: 100%;
+      height: 200%;
+      top: -100px;
       background-color: #fff;
       z-index: 0;
-      opacity: 0.85;
+      opacity: 0.9;
     }
 
-    .slogan {
-      padding-top: 100px;
+    .container {
       position: relative;
       z-index: 1;
     }
 
+    .action {
+      padding-top: 50px;
+      text-align: center;
+    }
+
+    .button-border {
+      font-size: 2em;
+    }
+
     h1 {
-      font-size: 4em;
+      font-size: 3.5em;
+      color: @color-theme;
       margin-bottom: 0.5em;
+    }
+
+    p {
+      font-size: 1.2em;
     }
   }
 }

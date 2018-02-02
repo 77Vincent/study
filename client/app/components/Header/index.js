@@ -15,9 +15,9 @@ export default class Header extends  Component{
         <h1 className='title'>Website Title</h1>
 
         <div className='nav'>
-          <a>About</a>
-          <a>About</a>
-          <a>About</a>
+          <a className='button-bold' href=''>About</a>
+          <a className='button-bold' href=''>About</a>
+          <a className='button-bold' href=''>About</a>
         </div>
       </div>
     );
