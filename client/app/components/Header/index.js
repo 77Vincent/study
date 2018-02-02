@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import fetch from 'isomorphic-fetch';
-import './index.less';
+import { Link } from 'react-router';
 import { WSAEINPROGRESS } from 'constants';
+import './index.less';
 
 export default class Header extends  Component{
   constructor(props){
@@ -10,40 +10,30 @@ export default class Header extends  Component{
   componentDidMount(){
   }
   render(){
+    console.log(this)
+
     const links = [{
       title: 'About us',
-      href: ''
+      href: '/about'
     }, {
       title: 'News',
-      href: ''
-    }, {
-      title: 'Forum',
-      href: ''
-    }];
-
-    const fns = [{
-      title: 'Sign in',
-      href: ''
-    }, {
-      title: 'Sign up',
-      href: ''
+      href: '/news'
     }];
 
     return (
       <div className='Header clearfix container-fluid fixed-top'>
-        <h1 className='float-left'>Website Title</h1>
+        <h1 className='float-left'>
+          <Link to='/'>Website Title</Link>
+        </h1>
 
         <div className='float-right'>
           {
             links.map((item, index) => {
-              return <a key={index} className='button-bold' href={item.href}>{item.title}</a>
+              return <Link key={index} className='button-bold' to={item.href}>{item.title}</Link>
             })
           }
-          {
-            fns.map((item, index) => {
-              return <a key={index} className='button-border' href={item.href}>{item.title}</a>
-            })
-          }
+          <button className='button-border'>Sign in</button>
+          <button className='button-border'>Sign up</button>
         </div>
       </div>
     );
