@@ -15,9 +15,9 @@ export default class Header extends  Component{
         <h1 className='title'>Website Title</h1>
 
         <div className='nav'>
-          <a className='button-bold' href=''>About</a>
-          <a className='button-bold' href=''>About</a>
-          <a className='button-bold' href=''>About</a>
+          <a className='button-bold' href=''>About us</a>
+          <a className='button-bold' href=''>News</a>
+          <a className='button-bold' href=''>Forum</a>
           <a className='button-border' href=''>Sign in</a>
           <a className='button-border' href=''>Sign up</a>
         </div>
