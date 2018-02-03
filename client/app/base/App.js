@@ -1,8 +1,11 @@
+// Dependencies
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
+// Style
 import './App.less';
 
+// Components
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Welcome from '../components/Welcome';

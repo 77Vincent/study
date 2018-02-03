@@ -1,5 +1,5 @@
-
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -7,6 +7,9 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 function resolve(relatedPath) {
   return path.join(__dirname, relatedPath);
 }
+
+const lessToJs = require('less-vars-to-js');
+const themeVariables = lessToJs(fs.readFileSync(resolve('../theme.less'), 'utf8'));
 
 const webpackConfigBase = {
   entry: {
@@ -42,6 +45,11 @@ const webpackConfigBase = {
         test: /\.js[x]?$/,
         exclude: /node_modules/,
         loader: 'babel',
+        options: {
+          plugins: [
+            ['import', { libraryName: 'antd', style: true }]
+          ]
+        },
       },
       {
         test: /\.css/,
@@ -57,8 +65,17 @@ const webpackConfigBase = {
         loader: ExtractTextPlugin.extract({
           fallback: 'style',
           use: [
-            { loader: 'css', options: { sourceMap: true } },
-            { loader: 'less', options: { sourceMap: true } }
+            { 
+              loader: 'css', 
+              options: { sourceMap: true }
+            },
+            { 
+              loader: 'less', 
+              options: { 
+                sourceMap: true,
+                modifyVars: themeVariables
+              }
+            }
           ]
         }),
       },

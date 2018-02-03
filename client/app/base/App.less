@@ -8,10 +8,6 @@ body {
   background-color: rgb(245,245,245);
 }
 
-h1 {
-  color: @color-theme;
-}
-
 a {
   color: inherit;
 
@@ -28,34 +24,4 @@ button {
 .main-container {
   padding-top: 100px;
   padding-bottom: 75px;
-}
-
-.button-border {
-  display: inline-block;
-  padding: 0.25em 1.5em; 
-  border: 1px solid @color-theme;
-  border-radius: 4px;
-  margin: 0 0.5em;
-  font-family: @font-serif;
-  .transition(all, 0.2s);
-
-  &:hover {
-    background-color: @color-theme;
-    color: #fff;
-  }
-}
-
-.button-bold {
-  display: inline-block;
-  margin-left: 10px;
-  margin-right: 10px;
-  .transition(all, 0.2s);
-
-  &.toggle {
-    border-bottom: 3px solid @color-theme;
-  }
-
-  &:hover {
-    border-bottom: 3px solid @color-theme;
-  }
 }

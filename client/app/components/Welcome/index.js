@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from 'antd';
 import fetch from 'isomorphic-fetch';
 import './index.less';
 
@@ -30,8 +31,13 @@ export default class Welcome extends  Component{
           </div>
 
           <div className='action container'>
-            <Link to='/orientation' className='button-border'>Find a tutor</Link>
-            <Link to='' className='button-border'>Be a tutor</Link>
+            <Button size='large'>
+              <Link to='/orientation' >Find a tutor</Link>
+            </Button>
+
+            <Button size='large'>
+              <Link to=''>Be a tutor</Link>
+            </Button>
           </div>
         </div>
 

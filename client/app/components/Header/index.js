@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { Row, Col } from 'antd';
 import { Link, NavLink } from 'react-router-dom';
+import { Button } from 'antd';
 import { WSAEINPROGRESS } from 'constants';
 import './index.less';
 
@@ -20,20 +22,34 @@ export default class Header extends  Component{
     }];
 
     return (
-      <div className='Header clearfix container-fluid fixed-top'>
-        <h1 className='float-left'>
-          <Link to='/'>Website Title</Link>
-        </h1>
+      <div className='Header'>
+        <Row>
+          <Col span='4'>
+            <h1> <Link to='/'>Website Title</Link> </h1>
+          </Col>
 
-        <div className='float-right'>
-          {
-            links.map((item, index) => {
-              return <NavLink key={index} className='button-bold' activeClassName='toggle' to={item.href}>{item.title}</NavLink>
-            })
-          }
-          <button className='button-border'>Sign in</button>
-          <button className='button-border'>Sign up</button>
-        </div>
+          <Col span='20' >
+            <Row gutter='8' type='flex' align='middle' justify='end'>
+              {
+                links.map((item, index) => {
+                  return (
+                    <Col>
+                      <NavLink key={index} className='button-bold' activeClassName='toggle' to={item.href}>
+                        {item.title}
+                      </NavLink>
+                    </Col>
+                  )
+                })
+              }
+              <Col>
+                <Button>Sign in</Button>
+              </Col>
+              <Col>
+                <Button>Sign in</Button>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
       </div>
     );
   }

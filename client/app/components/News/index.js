@@ -40,7 +40,6 @@ export default class Welcome extends  Component{
 
     return (
       <div className='News container'>
-        <h1>News</h1>
         {
           news.map((item, index) => {
             return (
