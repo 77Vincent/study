@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Button, Menu } from 'antd';
 import { Link, NavLink } from 'react-router-dom';
-import { Button } from 'antd';
 import { WSAEINPROGRESS } from 'constants';
 import './index.less';
 
@@ -22,34 +21,25 @@ export default class Header extends  Component{
     }];
 
     return (
-      <div className='Header'>
-        <Row>
-          <Col span='4'>
-            <h1> <Link to='/'>Website Title</Link> </h1>
-          </Col>
-
-          <Col span='20' >
-            <Row gutter='8' type='flex' align='middle' justify='end'>
-              {
-                links.map((item, index) => {
-                  return (
-                    <Col>
-                      <NavLink key={index} className='button-bold' activeClassName='toggle' to={item.href}>
-                        {item.title}
-                      </NavLink>
-                    </Col>
-                  )
-                })
-              }
-              <Col>
-                <Button>Sign in</Button>
-              </Col>
-              <Col>
-                <Button>Sign in</Button>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
+      <div>
+        <Link to='/'><h1>Website Title</h1></Link>
+        <Menu 
+          mode='horizontal' 
+          style={{ lineHeight: '64px' }}>
+          {
+            links.map((item, index) => {
+              return (
+                <Menu.Item>
+                  <NavLink key={index} className='button-bold' activeClassName='toggle' to={item.href}>
+                    {item.title}
+                  </NavLink>
+                </Menu.Item>
+              )
+            })
+          }
+          <Menu.Item>Sign in</Menu.Item>
+          <Menu.Item>Sign in</Menu.Item>
+        </Menu>
       </div>
     );
   }

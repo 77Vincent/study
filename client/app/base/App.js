@@ -1,34 +1,66 @@
 // Dependencies
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Layout, Menu, Button } from 'antd';
+import { Route, Link, NavLink } from 'react-router-dom';
 
 // Style
 import './App.less';
 
 // Components
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+// import Header from '../components/Header';
 import Welcome from '../components/Welcome';
 import Orientation from '../components/Orientation';
 import About from '../components/About';
 import News from '../components/News';
 
+const { Content, Header, Footer } = Layout;
+
 // @connect((state, props) => ({}))
 export default class App extends Component {
   render() {
+    const links = [{
+      title: 'About us',
+      href: '/about'
+    }, {
+      title: 'News',
+      href: '/news'
+    }];
+
     return (
       <div>
-        <Header />
+        <Layout>
+          <Header>
+            <div className="App-logo" />
+            <Menu 
+              mode='horizontal' 
+              style={{ lineHeight: '64px' }}
+            >
+              {
+                links.map((item, index) => {
+                  return <Menu.Item><NavLink key={index} to={item.href}>{item.title}</NavLink></Menu.Item>
+                })
+              }
+              <Menu.Item><Button>Sign in</Button></Menu.Item>
+              <Menu.Item><Button>Sign up</Button></Menu.Item>
+            </Menu>
+          </Header>
 
-        <div className='main-container'>
-          <Route exact path="/" component={Welcome} />
-          <Route path="/orientation" component={Orientation} />
-          <Route path="/about" component={About} />
-          <Route path="/news" component={News} />
-        </div>
+          <Content>
+          </Content>
 
-        <Footer />
+          <Footer>
+            Ant Design ©2016 Created by Ant UED
+          </Footer>
+        </Layout>
       </div>
     );
   }
 }
+
+    {/* <div className='main-container'>
+      <Route exact path="/" component={Welcome} />
+      <Route path="/orientation" component={Orientation} />
+      <Route path="/about" component={About} />
+      <Route path="/news" component={News} />
+    </div>
+    <Footer /> */}
