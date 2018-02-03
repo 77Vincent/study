@@ -48,8 +48,11 @@ button {
   display: inline-block;
   margin-left: 10px;
   margin-right: 10px;
-
   .transition(all, 0.2s);
+
+  &.toggle {
+    border-bottom: 3px solid @color-theme;
+  }
 
   &:hover {
     border-bottom: 3px solid @color-theme;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { WSAEINPROGRESS } from 'constants';
 import './index.less';
 
@@ -28,7 +28,7 @@ export default class Header extends  Component{
         <div className='float-right'>
           {
             links.map((item, index) => {
-              return <Link key={index} className='button-bold' to={item.href}>{item.title}</Link>
+              return <NavLink key={index} className='button-bold' activeClassName='toggle' to={item.href}>{item.title}</NavLink>
             })
           }
           <button className='button-border'>Sign in</button>
