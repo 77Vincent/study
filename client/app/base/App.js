@@ -29,8 +29,8 @@ export default class App extends Component {
     return (
       <div>
         <Layout>
-          <Header>
-            <div className="App-logo" />
+          <Header className='App-header'>
+            <Link to='/' className="App-logo" />
             <Menu 
               mode='horizontal' 
               style={{ lineHeight: '64px' }}
@@ -45,7 +45,11 @@ export default class App extends Component {
             </Menu>
           </Header>
 
-          <Content>
+          <Content className='App-content'>
+            <Route exact path="/" component={Welcome} />
+            <Route path="/orientation" component={Orientation} />
+            <Route path="/about" component={About} />
+            <Route path="/news" component={News} />
           </Content>
 
           <Footer>
@@ -57,10 +61,3 @@ export default class App extends Component {
   }
 }
 
-    {/* <div className='main-container'>
-      <Route exact path="/" component={Welcome} />
-      <Route path="/orientation" component={Orientation} />
-      <Route path="/about" component={About} />
-      <Route path="/news" component={News} />
-    </div>
-    <Footer /> */}

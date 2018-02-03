@@ -21,7 +21,7 @@ export default class Welcome extends  Component{
     return (
       <div className='Welcome'>
         <div className='intro'>
-          <div className='slogan container'>
+          <div className='slogan'>
             <h1>
                 We expertize in overseas studying<br/>
                 Get the right tutor you need<br/>
@@ -30,7 +30,7 @@ export default class Welcome extends  Component{
             <p>{placeholder}</p>
           </div>
 
-          <div className='action container'>
+          <div className='action'>
             <Button size='large'>
               <Link to='/orientation' >Find a tutor</Link>
             </Button>
@@ -41,7 +41,7 @@ export default class Welcome extends  Component{
           </div>
         </div>
 
-        <div className='promote container'>
+        <div className='promote'>
           {
             promote.map((item, index) => {
               return <div key={index} className='sub-promote'> <h1>{item}</h1> <p>{placeholder}</p> </div>;
