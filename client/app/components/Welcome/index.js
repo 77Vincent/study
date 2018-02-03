@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import fetch from 'isomorphic-fetch';
 import './index.less';
 
 export default class Welcome extends  Component{
-  constructor(props){
+  constructor(props) {
     super(props);
   }
-  componentDidMount(){
+  componentDidMount() {
     this.fetchData() 
   }
   async fetchData() {
   }
-  render(){
+  render() {
     // Temp variables
     const placeholder = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`;
     const promote = ['Why Here', 'Testimonial', 'Contact Us'];
@@ -29,8 +30,8 @@ export default class Welcome extends  Component{
           </div>
 
           <div className='action container'>
-            <a href='' className='button-border'>Find a tutor</a>
-            <a href='' className='button-border'>Be a tutor</a>
+            <Link to='/orientation' className='button-border'>Find a tutor</Link>
+            <Link to='' className='button-border'>Be a tutor</Link>
           </div>
         </div>
 
