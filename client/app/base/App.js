@@ -1,21 +1,22 @@
+'use strict';
+
 // Dependencies
 import React, { Component } from 'react';
 import { Layout, Menu, Button } from 'antd';
 import { Route, Link, NavLink } from 'react-router-dom';
 
-// Style
+// Global Style
 import './App.less';
 
 // Components
-// import Header from '../components/Header';
 import Welcome from '../components/Welcome';
 import Orientation from '../components/Orientation';
 import About from '../components/About';
 import News from '../components/News';
+import Login from '../components/Login';
 
 const { Content, Header, Footer } = Layout;
 
-// @connect((state, props) => ({}))
 export default class App extends Component {
   render() {
     const links = [{
@@ -40,8 +41,8 @@ export default class App extends Component {
                   return <Menu.Item><NavLink key={index} to={item.href}>{item.title}</NavLink></Menu.Item>
                 })
               }
-              <Menu.Item><Button><Link to='/signin'>Sign in</Link></Button></Menu.Item>
-              <Menu.Item><Button><Link to='/signup'>Sign up</Link></Button></Menu.Item>
+              <Menu.Item><Button><Link to='/login'>Sign in</Link></Button></Menu.Item>
+              <Menu.Item><Button><Link to='/register'>Sign up</Link></Button></Menu.Item>
             </Menu>
           </Header>
 
@@ -50,6 +51,7 @@ export default class App extends Component {
             <Route path="/orientation" component={Orientation} />
             <Route path="/about" component={About} />
             <Route path="/news" component={News} />
+            {/* <Route path="/login" component={Login} /> */}
           </Content>
 
           <Footer className='App-footer'>

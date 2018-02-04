@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import fetch from 'isomorphic-fetch';
 import './index.less';
 
-export default class Orientation extends  Component{
+export default class Orientation extends React.Component{
   constructor(props) {
     super(props);
   }

@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'antd';
 import fetch from 'isomorphic-fetch';
 import './index.less';
 
-export default class Welcome extends  Component{
+export default class Welcome extends React.Component {
   constructor(props) {
     super(props);
   }
