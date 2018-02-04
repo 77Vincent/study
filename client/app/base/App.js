@@ -31,16 +31,18 @@ export default class App extends Component {
       <div>
         <Layout>
           <Header className='App-header'>
-            <Link to='/' className="App-logo" />
             <Menu 
               mode='horizontal' 
-              style={{ lineHeight: '64px' }}
+              className='App-menu'
             >
+              <Menu.Item><Link to='/' className="App-logo" /></Menu.Item>
+
               {
                 links.map((item, index) => {
                   return <Menu.Item><NavLink key={index} to={item.href}>{item.title}</NavLink></Menu.Item>
                 })
               }
+
               <Menu.Item><Button><Link to='/login'>Sign in</Link></Button></Menu.Item>
               <Menu.Item><Button><Link to='/register'>Sign up</Link></Button></Menu.Item>
             </Menu>
@@ -48,9 +50,9 @@ export default class App extends Component {
 
           <Content className='App-content'>
             <Route exact path="/" component={Welcome} />
-            <Route path="/orientation" component={Orientation} />
-            <Route path="/about" component={About} />
-            <Route path="/news" component={News} />
+            <Route exact path="/orientation" component={Orientation} />
+            <Route exact path="/about" component={About} />
+            <Route exact path="/news" component={News} />
             {/* <Route path="/login" component={Login} /> */}
           </Content>
 
