@@ -40,8 +40,8 @@ export default class App extends Component {
                   return <Menu.Item><NavLink key={index} to={item.href}>{item.title}</NavLink></Menu.Item>
                 })
               }
-              <Menu.Item><Button>Sign in</Button></Menu.Item>
-              <Menu.Item><Button>Sign up</Button></Menu.Item>
+              <Menu.Item><Button><Link to='/signin'>Sign in</Link></Button></Menu.Item>
+              <Menu.Item><Button><Link to='/signup'>Sign up</Link></Button></Menu.Item>
             </Menu>
           </Header>
 
@@ -52,7 +52,7 @@ export default class App extends Component {
             <Route path="/news" component={News} />
           </Content>
 
-          <Footer>
+          <Footer className='App-footer'>
             Ant Design ©2016 Created by Ant UED
           </Footer>
         </Layout>
