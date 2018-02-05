@@ -9,13 +9,16 @@ export default class Welcome extends React.Component {
   }
   render() {
     // Temp variables
+    const domain = this.constructor.name;
     const placeholder = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`;
     const promote = ['Why Here', 'Testimonial', 'Contact Us'];
 
     return (
-      <div className='Welcome'>
-        <div className='intro'>
-          <div className='slogan'>
+      <div className={domain}>
+        <div className={`${domain}-intro`}>
+          <div className='App-background-image'></div>
+
+          <div className={`${domain}-slogan`}>
             <h1>
                 We expertize in overseas studying<br/>
                 Get the right tutor you need<br/>
@@ -24,7 +27,7 @@ export default class Welcome extends React.Component {
             <p>{placeholder}</p>
           </div>
 
-          <div className='action'>
+          <div className={`${domain}-action`}>
             <Button size='large'>
               <Link to='/orientation' >Find a tutor</Link>
             </Button>
@@ -35,10 +38,10 @@ export default class Welcome extends React.Component {
           </div>
         </div>
 
-        <div className='promote'>
+        <div className={`${domain}-news`}>
           {
             promote.map((item, index) => {
-              return <div key={index} className='sub-promote'> <h1>{item}</h1> <p>{placeholder}</p> </div>;
+              return <section key={index}> <h1>{item}</h1> <p>{placeholder}</p> </section>;
             })
           }
         </div>

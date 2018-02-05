@@ -52,29 +52,27 @@ export default class Orientation extends React.Component{
 
   render() {
     return (
-      <div className='Orientation'>
+      <div className={this.constructor.name}>
         <h2>了解你的需求以寻找合适的导师</h2>
 
         <Progress type='circle' className='Orientation-Progress' percent={this.state.progress} status="active" />
 
-        <div className='Orientation-questions'>
-          <Carousel ref={c => this.carousel = c} className='Orientation-question' dots='false' effect='fade'>
-            {
-              this.questions.map((question, index) => {
-                return (
-                  <Radio.Group key={index} onChange={this.onChange}>
-                    <h2>{question.title}</h2>
-                    {
-                      question.options.map((option, index) => {
-                        return <Radio.Button key={index} value={index}>{option}</Radio.Button>
-                      })
-                    }
-                  </Radio.Group>
-                )
-              })
-            }
-          </Carousel>
-        </div>
+        <Carousel ref={c => this.carousel = c} className='Orientation-question' dots='false' effect='fade'>
+          {
+            this.questions.map((question, index) => {
+              return (
+                <Radio.Group key={index} onChange={this.onChange}>
+                  <h2>{question.title}</h2>
+                  {
+                    question.options.map((option, index) => {
+                      return <Radio.Button key={index} value={index}>{option}</Radio.Button>
+                    })
+                  }
+                </Radio.Group>
+              )
+            })
+          }
+        </Carousel>
       </div>
     )
   }

@@ -1,41 +1,44 @@
 @import '../../base/meta.less';
 
 .Welcome {
-  margin-top: -50px;
+  margin: -50px -50px 0;
+}
 
-  .intro {
-    padding: 6em 50px;
-    background-size: cover;
-    background-image: url(../../assets/images/background.jpg);
-    background-position: center;
+.Welcome-action {
+  text-align: center;
+  button {
+    margin: 0 20px;
+  }
+}
 
-    h1 {
-      font-size: 3.3em;
-      font-weight: 700;
-      margin-bottom: 0.5em;
-    }
+.Welcome-news {
+  padding: 0 50px;
+  text-align: center;
 
-    p {
-      font-size: 1.2em;
-      max-width: 60%;
-      margin-bottom: 60px;
-    }
+  section {
+    margin: 50px 0;
+  }
+}
+
+.Welcome-intro {
+  padding: 6em 50px;
+  position: relative;
+  overflow: hidden;
+
+  h1 {
+    font-size: 3.3em;
+    font-weight: 700;
+    margin-bottom: 0.5em;
   }
 
-  .action {
-    text-align: center;
-
-    button {
-      margin: 0 20px;
-    }
+  p {
+    font-size: 1.2em;
+    max-width: 60%;
+    margin-bottom: 60px;
   }
+}
 
-  .promote {
-    padding: 0 50px;
-    text-align: center;
-
-    .sub-promote {
-      margin: 50px 0;
-    }
-  }
+.Welcome-slogan {
+  position: relative;
+  z-index: 1;
 }

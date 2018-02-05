@@ -6,6 +6,7 @@ import './index.less';
 class Login extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
+
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
@@ -14,9 +15,13 @@ class Login extends React.Component {
   }
   render() {
     const { getFieldDecorator } = this.props.form;
+    const domain = this.constructor.name;
+
     return (
-      <div>
-        <Form onSubmit={this.handleSubmit} className="App-login-form">
+      <div className={domain}>
+        <div className='App-background-image'></div>
+
+        <Form onSubmit={this.handleSubmit} className={`${domain}-form`}>
           <Form.Item>
             {getFieldDecorator('userName', {
               rules: [{ required: true, message: '请输入用户名!' }],
@@ -38,8 +43,8 @@ class Login extends React.Component {
             })(
               <Checkbox>记住我</Checkbox>
             )}
-            <a className="App-login-forgot" href="">忘记密码</a>
-            <Button type="primary" htmlType="submit" className="App-login-button">登录</Button>
+            <a className={`${domain}-forgot`} href="">忘记密码</a>
+            <Button type="primary" htmlType="submit" className={`${domain}-button`}>登录</Button>
           </Form.Item>
         </Form>
       </div>

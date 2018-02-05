@@ -22,6 +22,7 @@ export default class App extends React.Component {
         <Layout.Content className='Layout-Content'>
           <Route exact path="/" component={Components.Welcome} />
           <Route path="/orientation" component={Components.Orientation} />
+          <Route path="/teachers" component={Components.Teachers} />
           <Route path="/about" component={Components.About} />
           <Route path="/login" component={Components.Login} />
           <Route path="/register" component={Components.Register} />

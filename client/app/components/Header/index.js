@@ -6,11 +6,11 @@ import './index.less';
 export default class Header extends React.Component {
   render() {
     const links = [{
+      title: 'Find teachers',
+      href: '/teachers'
+    }, {
       title: 'About us',
       href: '/about'
-    }, {
-      title: 'Contact us',
-      href: '/contact'
     }];
 
     return (
