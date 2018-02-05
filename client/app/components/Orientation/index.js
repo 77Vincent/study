@@ -7,14 +7,11 @@ export default class Orientation extends React.Component{
   constructor(props) {
     super(props);
   }
-  componentDidMount() {
-    this.fetchData() 
-  }
-  async fetchData() {
-  }
   render() {
     return (
       <div className='Orientation'>
+      jjjjjjjj
+      jjjjjjjj
       </div>
     )
   }

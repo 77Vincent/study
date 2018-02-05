@@ -9,7 +9,7 @@ import { Route, Link, NavLink } from 'react-router-dom';
 import './App.less';
 
 // Custom Components
-import Components from '../components';
+import Components from 'components';
 
 export default class App extends React.Component {
   render() {
@@ -21,8 +21,8 @@ export default class App extends React.Component {
 
         <Layout.Content className='Layout-content'>
           <Route exact path="/" component={Components.Welcome} />
-          <Route exact path="/orientation" component={Components.Orientation} />
-          <Route exact path="/about" component={Components.About} />
+          <Route path="/orientation" component={Components.Orientation} />
+          <Route path="/about" component={Components.About} />
           <Route path="/login" component={Components.Login} />
           <Route path="/register" component={Components.Register} />
         </Layout.Content>

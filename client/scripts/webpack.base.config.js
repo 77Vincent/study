@@ -3,31 +3,25 @@ const fs = require('fs');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-// resolve 简单封装
-function resolve(relatedPath) {
-  return path.join(__dirname, relatedPath);
-}
-
 const lessToJs = require('less-vars-to-js');
-const themeVariables = lessToJs(fs.readFileSync(resolve('../theme.less'), 'utf8'));
+const themeVariables = lessToJs(fs.readFileSync(path.resolve('./theme.less'), 'utf8'));
 
 const webpackConfigBase = {
   entry: {
-    client: resolve('../app/index.js'),
+    client: path.resolve('./app/index.js'),
   },
   output: {
-    path: resolve('../dist'),
+    path: path.resolve('./dist'),
     filename: '[name].[hash:4].js',
     chunkFilename: 'chunks/[name].[hash:4].js',
   },
   resolve: {
     extensions: ['.js', '.json'],
     alias: {
-      components: path.join(__dirname, '/../app/components'),
-      api: path.join(__dirname, '/../app/api'),
-      utils: path.join(__dirname, '/../app/utils'),
-      style: path.join(__dirname, '/../app/style'),
-      images: path.join(__dirname, '/../app/images'),
+      components: path.resolve('./app/components'),
+      api: path.resolve('./app/api'),
+      utils: path.resolve('./app/utils'),
+      images: path.resolve('./app/assets/images'),
       /**
        * Todo: 先不上redux 
        */
@@ -102,7 +96,7 @@ const webpackConfigBase = {
     new ExtractTextPlugin('style.[hash:4].css'),
     // 将打包后的资源注入到html文件内    
     new HtmlWebpackPlugin({
-      template: resolve('../app/index.html'),
+      template: path.resolve('./app/index.html'),
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'client', // 入口文件名
@@ -110,7 +104,7 @@ const webpackConfigBase = {
       minChunks: function (module) {
         return module.resource &&
           /\.js$/.test(module.resource) &&
-          module.resource.indexOf(resolve('../node_modules')) === 0;
+          module.resource.indexOf(path.resolve('./node_modules')) === 0;
       }
     }),
     new webpack.optimize.CommonsChunkPlugin({
