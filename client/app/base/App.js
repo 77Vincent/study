@@ -14,12 +14,12 @@ import Components from 'components';
 export default class App extends React.Component {
   render() {
     return (
-      <Layout className='Layout'>
-        <Layout.Header className='Layout-header'>
+      <Layout className='App-Layout'>
+        <Layout.Header className='Layout-Header'>
           <Components.Header/ >
         </Layout.Header>
 
-        <Layout.Content className='Layout-content'>
+        <Layout.Content className='Layout-Content'>
           <Route exact path="/" component={Components.Welcome} />
           <Route path="/orientation" component={Components.Orientation} />
           <Route path="/about" component={Components.About} />
@@ -27,7 +27,7 @@ export default class App extends React.Component {
           <Route path="/register" component={Components.Register} />
         </Layout.Content>
 
-        <Layout.Footer className='Layout-footer'>
+        <Layout.Footer className='Layout-Footer'>
           <Components.Footer/ >
         </Layout.Footer>
       </Layout>
