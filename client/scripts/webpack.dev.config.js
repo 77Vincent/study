@@ -5,9 +5,7 @@ const webpackConfigBase = require('./webpack.base.config');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 const PORT = 3000;
-function resolve(relatedPath) {
-  return path.join(__dirname, relatedPath);
-}
+
 const webpackConfigDev = {
   plugins: [
     // 定义环境变量为开发环境
@@ -21,7 +19,7 @@ const webpackConfigDev = {
   ],
   devtool: 'source-map',
   devServer: {
-    contentBase: resolve('../app'),
+    contentBase: path.resolve('./app'),
     historyApiFallback: false,
     port: PORT,
     hot: false,

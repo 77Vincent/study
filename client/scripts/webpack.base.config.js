@@ -6,6 +6,10 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const lessToJs = require('less-vars-to-js');
 const themeVariables = lessToJs(fs.readFileSync(path.resolve('./theme.less'), 'utf8'));
 
+// Hit: use path.resolve without the first parameter, usually '__dirname'
+// the absolution path will be based on the excution context,
+// which is ./client in here, so the relative path to pass will all be based on this absolute path
+
 const webpackConfigBase = {
   entry: {
     client: path.resolve('./app/index.js'),

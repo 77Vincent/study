@@ -22,7 +22,7 @@ export default class Header extends React.Component {
 
         {
           links.map((item, index) => {
-            return <Menu.Item><NavLink key={index} to={item.href}>{item.title}</NavLink></Menu.Item>
+            return <Menu.Item key={index}><NavLink to={item.href}>{item.title}</NavLink></Menu.Item>
           })
         }
 
