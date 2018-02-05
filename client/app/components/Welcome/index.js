@@ -29,11 +29,11 @@ export default class Welcome extends React.Component {
 
           <div className={`${domain}-action`}>
             <Button size='large'>
-              <Link to='/orientation' >Find a tutor</Link>
+              <Link to='/orientation' >寻找老师</Link>
             </Button>
 
             <Button size='large'>
-              <Link to=''>Be a tutor</Link>
+              <Link to=''>成为老师</Link>
             </Button>
           </div>
         </div>

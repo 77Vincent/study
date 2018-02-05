@@ -19,8 +19,6 @@ class Login extends React.Component {
 
     return (
       <div className={domain}>
-        <div className='App-background-image'></div>
-
         <Form onSubmit={this.handleSubmit} className={`${domain}-form`}>
           <Form.Item>
             {getFieldDecorator('userName', {

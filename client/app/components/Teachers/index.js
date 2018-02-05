@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from 'antd';
+import { Layout, Button } from 'antd';
 import './index.less';
 
 export default class Teachers extends React.Component {
@@ -8,12 +8,33 @@ export default class Teachers extends React.Component {
     super(props);
   }
   render() {
-    // Temp variables
-    const placeholder = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`;
-    const promote = ['Why Here', 'Testimonial', 'Contact Us'];
+    const domain = this.constructor.name;
+    const teachers = [
+      {
+        name: 'Vincent',
+        last_active: '2018/01/01'
+      }
+    ]
 
     return (
-      <div className={this.constructor.name}>
+      <div className={domain}>
+        <Layout>
+          <Layout.Sider>
+          </Layout.Sider>
+
+          <Layout.Content>
+            {
+              teachers.map((teacher, index) => {
+                return (
+                  <div className={`${domain}-teacher App-tile`}>
+                    <div className='placeholder-img'></div>
+                    
+                  </div>
+                )
+              })
+            }
+          </Layout.Content>
+        </Layout>
       </div>
     );
   }
