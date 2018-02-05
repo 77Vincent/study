@@ -1,67 +1,42 @@
 'use strict';
 
-// Dependencies
-import React, { Component } from 'react';
-import { Layout, Menu, Button } from 'antd';
+// External Dependencies
+import React from 'react';
+import { Layout, Menu, Button, Modal } from 'antd';
 import { Route, Link, NavLink } from 'react-router-dom';
 
 // Global Style
 import './App.less';
 
-// Components
-import Welcome from '../components/Welcome';
-import Orientation from '../components/Orientation';
-import About from '../components/About';
-import News from '../components/News';
-import Login from '../components/Login';
+// Custom Components
+import App_Welcome from '../components/Welcome';
+import App_Header from '../components/Header';
+import App_Footer from '../components/Footer';
+import App_Orientation from '../components/Orientation';
+import App_About from '../components/About';
+import App_Login from '../components/Login';
+import App_Register from '../components/Register';
 
-const { Content, Header, Footer } = Layout;
-
-export default class App extends Component {
+export default class App extends React.Component {
   render() {
-    const links = [{
-      title: 'About us',
-      href: '/about'
-    }, {
-      title: 'News',
-      href: '/news'
-    }];
-
     return (
-      <div>
-        <Layout>
-          <Header className='App-header'>
-            <Menu 
-              mode='horizontal' 
-              className='App-menu'
-            >
-              <Menu.Item><Link to='/' className="App-logo" /></Menu.Item>
+      <Layout className='Layout'>
+        <Layout.Header className='Layout-header'>
+          <App_Header/ >
+        </Layout.Header>
 
-              {
-                links.map((item, index) => {
-                  return <Menu.Item><NavLink key={index} to={item.href}>{item.title}</NavLink></Menu.Item>
-                })
-              }
+        <Layout.Content className='Layout-content'>
+          <Route exact path="/" component={App_Welcome} />
+          <Route exact path="/orientation" component={App_Orientation} />
+          <Route exact path="/about" component={App_About} />
+          <Route path="/login" component={App_Login} />
+          <Route path="/register" component={App_Register} />
+        </Layout.Content>
 
-              <Menu.Item><Button><Link to='/login'>Sign in</Link></Button></Menu.Item>
-              <Menu.Item><Button><Link to='/register'>Sign up</Link></Button></Menu.Item>
-            </Menu>
-          </Header>
-
-          <Content className='App-content'>
-            <Route exact path="/" component={Welcome} />
-            <Route exact path="/orientation" component={Orientation} />
-            <Route exact path="/about" component={About} />
-            <Route exact path="/news" component={News} />
-            {/* <Route path="/login" component={Login} /> */}
-          </Content>
-
-          <Footer className='App-footer'>
-            Ant Design ©2016 Created by Ant UED
-          </Footer>
-        </Layout>
-      </div>
+        <Layout.Footer className='Layout-footer'>
+          <App_Footer/ >
+        </Layout.Footer>
+      </Layout>
     );
   }
 }
-
