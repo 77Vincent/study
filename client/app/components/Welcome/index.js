@@ -1,17 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'antd';
-import fetch from 'isomorphic-fetch';
 import './index.less';
 
 export default class Welcome extends React.Component {
   constructor(props) {
     super(props);
-  }
-  componentDidMount() {
-    this.fetchData() 
-  }
-  async fetchData() {
   }
   render() {
     // Temp variables
