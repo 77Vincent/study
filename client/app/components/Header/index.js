@@ -6,6 +6,9 @@ import './index.less';
 export default class Header extends React.Component {
   render() {
     const links = [{
+      title: '首页',
+      href: '/'
+    }, {
       title: '寻找老师',
       href: '/teachers'
     }, {
@@ -13,22 +16,26 @@ export default class Header extends React.Component {
       href: '/about'
     }];
 
+    const domain = this.constructor.name;
+
     return (
-      <Menu 
-        mode='horizontal' 
-        className='App-menu'
-      >
-        <Menu.Item><Link to='/' className="App-logo" /></Menu.Item>
+      <div>
+        <div className="App-logo"></div>
 
-        {
-          links.map((item, index) => {
-            return <Menu.Item key={index}><NavLink to={item.href}>{item.title}</NavLink></Menu.Item>
-          })
-        }
+        <Menu 
+          mode='horizontal' 
+          className={`${domain}-Menu`}
+        >
 
-        <Menu.Item><Button><Link to='/login'>登录</Link></Button></Menu.Item>
-        <Menu.Item><Button><Link to='/register'>注册</Link></Button></Menu.Item>
-      </Menu>
+          {
+            links.map((item, index) => {
+              return <Menu.Item key={index}><NavLink to={item.href}>{item.title}</NavLink></Menu.Item>
+            })
+          }
+          <Menu.Item style={{float: 'right'}}><Button><Link to='/register'>注册</Link></Button></Menu.Item>
+          <Menu.Item style={{float: 'right'}}><Button><Link to='/login'>登录</Link></Button></Menu.Item>
+        </Menu>
+      </div>
     );
   }
 }
