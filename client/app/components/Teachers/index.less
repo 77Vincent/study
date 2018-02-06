@@ -1,8 +1,14 @@
 @import '../../base/meta.less';
 
 .Teachers {
+  margin-top: -50px;
   margin-left: -50px;
-  max-width: 1200px;
+  margin-bottom: -50px;
+  height: 100%;
+}
+
+.Teachers-Content {
+  margin-left: 50px;
 }
 
 .placeholder-img {
@@ -14,7 +20,6 @@
 }
 
 .Teachers-teacher {
-  margin-left: 30px;
   background-color: #fff;
 }
 
@@ -22,14 +27,27 @@
   text-align: center;
   margin-right: 30px;
   width: 100px;
+
+  strong {
+    color: @color-primary; 
+  }
 }
 
 .Teachers-info {
+  flex: 1;
+
+  button {
+    float: right;
+  }
 }
 
 .Teachers-intro {
   margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid @color-gray-light;
 }
 
 .Teachers-active {
+  float: right;
+  opacity: 0.7 ;
 }
