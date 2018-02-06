@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const lessToJs = require('less-vars-to-js');
-const themeVariables = lessToJs(fs.readFileSync(path.resolve('./theme.less'), 'utf8'));
+const themeVariables = lessToJs(fs.readFileSync(path.resolve('./app/theme.less'), 'utf8'));
 
 // Hit: use path.resolve without the first parameter, usually '__dirname'
 // the absolution path will be based on the excution context,

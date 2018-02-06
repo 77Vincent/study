@@ -3,7 +3,11 @@
 // The whole reference is at here:
 // https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less
 
+// Colors
 @primary-color: #00a2ff;
+@color-gray-dark: #777;
+@color-gray: #aaa;
+@color-gray-light: #eee;
 
 // Layout
 @layout-body-background: #f8f8f8;
@@ -24,6 +28,16 @@
 // Font
 @font-size-base: 14px;
 @font-size-lg: @font-size-base + 4px;
+@font-sans: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+@font-serif: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
 
 // Sider
 @layout-sider-background: gray;
+
+// Function
+.transition(...) {
+  -webkit-transition: @arguments;
+  -moz-transition: @arguments;
+  -o-transition: @arguments;
+  transition: @arguments;
+}
