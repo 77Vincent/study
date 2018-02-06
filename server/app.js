@@ -13,20 +13,22 @@ import onerror from 'koa-onerror'; //错误处理
 import resource from 'koa-static'; //静态资源托管
 import path from 'path'
 import routes from './routes'
-
+import { checkToken } from './routes/oauth/index'
 const app = new Koa();
-onerror(app)
-app.use(convert(cors()))
-app.use(convert(logger()))
-app.use(bodyParser())
-
+onerror(app);
+app.use(convert(cors()));
+app.use(convert(logger()));
+app.use(bodyParser());
+app.proxy = true;
 app.use(resource(path.join(__dirname, '../public')))
 // app.use(json({ pretty: false, param: 'pretty' }))
 app.use(async(ctx, next) => {
   await next()
   ctx.set('X-Powered-By', 'Koa2')
 })
-
+// app.use(async (ctx, next) => {
+// 	await checkToken(ctx)
+// })
 app.use(async (ctx, next) => {
 	const start = new Date()
 	await next()
