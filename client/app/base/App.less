@@ -2,6 +2,10 @@
 // Be very careful when adding new rules in here!!!
 @import '../theme.less';
 
+img {
+  max-width: 100%;
+}
+
 .App-background-image {
   position: absolute;
   left: 0;
@@ -51,5 +55,6 @@
 
   &:hover {
     border-color: @primary-color;
+    box-shadow: 0 0 15px 0 @color-gray;
   }
 }

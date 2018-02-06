@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Layout, Button, Row, Col, Tag, Spin } from 'antd';
+import { Layout, Button, Row, Col, Tag, Modal } from 'antd';
 import Components from 'components';
 import './index.less';
 
@@ -14,6 +14,10 @@ export default class Teachers extends React.Component {
     teachers: []
   }
 
+  expand = (e) => {
+    console.log(e)
+  }
+
   render() {
     const domain = this.constructor.name;
 
@@ -23,6 +27,7 @@ export default class Teachers extends React.Component {
       name: 'Vincent Wen',
       last_active: '2018/01/01',
       cost: 300,
+      photo: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517943229853&di=9a0ed432b8c531eac245ccb293c47894&imgtype=0&src=http%3A%2F%2Fimg.duoziwang.com%2F2017%2F08%2F10239173757.jpg',
       majors: ['建筑', '景观'],
       introduction: '金吉列留学，国内出国留学咨询服务机构，涵盖出国留学，签证移民等频道，提供全方位的美国留学，加拿大留...'
     };
@@ -38,6 +43,10 @@ export default class Teachers extends React.Component {
 
     return (
       <div className={domain}>
+        <Modal>
+          jjjjj
+        </Modal>
+
         <Components.Loading visibility={this.state.loading} />
         <Layout>
           <Layout.Sider width='300' className={`${domain}-Sider`}>
@@ -51,10 +60,10 @@ export default class Teachers extends React.Component {
                 this.state.teachers.map((teacher, index) => {
                   return (
                     <Col xl={12} lg={24} key={index}>
-                      <div className={`${domain}-teacher App-tile`}>
+                      <div onClick={this.expand} className={`${domain}-teacher App-tile`}>
                         <Row type='flex'>
                           <Col className={`${domain}-profile`}>
-                            <div className='placeholder-img'></div>
+                            <img src={teacher.photo} />
                             <h4>{teacher.name}</h4>
                             <strong>{teacher.cost}/小时</strong>
                           </Col>
