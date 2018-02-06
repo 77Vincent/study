@@ -41,6 +41,8 @@ export default class Teachers extends React.Component {
         <Components.Loading visibility={this.state.loading} />
         <Layout>
           <Layout.Sider width='300' className={`${domain}-Sider`}>
+            <div className={`${domain}-filter`}>
+            </div>
           </Layout.Sider>
 
           <Layout.Content className={`${domain}-Content`}>
@@ -48,7 +50,7 @@ export default class Teachers extends React.Component {
               {
                 this.state.teachers.map((teacher, index) => {
                   return (
-                    <Col span='12' key={index}>
+                    <Col xl={12} lg={24} key={index}>
                       <div className={`${domain}-teacher App-tile`}>
                         <Row type='flex'>
                           <Col className={`${domain}-profile`}>

@@ -41,7 +41,7 @@ export default class Orientation extends React.Component{
     },
   ]
 
-  onChange = (e) => {
+  progress = (e) => {
     this.carousel.next();
 
     this.setState({
@@ -61,7 +61,7 @@ export default class Orientation extends React.Component{
           {
             this.questions.map((question, index) => {
               return (
-                <Radio.Group key={index} onChange={this.onChange}>
+                <Radio.Group key={index} onChange={this.progress}>
                   <h2>{question.title}</h2>
                   {
                     question.options.map((option, index) => {
