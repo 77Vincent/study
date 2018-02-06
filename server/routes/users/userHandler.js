@@ -17,7 +17,19 @@ let createUserInfo = async(ctx) => {
         return false
     }
 }
+
+let checkPassword = async(ctx) => {
+    let {body} = ctx.request
+    console.log('body', ctx.request)
+    return User.findOne({
+        where:{
+            name: body.name,
+            password: body.password
+        }
+    })
+}
 export {
     getAllUserInfos,
-    createUserInfo
+    createUserInfo,
+    checkPassword
 }
