@@ -34,7 +34,7 @@ export default class Teachers extends React.Component {
         teachers,
         loading: false
       })
-    }, 20000);
+    }, 1000);
 
     return (
       <div className={domain}>
@@ -42,40 +42,38 @@ export default class Teachers extends React.Component {
           <Layout.Sider width='300' className={`${domain}-Sider`}>
           </Layout.Sider>
 
-          <Components.Loading visibility={this.state.loading}>
-            <Layout.Content className={`${domain}-Content`}>
-              <Row gutter={20}>
-                {
-                  this.state.teachers.map((teacher, index) => {
-                    return (
-                      <Col span='12' key={index}>
-                        <div className={`${domain}-teacher App-tile`}>
-                          <Row type='flex'>
-                            <Col className={`${domain}-profile`}>
-                              <div className='placeholder-img'></div>
-                              <h3>{teacher.name}</h3>
-                              <strong>{teacher.cost}/小时</strong>
-                            </Col>
+          <Layout.Content className={`${domain}-Content`}>
+            <Row gutter={20}>
+              {
+                this.state.teachers.map((teacher, index) => {
+                  return (
+                    <Col span='12' key={index}>
+                      <div className={`${domain}-teacher App-tile`}>
+                        <Row type='flex'>
+                          <Col className={`${domain}-profile`}>
+                            <div className='placeholder-img'></div>
+                            <h3>{teacher.name}</h3>
+                            <strong>{teacher.cost}/小时</strong>
+                          </Col>
 
-                            <Col className={`${domain}-info`}>
-                              {
-                                teacher.majors.map((major, index) => {
-                                  return <Tag key={index}>{major}</Tag>
-                                })
-                              }
-                              <p className={`${domain}-active`}>上次在线：{teacher.last_active}</p>
-                              <p className={`${domain}-intro`}>{teacher.introduction}</p>
-                              <Button type='primary'>预约</Button>
-                            </Col>
-                          </Row>
-                        </div>
-                      </Col>
-                    )
-                  })
-                }
-              </Row>
-            </Layout.Content>
-          </Components.Loading>
+                          <Col className={`${domain}-info`}>
+                            {
+                              teacher.majors.map((major, index) => {
+                                return <Tag key={index}>{major}</Tag>
+                              })
+                            }
+                            <p className={`${domain}-active`}>上次在线：{teacher.last_active}</p>
+                            <p className={`${domain}-intro`}>{teacher.introduction}</p>
+                            <Button type='primary'>预约</Button>
+                          </Col>
+                        </Row>
+                      </div>
+                    </Col>
+                  )
+                })
+              }
+            </Row>
+          </Layout.Content>
         </Layout>
       </div>
     );

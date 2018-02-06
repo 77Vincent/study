@@ -2,7 +2,7 @@
 
 // External Dependencies
 import React from 'react';
-import { Layout, Menu, Button, Modal } from 'antd';
+import { Layout, Menu, Button } from 'antd';
 import { Route, Link, NavLink } from 'react-router-dom';
 
 // Global custom Style

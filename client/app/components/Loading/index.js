@@ -14,11 +14,9 @@ export default class Loading extends React.Component {
       <div>
         {
           this.props.visibility ? 
-            <Spin size='large' className={domain}>
-              {this.props.children}
-            </Spin> :
-            this.props.children
-
+            <div className={`${domain}-Wrapper`}>
+              <Spin size='large'/>
+            </div> : null
         }
       </div>
     )
