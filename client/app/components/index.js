@@ -5,6 +5,7 @@ import Login from './Login';
 import Register from './Register';
 import Header from './Header';
 import Footer from './Footer';
+import Loading from './Loading';
 import Orientation from './Orientation';
 
 export default {
@@ -15,5 +16,6 @@ export default {
   Login,
   Register,
   Header,
-  Footer
+  Footer,
+  Loading
 };

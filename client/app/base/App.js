@@ -1,7 +1,7 @@
 'use strict';
 
 // External Dependencies
-import React, { Component } from 'react';
+import React from 'react';
 import { Layout, Menu, Button, Modal } from 'antd';
 import { Route, Link, NavLink } from 'react-router-dom';
 
