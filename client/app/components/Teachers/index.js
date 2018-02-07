@@ -16,7 +16,9 @@ export default class Teachers extends React.Component {
   }
 
   openTeacher = (e) => {
-    console.log(e)
+    return () => {
+      console.log(e)
+    }
   }
 
   handleOk = (e) => {
@@ -36,16 +38,18 @@ export default class Teachers extends React.Component {
 
     // Simulate getting data from server
     const teachers = [];
-    const teacher = {
-      name: 'Vincent Wen',
-      last_active: '2018/01/01',
-      cost: 300,
-      photo: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517943229853&di=9a0ed432b8c531eac245ccb293c47894&imgtype=0&src=http%3A%2F%2Fimg.duoziwang.com%2F2017%2F08%2F10239173757.jpg',
-      majors: ['建筑', '景观'],
-      introduction: '金吉列留学，国内出国留学咨询服务机构，涵盖出国留学，签证移民等频道，提供全方位的美国留学，加拿大留...'
-    };
     for (let i=0; i<10; i++) {
-      teachers.push(teacher);
+      teachers.push(((i) => {
+        return {
+          name: 'Vincent Wen',
+          id: i,
+          last_active: '2018/01/01',
+          cost: 300,
+          photo: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517943229853&di=9a0ed432b8c531eac245ccb293c47894&imgtype=0&src=http%3A%2F%2Fimg.duoziwang.com%2F2017%2F08%2F10239173757.jpg',
+          majors: ['建筑', '景观'],
+          introduction: '金吉列留学，国内出国留学咨询服务机构，涵盖出国留学，签证移民等频道，提供全方位的美国留学，加拿大留...'
+        };
+      })(i));
     }
     setTimeout(() => {
       this.setState({
@@ -79,8 +83,8 @@ export default class Teachers extends React.Component {
               {
                 this.state.teachers.map((teacher, index) => {
                   return (
-                    <Col xl={12} lg={24}>
-                      <Components.Teacher key={index} teacher={teacher} openTeacher={id => this.openTeacher(id)} />
+                    <Col xl={12} lg={24} key={index}>
+                      <Components.Teacher teacher={teacher} openTeacher={this.openTeacher} />
                     </Col>
                   )
                 })

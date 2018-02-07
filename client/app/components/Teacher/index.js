@@ -9,15 +9,11 @@ export default class Teacher extends React.Component {
     super(props)
   }
 
-  handleClick(id) {
-    return this.props.openTeacher(id);
-  }
-
   render() {
     const domain = this.constructor.name;
 
     return (
-      <div onClick={this.props.openTeacher} className={`${domain} App-tile`}>
+      <div onClick={this.props.openTeacher(this.props.teacher.id)} className={`${domain} App-tile`}>
         <Row type='flex'>
           <Col className={`${domain}-profile`}>
             <img src={this.props.teacher.photo} />
