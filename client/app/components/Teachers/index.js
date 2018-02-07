@@ -35,9 +35,7 @@ export default class Teachers extends React.Component {
     });
   }
 
-  render() {
-    const domain = this.constructor.name;
-
+  componentDidMount = () => {
     // Simulate getting data from server
     const teachers = [];
     for (let i=0; i<10; i++) {
@@ -47,9 +45,9 @@ export default class Teachers extends React.Component {
           id: i,
           last_active: '2018/01/01',
           cost: 300,
-          photo: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517943229853&di=9a0ed432b8c531eac245ccb293c47894&imgtype=0&src=http%3A%2F%2Fimg.duoziwang.com%2F2017%2F08%2F10239173757.jpg',
+          avatar: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517943229853&di=9a0ed432b8c531eac245ccb293c47894&imgtype=0&src=http%3A%2F%2Fimg.duoziwang.com%2F2017%2F08%2F10239173757.jpg',
           majors: ['建筑', '景观'],
-          introduction: '金吉列留学，国内出国留学咨询服务机构，涵盖出国留学，签证移民等频道，提供全方位的美国留学，加拿大留...'
+          introduction: '留学，旧称留洋，一般是指一个人出国或出境接受各类教育，时间可以为短期或长期（从几个星期到几年）。这些人被称为“留学生”。 另外，美国等国家组织的一类海外短期的交换学生计划，其英文名字“Study abroad”直译也为留学，又称为海外研修（中国大陆、港澳称为“海外交流”）。'
         };
       })(i));
     }
@@ -59,6 +57,10 @@ export default class Teachers extends React.Component {
         loading: false
       })
     }, 500);
+  }
+
+  render() {
+    const domain = this.constructor.name;
 
     return (
       <div className={domain}>
@@ -69,7 +71,7 @@ export default class Teachers extends React.Component {
           visible={this.state.expand}
           onCancel={this.handleCancel}
         >
-          <Components.Teacher teacher={this.state.teacher} />
+          <Components.Teacher type='detail' teacher={this.state.teacher} />
         </Modal>
 
         <Components.Loading visibility={this.state.loading} />
@@ -87,7 +89,7 @@ export default class Teachers extends React.Component {
                   return (
                     <Col xl={12} lg={24} key={index}>
                       <div className='App-tile' onClick={() => this.openTeacher(teacher.id)}>
-                        <Components.Teacher teacher={teacher} />
+                        <Components.Teacher type='overall' teacher={teacher} />
                       </div>
                     </Col>
                   )
