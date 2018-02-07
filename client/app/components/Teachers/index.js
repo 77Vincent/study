@@ -10,12 +10,27 @@ export default class Teachers extends React.Component {
   }
 
   state = {
+    expand: false,
     loading: true,
     teachers: []
   }
 
-  expand = (e) => {
-    console.log(e)
+  expandDetail = (e) => {
+    this.setState({
+      expand: true,
+    });
+  }
+
+  handleOk = (e) => {
+    this.setState({
+      expand: false,
+    });
+  }
+
+  handleCancel = (e) => {
+    this.setState({
+      expand: false,
+    });
   }
 
   render() {
@@ -43,8 +58,17 @@ export default class Teachers extends React.Component {
 
     return (
       <div className={domain}>
-        <Modal>
-          jjjjj
+        <Modal
+          cancelText='留言'
+          width={600}
+          okText='预约'
+          visible={this.state.expand}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
         </Modal>
 
         <Components.Loading visibility={this.state.loading} />
@@ -59,27 +83,8 @@ export default class Teachers extends React.Component {
               {
                 this.state.teachers.map((teacher, index) => {
                   return (
-                    <Col xl={12} lg={24} key={index}>
-                      <div onClick={this.expand} className={`${domain}-teacher App-tile`}>
-                        <Row type='flex'>
-                          <Col className={`${domain}-profile`}>
-                            <img src={teacher.photo} />
-                            <h4>{teacher.name}</h4>
-                            <strong>{teacher.cost}/小时</strong>
-                          </Col>
-
-                          <Col className={`${domain}-info`}>
-                            {
-                              teacher.majors.map((major, index) => {
-                                return <Tag key={index}>{major}</Tag>
-                              })
-                            }
-                            <h5>上次在线：{teacher.last_active}</h5>
-                            <p>{teacher.introduction}</p>
-                            <Button type='primary'>预约</Button>
-                          </Col>
-                        </Row>
-                      </div>
+                    <Col xl={12} lg={24}>
+                      <Components.Teacher key={index} teacher={teacher}/>
                     </Col>
                   )
                 })

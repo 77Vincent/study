@@ -1,6 +1,7 @@
 import About from './About';
 import Welcome from './Welcome';
 import Teachers from './Teachers';
+import Teacher from './Teacher';
 import Login from './Login';
 import Register from './Register';
 import Header from './Header';
@@ -12,6 +13,7 @@ export default {
   About,
   Welcome,
   Teachers,
+  Teacher,
   Orientation,
   Login,
   Register,
