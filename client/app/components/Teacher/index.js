@@ -26,12 +26,15 @@ export default class Teacher extends React.Component {
           </Col>
 
           <Col className={`${domain}-info`}>
-            {
-              teacher.majors.map((major, index) => {
-                return <Tag key={index}>{major}</Tag>
-              })
-            }
-            <h5>上次在线：{teacher.last_active}</h5>
+            <div className={`${domain}-info-top`}>
+              {
+                teacher.majors.map((major, index) => {
+                  return <Tag key={index}>{major}</Tag>
+                })
+              }
+              <h5>上次在线：{teacher.last_active}</h5>
+            </div>
+            <h4>{teacher.school} / {teacher.degree}</h4>
             <p>{isDetail ? teacher.introduction : introductionShort}</p>
 
             <section>
