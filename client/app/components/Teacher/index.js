@@ -19,28 +19,37 @@ export default class Teacher extends React.Component {
     return (
       <div className={this.props.type === 'overall' ? domain : `${domain} ${domain}-detail`}>
         <Row type='flex'>
-          <Col className={`${domain}-profile`}>
-            <img src={teacher.avatar} />
-            <h4>{isDetail ? '' : teacher.name}</h4>
-            <strong>{teacher.cost}/小时</strong>
+          <Col>
+            <aside>
+              <span style={{backgroundImage: `url(${teacher.avatar})`}} />
+              <h4>{isDetail ? '' : teacher.name}</h4>
+              <strong>{teacher.cost}/小时</strong>
+            </aside>
           </Col>
 
-          <Col className={`${domain}-info`}>
-            <div className={`${domain}-info-top`}>
-              {
-                teacher.majors.map((major, index) => {
-                  return <Tag key={index}>{major}</Tag>
-                })
-              }
-              <h5>上次在线：{teacher.last_active}</h5>
-            </div>
-            <h4>{teacher.school} / {teacher.degree}</h4>
-            <p>{isDetail ? teacher.introduction : introductionShort}</p>
+          <Col style={{flex: 1}}>
+            <article>
+              <header>
+                {
+                  teacher.majors.map((major, index) => {
+                    return <Tag key={index}>{major}</Tag>
+                  })
+                }
+                <small>上次在线：{teacher.last_active}</small>
+              </header>
 
-            <section>
-              <Button type='primary'>预约</Button>
-              <Button>留言</Button>
-            </section>
+              <h4>
+                {teacher.school ? <span>{teacher.school}</span> : null}
+                {teacher.degree ? <span>{teacher.degree}</span> : null}
+              </h4>
+
+              <p>{isDetail ? teacher.introduction : introductionShort}</p>
+
+              <section>
+                <Button>留言</Button>
+                <Button type='primary'>预约</Button>
+              </section>
+            </article>
           </Col>
         </Row>
       </div>
