@@ -15,10 +15,8 @@ export default class Teachers extends React.Component {
     teachers: []
   }
 
-  expandDetail = (e) => {
-    this.setState({
-      expand: true,
-    });
+  openTeacher = (e) => {
+    console.log(e)
   }
 
   handleOk = (e) => {
@@ -46,7 +44,7 @@ export default class Teachers extends React.Component {
       majors: ['建筑', '景观'],
       introduction: '金吉列留学，国内出国留学咨询服务机构，涵盖出国留学，签证移民等频道，提供全方位的美国留学，加拿大留...'
     };
-    for (let i=0; i<20; i++) {
+    for (let i=0; i<10; i++) {
       teachers.push(teacher);
     }
     setTimeout(() => {
@@ -66,12 +64,10 @@ export default class Teachers extends React.Component {
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
         </Modal>
 
         <Components.Loading visibility={this.state.loading} />
+
         <Layout>
           <Layout.Sider width='300' className={`${domain}-Sider`}>
             <div className={`${domain}-filter`}>
@@ -84,7 +80,7 @@ export default class Teachers extends React.Component {
                 this.state.teachers.map((teacher, index) => {
                   return (
                     <Col xl={12} lg={24}>
-                      <Components.Teacher key={index} teacher={teacher}/>
+                      <Components.Teacher key={index} teacher={teacher} openTeacher={id => this.openTeacher(id)} />
                     </Col>
                   )
                 })
