@@ -1,6 +1,5 @@
-'use strict';
-const sequelize = require('./sequelize.js');
-const Sequelize = require('sequelize');
+import sequelize from './sequelize.js';
+import Sequelize from 'sequelize';
 
 const User = sequelize.define('User', {
     id: {
@@ -21,4 +20,4 @@ const User = sequelize.define('User', {
 
 User.sync(); //创建表
 
-module.exports = User;
+export default User;

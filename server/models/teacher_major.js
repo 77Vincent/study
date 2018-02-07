@@ -1,21 +1,19 @@
-'use strict';
 import sequelize from './sequelize.js';
 import Sequelize from 'sequelize';
 
-const Major = sequelize.define('major', {
+const Teacher_Major = sequelize.define('teacher_major', {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
-    name: {
+    major_id: {
         type: Sequelize.STRING
     },
-    desc: {
-        type: Sequelize.STRING,
+    teacher_id: {
+        type: Sequelize.DATE,
     }
 });
 
-Major.sync(); //创建表
-
-export default Major;
+Teacher_Major.sync(); //创建表
+export default Teacher_Major;
