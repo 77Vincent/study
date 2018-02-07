@@ -4,28 +4,26 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const lessToJs = require('less-vars-to-js');
-const themeVariables = lessToJs(fs.readFileSync(path.resolve('./app/theme.less'), 'utf8'));
 
-// Hit: use path.resolve without the first parameter, usually '__dirname'
-// the absolution path will be based on the excution context,
-// which is ./client in here, so the relative path to pass will all be based on this absolute path
+const resolve = path.resolve;
+const themeVariables = lessToJs(fs.readFileSync(resolve('./app/theme.less'), 'utf8'));
 
 const webpackConfigBase = {
   entry: {
-    client: path.resolve('./app/index.js'),
+    client: resolve('./app/index.js'),
   },
   output: {
-    path: path.resolve('./dist'),
+    path: resolve('./dist'),
     filename: '[name].[hash:4].js',
     chunkFilename: 'chunks/[name].[hash:4].js',
   },
   resolve: {
     extensions: ['.js', '.json'],
     alias: {
-      components: path.resolve('./app/components'),
-      api: path.resolve('./app/api'),
-      utils: path.resolve('./app/utils'),
-      images: path.resolve('./app/assets/images'),
+      components: resolve('./app/components'),
+      api: resolve('./app/api'),
+      utils: resolve('./app/utils'),
+      images: resolve('./app/assets/images'),
       /**
        * Todo: 先不上redux 
        */
@@ -97,18 +95,18 @@ const webpackConfigBase = {
   },
   plugins: [
     // 提取css
-    new ExtractTextPlugin('style.[hash:4].css'),
+    new ExtractTextPlugin('build.[hash:4].css'),
     // 将打包后的资源注入到html文件内    
     new HtmlWebpackPlugin({
-      template: path.resolve('./app/index.html'),
+      template: resolve('./app/index.html'),
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'client', // 入口文件名
-      filename: 'common.bundle.js', // 打包后的文件名
+      filename: 'build.js', // 打包后的文件名
       minChunks: function (module) {
         return module.resource &&
           /\.js$/.test(module.resource) &&
-          module.resource.indexOf(path.resolve('./node_modules')) === 0;
+          module.resource.indexOf(resolve('./node_modules')) === 0;
       }
     }),
     new webpack.optimize.CommonsChunkPlugin({
