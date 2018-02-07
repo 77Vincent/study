@@ -12,13 +12,15 @@ export default class Teachers extends React.Component {
   state = {
     expand: false,
     loading: true,
-    teachers: []
+    teachers: [],
+    teacher: {}
   }
 
-  openTeacher = (e) => {
-    return () => {
-      console.log(e)
-    }
+  openTeacher = (teacher_id) => {
+    this.setState({
+      expand: true,
+      teacher: this.state.teachers[teacher_id] 
+    });
   }
 
   handleOk = (e) => {
@@ -61,13 +63,13 @@ export default class Teachers extends React.Component {
     return (
       <div className={domain}>
         <Modal
-          cancelText='留言'
-          width={600}
-          okText='预约'
+          title={this.state.teacher.name}
+          footer={null}
+          width={900}
           visible={this.state.expand}
-          onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
+          <Components.Teacher teacher={this.state.teacher} />
         </Modal>
 
         <Components.Loading visibility={this.state.loading} />
@@ -84,7 +86,9 @@ export default class Teachers extends React.Component {
                 this.state.teachers.map((teacher, index) => {
                   return (
                     <Col xl={12} lg={24} key={index}>
-                      <Components.Teacher teacher={teacher} openTeacher={this.openTeacher} />
+                      <div className='App-tile' onClick={() => this.openTeacher(teacher.id)}>
+                        <Components.Teacher teacher={teacher} />
+                      </div>
                     </Col>
                   )
                 })

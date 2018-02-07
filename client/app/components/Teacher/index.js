@@ -13,7 +13,7 @@ export default class Teacher extends React.Component {
     const domain = this.constructor.name;
 
     return (
-      <div onClick={this.props.openTeacher(this.props.teacher.id)} className={`${domain} App-tile`}>
+      <div className={`${domain}`}>
         <Row type='flex'>
           <Col className={`${domain}-profile`}>
             <img src={this.props.teacher.photo} />
@@ -29,8 +29,11 @@ export default class Teacher extends React.Component {
             }
             <h5>上次在线：{this.props.teacher.last_active}</h5>
             <p>{this.props.teacher.introduction}</p>
-            <Button>留言</Button>
-            <Button type='primary'>预约</Button>
+
+            <section>
+              <Button type='primary'>预约</Button>
+              <Button>留言</Button>
+            </section>
           </Col>
         </Row>
       </div>
