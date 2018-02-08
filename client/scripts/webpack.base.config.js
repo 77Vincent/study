@@ -13,7 +13,7 @@ const webpackConfigBase = {
     client: resolve('./app/index.js'),
   },
   output: {
-    path: resolve('./dist'),
+    path: resolve('./build'),
     filename: '[name].[hash:4].js',
     chunkFilename: 'chunks/[name].[hash:4].js',
   },
