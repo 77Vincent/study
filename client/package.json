@@ -23,7 +23,7 @@
   "scripts": {
     "dev": "webpack-dev-server --config ./scripts/webpack.dev.config.js",
     "build": "webpack --config ./scripts/webpack.prod.config.js",
-    "build-test": "http-server ./build"
+    "server": "http-server ./build -p 3000"
   },
   "contributors": [
     {
