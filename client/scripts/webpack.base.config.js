@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const lessToJs = require('less-vars-to-js');
 
-const resolve = path.resolve; 
+const resolve = path.resolve;
 const themeVariables = lessToJs(fs.readFileSync(resolve('./app/theme.less'), 'utf8'));
 
 const webpackConfigBase = {
