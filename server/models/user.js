@@ -20,6 +20,4 @@ const User = sequelize.define('User', {
     tableName: 'User'
 });
 
-User.sync({force:true}); //创建表
-
 export default User;

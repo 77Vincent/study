@@ -32,6 +32,4 @@ const Teacher = sequelize.define('teacher', {
     tableName: 'Teacher'
 });
 
-Teacher.sync(); //创建表
-
 export default Teacher;

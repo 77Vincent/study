@@ -32,6 +32,5 @@ const Student = sequelize.define('student', {
     tableName: 'Student'
 });
 
-Student.sync(); //创建表
 
 export default Student;

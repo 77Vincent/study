@@ -17,5 +17,4 @@ Teacher_Major.hasOne(Student_Teacher_Major,{as: 'student_teacher_major', foreign
 
 Student_Teacher_Major.belongsTo(Student, {as:'student',foreignKey:'student_id'});
 Student.hasOne(Student_Teacher_Major,{as:'student_teacher_major', foreignKey:'student_id'});
-Student_Teacher_Major.sync(); //创建表
 export default Student_Teacher_Major;

@@ -19,6 +19,4 @@ const Major = sequelize.define('major', {
 }
 );
 
-Major.sync(); //创建表
-
 export default Major;
