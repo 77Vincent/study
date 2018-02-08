@@ -3,6 +3,7 @@ const fs = require('fs');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin'); 
 const lessToJs = require('less-vars-to-js');
 
 const resolve = path.resolve;
@@ -14,7 +15,7 @@ const webpackConfigBase = {
   },
   output: {
     path: resolve('./build'),
-    filename: '[name].[hash:4].js',
+    filename: 'build.[hash:4].js',
     chunkFilename: 'chunks/[name].[hash:4].js',
   },
   resolve: {
@@ -94,25 +95,18 @@ const webpackConfigBase = {
     ],
   },
   plugins: [
+    // 在打包前先移除build文件夹
+    new CleanWebpackPlugin(['build'], {
+      root: resolve(),
+      verbose:  true,
+      dry:      false
+    }),
     // 提取css
     new ExtractTextPlugin('build.[hash:4].css'),
     // 将打包后的资源注入到html文件内    
     new HtmlWebpackPlugin({
       template: resolve('./app/index.html'),
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'client', // 入口文件名
-      filename: 'build.js', // 打包后的文件名
-      minChunks: function (module) {
-        return module.resource &&
-          /\.js$/.test(module.resource) &&
-          module.resource.indexOf(resolve('./node_modules')) === 0;
-      }
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      async: 'async-common',
-      minChunks: 3,
-    }),
+    })
   ]
 };
 
