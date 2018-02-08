@@ -16,8 +16,10 @@ const User = sequelize.define('User', {
         type: Sequelize.STRING,
         allowNull: false,
     }
+},{
+    tableName: 'User'
 });
 
-User.sync(); //创建表
+User.sync({force:true}); //创建表
 
 export default User;

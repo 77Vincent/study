@@ -14,7 +14,10 @@ const Major = sequelize.define('major', {
     desc: {
         type: Sequelize.STRING,
     }
-});
+},{
+    tableName: 'Major'
+}
+);
 
 Major.sync(); //创建表
 

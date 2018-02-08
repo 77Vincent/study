@@ -28,6 +28,8 @@ const Teacher = sequelize.define('teacher', {
     last_logout: {
         type: Sequelize.DATE,
     }
+},{
+    tableName: 'Teacher'
 });
 
 Teacher.sync(); //创建表
