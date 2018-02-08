@@ -52,7 +52,7 @@ export default class Orientation extends React.Component{
 
   render() {
     return (
-      <div className={this.constructor.name}>
+      <div className='Orientation'>
         <h2>了解你的需求以寻找合适的导师</h2>
 
         <Progress type='circle' className='Orientation-Progress' percent={this.state.progress} status="active" />

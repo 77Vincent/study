@@ -81,10 +81,8 @@ export default class Teachers extends React.Component {
   }
 
   render() {
-    const domain = this.constructor.name;
-
     return (
-      <div className={domain}>
+      <div className='Teachers'>
         <Modal
           title={this.state.teacher.name}
           footer={null}
@@ -98,12 +96,10 @@ export default class Teachers extends React.Component {
         <Components.Loading visibility={this.state.loading} />
 
         <Layout>
-          <Layout.Sider width='300' className={`${domain}-Sider`}>
-            <div className={`${domain}-filter`}>
-            </div>
+          <Layout.Sider width='300' className='Teachers-Sider'>
           </Layout.Sider>
 
-          <Layout.Content className={`${domain}-Content`}>
+          <Layout.Content className='Teachers-Content'>
             <Row gutter={20}>
               {
                 this.state.teachers.map((teacher, index) => {

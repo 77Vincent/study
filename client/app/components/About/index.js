@@ -7,7 +7,7 @@ export default class About extends React.Component {
   }
   render(){
     return (
-      <div className={this.constructor.name}>
+      <div className='About'>
       </div>
     );
   }

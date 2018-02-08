@@ -16,17 +16,11 @@ export default class Header extends React.Component {
       href: '/about'
     }];
 
-    const domain = this.constructor.name;
-
     return (
       <div>
         <div className="App-logo"></div>
 
-        <Menu 
-          mode='horizontal' 
-          className={`${domain}-Menu`}
-        >
-
+        <Menu mode='horizontal' className='Header-Menu'>
           {
             links.map((item, index) => {
               return <Menu.Item key={index}><NavLink to={item.href}>{item.title}</NavLink></Menu.Item>

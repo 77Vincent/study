@@ -15,11 +15,10 @@ class Login extends React.Component {
   }
   render() {
     const { getFieldDecorator } = this.props.form;
-    const domain = this.constructor.name;
 
     return (
-      <div className={domain}>
-        <Form onSubmit={this.handleSubmit} className={`${domain}-form`}>
+      <div className='Login'>
+        <Form onSubmit={this.handleSubmit} className='Login-Form'>
           <Form.Item>
             {getFieldDecorator('userName', {
               rules: [{ required: true, message: '请输入用户名!' }],
@@ -41,8 +40,8 @@ class Login extends React.Component {
             })(
               <Checkbox>记住我</Checkbox>
             )}
-            <a className={`${domain}-forgot`} href="">忘记密码</a>
-            <Button type="primary" htmlType="submit" className={`${domain}-button`}>登录</Button>
+            <a className='Login-forgot' href="">忘记密码</a>
+            <Button type="primary" htmlType="submit" className='Login-Button'>登录</Button>
           </Form.Item>
         </Form>
       </div>

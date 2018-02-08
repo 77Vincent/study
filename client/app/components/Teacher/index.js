@@ -11,13 +11,12 @@ export default class Teacher extends React.Component {
   }
 
   render() {
-    const domain = this.constructor.name;
     const teacher = this.props.teacher;
     const isDetail = this.props.type === 'detail';
     const introductionShort = teacher.introduction.length <= 50 ? teacher.introduction : `${teacher.introduction.slice(0, 50)}...`;
 
     return (
-      <div className={this.props.type === 'overall' ? domain : `${domain} ${domain}-detail`}>
+      <div className={this.props.type === 'overall' ? 'Teacher' : 'Teacher Teacher-detail'}>
         <Row type='flex'>
           <Col>
             <aside>
