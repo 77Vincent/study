@@ -1,4 +1,4 @@
 {
     "jwt_secret": "Edmond",
-    "expiresIn": 120
+    "expiresIn": 1200000
 }

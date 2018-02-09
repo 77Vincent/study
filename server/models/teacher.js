@@ -25,6 +25,9 @@ const Teacher = sequelize.define('teacher', {
     telephone: {
         type: Sequelize.STRING
     },
+    email: {
+        type: Sequelize.STRING
+    },
     last_logout: {
         type: Sequelize.DATE,
     }

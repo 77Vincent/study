@@ -26,9 +26,10 @@ app.use(async(ctx, next) => {
   await next()
   ctx.set('X-Powered-By', 'Koa2')
 })
-// app.use(async (ctx, next) => {
-// 	await checkToken(ctx)
-// })
+app.use(async (ctx, next) => {
+	await checkToken(ctx)
+	await next()
+})
 app.use(async (ctx, next) => {
 	const start = new Date()
 	await next()

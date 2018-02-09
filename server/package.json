@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "start": "./node_modules/.bin/nodemon bin/run",
+    "initMysql": "babel-node initMysql",
     "pm2": "pm2 start bin/run "
   },
   "dependencies": {
@@ -26,6 +27,13 @@
     "mocha": "^2.4.5",
     "nodemon": "^1.9.1",
     "should": "^8.3.0",
-    "supertest": "^1.2.0"
+    "supertest": "^1.2.0",
+    "babel-cli": "~6.3.17",
+    "babel-core": "~6.3.26",
+    "babel-plugin-syntax-object-rest-spread": "^6.3.13",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.3.16",
+    "babel-plugin-transform-es2015-spread": "^6.3.14",
+    "babel-plugin-transform-object-rest-spread": "^6.3.13",
+    "babel-polyfill": "^6.3.14"
   }
 }
