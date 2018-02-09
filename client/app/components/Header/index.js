@@ -17,10 +17,10 @@ export default class Header extends React.Component {
     }];
 
     return (
-      <div>
+      <div className='Header'>
         <div className="App-logo"></div>
 
-        <Menu mode='horizontal' className='Header-Menu'>
+        <Menu mode='horizontal' className='Menu'>
           {
             links.map((item, index) => {
               return <Menu.Item key={index}><NavLink to={item.href}>{item.title}</NavLink></Menu.Item>

@@ -1,22 +1,30 @@
-import About from './About';
 import Welcome from './Welcome';
+import Orientation from './Orientation';
+import About from './About';
+
 import Teachers from './Teachers';
 import Teacher from './Teacher';
+
 import Login from './Login';
 import Register from './Register';
+import Forgot from './Forgot';
+
 import Header from './Header';
 import Footer from './Footer';
 import Loading from './Loading';
-import Orientation from './Orientation';
 
 export default {
-  About,
   Welcome,
+  Orientation,
+  About,
+
   Teachers,
   Teacher,
-  Orientation,
+
   Login,
   Register,
+  Forgot,
+
   Header,
   Footer,
   Loading

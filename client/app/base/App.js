@@ -15,20 +15,21 @@ export default class App extends React.Component {
   render() {
     return (
       <Layout className='App-Layout'>
-        <Layout.Header className='Layout-Header'>
+        <Layout.Header className='App-Header'>
           <Components.Header/ >
         </Layout.Header>
 
-        <Layout.Content className='Layout-Content'>
+        <Layout.Content className='App-Content'>
           <Route exact path="/" component={Components.Welcome} />
           <Route path="/orientation" component={Components.Orientation} />
           <Route path="/teachers" component={Components.Teachers} />
           <Route path="/about" component={Components.About} />
           <Route path="/login" component={Components.Login} />
           <Route path="/register" component={Components.Register} />
+          <Route path="/Forgot" component={Components.Forgot} />
         </Layout.Content>
 
-        <Layout.Footer className='Layout-Footer'>
+        <Layout.Footer className='App-Footer'>
           <Components.Footer/ >
         </Layout.Footer>
       </Layout>

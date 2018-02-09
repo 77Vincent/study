@@ -21,9 +21,9 @@
     "redux-thunk": "~2.2.0"
   },
   "scripts": {
-    "dev": "webpack-dev-server --config ./scripts/webpack.dev.config.js",
+    "start": "webpack-dev-server --config ./scripts/webpack.dev.config.js",
     "build": "webpack --config ./scripts/webpack.prod.config.js",
-    "server": "http-server ./build -p 3000"
+    "build-server": "http-server ./build -p 3000"
   },
   "contributors": [
     {

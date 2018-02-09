@@ -13,7 +13,7 @@
 ### 启动
 ```sh
 npm i
-npm run dev
+npm start 
 ```
 + 端口：//localhost:3000
 

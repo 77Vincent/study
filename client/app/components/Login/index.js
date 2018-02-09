@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Link } from 'react-router-dom';
 import fetch from 'isomorphic-fetch';
 import './index.less';
 
@@ -15,20 +16,19 @@ class Login extends React.Component {
   }
   render() {
     const { getFieldDecorator } = this.props.form;
-
     return (
       <div className='Login'>
-        <Form onSubmit={this.handleSubmit} className='Login-Form'>
+        <Form onSubmit={this.handleSubmit} className='Form'>
           <Form.Item>
             {getFieldDecorator('userName', {
-              rules: [{ required: true, message: '请输入用户名!' }],
+              rules: [{ required: true, message: '请输入电子邮箱' }],
             })(
-              <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="用户名" />
+              <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='电子邮箱' />
             )}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('password', {
-              rules: [{ required: true, message: '请输入密码!' }],
+              rules: [{ required: true, message: '请输入密码' }],
             })(
               <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="密码" />
             )}
@@ -40,8 +40,8 @@ class Login extends React.Component {
             })(
               <Checkbox>记住我</Checkbox>
             )}
-            <a className='Login-forgot' href="">忘记密码</a>
-            <Button type="primary" htmlType="submit" className='Login-Button'>登录</Button>
+            <Link to='/forgot'>忘记密码</Link>
+            <Button type="primary" htmlType="submit">登录</Button>
           </Form.Item>
         </Form>
       </div>
