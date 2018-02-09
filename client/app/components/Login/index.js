@@ -4,9 +4,23 @@ import { Link } from 'react-router-dom';
 import './index.less';
 
 class Login extends React.Component {
-  handleSubmit = (e) => {
+  handleSubmit = async(e) => {
     e.preventDefault();
-
+    // await fetch('/api/user/login',{
+    //   method:"POST",
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //   },
+    //   credentials: 'include',
+    //   body: JSON.stringify({
+    //     name: 'edguan1',
+    //     password: '123456'
+    //   })
+    // })
+    await fetch('./api/user/test',{
+      credentials: 'include'
+    })
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
