@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, Radio } from 'antd';
 import './index.less';
 
 class Register extends React.Component {
@@ -21,7 +21,7 @@ class Register extends React.Component {
   checkPassword = (rule, value, callback) => {
     const form = this.props.form;
     if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
+      callback('两次输入密码不一致');
     } else {
       callback();
     }
@@ -62,12 +62,24 @@ class Register extends React.Component {
 
     return (
       <Form onSubmit={this.handleSubmit} className='Register'>
+        <Form.Item {...formItemLayout} label="用户类别">
+          {getFieldDecorator('radio-group', {
+            rules: [{
+              required: true, message: '请选择用户类别'
+            }]
+          })(
+            <Radio.Group>
+              <Radio value="a">学生</Radio>
+              <Radio value="b">老师</Radio>
+            </Radio.Group>
+          )}
+        </Form.Item>
         <Form.Item {...formItemLayout} label="电子邮箱">
           {getFieldDecorator('email', {
             rules: [{
-              type: 'email', message: '不符合电子邮箱格式!',
+              type: 'email', message: '不符合电子邮箱格式',
             }, {
-              required: true, message: '请输入电子邮箱!',
+              required: true, message: '请输入电子邮箱',
             }],
           })(
             <Input />
@@ -79,7 +91,7 @@ class Register extends React.Component {
         >
           {getFieldDecorator('password', {
             rules: [{
-              required: true, message: '请输入密码!',
+              required: true, message: '请输入密码',
             }, {
               validator: this.checkConfirm,
             }],
@@ -93,7 +105,7 @@ class Register extends React.Component {
         >
           {getFieldDecorator('confirm', {
             rules: [{
-              required: true, message: '请再次输入密码!',
+              required: true, message: '请再次输入密码',
             }, {
               validator: this.checkPassword,
             }],
@@ -103,19 +115,19 @@ class Register extends React.Component {
         </Form.Item>
         <Form.Item
           {...formItemLayout}
-          label="Captcha"
-          extra="We must make sure that your are a human."
+          label="验证码"
+          extra="以验证是真人操作"
         >
           <Row gutter={8}>
             <Col span={12}>
               {getFieldDecorator('captcha', {
-                rules: [{ required: true, message: 'Please input the captcha you got!' }],
+                rules: [{ required: true, message: '请填写您收到的验证码' }],
               })(
                 <Input />
               )}
             </Col>
             <Col span={12}>
-              <Button>Get captcha</Button>
+              <Button>获取验证码</Button>
             </Col>
           </Row>
         </Form.Item>
@@ -123,11 +135,11 @@ class Register extends React.Component {
           {getFieldDecorator('agreement', {
             valuePropName: 'checked',
           })(
-            <Checkbox>I have read the <a href="">agreement</a></Checkbox>
+            <Checkbox>我已经阅读<a href="">协议</a></Checkbox>
           )}
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">Register</Button>
+          <Button style={{width: '100%'}} type="primary" htmlType="submit">注册</Button>
         </Form.Item>
       </Form>
     );
