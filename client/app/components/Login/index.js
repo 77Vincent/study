@@ -18,9 +18,14 @@ class Login extends React.Component {
     //     password: '123456'
     //   })
     // })
-    await fetch('./api/user/test',{
+
+    await fetch('/api/user/verify',{
       credentials: 'include'
     })
+
+    // await fetch('/api/user/logout',{
+    //   credentials: 'include'
+    // })
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
