@@ -96,7 +96,7 @@ export default class Teachers extends React.Component {
         <Components.Loading visibility={this.state.loading} />
 
         <Layout>
-          <Layout.Sider width='300' className='Teachers-Sider'>
+          <Layout.Sider width='300'>
             <Components.Filter />
           </Layout.Sider>
 

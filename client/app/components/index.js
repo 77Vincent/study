@@ -5,6 +5,7 @@ import About from './About';
 import Teachers from './Teachers';
 import Teacher from './Teacher';
 import Filter from './Filter';
+import Dashboard from './Dashboard';
 
 import Login from './Login';
 import Register from './Register';
@@ -22,6 +23,7 @@ export default {
   Teachers,
   Teacher,
   Filter,
+  Dashboard,
 
   Login,
   Register,

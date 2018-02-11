@@ -26,7 +26,8 @@ export default class App extends React.Component {
           <Route path="/about" component={Components.About} />
           <Route path="/login" component={Components.Login} />
           <Route path="/register" component={Components.Register} />
-          <Route path="/Forgot" component={Components.Forgot} />
+          <Route path="/forgot" component={Components.Forgot} />
+          <Route path="/dashboard" component={Components.Dashboard} />
         </Layout.Content>
 
         <Layout.Footer className='App-Footer'>

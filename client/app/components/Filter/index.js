@@ -52,6 +52,20 @@ export default class Filter extends React.Component {
         ]
       },
       {
+        name: '导师类型',
+        multiple: true,
+        options: [
+          {
+            label: '名校前辈',
+            value: '1'
+          },
+          {
+            label: '专业培训导师',
+            value: '0'
+          },
+        ]
+      },
+      {
         name: '上课方式',
         multiple: true,
         options: [
@@ -80,28 +94,28 @@ export default class Filter extends React.Component {
         ]
       },
       {
-        name: '导师类型',
+        name: '区域',
         multiple: true,
         options: [
           {
-            label: '名校前辈',
+            label: '上海',
             value: '1'
           },
           {
-            label: '专业培训导师',
+            label: '全国',
             value: '0'
           },
         ]
-      }
+      },
     ];
 
     return (
-      <div className='Filter'>
+      <div className='Filter App-tile'>
         {
           filters.map((filter, index) => {
             return (
               <section key={index}>
-                <h3>{filter.name}</h3>
+                <h4>{filter.name}</h4>
                 {
                   filter.multiple ?
                     <Checkbox.Group options={filter.options}></Checkbox.Group> :
