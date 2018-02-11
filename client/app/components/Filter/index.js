@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Layout, Button, Row, Col, Tag, Checkbox, Select } from 'antd';
+import { Layout, Button, Row, Col, Tag, Checkbox, Select, Radio } from 'antd';
 import Components from 'components';
 import './index.less';
 
@@ -13,6 +13,7 @@ export default class Filter extends React.Component {
     const filters = [
       {
         name: '专业',
+        multiple: true,
         options: [
           {
             label: '平面',
@@ -35,6 +36,62 @@ export default class Filter extends React.Component {
             value: 'architecture',
           },
         ]
+      },
+      {
+        name: '国家',
+        multiple: true,
+        options: [
+          {
+            label: '英国',
+            value: 'us'
+          },
+          {
+            label: '美国',
+            value: 'uk'
+          },
+        ]
+      },
+      {
+        name: '上课方式',
+        multiple: true,
+        options: [
+          {
+            label: '线上',
+            value: '1'
+          },
+          {
+            label: '线下',
+            value: '0'
+          },
+        ]
+      },
+      {
+        name: '导师性别',
+        multiple: true,
+        options: [
+          {
+            label: '男生',
+            value: '1'
+          },
+          {
+            label: '女生',
+            value: '0'
+          },
+        ]
+      },
+      {
+        name: '导师类型',
+        multiple: true,
+        options: [
+          {
+            label: '名校前辈',
+            value: '1'
+          },
+          {
+            label: '专业培训导师',
+            value: '0'
+          },
+        ]
       }
     ];
 
@@ -45,7 +102,11 @@ export default class Filter extends React.Component {
             return (
               <section key={index}>
                 <h3>{filter.name}</h3>
-                <Checkbox.Group options={filter.options}></Checkbox.Group>
+                {
+                  filter.multiple ?
+                    <Checkbox.Group options={filter.options}></Checkbox.Group> :
+                    <Radio></Radio>
+                }
               </section>
             )
           })
