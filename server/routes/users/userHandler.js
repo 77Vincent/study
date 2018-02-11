@@ -2,20 +2,22 @@ import {
   Student,
   Teacher
 } from '../../models';
+import Sequelize from 'sequelize';
+const Op = Sequelize.Op;
 
-let getAllUserInfos = async (ctx) => {
+const getAllUserInfos = async (ctx) => {
   let userInfo = await User.findAndCount({
     where: {}
   })
   return userInfo
 }
 
-let register = async (ctx) => {
+const register = async (ctx) => {
   try {
     let {
       userInfo
     } = ctx.request.body
-    await User.create(userInfo)
+    await Student.create(userInfo)
     return true
   } catch (error) {
     console.log(error)
@@ -23,13 +25,13 @@ let register = async (ctx) => {
   }
 }
 
-let checkPassword = async (ctx) => {
+const checkPassword = async (ctx) => {
   let {
     body
   } = ctx.request
   const student = await Student.findOne({
     where: {
-        $or: [{ 
+        [Op.or]: [{ 
           account: body.name
         }, {
           email: body.name
@@ -39,7 +41,7 @@ let checkPassword = async (ctx) => {
   })
   const teacher = await Teacher.findOne({
     where: {
-        $or: [{
+      [Op.or]: [{
           account: body.name
         }, {
           email: body.name
@@ -64,8 +66,21 @@ let checkPassword = async (ctx) => {
     // 老师很学生账号密码相同的情况
   }
 }
+
+const getUserInfo = async(id, role) => {
+  let userInfo
+  if(role) {
+    userInfo = await Student.findOne({
+      where: { id }
+    })
+  } else {
+    userIndo = await Teacher.findOne({ where : { id } })
+  }
+  return userInfo
+}
 export {
   getAllUserInfos,
   register,
-  checkPassword
+  checkPassword,
+  getUserInfo
 }

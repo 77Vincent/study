@@ -27,6 +27,7 @@ app.use(async(ctx, next) => {
   ctx.set('X-Powered-By', 'Koa2')
 })
 app.use(async (ctx, next) => {
+	ctx.decoded = {}
 	await checkToken(ctx)
 	await next()
 })
