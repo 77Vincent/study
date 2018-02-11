@@ -5,19 +5,16 @@ import {
 import Sequelize from 'sequelize';
 const Op = Sequelize.Op;
 
-const getAllUserInfos = async (ctx) => {
-  let userInfo = await User.findAndCount({
-    where: {}
-  })
-  return userInfo
-}
-
 const register = async (ctx) => {
   try {
     let {
       userInfo
     } = ctx.request.body
-    await Student.create(userInfo)
+    if(userInfo.type === "student"){
+      await Student.create(userInfo)
+    } else {
+      await Teacher.create(userInfo)
+    }
     return true
   } catch (error) {
     console.log(error)
@@ -79,7 +76,6 @@ const getUserInfo = async(id, role) => {
   return userInfo
 }
 export {
-  getAllUserInfos,
   register,
   checkPassword,
   getUserInfo

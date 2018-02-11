@@ -4,12 +4,13 @@ const Student = require('./models').Student
 const Student_Major = require('./models').Student_Major
 const Teacher = require('./models').Teacher
 const Teacher_Major = require('./models').Teacher_Major
-const Student_Teacher_Major = require('./models').Student_Teacher_Major
+const Student_Teacher = require('./models').Student_Teacher
 const Major = require('./models').Major
  
 const initMysql = (async() => {
     try{
         await sequelize.dropAllSchemas()
+        
         await Major.sync({force:true});
         await Major.create({name:'语文1',desc:'这是语文'})
         await Major.create({name:'语文2',desc:'这是语文'})
@@ -61,37 +62,26 @@ const initMysql = (async() => {
         await Student_Major.create({major_id:2,student_id:7})
         await Student_Major.create({major_id:1,student_id:7})
         await Student_Major.create({major_id:3,student_id:7})
-        await Student_Teacher_Major.sync({force:true});
+        await Student_Teacher.sync({force:true});
     
-        await Student_Teacher_Major.create({student_id:1, teacher_major_id:1})
-        await Student_Teacher_Major.create({student_id:2, teacher_major_id:1})
-        await Student_Teacher_Major.create({student_id:3, teacher_major_id:1})
-        await Student_Teacher_Major.create({student_id:3, teacher_major_id:2})
-        await Student_Teacher_Major.create({student_id:4, teacher_major_id:4})
-        await Student_Teacher_Major.create({student_id:4, teacher_major_id:6})
-        await Student_Teacher_Major.create({student_id:2, teacher_major_id:5})
-        await Student_Teacher_Major.create({student_id:3, teacher_major_id:3})
-        await Student_Teacher_Major.create({student_id:4, teacher_major_id:3})
-        await Student_Teacher_Major.create({student_id:6, teacher_major_id:2})
-        await Student_Teacher_Major.create({student_id:1, teacher_major_id:4})
-        await Student_Teacher_Major.create({student_id:3, teacher_major_id:6})
+        await Student_Teacher.create({student_id:1, teacher_id:1})
+        await Student_Teacher.create({student_id:2, teacher_id:1})
+        await Student_Teacher.create({student_id:3, teacher_id:1})
+        await Student_Teacher.create({student_id:4, teacher_id:1})
+        await Student_Teacher.create({student_id:2, teacher_id:6})
+        await Student_Teacher.create({student_id:1, teacher_id:2})
+        await Student_Teacher.create({student_id:3, teacher_id:2})
+        await Student_Teacher.create({student_id:4, teacher_id:2})
+        await Student_Teacher.create({student_id:1, teacher_id:3})
+        await Student_Teacher.create({student_id:2, teacher_id:2})
+        await Student_Teacher.create({student_id:3, teacher_id:4})
+        await Student_Teacher.create({student_id:4, teacher_id:6})
     
-        let data = await Student_Teacher_Major.findAll({
-          where:{student_id:4},
+        let data = await Student.findAll({
+          where:{id:4},
           include:[
             {
-              model:Teacher_Major,
-              as:'teacher_major',
-              include:[
-                {
-                  model: Major,
-                  as: 'major'
-                }
-              ]
-            },
-            {
-              model:Student,
-              as:'student'
+              model:Teacher
             }
           ]
         });

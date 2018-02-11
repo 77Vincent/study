@@ -26,6 +26,7 @@ class Login extends React.Component {
     // await fetch('/api/user/logout',{
     //   credentials: 'include'
     // })
+    
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);

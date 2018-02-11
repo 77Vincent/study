@@ -1,22 +1,19 @@
 import sequelize from './sequelize.js';
 import Sequelize from 'sequelize';
-const Student_Major = sequelize.define('student_major', {
+const Student_Teacher = sequelize.define('student_teacher', {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
-    major_id: {
+    student_id: {
         type: Sequelize.INTEGER
     },
-    student_id: {
+    teacher_id: {
         type: Sequelize.INTEGER
     }
 },{
-    tableName: 'Student_Major'
+    tableName: 'Student_Teacher'
 });
 
-export default Student_Major;
-
-
-
+export default Student_Teacher;

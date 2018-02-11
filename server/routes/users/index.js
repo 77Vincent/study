@@ -43,15 +43,6 @@ router.post('/register', async(ctx, next) => {
   }
 })
 
-router.get('/test', async(ctx, next) => {
-  if(true){
-      ctx.body = {data:'test'}
-      ctx.status = 200;
-  } else {
-    ctx.status = 500;
-  }
-})
-
 router.post('/login',async (ctx,next) => {
   try{
     let user = await checkPassword(ctx)
