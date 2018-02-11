@@ -97,10 +97,11 @@ export default class Teachers extends React.Component {
 
         <Layout>
           <Layout.Sider width='300' className='Teachers-Sider'>
+            <Components.Filter />
           </Layout.Sider>
 
           <Layout.Content className='Teachers-Content'>
-            <Row gutter={20}>
+            <Row>
               {
                 this.state.teachers.map((teacher, index) => {
                   return (

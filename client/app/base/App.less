@@ -28,7 +28,6 @@ img {
 
 .App-Layout {
   min-height: 100vh;
-
 }
 
 .App-Header {
@@ -39,7 +38,7 @@ img {
 
 .App-Content {
   position: relative;
-  padding: 50px;
+  padding: 25px 50px;
 }
 
 .App-Footer {
@@ -47,16 +46,14 @@ img {
 }
 
 .App-tile {
-  padding: 24px;
+  margin: 10px 10px;
+  padding: 18px;
   background-color: #fff;
-  border-radius: 10px;
-  border: 2px solid #fff;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  .transition(all, 0.3s);
+  border-radius: @border-radius-l;
+  border: 1px solid @color-gray-light;
+  .transition(box-shadow, 0.2s);
 
   &:hover {
-    border-color: @primary-color;
-    box-shadow: 0 0 15px 0 @color-gray;
+    box-shadow: 0 0 20px 0 @color-gray;
   }
 }

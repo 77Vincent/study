@@ -30,7 +30,7 @@ export default class Welcome extends React.Component {
             </Button>
 
             <Button size='large'>
-              <Link to=''>成为老师</Link>
+              <Link to='/login'>成为老师</Link>
             </Button>
           </Col>
         </Row>
