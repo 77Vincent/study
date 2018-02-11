@@ -88,7 +88,7 @@ export default class Teachers extends React.Component {
         <Modal
           title={this.state.teacher.name}
           footer={null}
-          width={900}
+          width={800}
           visible={this.state.expand}
           onCancel={this.handleCancel}
         >
