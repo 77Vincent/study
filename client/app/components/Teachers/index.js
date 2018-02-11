@@ -78,7 +78,7 @@ export default class Teachers extends React.Component {
       this.setState({
         teachers,
         loading: false
-      })
+      });
     }, 500);
   }
 
