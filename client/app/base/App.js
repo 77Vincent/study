@@ -2,7 +2,7 @@
 
 // External Dependencies
 import React from 'react';
-import { Layout, Menu, Button } from 'antd';
+import { Layout, Menu, Button, message } from 'antd';
 import { Route, Link, NavLink } from 'react-router-dom';
 
 // Global custom Style
@@ -12,6 +12,13 @@ import './App.less';
 import Components from 'components';
 
 export default class App extends React.Component {
+  componentDidMount() {
+    message.config({
+      top: '75px',
+      duration: 2
+    })
+  }
+
   render() {
     return (
       <Layout className='App-Layout'>

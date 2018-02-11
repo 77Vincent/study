@@ -36,7 +36,6 @@ export default class Teachers extends React.Component {
   }
 
   componentDidMount = () => {
-    // Simulate getting data from server
     const teachers = [
       {
         name: '王尼玛',

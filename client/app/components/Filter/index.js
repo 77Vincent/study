@@ -71,52 +71,48 @@ export default class Filter extends React.Component {
       }, {
         name: '导师性别',
         multiple: true,
-        options: [
-          {
-            label: '男生',
-            value: '1'
-          }, {
-            label: '女生',
-            value: '0'
-          },
-        ]
+        options: [{
+          label: '男生',
+          value: '1'
+        }, {
+          label: '女生',
+          value: '0'
+        }]
       }, {
         name: '区域',
         multiple: true,
-        options: [
-          {
-            label: '上海',
-            value: '1'
-          }, {
-            label: '全国',
-            value: '0'
-          },
-        ]
-      },
+        options: [{
+          label: '上海',
+          value: '1'
+        }, {
+          label: '全国',
+          value: '0'
+        }]
+      }
     ];
 
-    const sorting = [
-      {
-        name: '按价格高低',
-        options: [
-          {
-            label: '由低到高',
-            value: 0
-          }, {
-            label: '由高到低',
-            value: 1 
-          }
-        ]
+    const sorting = [{
+      name: '按价格高低',
+      options: [{
+        label: '由低到高',
+        value: 0
       }, {
-        name: '按最近在线时间',
-        options: [
-          {
-            label: '最近在线优先',
-            value: 0
-          }
-        ]
-      },
-    ];
+        label: '由高到低',
+        value: 1 
+      }]
+    }, {
+      name: '按最近在线时间',
+      options: [{
+        label: '最近在线优先',
+        value: 0
+      }]
+    }, {
+      name: '按已授课时长',
+      options: [{
+        label: '时长最长优先',
+        value: 0
+      }]
+    }];
 
     return (
       <div className='Filter App-tile'>
