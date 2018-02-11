@@ -34,20 +34,25 @@ export default class Teacher extends React.Component {
                     return <Tag key={index}>{major}</Tag>
                   })
                 }
-                <small>上次在线：{teacher.last_active}</small>
+                <h4>
+                  {teacher.school ? <span>{teacher.school}</span> : null}
+                  {teacher.degree ? <span>{teacher.degree}</span> : null}
+                </h4>
               </header>
-
-              <h4>
-                {teacher.school ? <span>{teacher.school}</span> : null}
-                {teacher.degree ? <span>{teacher.degree}</span> : null}
-              </h4>
 
               <p>{isDetail ? teacher.introduction : introductionShort}</p>
 
-              <section>
-                <Button>留言</Button>
-                <Button type='primary'>预约</Button>
-              </section>
+              <Row type='flex' align='bottom'>
+                <Col span={12}>
+                  <small>已授课时长: {teacher.sold}小时</small>
+                  <small>上次在线：{teacher.last_active}</small>
+                </Col>
+
+                <Col span={12} style={{textAlign: 'right'}}>
+                  <Button>留言</Button>
+                  <Button type='primary'>预约</Button>
+                </Col>
+              </Row>
             </article>
           </Col>
         </Row>
