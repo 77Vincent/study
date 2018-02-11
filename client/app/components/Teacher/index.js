@@ -20,7 +20,7 @@ export default class Teacher extends React.Component {
         <Row type='flex'>
           <Col>
             <aside>
-              <span style={{backgroundImage: `url(${teacher.avatar})`}} />
+              <div className='App-avatar' style={{backgroundImage: `url(${teacher.avatar})`}} />
               <h4>{isDetail ? '' : teacher.name}</h4>
               <strong>{teacher.cost}/小时</strong>
             </aside>
