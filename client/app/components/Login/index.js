@@ -2,37 +2,34 @@ import React from 'react';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import { Link } from 'react-router-dom';
 import './index.less';
+import '../../base/fn.js';
 
 class Login extends React.Component {
-  handleSubmit = async(e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
-    // await fetch('/api/user/login',{
-    //   method:"POST",
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   credentials: 'include',
-    //   body: JSON.stringify({
-    //     name: 'edguan1',
-    //     password: '123456'
-    //   })
-    // })
 
-    await fetch('/api/user/verify',{
-      credentials: 'include'
-    })
-
-    // await fetch('/api/user/logout',{
-    //   credentials: 'include'
-    // })
-    
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFields(async (err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
       }
+
+      let user = await fetch('/api/user/login', {
+        method:"POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          name: values.userName,
+          password: values.password 
+        })
+      });
+
+      this.props.history.goBack();
     });
   }
+
   render() {
     const { getFieldDecorator } = this.props.form;
     return (

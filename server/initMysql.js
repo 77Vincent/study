@@ -12,18 +12,12 @@ const initMysql = (async() => {
         await sequelize.dropAllSchemas()
         
         await Major.sync({force:true});
-        await Major.create({name:'语文1',desc:'这是语文'})
-        await Major.create({name:'语文2',desc:'这是语文'})
-        await Major.create({name:'语文3',desc:'这是语文'})
-        await Major.create({name:'语文4',desc:'这是语文'})
-        await Major.create({name:'语文5',desc:'这是语文'})
-        await Major.create({name:'语文6',desc:'这是语文'})
-        await Major.create({name:'语文7',desc:'这是语文'})
-        await Major.create({name:'语文8',desc:'这是语文'})
-        await Major.create({name:'语文9',desc:'这是语文'})
-        await Major.create({name:'语文10',desc:'这是语文'})
-        await Major.create({name:'语文11',desc:'这是语文'})
-        await Major.create({name:'语文12',desc:'这是语文'})
+        await Major.create({name:'建筑',desc:'建筑设计'})
+        await Major.create({name:'景观',desc:'景观设计'})
+        await Major.create({name:'室内',desc:'室内设计'})
+        await Major.create({name:'平面',desc:'平面设计'})
+        await Major.create({name:'工业',desc:'工业设计'})
+        await Major.create({name:'服装',desc:'服装设计'})
     
         await Teacher.sync({force:true});
         await Teacher.create({account:'vincent1', name:'vincent1',password:'123456'})
