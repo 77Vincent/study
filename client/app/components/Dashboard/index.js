@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Layout, Button, Row, Col, Tag, Icon } from 'antd';
+import { Layout, Button, Row, Col, Tag, Icon, Menu } from 'antd';
 import Components from 'components';
 import './index.less';
 
@@ -12,6 +12,10 @@ export default class Dashboard extends React.Component {
   state = {
     loading: true,
     user: null 
+  }
+
+  expandInfo = () => {
+
   }
 
   componentDidMount = () => {
@@ -37,33 +41,37 @@ export default class Dashboard extends React.Component {
     const user = this.state.user;
 
     return (
-      <div className='Dashboard'>
-        <Components.Loading visibility={this.state.loading} />
-
+      <div className={this.state.loading ? 'Dashboard App-spinner' : 'Dashboard'}>
         <Layout>
-          <Layout.Sider width='300'>
-            {
-              user ? 
-              <div className='Dashboard-sider App-tile'>
-                <h4>个人面板<Icon className='App-icon-button' type="edit" /></h4>
-                <section>
-                  <div className='App-avatar' style={{backgroundImage: `url(${user.avatar})`}} />
-                  <h4>{user.type.value}：{user.name}</h4>
-
-                  <h4>
-                    意向专业：
-                    {
-                      user.majors.map((major, index) => {
-                        return <Tag key={index}>{major}</Tag>
-                      })
-                    }
-                  </h4>
-                </section>
-              </div> : null
-            }
+          <Layout.Sider width='300' className='Dashboard-sider App-tile'>
+            <Menu 
+              mode="inline"
+              defaultSelectedKeys={['1']}
+              style={{ height: '100%', borderRight: 0 }}
+            >
+              <Menu.Item key='1'>基本信息</Menu.Item>
+              <Menu.Item key='2'>我的课程</Menu.Item>
+              <Menu.Item key='3'>我的订单</Menu.Item>
+            </Menu>
           </Layout.Sider>
 
-          <Layout.Content className='Dashboard-Content'>
+          <Layout.Content className='Dashboard-Content App-tile'>
+            {
+              user ? 
+              <section>
+                <div className='App-avatar' style={{backgroundImage: `url(${user.avatar})`}} />
+                <h4>{user.type.value}：{user.name}</h4>
+
+                <h4>
+                  意向专业：
+                  {
+                    user.majors.map((major, index) => {
+                      return <Tag key={index}>{major}</Tag>
+                    })
+                  }
+                </h4>
+              </section> : null
+            }
           </Layout.Content>
         </Layout>
       </div>
