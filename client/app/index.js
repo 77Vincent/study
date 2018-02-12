@@ -13,5 +13,9 @@ ReactDOM.render(
   <HashRouter>
     <App />
   </HashRouter>,
-  document.getElementById('root')
+  document.getElementById('root'),
+  () => {
+    // remove initial spinning loader after react dom is rendered
+    document.getElementById('root').classList.remove('App-spinner');
+  }
 );
