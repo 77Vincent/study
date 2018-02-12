@@ -79,12 +79,12 @@ export default class Teachers extends React.Component {
         teachers,
         loading: false
       });
-    }, 500);
+    }, 1100);
   }
 
   render() {
     return (
-      <div className='Teachers'>
+      <div>
         <Modal
           title={this.state.teacher.name}
           footer={null}
@@ -95,14 +95,12 @@ export default class Teachers extends React.Component {
           <Components.Teacher type='detail' teacher={this.state.teacher} />
         </Modal>
 
-        <Components.Loading visibility={this.state.loading} />
-
         <Layout>
           <Layout.Sider width='300'>
             <Components.Filter />
           </Layout.Sider>
 
-          <Layout.Content className='Teachers-Content'>
+          <Layout.Content className={this.state.loading ? 'Teachers-Content App-spinner' : 'Teachers-Content'}>
             <Row>
               {
                 this.state.teachers.map((teacher, index) => {

@@ -64,7 +64,7 @@ class Login extends React.Component {
           </section>
 
           <Button type="primary" htmlType="submit">登录</Button>
-          <Button><Link to='/register'>现在注册</Link></Button>
+          <Link to='/register'><Button>现在注册</Button></Link>
         </Form.Item>
       </Form>
     );

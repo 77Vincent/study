@@ -26,10 +26,14 @@ export default class Header extends React.Component {
               return <Menu.Item key={index}><NavLink to={item.href}>{item.title}</NavLink></Menu.Item>
             })
           }
-          <Menu.Item style={{float: 'right'}}><Button><Link to='/register'>注册</Link></Button></Menu.Item>
-          <Menu.Item style={{float: 'right'}}><Button><Link to='/login'>登录</Link></Button></Menu.Item>
+          <Menu.Item style={{float: 'right'}}>
+            <Link to='/register'><Button>注册</Button></Link>
+          </Menu.Item>
+          <Menu.Item style={{float: 'right'}}>
+            <Link to='/login'><Button>登录</Button></Link>
+          </Menu.Item>
         </Menu>
       </div>
-    );
+    )
   }
 }
