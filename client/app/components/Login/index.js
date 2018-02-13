@@ -2,15 +2,23 @@ import React from 'react';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import { Link } from 'react-router-dom';
 import { Loading } from 'components';
-import './index.less';
-import '../../base/fn.js';
 
 class Login extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   state = {
     loading: false
   }
 
-  handleSubmit = async (e) => {
+  componentWillMount = () => {
+    if (this.props.isLogin) {
+      console.log(this)
+    }
+  }
+
+  login = (e) => {
     e.preventDefault();
 
     this.props.form.validateFields(async (err, values) => {
@@ -33,7 +41,10 @@ class Login extends React.Component {
         });
 
         if (res.status === 200) {
-          this.props.history.push('/dashboard');
+          this.props.login();
+          this.setState({
+            loading: false
+          });
         }
       }
     });
@@ -44,7 +55,7 @@ class Login extends React.Component {
 
     return (
       <Loading loading={this.state.loading}>
-        <Form onSubmit={this.handleSubmit} className='Login'>
+        <Form onSubmit={this.login} style={{maxWidth: '300px', margin: '0 auto'}}>
           <Form.Item>
             {getFieldDecorator('userName', {
               rules: [{ required: true, message: '请输入电子邮箱' }],
@@ -67,12 +78,10 @@ class Login extends React.Component {
               <Checkbox>记住我</Checkbox>
             )}
 
-            <section>
-              <Link to='/forgot'>忘记密码</Link>
-            </section>
+            <Link to='/forgot' style={{float: 'right'}}>忘记密码</Link>
 
-            <Button type="primary" htmlType="submit">登录</Button>
-            <Link to='/register'><Button>现在注册</Button></Link>
+            <Button style={{width: '100%'}} type="primary" htmlType="submit">登录</Button>
+            <Link to='/register'><Button style={{width: '100%'}}>现在注册</Button></Link>
           </Form.Item>
         </Form>
       </Loading>

@@ -35,10 +35,6 @@ export default class App extends React.Component {
   componentWillMount() {
     this.verify();
 
-    window.onhashchange = (e) => {
-      this.verify();
-    }
-
     message.config({
       top: '75px',
       duration: 2
@@ -51,22 +47,29 @@ export default class App extends React.Component {
     this.setState({
       isLogin: data.code === 200 ? true : false
     });
-    console.log(this.state.isLogin)
   }
 
-  logout = async (e) => {
+  login = async (e) => {
+    this.setState({
+      isLogin: true
+    });
+  }
+
+  logout = async () => {
     this.setState({
       loading: true
     });
 
-    await fetch('/api/user/logout', {
+    const res = await fetch('/api/user/logout', {
       credentials: 'include'
     });
 
-    this.verify();
-    this.setState({
-      loading: false
-    });
+    if (res.status === 200) {
+      this.setState({
+        isLogin: false,
+        loading: false
+      });
+    }
   }
 
 
@@ -83,10 +86,10 @@ export default class App extends React.Component {
             <Route path="/orientation" component={Orientation} />
             <Route path="/teachers" component={Teachers} />
             <Route path="/about" component={About} />
-            <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
             <Route path="/forgot" component={Forgot} />
-            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/login" render={() => <Login login={this.login} isLogin={this.state.isLogin}/>} />
+            <Route path="/dashboard" render={() => <Dashboard isLogin={this.state.isLogin}/>} />
           </Loading>
         </Layout.Content>
 

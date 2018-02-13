@@ -1,8 +1,6 @@
 import React from 'react';
 import { Menu, Button, Icon } from 'antd';
 import { Route, Link, NavLink } from 'react-router-dom';
-import './index.less';
-import fn from '../../base/fn.js';
 
 export default class Header extends React.Component {
   constructor(props) {
@@ -11,14 +9,11 @@ export default class Header extends React.Component {
 
   render() {
     const links = [{
-      label: '首页',
-      to: '/'
+      label: '首页', to: '/'
     }, {
-      label: '寻找老师',
-      to: '/teachers'
+      label: '寻找老师', to: '/teachers'
     }, {
-      label: '关于我们',
-      to: '/about'
+      label: '关于我们', to: '/about'
     }];
 
     const { isLogin } = this.props;
@@ -27,7 +22,7 @@ export default class Header extends React.Component {
       <div className='Header'>
         <div className="App-logo"></div>
 
-        <Menu mode='horizontal' className='Menu'>
+        <Menu mode='horizontal' style={{lineHeight: '63px', borderBottom: 'none'}}>
           {
             links.map((link, index) => {
               return (
