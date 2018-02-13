@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Tag } from 'antd';
-import Components from 'components';
+import { Loading } from 'components';
 import './index.less';
 
 export default class Info extends React.Component {
@@ -10,7 +10,7 @@ export default class Info extends React.Component {
   }
 
   state = {
-    loading: true,
+    loading: true
   }
 
   componentDidMount = () => {
@@ -36,7 +36,7 @@ export default class Info extends React.Component {
     const user = this.state.user;
 
     return (
-      <div className={this.state.loading ? 'App-spinner' : null}>
+      <Loading loading={this.state.loading}>
         {
           user ?
           <div className='Info'>
@@ -54,7 +54,7 @@ export default class Info extends React.Component {
             </section>
           </div> : null
         }
-      </div>
+      </Loading>
     )
   }
 }

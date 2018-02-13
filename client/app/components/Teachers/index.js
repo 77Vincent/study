@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import { Layout, Button, Row, Col, Tag, Modal } from 'antd';
-import Components from 'components';
+import { Loading, Filter, Teacher } from 'components';
 import './index.less';
 
 export default class Teachers extends React.Component {
@@ -10,8 +9,8 @@ export default class Teachers extends React.Component {
   }
 
   state = {
-    expand: false,
     loading: true,
+    expand: false,
     teachers: [],
     teacher: {}
   }
@@ -35,7 +34,7 @@ export default class Teachers extends React.Component {
     });
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
     const teachers = [
       {
         name: '王尼玛',
@@ -108,7 +107,7 @@ export default class Teachers extends React.Component {
 
   render() {
     return (
-      <div className={this.state.loading ? 'App-spinner' : null}>
+      <Loading loading={this.state.loading}>
         <Modal
           title={this.state.teacher.name}
           footer={null}
@@ -116,12 +115,12 @@ export default class Teachers extends React.Component {
           visible={this.state.expand}
           onCancel={this.handleCancel}
         >
-          <Components.Teacher type='detail' teacher={this.state.teacher} />
+          <Teacher type='detail' teacher={this.state.teacher} />
         </Modal>
 
         <Layout>
           <Layout.Sider width='300'>
-            <Components.Filter />
+            <Filter />
           </Layout.Sider>
 
           <Layout.Content className='Teachers-Content'>
@@ -131,7 +130,7 @@ export default class Teachers extends React.Component {
                   return (
                     <Col xl={12} lg={24} key={index}>
                       <div className='App-tile' onClick={() => this.openTeacher(teacher.id)}>
-                        <Components.Teacher type='overall' teacher={teacher} />
+                        <Teacher type='overall' teacher={teacher} />
                       </div>
                     </Col>
                   )
@@ -140,7 +139,7 @@ export default class Teachers extends React.Component {
             </Row>
           </Layout.Content>
         </Layout>
-      </div>
+      </Loading>
     );
   }
 }

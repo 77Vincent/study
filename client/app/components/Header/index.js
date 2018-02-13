@@ -1,47 +1,27 @@
 import React from 'react';
-import { Menu, Button } from 'antd';
+import { Menu, Button, Icon } from 'antd';
 import { Route, Link, NavLink } from 'react-router-dom';
 import './index.less';
 import fn from '../../base/fn.js';
 
 export default class Header extends React.Component {
-  state = {
-    isLogin: false
-  }
-
-  componentDidMount() {
-    this.verify();
-
-    window.onhashchange = (e) => {
-      this.verify();
-    }
-  }
-
-  verify = async () => {
-    let data = await fn.fetch('/api/user/verify');
-
-    this.setState({
-      isLogin: data.code === 200 ? true : false
-    });
-  }
-
-  logout = async (e) => {
-    let result = await fetch('/api/user/logout', {
-      credentials: 'include'
-    });
+  constructor(props) {
+    super(props);
   }
 
   render() {
     const links = [{
-      title: '首页',
-      href: '/'
+      label: '首页',
+      to: '/'
     }, {
-      title: '寻找老师',
-      href: '/teachers'
+      label: '寻找老师',
+      to: '/teachers'
     }, {
-      title: '关于我们',
-      href: '/about'
+      label: '关于我们',
+      to: '/about'
     }];
+
+    const { isLogin } = this.props;
 
     return (
       <div className='Header'>
@@ -49,30 +29,39 @@ export default class Header extends React.Component {
 
         <Menu mode='horizontal' className='Menu'>
           {
-            links.map((item, index) => {
-              return <Menu.Item key={index}><NavLink to={item.href}>{item.title}</NavLink></Menu.Item>
+            links.map((link, index) => {
+              return (
+                <Menu.Item key={index}>
+                  <Link to={link.to}>{link.label}</Link>
+                </Menu.Item>
+              )
             })
           }
           {
-            this.state.isLogin ? null :
+            isLogin ? null :
               <Menu.Item style={{float: 'right'}}>
                 <Link to='/register'><Button>注册</Button></Link>
               </Menu.Item>
           }
           {
-            this.state.isLogin ? null :
+            isLogin ? null :
               <Menu.Item style={{float: 'right'}}>
-                <Link to='/login'><Button>登录</Button></Link>
+                <Link to='/login'><Button type='primary'>登录</Button></Link>
               </Menu.Item>
           }
           {
-            !this.state.isLogin ? null :
+            !isLogin ? null :
               <Menu.Item style={{float: 'right'}}>
-                <Button onClick={this.logout}>登出</Button>
+                <Button onClick={this.props.logout}>登出</Button>
+              </Menu.Item>
+          }
+          {
+            !isLogin ? null :
+              <Menu.Item style={{float: 'right'}}>
+                <Link to='/dashboard'><Button><Icon type='user'/>个人面板</Button></Link>
               </Menu.Item>
           }
         </Menu>
-
       </div>
     )
   }
