@@ -10,9 +10,9 @@ export default class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.props.isLogin) {
-      this.props.history.push('./login')
-    }
+    // if (!this.props.isLogin) {
+    //   this.props.history.push('./login')
+    // }
   }
 
   render() {

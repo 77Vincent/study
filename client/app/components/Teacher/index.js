@@ -43,12 +43,11 @@ export default class Teacher extends React.Component {
               <p>{isDetail ? teacher.introduction : introductionShort}</p>
 
               <Row type='flex' align='bottom'>
-                <Col span={12}>
+                <Col span={10}>
                   <small>已授课时长: {teacher.sold}小时</small>
-                  <small>上次在线：{teacher.last_active}</small>
                 </Col>
 
-                <Col span={12} style={{textAlign: 'right'}}>
+                <Col span={14} style={{textAlign: 'right'}}>
                   <Button>留言</Button>
                   <Button type='primary'>预约</Button>
                 </Col>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Layout, Button, Row, Col, Tag, Modal } from 'antd';
 import { Loading, Filter, Teacher } from 'components';
-import './index.less';
 
 export default class Teachers extends React.Component {
   constructor(props) {
@@ -123,7 +122,7 @@ export default class Teachers extends React.Component {
             <Filter />
           </Layout.Sider>
 
-          <Layout.Content className='Teachers-Content'>
+          <Layout.Content style={{marginLeft: '7px', marginTop: '-7px'}}>
             <Row>
               {
                 this.state.teachers.map((teacher, index) => {

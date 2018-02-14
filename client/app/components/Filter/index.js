@@ -101,12 +101,6 @@ export default class Filter extends React.Component {
         value: 1 
       }]
     }, {
-      name: '按最近在线时间',
-      options: [{
-        label: '最近在线优先',
-        value: 0
-      }]
-    }, {
       name: '按已授课时长',
       options: [{
         label: '时长最长优先',
