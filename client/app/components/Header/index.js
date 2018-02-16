@@ -11,7 +11,7 @@ export default class Header extends React.Component {
     const links = [{
       label: '首页', to: '/'
     }, {
-      label: '寻找老师', to: '/teachers'
+      label: '寻找导师', to: '/teachers'
     }, {
       label: '关于我们', to: '/about'
     }];

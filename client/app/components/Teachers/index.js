@@ -1,14 +1,13 @@
-import React from 'react';
-import { Layout, Button, Row, Col, Tag, Modal } from 'antd';
-import { Loading, Filter, Teacher } from 'components';
+import React from 'react'
+import { Layout, Button, Row, Col, Tag, Modal } from 'antd'
+import { Filter, Teacher } from 'components'
 
 export default class Teachers extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
   }
 
   state = {
-    loading: true,
     expand: false,
     teachers: [],
     teacher: {}
@@ -18,22 +17,24 @@ export default class Teachers extends React.Component {
     this.setState({
       expand: true,
       teacher: this.state.teachers[teacher_id] 
-    });
+    })
   }
 
   handleOk = (e) => {
     this.setState({
       expand: false,
-    });
+    })
   }
 
   handleCancel = (e) => {
     this.setState({
       expand: false,
-    });
+    })
   }
 
-  componentDidMount() {
+  componentWillMount() {
+    this.props.loading()
+
     const teachers = [
       {
         name: '王尼玛',
@@ -95,18 +96,19 @@ export default class Teachers extends React.Component {
         majors: ['室内'],
         introduction: '烹饪指的是膳食的艺术，是一种复杂而有规律的将食材转化为食物的加工过程。是对食材加工处理，使食物更可口，更好看，更好闻的处理方式与方法。一道美味佳肴，必然色香味意形养俱佳，不但让人在食用时感到满足，而且能让食物的营养更容易被人体吸收。另外日语中有烹饪一义的“料理”一词也常在台湾被使用。'
       },
-    ];
+    ]
     setTimeout(() => {
       this.setState({
-        teachers,
-        loading: false
-      });
-    }, 1100);
+        teachers
+      })
+
+      this.props.loaded()
+    }, 1100)
   }
 
   render() {
     return (
-      <Loading loading={this.state.loading}>
+      <Layout>
         <Modal
           title={this.state.teacher.name}
           footer={null}
@@ -116,29 +118,26 @@ export default class Teachers extends React.Component {
         >
           <Teacher type='detail' teacher={this.state.teacher} />
         </Modal>
+        <Layout.Sider width='300'>
+          <Filter />
+        </Layout.Sider>
 
-        <Layout>
-          <Layout.Sider width='300'>
-            <Filter />
-          </Layout.Sider>
-
-          <Layout.Content style={{marginLeft: '7px', marginTop: '-7px'}}>
-            <Row>
-              {
-                this.state.teachers.map((teacher, index) => {
-                  return (
-                    <Col xl={12} lg={24} key={index}>
-                      <div className='App-tile' onClick={() => this.openTeacher(teacher.id)}>
-                        <Teacher type='overall' teacher={teacher} />
-                      </div>
-                    </Col>
-                  )
-                })
-              }
-            </Row>
-          </Layout.Content>
-        </Layout>
-      </Loading>
-    );
+        <Layout.Content style={{marginLeft: '7px', marginTop: '-7px'}}>
+          <Row>
+            {
+              this.state.teachers.map((teacher, index) => {
+                return (
+                  <Col xl={12} lg={24} key={index}>
+                    <div className='App-tile' onClick={() => this.openTeacher(teacher.id)}>
+                      <Teacher type='overall' teacher={teacher} />
+                    </div>
+                  </Col>
+                )
+              })
+            }
+          </Row>
+        </Layout.Content>
+      </Layout>
+    )
   }
 }

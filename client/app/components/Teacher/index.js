@@ -45,10 +45,13 @@ export default class Teacher extends React.Component {
                   <small>已授课时长: {teacher.sold}小时</small>
                 </Col>
 
-                <Col span={14} style={{textAlign: 'right'}}>
-                  <Button>留言</Button>
-                  <Button type='primary'>预约</Button>
-                </Col>
+                {
+                  isDetail ? 
+                    <Col span={14} style={{textAlign: 'right'}}>
+                      <Button>留言</Button>
+                      <Button type='primary'>预约</Button>
+                    </Col> : null
+                }
               </Row>
             </article>
           </Col>

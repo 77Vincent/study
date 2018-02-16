@@ -12,6 +12,10 @@ export default class Welcome extends React.Component {
     position: 'center'
   }
 
+  componentDidMount = () => {
+    this.props.loaded()
+  }
+
   effect = (e) => {
     this.setState({
       position: `-${e.pageX / 2}px -${e.pageY / 2}px`

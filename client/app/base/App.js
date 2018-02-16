@@ -1,12 +1,12 @@
-'use strict';
+'use strict'
 
 // External Dependencies
-import React from 'react';
-import { Layout, Menu, Button, message } from 'antd';
-import { Route, Link, NavLink } from 'react-router-dom';
+import React from 'react'
+import { Layout, Menu, Button, message } from 'antd'
+import { Route, Link, NavLink } from 'react-router-dom'
 
 // Custom styles, components and functions
-import './App.less';
+import './App.less'
 import {
   Header, 
   Footer, 
@@ -19,8 +19,8 @@ import {
   Dashboard,
   Orientation,
   Teachers
-} from 'components';
-import Fun from './fn.js';
+} from 'components'
+import Fun from './fn.js'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -33,7 +33,7 @@ export default class App extends React.Component {
   }
 
   componentWillMount() {
-    this.verify();
+    this.verify()
 
     message.config({
       top: '75px',
@@ -41,34 +41,47 @@ export default class App extends React.Component {
     })
   }
 
+  loading = () => {
+    this.setState({
+      loading: true
+    })
+  }
+
+  loaded = () => {
+    this.setState({
+      loading: false 
+    })
+  }
+
   verify = async () => {
-    let data = await Fun.fetch('/api/user/verify');
+    let data = await Fun.fetch('/api/user/verify')
 
     this.setState({
       isLogin: data.code === 200 ? true : false
-    });
+    })
   }
 
   login = async (e) => {
     this.setState({
-      isLogin: true
-    });
+      isLogin: true,
+      loading: false
+    })
   }
 
   logout = async () => {
     this.setState({
       loading: true
-    });
+    })
 
     const res = await fetch('/api/user/logout', {
       credentials: 'include'
-    });
+    })
 
     if (res.status === 200) {
       this.setState({
         isLogin: false,
         loading: false
-      });
+      })
     }
   }
 
@@ -82,13 +95,13 @@ export default class App extends React.Component {
 
         <Layout.Content className='App-Content'>
           <Loading loading={this.state.loading}>
-            <Route exact path="/" component={Welcome} />
+            <Route exact path="/" render={() => <Welcome loaded={this.loaded}/>} />
             <Route path="/orientation" component={Orientation} />
-            <Route path="/teachers" component={Teachers} />
+            <Route path="/teachers" render={() => <Teachers loading={this.loading} loaded={this.loaded}/>} />
             <Route path="/about" component={About} />
             <Route path="/register" component={Register} />
             <Route path="/forgot" component={Forgot} />
-            <Route path="/login" render={() => <Login login={this.login} isLogin={this.state.isLogin}/>} />
+            <Route path="/login" render={() => <Login login={this.login} isLogin={this.state.isLogin} loading={this.loading}/>} />
             <Route path="/dashboard" render={() => <Dashboard isLogin={this.state.isLogin}/>} />
           </Loading>
         </Layout.Content>
@@ -97,6 +110,6 @@ export default class App extends React.Component {
           <Footer />
         </Layout.Footer>
       </Layout>
-    );
+    )
   }
 }

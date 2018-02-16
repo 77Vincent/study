@@ -1,16 +1,15 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Tag } from 'antd';
-import { Loading } from 'components';
-import './index.less';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { Tag } from 'antd'
+import './index.less'
 
 export default class Info extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
   }
 
   state = {
-    loading: true
+    user: null
   }
 
   componentDidMount = () => {
@@ -22,39 +21,38 @@ export default class Info extends React.Component {
       avatar: 'https://tse2-mm.cn.bing.net/th?id=OIP.dPir_9YtuhaGxUwswmcsgAHaI9&p=0&o=5&pid=1.1',
       name: 'Vincent',
       majors: [ '建筑', '景观' ]
-    };
+    }
 
     setTimeout(() => {
       this.setState({
-        user,
-        loading: false
-      });
-    }, 1000);
+        user
+      })
+    }, 1000)
   }
 
   render() {
-    const user = this.state.user;
+    const user = this.state.user
 
     return (
-      <Loading loading={this.state.loading}>
-        {
-          user ?
-          <div className='Info'>
-            <div className='App-avatar' style={{backgroundImage: `url(${user.avatar})`}} />
-            <h3>{user.type.value}</h3>
-            <h3>{user.name}</h3>
+        <div>
+          {
+            !user ? null :
+            <div className='Info'>
+              <div className='App-avatar' style={{backgroundImage: `url(${user.avatar})`}} />
+              <h3>{user.type.value}</h3>
+              <h3>{user.name}</h3>
 
-            <section>
-              <h3>意向专业：</h3>
-              {
-                user.majors.map((major, index) => {
-                  return <Tag key={index}>{major}</Tag>
-                })
-              }
-            </section>
-          </div> : null
-        }
-      </Loading>
+              <section>
+                <h3>意向专业：</h3>
+                {
+                  user.majors.map((major, index) => {
+                    return <Tag key={index}>{major}</Tag>
+                  })
+                }
+              </section>
+            </div>
+          }
+      </div>
     )
   }
 }

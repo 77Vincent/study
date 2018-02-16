@@ -29,7 +29,8 @@ img {
 }
 
 .App-translucent {
-  opacity: 0.4;
+  opacity: 0.2;
+  pointer-events: none;
 }
 
 .App-avatar {
@@ -43,7 +44,6 @@ img {
 }
 
 .App-Layout {
-  min-height: 100vh;
 }
 
 .App-Header {
@@ -57,6 +57,7 @@ img {
 .App-Content {
   position: relative;
   padding: 25px 50px;
+  min-height: 100vh;
 }
 
 .App-tile {
@@ -67,6 +68,6 @@ img {
   .transition(box-shadow, 0.2s);
 
   &:hover {
-    box-shadow: 0 0 15px 0 @color-gray-light;
+    box-shadow: 0 0 15px 0 rgba(0,0,0,0.1);
   }
 }
