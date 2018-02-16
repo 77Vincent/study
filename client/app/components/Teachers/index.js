@@ -26,7 +26,7 @@ export default class Teachers extends React.Component {
     })
   }
 
-  handleCancel = (e) => {
+  closeTeacher = (e) => {
     this.setState({
       expand: false,
     })
@@ -114,7 +114,7 @@ export default class Teachers extends React.Component {
           footer={null}
           width={800}
           visible={this.state.expand}
-          onCancel={this.handleCancel}
+          onCancel={this.closeTeacher}
         >
           <Teacher type='detail' teacher={this.state.teacher} />
         </Modal>

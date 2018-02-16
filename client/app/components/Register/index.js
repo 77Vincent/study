@@ -1,41 +1,50 @@
-import React from 'react';
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, Radio } from 'antd';
-import './index.less';
+import React from 'react'
+import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, Radio, Modal } from 'antd'
 
 class Register extends React.Component {
   state = {
+    expand: false,
     confirmDirty: false,
-  };
+  }
   handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        console.log('Received values of form: ', values)
       }
-    });
+    })
   }
   handleConfirmBlur = (e) => {
-    const value = e.target.value;
-    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
+    const value = e.target.value
+    this.setState({ confirmDirty: this.state.confirmDirty || !!value })
   }
   checkPassword = (rule, value, callback) => {
-    const form = this.props.form;
+    const form = this.props.form
     if (value && value !== form.getFieldValue('password')) {
-      callback('两次输入密码不一致');
+      callback('两次输入密码不一致')
     } else {
-      callback();
+      callback()
     }
   }
   checkConfirm = (rule, value, callback) => {
-    const form = this.props.form;
+    const form = this.props.form
     if (value && this.state.confirmDirty) {
-      form.validateFields(['confirm'], { force: true });
+      form.validateFields(['confirm'], { force: true })
     }
-    callback();
+    callback()
   }
-
+  openProvision = () => {
+    this.setState({
+      expand: true
+    })
+  }
+  closeProvision = (e) => {
+    this.setState({
+      expand: false,
+    })
+  }
   render() {
-    const { getFieldDecorator } = this.props.form;
+    const { getFieldDecorator } = this.props.form
 
     const formItemLayout = {
       labelCol: {
@@ -46,7 +55,7 @@ class Register extends React.Component {
         xs: { span: 24 },
         sm: { span: 16 },
       },
-    };
+    }
     const tailFormItemLayout = {
       wrapperCol: {
         xs: {
@@ -58,10 +67,20 @@ class Register extends React.Component {
           offset: 8,
         },
       },
-    };
+    }
 
     return (
-      <Form onSubmit={this.handleSubmit} className='Register'>
+      <Form onSubmit={this.handleSubmit} style={{maxWidth: '450px', margin: '0 auto'}}>
+        <Modal
+          title='服务条款'
+          footer={null}
+          width={800}
+          visible={this.state.expand}
+          onCancel={this.closeProvision}
+        >
+          ...
+        </Modal>
+
         <Form.Item {...formItemLayout} label="用户类别">
           {getFieldDecorator('radio-group', {
             rules: [{
@@ -135,15 +154,15 @@ class Register extends React.Component {
           {getFieldDecorator('agreement', {
             valuePropName: 'checked',
           })(
-            <Checkbox>我已经阅读<a href="">协议</a></Checkbox>
+            <Checkbox>我已经阅读<a onClick={this.openProvision}>协议</a></Checkbox>
           )}
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
           <Button style={{width: '100%'}} type="primary" htmlType="submit">注册</Button>
         </Form.Item>
       </Form>
-    );
+    )
   }
 }
 
-export default Form.create()(Register);
+export default Form.create()(Register)

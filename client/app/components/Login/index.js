@@ -15,10 +15,10 @@ class Login extends React.Component {
 
   login = (e) => {
     e.preventDefault()
-    this.props.loading()
 
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
+        this.props.loading()
 
         let res = await fetch('/api/user/login', {
           method:"POST",
@@ -47,9 +47,9 @@ class Login extends React.Component {
       <Form onSubmit={this.login} style={{maxWidth: '300px', margin: '0 auto'}}>
         <Form.Item>
           {getFieldDecorator('userName', {
-            rules: [{ required: true, message: '请输入电子邮箱' }],
+            rules: [{ required: true, message: '请输入手机号/用户名' }],
           })(
-            <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='电子邮箱' />
+            <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='手机号/用户名' />
           )}
         </Form.Item>
         <Form.Item>
