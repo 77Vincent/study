@@ -14,9 +14,10 @@ img {
   width: 100%;
   height: 100%;
   background-size: cover;
-  background-image: url(../assets/images/background-2.jpg);
+  background-image: url(../assets/images/background.jpg);
   background-position: center;
-  filter: blur(20px);
+  opacity: 0.65;
+  .transition(background-position, 1s, ease);
 }
 
 .App-logo {
@@ -62,11 +63,10 @@ img {
   margin: 7px;
   padding: 20px;
   background-color: #fff;
-  border-radius: @border-radius-l;
   border: 1px solid @color-gray-light;
   .transition(box-shadow, 0.2s);
 
   &:hover {
-    box-shadow: 0 0 15px 0 @color-gray;
+    box-shadow: 0 0 15px 0 @color-gray-light;
   }
 }
