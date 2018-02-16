@@ -45,18 +45,6 @@ export default class Filter extends React.Component {
           },
         ]
       }, {
-        name: '导师类型',
-        multiple: true,
-        options: [
-          {
-            label: '名校前辈',
-            value: '1'
-          }, {
-            label: '专业培训导师',
-            value: '0'
-          },
-        ]
-      }, {
         name: '上课方式',
         multiple: true,
         options: [
@@ -82,11 +70,8 @@ export default class Filter extends React.Component {
         name: '区域',
         multiple: true,
         options: [{
-          label: '上海',
+          label: '目前所在地',
           value: '1'
-        }, {
-          label: '全国',
-          value: '0'
         }]
       }
     ];
@@ -99,12 +84,6 @@ export default class Filter extends React.Component {
       }, {
         label: '由高到低',
         value: 1 
-      }]
-    }, {
-      name: '按已授课时长',
-      options: [{
-        label: '时长最长优先',
-        value: 0
       }]
     }];
 

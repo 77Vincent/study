@@ -93,7 +93,7 @@ export default class App extends React.Component {
           </Loading>
         </Layout.Content>
 
-        <Layout.Footer className='App-Footer'>
+        <Layout.Footer>
           <Footer />
         </Layout.Footer>
       </Layout>

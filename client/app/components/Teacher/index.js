@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Layout, Button, Row, Col, Tag } from 'antd';
-import Components from 'components';
 import './index.less';
-import { isDate } from 'moment';
 
 export default class Teacher extends React.Component {
   constructor(props) {

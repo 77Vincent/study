@@ -1,12 +1,15 @@
 @import '../../theme.less';
 
 .Welcome {
-  margin: -25px -50px 0;
+  margin: -25px -50px;
+  min-height: 100vh;
 
-  .Welcome-intro {
-    padding: 6em 50px;
+  hgroup {
     position: relative;
     overflow: hidden;
+    text-align: center;
+    min-height: 100vh;
+    padding-top: 20vh;
 
     @media (max-width: @bp-laptop) {
       font-size: 0.9em;
@@ -15,8 +18,8 @@
     h1 {
       font-size: 3em;
       font-weight: 700;
-      margin-bottom: 0.5em;
-
+      margin-bottom: 1em;
+      position: relative;
     }
 
     p {
@@ -29,19 +32,10 @@
     color: @primary-color;
   }
 
-  hgroup {
-    position: relative;
-    z-index: 1;
-  }
-
   button {
-    display: block;
-    margin: 20px 0;
-    width: 80%;
-  }
-
-  .Welcome-news {
-    padding: 0 50px;
-    text-align: center;
+    margin: 0 20px;
+    width: 60%;
+    max-width: 300px;
+    min-width: 100px;
   }
 }
