@@ -59,18 +59,16 @@ export default class Orientation extends React.Component{
 
         <Carousel ref={c => this.carousel = c} className='Carousel' dots='false' effect='fade'>
           {
-            this.questions.map((question, index) => {
-              return (
+            this.questions.map((question, index) => 
+              (
                 <Radio.Group key={index} onChange={this.progress}>
                   <h2>{question.title}</h2>
                   {
-                    question.options.map((option, index) => {
-                      return <Radio.Button key={index} value={index}>{option}</Radio.Button>
-                    })
+                    question.options.map((option, index) => <Radio.Button key={index} value={index}>{option}</Radio.Button> )
                   }
                 </Radio.Group>
               )
-            })
+            )
           }
         </Carousel>
       </div>

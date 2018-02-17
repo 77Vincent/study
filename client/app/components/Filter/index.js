@@ -91,8 +91,8 @@ export default class Filter extends React.Component {
       <div className='Filter App-tile'>
         <h4>过滤</h4>
         {
-          filters.map((filter, index) => {
-            return (
+          filters.map((filter, index) => 
+            (
               <section key={index}>
                 <h4>{filter.name}</h4>
                 {
@@ -102,18 +102,18 @@ export default class Filter extends React.Component {
                 }
               </section>
             )
-          })
+          )
         }
         <h4>排序</h4>
         {
-          sorting.map((sorting, index) => {
-            return (
+          sorting.map((sorting, index) => 
+            (
               <section key={index}>
                 <h4>{sorting.name}</h4>
                 <Radio.Group options={sorting.options}/>
               </section>
             )
-          })
+          )
         }
       </div>
     )

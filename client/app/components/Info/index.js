@@ -45,9 +45,7 @@ export default class Info extends React.Component {
               <section>
                 <h3>意向专业：</h3>
                 {
-                  user.majors.map((major, index) => {
-                    return <Tag key={index}>{major}</Tag>
-                  })
+                  user.majors.map((major, index) => <Tag key={index}>{major}</Tag> )
                 }
               </section>
             </div>

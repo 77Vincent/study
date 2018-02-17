@@ -28,9 +28,7 @@ export default class Teacher extends React.Component {
             <article>
               <header>
                 {
-                  teacher.majors.map((major, index) => {
-                    return <Tag key={index}>{major}</Tag>
-                  })
+                  teacher.majors.map((major, index) => <Tag key={index}>{major}</Tag> )
                 }
                 <h4>
                   {teacher.school ? <span>{teacher.school}</span> : null}

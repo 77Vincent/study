@@ -22,13 +22,13 @@ export default class Header extends React.Component {
 
         <Menu mode='horizontal' style={{lineHeight: '47px', borderBottom: 'none'}}>
           {
-            links.map((link, index) => {
-              return (
+            links.map((link, index) => 
+              (
                 <Menu.Item key={index}>
                   <Link to={link.to}>{link.label}</Link>
                 </Menu.Item>
               )
-            })
+            )
           }
 
           <Menu.Item style={{float: 'right'}}>

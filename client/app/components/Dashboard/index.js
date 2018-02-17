@@ -1,15 +1,15 @@
-import React from 'react';
-import { Route, Link } from 'react-router-dom';
-import { Layout, Menu } from 'antd';
-import { Info, Schedule, Order } from 'components';
-import './index.less';
+import React from 'react'
+import { Route, Link } from 'react-router-dom'
+import { Layout, Menu } from 'antd'
+import { Info, Schedule, Order } from 'components'
 
 export default class Dashboard extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
   }
 
   componentDidMount() {
+    console.log(this)
     // if (!this.props.isLogin) {
     //   this.props.history.push('./login')
     // }
@@ -27,13 +27,13 @@ export default class Dashboard extends React.Component {
             </Menu>
           </Layout.Sider>
 
-          <Layout.Content className='Dashboard-Content App-tile'>
+          <Layout.Content className='App-tile' style={{maxWidth: '900px'}}>
             <Route exact path="/dashboard" component={Info} />
             <Route path="/dashboard/schedule" component={Schedule} />
             <Route path="/dashboard/order" component={Order} />
           </Layout.Content>
         </Layout>
       </div>
-    );
+    )
   }
 }
