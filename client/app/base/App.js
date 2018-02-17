@@ -90,7 +90,7 @@ export default class App extends React.Component {
     return (
       <Layout className='App-Layout'>
         <Layout.Header className='App-Header'>
-          <Header isLogin={this.state.isLogin} logout={this.logout}/>
+          <Header />
         </Layout.Header>
 
         <Layout.Content className='App-Content'>

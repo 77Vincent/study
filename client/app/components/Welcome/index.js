@@ -30,7 +30,7 @@ export default class Welcome extends React.Component {
 
           <h1>
             专注于<span>设计</span>辅导<br/>
-            在这找到你需要的<span>导师</span><br/>
+            在这寻找你需要的<span>导师</span><br/>
             或成为导师，分享你的<span>知识</span>
           </h1>
 
