@@ -68,6 +68,13 @@ class Register extends React.Component {
         },
       },
     }
+    const prefixSelector = getFieldDecorator('prefix', {
+      initialValue: '86',
+    })(
+      <Select style={{ width: 70 }}>
+        <Option value="86">+86</Option>
+      </Select>
+    ) 
 
     return (
       <Form onSubmit={this.handleSubmit} style={{maxWidth: '450px', margin: '0 auto'}}>
@@ -93,15 +100,11 @@ class Register extends React.Component {
             </Radio.Group>
           )}
         </Form.Item>
-        <Form.Item {...formItemLayout} label="电子邮箱">
-          {getFieldDecorator('email', {
-            rules: [{
-              type: 'email', message: '不符合电子邮箱格式',
-            }, {
-              required: true, message: '请输入电子邮箱',
-            }],
+        <Form.Item {...formItemLayout} label="手机号">
+          {getFieldDecorator('phone', {
+            rules: [{ required: true, message: '请输入手机号' }],
           })(
-            <Input />
+            <Input addonBefore={prefixSelector}/>
           )}
         </Form.Item>
         <Form.Item
