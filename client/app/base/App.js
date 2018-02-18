@@ -100,7 +100,12 @@ export default class App extends React.Component {
             <Route path="/about" component={About} />
             <Route path="/register" component={Register} />
             <Route path="/forgot" component={Forgot} />
-            <Route path="/login" render={() => <Login login={this.login} isLogin={this.state.isLogin} loading={this.loading}/>} />
+            <Route path="/login" render={(props) => <Login 
+              login={this.login} 
+              isLogin={this.state.isLogin} 
+              loading={this.loading} 
+              {...props} />} 
+            />
             <Route path="/dashboard" render={props => <Dashboard isLogin={this.state.isLogin} {...props} />} />
             <Route path="/teachers" render={() => <Teachers loading={this.loading} loaded={this.loaded}/>} />
           </Loading>

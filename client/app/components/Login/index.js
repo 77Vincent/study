@@ -9,7 +9,7 @@ class Login extends React.Component {
 
   componentWillMount = () => {
     if (this.props.isLogin) {
-      console.log(this)
+      this.props.history.push('./dashboard')
     }
   }
 

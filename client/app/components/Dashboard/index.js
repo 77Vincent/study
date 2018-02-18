@@ -8,7 +8,7 @@ export default class Dashboard extends React.Component {
     super(props)
   }
 
-  componentDidMount() {
+  componentWillMount = () => {
     if (!this.props.isLogin) {
       this.props.history.push('./login')
     }
