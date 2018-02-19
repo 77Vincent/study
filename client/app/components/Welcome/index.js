@@ -9,7 +9,17 @@ export default class Welcome extends React.Component {
   }
 
   state = {
-    position: 'center'
+    position: 'center',
+    ad: [{
+      text: '已辅导学生人数',
+      num: '200'
+    }, {
+      text: '认证老师人数',
+      num: '200'
+    }, {
+      text: '全网已预定课时',
+      num: '200'
+    }]     
   }
 
   componentDidMount = () => {
@@ -25,23 +35,32 @@ export default class Welcome extends React.Component {
   render() {
     return (
       <div className='Welcome' onMouseMove={this.effect} >
-        <hgroup>
-          <div style={{backgroundPosition: `${this.state.position}`}} className='App-background-image' />
+        <div style={{backgroundPosition: `${this.state.position}`}} className='App-background-image' />
 
+        <hgroup>
           <h1>
             专注于<span>设计</span>辅导<br/>
             在这寻找你需要的<span>导师</span><br/>
             或成为导师，分享你的<span>知识</span>
           </h1>
 
-          <Button size='large' type='primary'>
+          <Button size='large' type='primary' style={{opacity: '0.7'}}>
             <Link to='/orientation' >寻找导师</Link>
           </Button>
 
-          <Button size='large'>
-            <Link to='/login'>成为导师</Link>
-          </Button>
+          <Link to='/login'>成为导师 ></Link>
         </hgroup>
+
+        <aside>
+          {
+            this.state.ad.map((item, index) => (
+              <section>
+                <h3>{item.text}</h3>
+                <h2>{item.num}</h2>
+              </section>
+            ))
+          }
+        </aside>
       </div>
     );
   }

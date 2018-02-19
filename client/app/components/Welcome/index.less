@@ -2,13 +2,12 @@
 
 .Welcome {
   margin: -25px -50px;
+  min-height: 100vh;
+  text-align: center;
 
   hgroup {
+    padding-top: 15vh;
     position: relative;
-    overflow: hidden;
-    text-align: center;
-    min-height: 100vh;
-    padding-top: 20vh;
 
     @media (max-width: @bp-laptop) {
       font-size: 0.8em;
@@ -32,9 +31,34 @@
   }
 
   button {
-    margin: 0 20px;
+    margin-right: 50px;
     width: 20%;
-    max-width: 300px;
+    max-width: 240px;
     min-width: 100px;
+  }
+
+  aside {
+    position: relative;
+    max-width: 900px;
+    margin: 10vh auto 0;
+    padding-top: 1em;
+
+    section {
+      display: inline-block;
+      background-color: rgba(255, 255, 255, 0.7);
+      border-radius: 10px;
+      margin: 0 20px;
+      padding: 30px;
+    }
+
+    h3 {
+      font-weight: 300;
+      width: 120px;
+    }
+
+    h2 {
+      margin-bottom: 0;
+      color: @primary-color;
+    }
   }
 }

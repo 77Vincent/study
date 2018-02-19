@@ -44,11 +44,11 @@ export default class Teacher extends React.Component {
                 </Col>
 
                 {
-                  isDetail ? 
+                  !isDetail ? null :
                     <Col span={14} style={{textAlign: 'right'}}>
                       <Button>留言</Button>
                       <Button type='primary'>预约</Button>
-                    </Col> : null
+                    </Col>
                 }
               </Row>
             </article>
