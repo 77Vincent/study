@@ -33,7 +33,8 @@ export default class Header extends React.Component {
 
           <Menu.Item style={{float: 'right'}}>
             <Link to='/dashboard'>
-              <Icon type='user' />我的面板
+              <Icon type='user' style={{fontSize: '1.2em'}} />
+              {this.props.user ? this.props.user.name : '未登录'}
             </Link>
           </Menu.Item>
         </Menu>

@@ -1,4 +1,5 @@
 'use strict'
+
 const sequelize = require('./models/sequelize')
 const Student = require('./models').Student
 const Student_Major = require('./models').Student_Major

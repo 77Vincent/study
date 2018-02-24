@@ -44,7 +44,7 @@ export default class Welcome extends React.Component {
             或成为导师，分享你的<span>知识</span>
           </h1>
 
-          <Button size='large' type='primary' style={{opacity: '0.7'}}>
+          <Button size='large' type='primary'>
             <Link to='/orientation' >寻找导师</Link>
           </Button>
 
@@ -54,7 +54,7 @@ export default class Welcome extends React.Component {
         <aside>
           {
             this.state.ad.map((item, index) => (
-              <section>
+              <section key={index}>
                 <h3>{item.text}</h3>
                 <h2>{item.num}</h2>
               </section>

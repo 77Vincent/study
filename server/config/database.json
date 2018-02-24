@@ -4,7 +4,7 @@
   "port": 3306,
   "userName": "root",
   "password": "root",
-  "databaseName": "blog",
+  "databaseName": "study",
   "ssl": false,
   "timezone": "+08:00"
 }

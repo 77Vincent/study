@@ -28,6 +28,7 @@ export default class App extends React.Component {
   }
 
   state = {
+    user: null,
     isLogin: false,
     loading: false
   }
@@ -54,15 +55,16 @@ export default class App extends React.Component {
   }
 
   verify = async () => {
-    let data = await Fn.fetch('/api/user/verify')
+    let res = await Fn.fetch('/api/user/verify')
 
     this.setState({
-      isLogin: data.code === 200 ? true : false
+      isLogin: res.code === 200 ? true : false
     })
   }
 
-  login = async (e) => {
+  login = async (user) => {
     this.setState({
+      user,
       isLogin: true,
       loading: false
     })
@@ -90,7 +92,7 @@ export default class App extends React.Component {
     return (
       <Layout className='App-Layout'>
         <Layout.Header className='App-Header'>
-          <Header />
+          <Header isLogin={this.state.isLogin} user={this.state.user}/>
         </Layout.Header>
 
         <Layout.Content className='App-Content'>

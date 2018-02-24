@@ -3,26 +3,27 @@
 //代码逻辑混乱，接口数据有问题，请你坚持下去
 //谨记，请勿辱骂前人
 
-import Koa from 'koa';
-import http from 'http';
-import convert from 'koa-convert';
-import logger from 'koa-logger';
-import cors from 'koa-cors';//跨域
-import bodyParser from 'koa-bodyparser'; //请求体JSON解析
-import onerror from 'koa-onerror'; //错误处理
-import resource from 'koa-static'; //静态资源托管
+import Koa from 'koa'
+import http from 'http'
+import convert from 'koa-convert'
+import logger from 'koa-logger'
+import cors from 'koa-cors'//跨域
+import bodyParser from 'koa-bodyparser' //请求体JSON解析
+import onerror from 'koa-onerror' //错误处理
+import resource from 'koa-static' //静态资源托管
 import path from 'path'
 import routes from './routes'
 import { checkToken } from './routes/oauth/index'
-const app = new Koa();
-onerror(app);
-app.use(convert(cors()));
-app.use(convert(logger()));
-app.use(bodyParser());
-app.proxy = true;
+
+const app = new Koa()
+onerror(app)
+app.use(convert(cors()))
+app.use(convert(logger()))
+app.use(bodyParser())
+app.proxy = true
 app.use(resource(path.join(__dirname, '../public')))
 // app.use(json({ pretty: false, param: 'pretty' }))
-app.use(async(ctx, next) => {
+app.use(async (ctx, next) => {
   await next()
   ctx.set('X-Powered-By', 'Koa2')
 })
@@ -39,12 +40,12 @@ app.use(async (ctx, next) => {
 })
 
 // routes
-app.use(routes.routes(), routes.allowedMethods());
+app.use(routes.routes(), routes.allowedMethods())
 
 app.on('error', (error, ctx) => {
 	console.log('奇怪的错误' + JSON.stringify(ctx.onerror))
 	console.log('server error:' + error)
 })
 
-export default app;
+export default app
 

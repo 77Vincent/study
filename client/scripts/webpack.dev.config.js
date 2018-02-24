@@ -22,6 +22,7 @@ const webpackConfigDev = {
     contentBase: path.resolve('./app'),
     historyApiFallback: false,
     port: PORT,
+    host: '0.0.0.0',
     hot: false,
     stats: { colors: true },    
     proxy: {

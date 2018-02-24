@@ -20,7 +20,7 @@ class Login extends React.Component {
       if (!err) {
         this.props.loading()
 
-        let res = await fetch('/api/user/login', {
+        const header = {
           method:"POST",
           headers: {
             'Accept': 'application/json',
@@ -28,13 +28,16 @@ class Login extends React.Component {
           },
           credentials: 'include',
           body: JSON.stringify({
-            name: values.userName,
+            name: values.username,
             password: values.password 
           })
-        })
+        }
+
+        let res = await fetch('/api/user/login', header)
+        let result = await res.json()
 
         if (res.status === 200) {
-          this.props.login()
+          this.props.login(result.data.data)
         }
       }
     })
@@ -46,7 +49,7 @@ class Login extends React.Component {
     return (
       <Form onSubmit={this.login} style={{maxWidth: '300px', margin: '0 auto'}}>
         <Form.Item>
-          {getFieldDecorator('userName', {
+          {getFieldDecorator('username', {
             rules: [{ required: true, message: '请输入手机号/用户名' }],
           })(
             <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='手机号/用户名' />
