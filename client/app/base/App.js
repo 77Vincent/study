@@ -92,6 +92,7 @@ export default class App extends React.Component {
 
     if (res.status === 200) {
       this.setState({
+        user: null,
         loading: false
       })
     }

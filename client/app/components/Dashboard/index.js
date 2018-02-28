@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Link } from 'react-router-dom'
-import { Layout, Menu } from 'antd'
+import { Layout, Menu, Button } from 'antd'
 import { Info, Schedule, Order } from 'components'
 
 export default class Dashboard extends React.Component {
@@ -14,6 +14,16 @@ export default class Dashboard extends React.Component {
     }
   }
 
+  componentDidUpdate = () => {
+    if (!this.props.user) {
+      this.props.history.push('./login')
+    }
+  }
+
+  logout = () => {
+    this.props.logout()
+  }
+
   render() {
     return (
       <div className='Dashboard'>
@@ -24,6 +34,7 @@ export default class Dashboard extends React.Component {
               <Menu.Item key='2'><Link to='/dashboard/schedule'>我的课程</Link></Menu.Item>
               <Menu.Item key='3'><Link to='/dashboard/order'>我的订单</Link></Menu.Item>
             </Menu>
+            <Button onClick={this.logout}>登出</Button>
           </Layout.Sider>
 
           <Layout.Content className='App-tile' style={{maxWidth: '900px'}}>
