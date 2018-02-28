@@ -7,8 +7,14 @@ class Login extends React.Component {
     super(props)
   }
 
+  componentDidUpdate = () => {
+    if (this.props.user) {
+      this.props.history.push('./dashboard')
+    }
+  }
+
   componentWillMount = () => {
-    if (this.props.isLogin) {
+    if (this.props.user) {
       this.props.history.push('./dashboard')
     }
   }
@@ -18,27 +24,7 @@ class Login extends React.Component {
 
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        this.props.loading()
-
-        const header = {
-          method:"POST",
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          credentials: 'include',
-          body: JSON.stringify({
-            name: values.username,
-            password: values.password 
-          })
-        }
-
-        let res = await fetch('/api/user/login', header)
-        let result = await res.json()
-
-        if (res.status === 200) {
-          this.props.login(result.data.data)
-        }
+        this.props.login(values)
       }
     })
   }

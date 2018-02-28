@@ -29,17 +29,11 @@ export default class App extends React.Component {
 
   state = {
     user: null,
-    isLogin: false,
     loading: false
   }
 
   componentWillMount() {
     this.verify()
-
-    message.config({
-      top: '75px',
-      duration: 2
-    })
   }
 
   loading = () => {
@@ -56,18 +50,35 @@ export default class App extends React.Component {
 
   verify = async () => {
     let res = await Fn.fetch('/api/user/verify')
-
-    this.setState({
-      isLogin: res.code === 200 ? true : false
-    })
   }
 
-  login = async (user) => {
+  login = async (credentials) => {
     this.setState({
-      user,
-      isLogin: true,
-      loading: false
+      loading: true 
     })
+
+    const header = {
+      method:"POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        name: credentials.username,
+        password: credentials.password 
+      })
+    }
+
+    const res = await fetch('/api/user/login', header)
+    const result = await res.json()
+
+    if (res.status === 200) {
+      this.setState({
+        user: result.data.data,
+        loading: false
+      })
+    }
   }
 
   logout = async () => {
@@ -81,7 +92,6 @@ export default class App extends React.Component {
 
     if (res.status === 200) {
       this.setState({
-        isLogin: false,
         loading: false
       })
     }
@@ -92,7 +102,7 @@ export default class App extends React.Component {
     return (
       <Layout className='App-Layout'>
         <Layout.Header className='App-Header'>
-          <Header isLogin={this.state.isLogin} user={this.state.user}/>
+          <Header user={this.state.user}/>
         </Layout.Header>
 
         <Layout.Content className='App-Content'>
@@ -104,11 +114,14 @@ export default class App extends React.Component {
             <Route path="/forgot" component={Forgot} />
             <Route path="/login" render={(props) => <Login 
               login={this.login} 
-              isLogin={this.state.isLogin} 
-              loading={this.loading} 
+              user={this.state.user} 
               {...props} />} 
             />
-            <Route path="/dashboard" render={props => <Dashboard isLogin={this.state.isLogin} {...props} />} />
+            <Route path="/dashboard" render={props => <Dashboard 
+              logout={this.logout} 
+              user={this.state.user} 
+              {...props} />} 
+            />
             <Route path="/teachers" render={() => <Teachers loading={this.loading} loaded={this.loaded}/>} />
           </Loading>
         </Layout.Content>
