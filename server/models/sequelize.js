@@ -1,5 +1,6 @@
-import Sequelize from 'sequelize';
-import databaseConfig from '../config/database.json';
+import Sequelize from 'sequelize'
+import databaseConfig from '../config/database.json'
+
 const sequelize = new Sequelize(databaseConfig.databaseName, databaseConfig.userName, databaseConfig.password, {
     host: databaseConfig.host,
     dialect: databaseConfig.dialect,
@@ -11,6 +12,6 @@ const sequelize = new Sequelize(databaseConfig.databaseName, databaseConfig.user
     dialectOptions: {
         ssl: databaseConfig.ssl,
     }
-});
+})
 
-module.exports = sequelize;
+module.exports = sequelize

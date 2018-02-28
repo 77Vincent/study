@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "start": "./node_modules/.bin/nodemon bin/run",
-    "initMysql": "babel-node initMysql",
+    "init-mysql": "babel-node init-mysql",
     "pm2": "pm2 start bin/run "
   },
   "dependencies": {
