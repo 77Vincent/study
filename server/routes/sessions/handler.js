@@ -3,27 +3,27 @@ import Sequelize from 'sequelize'
 const Op = Sequelize.Op
 
 const authenticate = async (ctx) => {
-  const { body } = ctx.request
+  const { username, password } = ctx.request.body
 
   const student = await Student.findOne({
     where: {
       [Op.or]: [{
-        account: body.name
+        account: username
       }, {
-        email: body.name
+        email: username
       }],
-      password: body.password
+      password: password
     }
   })
 
   const teacher = await Teacher.findOne({
     where: {
       [Op.or]: [{
-        account: body.name
+        account: username
       }, {
-        email: body.name
+        email: username
       }],
-      password: body.password
+      password: password
     }
   })
 
@@ -53,7 +53,10 @@ const getUser = async(id, role) => {
   } else {
     user = await Teacher.findOne({ where : { id } })
   }
-  return user 
+  return  {
+    data: user,
+    role: role
+  } 
 }
 
 export {

@@ -32,7 +32,7 @@ export default class App extends React.Component {
     loading: false
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.login()
   }
 
@@ -48,10 +48,6 @@ export default class App extends React.Component {
     })
   }
 
-  verify = async () => {
-    let res = await Fn.fetch('/api/user/verify')
-  }
-
   login = async (credentials) => {
     this.setState({
       loading: true 
@@ -65,7 +61,7 @@ export default class App extends React.Component {
       },
       credentials: 'include',
       body: credentials ? JSON.stringify({
-        name: credentials.username,
+        username: credentials.username,
         password: credentials.password 
       }) : null
     }
@@ -75,10 +71,13 @@ export default class App extends React.Component {
 
     if (res.status === 200) {
       this.setState({
-        user: result.data.data,
-        loading: false
+        user: result.data,
       })
     }
+
+    this.setState({
+      loading: false
+    })
   }
 
   logout = async () => {

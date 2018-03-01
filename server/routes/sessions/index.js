@@ -22,33 +22,25 @@ router.post('/', async (ctx, next) => {
         })
 
         ctx.status = 200
-        ctx.body = {
-          data: user,
-          message: 'login in success'
-        }
+        ctx.statusText = 'Login Success'
+        ctx.body = user
       } else {
         ctx.status = 403
-        ctx.body = {
-          message: 'password wrong'
-        }
+        ctx.statusText = 'Login Failed'
       }
     } catch (err) {
       ctx.status = 500
-      ctx.body = {
-        message: 'Internal Server Error'
-      }
+      ctx.statusText = 'Internal Server Error'
       console.log('login failure', err)
     }
+
+  // Sign in with credentials in cookies if exist 
   } else if (cookies.user_id) {
-    // Sign in with credentials in cookies if exist 
     user = await getUser(cookies.user_id, cookies.is_student)
 
     ctx.status = 200
-    ctx.body = {
-      data: user,
-      message: 'login in success',
-      is_student: ctx.decoded.is_student === "student"
-    }
+    ctx.statusText = 'Login Success'
+    ctx.body = user
   }
 })
 
@@ -57,15 +49,11 @@ router.delete('/', async (ctx, next) => {
   try {
     ctx.cookies.set('user_info', null)
     ctx.status = 200
-    ctx.body = {
-      message: 'logout success'
-    }
+    ctx.statusText = 'Logout Success'
   } catch (err) {
     console.log('logout error', err)
     ctx.status = 500
-    ctx.body = {
-      message: 'Internal Server Error'
-    }
+    ctx.statusText = 'Internal Server Error'
   }
 })
 

@@ -56,7 +56,7 @@ class Login extends React.Component {
             <Checkbox>记住我</Checkbox>
           )}
 
-          {/* <Link to='/forgot' style={{float: 'right'}}>忘记密码</Link> */}
+          <Link to='/forgot' style={{float: 'right'}}>忘记密码</Link>
 
           <Button style={{width: '100%'}} type="primary" htmlType="submit">登录</Button>
           <Link to='/register'><Button style={{width: '100%'}}>注册</Button></Link>
