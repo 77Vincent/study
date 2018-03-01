@@ -48,10 +48,12 @@ export default class App extends React.Component {
     })
   }
 
-  login = async (credentials) => {
+  login = async (credentials = { username: null, password: null}) => {
     this.setState({
       loading: true 
     })
+
+    const { username, password } = credentials
 
     const header = {
       method:"POST",
@@ -60,10 +62,7 @@ export default class App extends React.Component {
         'Content-Type': 'application/json'
       },
       credentials: 'include',
-      body: credentials ? JSON.stringify({
-        username: credentials.username,
-        password: credentials.password 
-      }) : null
+      body: JSON.stringify({ username, password }) 
     }
 
     const res = await fetch('/api/sessions', header)

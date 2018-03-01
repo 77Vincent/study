@@ -6,10 +6,11 @@ import { signToken } from '../oauth/index'
 // Login 
 router.post('/', async (ctx, next) => {
   const cookies = ctx.decoded
+  const { username, password } = ctx.request.body
   let user
 
   // Sign in with user input credentials
-  if (Object.keys(ctx.request.body).length) {
+  if (username && password) {
     try {
       user = await authenticate(ctx)
 
