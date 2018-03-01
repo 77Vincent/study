@@ -33,7 +33,7 @@ export default class App extends React.Component {
   }
 
   componentWillMount() {
-    this.verify()
+    this.login()
   }
 
   loading = () => {
@@ -64,13 +64,13 @@ export default class App extends React.Component {
         'Content-Type': 'application/json'
       },
       credentials: 'include',
-      body: JSON.stringify({
+      body: credentials ? JSON.stringify({
         name: credentials.username,
         password: credentials.password 
-      })
+      }) : null
     }
 
-    const res = await fetch('/api/user/login', header)
+    const res = await fetch('/api/sessions', header)
     const result = await res.json()
 
     if (res.status === 200) {
@@ -86,7 +86,8 @@ export default class App extends React.Component {
       loading: true
     })
 
-    const res = await fetch('/api/user/logout', {
+    const res = await fetch('/api/sessions', {
+      method:"DELETE",
       credentials: 'include'
     })
 
