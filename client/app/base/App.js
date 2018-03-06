@@ -36,22 +36,11 @@ export default class App extends React.Component {
     this.login()
   }
 
-  loading = () => {
-    this.setState({
-      loading: true
-    })
-  }
-
-  loaded = () => {
-    this.setState({
-      loading: false 
-    })
-  }
+  loading = () => { this.setState({ loading: true }) }
+  loaded = () => { this.setState({ loading: false }) }
 
   login = async (credentials = { username: null, password: null}) => {
-    this.setState({
-      loading: true 
-    })
+    this.loading()
 
     const { username, password } = credentials
 
@@ -74,15 +63,11 @@ export default class App extends React.Component {
       })
     }
 
-    this.setState({
-      loading: false
-    })
+    this.loaded()
   }
 
   logout = async () => {
-    this.setState({
-      loading: true
-    })
+    this.loading()
 
     const res = await fetch('/api/sessions', {
       method:"DELETE",
@@ -91,9 +76,9 @@ export default class App extends React.Component {
 
     if (res.status === 200) {
       this.setState({
-        user: null,
-        loading: false
+        user: null
       })
+      this.loaded()
     }
   }
 

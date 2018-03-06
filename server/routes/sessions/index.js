@@ -1,7 +1,8 @@
 import Router from 'koa-router'
-const router = Router()
 import { authenticate, getUser } from './handler'
 import { signToken } from '../oauth/index'
+
+const router = Router()
 
 // Login 
 router.post('/', async (ctx, next) => {

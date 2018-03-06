@@ -1,12 +1,11 @@
 'use strict'
 
-const sequelize = require('./models/sequelize')
-const Student = require('./models').Student
-const Student_Major = require('./models').Student_Major
-const Teacher = require('./models').Teacher
-const Teacher_Major = require('./models').Teacher_Major
-const Student_Teacher = require('./models').Student_Teacher
-const Major = require('./models').Major
+import sequelize from './config/database'
+import {
+  User,
+  Major,
+  User_Major
+} from './models'
 
 const initMysql = (async () => {
   try {
@@ -40,84 +39,15 @@ const initMysql = (async () => {
       desc: '服装设计'
     })
 
-    // Teacher
-    await Teacher.sync({
+    await User.sync({
       force: true
     })
-    await Teacher.create({
-      account: 'teacher1',
-      name: 'Vincent',
-      password: '000000'
-    })
-    await Teacher.create({
-      account: 'teacher2',
-      name: 'Jessie',
-      password: '000000'
+    await User.create({
+      username: 'user1',
+      password: '000000',
+      name: 'Vincent'
     })
 
-    // Student 
-    await Student.sync({
-      force: true
-    })
-    await Student.create({
-      account: 'teststudent1',
-      name: 'Peter',
-      password: '000000'
-    })
-    await Student.create({
-      account: 'teststudent2',
-      name: 'Marry',
-      password: '000000'
-    })
-
-    // Teacher Major
-    await Teacher_Major.sync({
-      force: true
-    })
-    await Teacher_Major.create({
-      major_id: 1,
-      teacher_id: 1 
-    })
-    await Teacher_Major.create({
-      major_id: 2,
-      teacher_id: 2 
-    })
-
-    // Student Major
-    await Student_Major.sync({
-      force: true
-    })
-    await Student_Major.create({
-      major_id: 1,
-      student_id: 1 
-    })
-    await Student_Major.create({
-      major_id: 2,
-      student_id: 2 
-    })
-
-    // Student Teacher
-    await Student_Teacher.sync({
-      force: true
-    })
-    await Student_Teacher.create({
-      student_id: 1,
-      teacher_id: 1
-    })
-    await Student_Teacher.create({
-      student_id: 2,
-      teacher_id: 2 
-    })
-
-    let data = await Student.findAll({
-      where: {
-        id: 4
-      },
-      include: [{
-        model: Teacher
-      }]
-    })
-    console.log('data:', data)
   } catch (err) {
     console.log('init Error', err)
   }

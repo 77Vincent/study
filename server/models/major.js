@@ -1,6 +1,7 @@
-'use strict';
-import sequelize from './sequelize.js';
-import Sequelize from 'sequelize';
+'use strict'
+
+import Sequelize from 'sequelize'
+import sequelize from '../config/database.js'
 
 const Major = sequelize.define('major', {
     id: {
@@ -17,6 +18,6 @@ const Major = sequelize.define('major', {
 },{
     tableName: 'Major'
 }
-);
+)
 
-export default Major;
+export default Major
