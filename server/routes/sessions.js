@@ -1,64 +1,45 @@
 import Router from 'koa-router'
 import Sequelize from 'sequelize'
-import User from '../models'
+
+import { User } from '../models'
 import { signToken } from '../base/oauth'
 
 const Op = Sequelize.Op
 const router = Router()
 
-const authenticate = async (ctx) => {
-  const { username, password } = ctx.request.body
+const getUser = async (username, password, id) => {
+  let user
 
-  const student = await Student.findOne({
-    where: {
-      [Op.or]: [{
-        account: username
-      }, {
-        email: username
-      }],
-      password: password
-    }
-  })
-
-  const teacher = await Teacher.findOne({
-    where: {
-      [Op.or]: [{
-        account: username
-      }, {
-        email: username
-      }],
-      password: password
-    }
-  })
-
-  if (student && !teacher) {
-    return {
-      data: student,
-      role: 'student'
-    }
-  } else if (!student && teacher) {
-    return {
-      data: teacher,
-      role: 'teacher'
-    }
-  } else if (!student && !teacher) {
-    // Authetication failed
-    return false
-  } else {
-    // 老师很学生账号密码相同的情况
+  if (username && password) {
+    user = await User.findOne({
+      where: {
+        [Op.or]: [{ 
+          username 
+        }, { 
+          email: username 
+        }, {
+          mobilephone: username 
+        }],
+        password
+      }
+    })
+  } else if (id) {
+    user = await User.findOne({ where: { id } })
   }
+
+  return user
 }
 
 // Login 
 router.post('/', async (ctx, next) => {
-  const cookies = ctx.decoded
+  const id = ctx.decoded.user_info
   const { username, password } = ctx.request.body
   let user
 
   // Sign in with user input credentials
   if (username && password) {
     try {
-      user = await authenticate(ctx)
+      user = await getUser(username, password)
 
       if (user) {
         const { token, expiresIn } = signToken(user)
@@ -69,20 +50,43 @@ router.post('/', async (ctx, next) => {
         })
 
         ctx.status = 200
-        ctx.statusText = 'Login Success'
-        ctx.body = user
+        ctx.body = {
+          data: user,
+          code: 200,
+          message: 'Success'
+        }
       } else {
         ctx.status = 403
-        ctx.statusText = 'Login Failed'
+        ctx.body = {
+          code: 403,
+          message: 'Failure'
+        }
       }
     } catch (err) {
       ctx.status = 500
-      ctx.statusText = 'Internal Server Error'
-      console.log('login failure', err)
+      ctx.body = {
+        code: 500,
+        message: 'Internal Error'
+      }
     }
 
   // Sign in with credentials in cookies if exist 
-  } else if (cookies.user_id) {
+  } else if (id) {
+    try {
+      user = await getUser(null, null, id)
+        ctx.status = 200
+        ctx.body = {
+          data: user,
+          code: 200,
+          message: 'Success'
+        }
+    } catch (err) {
+      ctx.status = 500
+      ctx.body = {
+        code: 500,
+        message: 'Internal Error'
+      }
+    }
   }
 })
 
@@ -91,11 +95,17 @@ router.delete('/', async (ctx, next) => {
   try {
     ctx.cookies.set('user_info', null)
     ctx.status = 200
-    ctx.statusText = 'Logout Success'
+    ctx.body = {
+      code: 200,
+      message: 'Success'
+    }
   } catch (err) {
     console.log('logout error', err)
     ctx.status = 500
-    ctx.statusText = 'Internal Server Error'
+    ctx.body = {
+      code: 500,
+      message: 'Internal Error'
+    }
   }
 })
 

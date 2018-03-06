@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken'
 
 const config = {
-  "secret": "Edmond",
-  "timeout": 1200000
+  secret: 'Jessie',
+  timeout: 1200000
 }
 
 /**
@@ -12,7 +12,7 @@ const config = {
  */
 const signToken = (user) => {
   const token = jwt.sign({
-    user_info: user.data.id
+    user_info: user.id
   }, config.secret, {
     expiresIn: config.timeout
   })
@@ -25,16 +25,14 @@ const signToken = (user) => {
 
 /**
  * Check and get token if exist
- * @param {any} ctx 
- * @return {void}
+ * @param {Object} ctx 
+ * @return {String} user ide
  */
 const verifyToken = async (ctx) => {
   const user_info = await ctx.cookies.get('user_info')
 
   if (user_info) {
-    jwt.verify(user_info, config.secret, function (err, decoded) {
-      ctx.decoded = decoded && decoded.user_info
-    })
+    return jwt.verify(user_info, config.secret)
   }
 }
 

@@ -30,7 +30,12 @@ app
 	})
 	.use(async (ctx, next) => {
 		ctx.decoded = {}
-		await verifyToken(ctx)
+
+		let id = await verifyToken(ctx)
+
+		if (id) {
+			ctx.decoded = id
+		}
 		await next()
 	})
 	.use(async (ctx, next) => {
