@@ -1,8 +1,53 @@
 import Router from 'koa-router'
-import { authenticate, getUser } from './handler'
-import { signToken } from '../oauth/index'
+import Sequelize from 'sequelize'
+import User from '../models'
+import { signToken } from '../base/oauth'
 
+const Op = Sequelize.Op
 const router = Router()
+
+const authenticate = async (ctx) => {
+  const { username, password } = ctx.request.body
+
+  const student = await Student.findOne({
+    where: {
+      [Op.or]: [{
+        account: username
+      }, {
+        email: username
+      }],
+      password: password
+    }
+  })
+
+  const teacher = await Teacher.findOne({
+    where: {
+      [Op.or]: [{
+        account: username
+      }, {
+        email: username
+      }],
+      password: password
+    }
+  })
+
+  if (student && !teacher) {
+    return {
+      data: student,
+      role: 'student'
+    }
+  } else if (!student && teacher) {
+    return {
+      data: teacher,
+      role: 'teacher'
+    }
+  } else if (!student && !teacher) {
+    // Authetication failed
+    return false
+  } else {
+    // 老师很学生账号密码相同的情况
+  }
+}
 
 // Login 
 router.post('/', async (ctx, next) => {
@@ -38,11 +83,6 @@ router.post('/', async (ctx, next) => {
 
   // Sign in with credentials in cookies if exist 
   } else if (cookies.user_id) {
-    user = await getUser(cookies.user_id, cookies.is_student)
-
-    ctx.status = 200
-    ctx.statusText = 'Login Success'
-    ctx.body = user
   }
 })
 

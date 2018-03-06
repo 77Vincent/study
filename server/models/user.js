@@ -1,40 +1,54 @@
-import Sequelize from 'sequelize';
-import sequelize from '../config/database.js';
+import Sequelize from 'sequelize'
+import sequelize from '../base/database.js'
 
-const User = sequelize.define('user', {
-    id: {
-        type:Sequelize.INTEGER,
-        primaryKey:true,
-        autoIncrement:true,
-    },
-    username: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
-    },
-    password: {
-        type: Sequelize.STRING,
-        allowNull: false,
-    },
-    name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
-    },
-    birthday: {
-        type: Sequelize.DATE,
-    },
-    mobilephone: {
-        type: Sequelize.STRING
-    },
-    email: {
-        type: Sequelize.STRING
-    },
-    last_logout: {
-        type: Sequelize.DATE,
-    },
-},{
-    tableName: 'User'
-});
-
-export default User;
+export default sequelize.define('user', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  username: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
+  },
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
+  },
+  role: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  avatar: {
+    type: Sequelize.STRING
+  },
+  school: {
+    type: Sequelize.STRING
+  },
+  title: {
+    type: Sequelize.STRING
+  },
+  gender: {
+    type: Sequelize.BOOLEAN
+  },
+  birthday: {
+    type: Sequelize.DATE,
+  },
+  mobilephone: {
+    type: Sequelize.STRING
+  },
+  email: {
+    type: Sequelize.STRING
+  },
+  last_logout: {
+    type: Sequelize.DATE,
+  },
+}, {
+  tableName: 'User'
+})

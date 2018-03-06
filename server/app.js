@@ -11,7 +11,7 @@ import resource from 'koa-static' //静态资源托管
 import path from 'path'
 
 import routes from './routes'
-import { checkToken } from './routes/oauth/index'
+import { verifyToken } from './base/oauth'
 
 const app = new Koa()
 
@@ -30,7 +30,7 @@ app
 	})
 	.use(async (ctx, next) => {
 		ctx.decoded = {}
-		await checkToken(ctx)
+		await verifyToken(ctx)
 		await next()
 	})
 	.use(async (ctx, next) => {
