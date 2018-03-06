@@ -7,25 +7,19 @@ import { signToken } from '../base/oauth'
 const Op = Sequelize.Op
 const router = Router()
 
-const getUser = async (username, password, id) => {
-  let user
-
-  if (username && password) {
-    user = await User.findOne({
-      where: {
-        [Op.or]: [{ 
-          username 
-        }, { 
-          email: username 
-        }, {
-          mobilephone: username 
-        }],
-        password
-      }
-    })
-  } else if (id) {
-    user = await User.findOne({ where: { id } })
-  }
+const getUser = async (username, password) => {
+  let user = await User.findOne({
+    where: {
+      [Op.or]: [{ 
+        username 
+      }, { 
+        email: username 
+      }, {
+        mobilephone: username 
+      }],
+      password
+    }
+  })
 
   return user
 }
@@ -73,19 +67,29 @@ router.post('/', async (ctx, next) => {
   // Sign in with credentials in cookies if exist 
   } else if (id) {
     try {
-      user = await getUser(null, null, id)
-        ctx.status = 200
-        ctx.body = {
-          data: user,
-          code: 200,
-          message: 'Success'
-        }
+      user = await User.findOne({ where: { id } })
+
+      ctx.status = 200
+      ctx.body = {
+        data: user,
+        code: 200,
+        message: 'Success'
+      }
     } catch (err) {
       ctx.status = 500
       ctx.body = {
         code: 500,
         message: 'Internal Error'
       }
+    }
+
+  // Newly visit
+  } else {
+    ctx.status = 403
+    ctx.body = {
+      data: user,
+      code: 403,
+      message: 'Failure'
     }
   }
 })
