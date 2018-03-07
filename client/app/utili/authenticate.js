@@ -33,7 +33,6 @@ async function register () {
   }
 }
 
-
 async function login (credentials = { username: null, password: null}) {
   this.loading()
 
@@ -62,19 +61,12 @@ async function login (credentials = { username: null, password: null}) {
 }
 
 async function logout () {
-  this.loading()
-
   const res = await window.fetch('/api/sessions', {
     method:"DELETE",
     credentials: 'include'
   })
 
-  if (res.status === 200) {
-    this.setState({
-      user: null
-    })
-    this.loaded()
-  }
+  return res
 }
 
 export {

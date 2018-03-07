@@ -4,7 +4,7 @@
 import React from 'react'
 import { Layout, Menu, Button, message } from 'antd'
 import { Route, Link, NavLink } from 'react-router-dom'
-import { login, logout, register } from './fn'
+import { login, logout, register } from '../utili/authenticate'
 
 // Custom styles, components and functions
 import './App.less'
@@ -39,6 +39,17 @@ export default class App extends React.Component {
   loading = () => { this.setState({ loading: true }) }
   loaded = () => { this.setState({ loading: false }) }
 
+  logout = async () => {
+    this.loading()
+
+    await logout()
+
+    this.setState({
+      user: null
+    })
+    this.loaded()
+  }
+
   render() {
     return (
       <Layout className='App-Layout'>
@@ -64,7 +75,7 @@ export default class App extends React.Component {
               {...props} />} 
             />
             <Route path="/dashboard" render={props => <Dashboard 
-              logout={logout.bind(this)} 
+              logout={this.logout} 
               user={this.state.user} 
               {...props} />} 
             />
