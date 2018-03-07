@@ -33,11 +33,7 @@ async function register () {
   }
 }
 
-async function login (credentials = { username: null, password: null}) {
-  this.loading()
-
-  const { username, password } = credentials
-
+async function login (username, password) {
   const header = {
     method:"POST",
     headers: {
@@ -49,15 +45,7 @@ async function login (credentials = { username: null, password: null}) {
   }
 
   const res = await window.fetch('/api/sessions', header)
-  const result = await res.json()
-
-  if (res.status === 200) {
-    this.setState({
-      user: result.data,
-    })
-  }
-
-  this.loaded()
+  return res
 }
 
 async function logout () {

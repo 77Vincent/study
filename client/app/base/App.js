@@ -33,20 +33,32 @@ export default class App extends React.Component {
   }
 
   componentDidMount () {
-    login.call(this)
+    this.login()
   }
 
   loading = () => { this.setState({ loading: true }) }
   loaded = () => { this.setState({ loading: false }) }
 
+  login = async (username, password) => {
+    this.loading()
+    const res = await login(username, password)
+    if (res.status === 200) {
+      const result = await res.json()
+      this.setState({
+        user: result.data,
+      })
+    }
+    this.loaded()
+  }
+
   logout = async () => {
     this.loading()
-
-    await logout()
-
-    this.setState({
-      user: null
-    })
+    const res = await logout()
+    if (res.status === 200) {
+      this.setState({
+        user: null
+      })
+    }
     this.loaded()
   }
 
@@ -70,7 +82,7 @@ export default class App extends React.Component {
               {...props} />} 
             />
             <Route path="/login" render={(props) => <Login 
-              login={login.bind(this)} 
+              login={this.login} 
               user={this.state.user} 
               {...props} />} 
             />
