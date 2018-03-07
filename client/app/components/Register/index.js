@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, Radio, Modal } from 'antd'
 
 class Register extends React.Component {
@@ -8,6 +9,7 @@ class Register extends React.Component {
   }
   handleSubmit = (e) => {
     e.preventDefault()
+
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values)
@@ -89,28 +91,27 @@ class Register extends React.Component {
         </Modal>
 
         <Form.Item {...formItemLayout} label="用户类别">
-          {getFieldDecorator('radio-group', {
+          {getFieldDecorator('role', {
             rules: [{
               required: true, message: '请选择用户类别'
             }]
           })(
             <Radio.Group>
-              <Radio value="a">学生</Radio>
-              <Radio value="b">老师</Radio>
+              <Radio value="student">学生</Radio>
+              <Radio value="teacher">老师</Radio>
             </Radio.Group>
           )}
         </Form.Item>
+
         <Form.Item {...formItemLayout} label="手机号">
-          {getFieldDecorator('phone', {
+          {getFieldDecorator('mobilephone', {
             rules: [{ required: true, message: '请输入手机号' }],
           })(
             <Input addonBefore={prefixSelector}/>
           )}
         </Form.Item>
-        <Form.Item
-          {...formItemLayout}
-          label="密码"
-        >
+
+        <Form.Item {...formItemLayout} label="密码">
           {getFieldDecorator('password', {
             rules: [{
               required: true, message: '请输入密码',
@@ -121,10 +122,8 @@ class Register extends React.Component {
             <Input type="password" />
           )}
         </Form.Item>
-        <Form.Item
-          {...formItemLayout}
-          label="确认密码"
-        >
+
+        <Form.Item {...formItemLayout} label="确认密码">
           {getFieldDecorator('confirm', {
             rules: [{
               required: true, message: '请再次输入密码',
@@ -135,11 +134,8 @@ class Register extends React.Component {
             <Input type="password" onBlur={this.handleConfirmBlur} />
           )}
         </Form.Item>
-        <Form.Item
-          {...formItemLayout}
-          label="验证码"
-          extra="以验证是真人操作"
-        >
+
+        <Form.Item {...formItemLayout} label="验证码">
           <Row gutter={8}>
             <Col span={12}>
               {getFieldDecorator('captcha', {
@@ -153,15 +149,16 @@ class Register extends React.Component {
             </Col>
           </Row>
         </Form.Item>
+
         <Form.Item {...tailFormItemLayout}>
           {getFieldDecorator('agreement', {
             valuePropName: 'checked',
           })(
             <Checkbox>我已经阅读<a onClick={this.openProvision}>协议</a></Checkbox>
           )}
-        </Form.Item>
-        <Form.Item {...tailFormItemLayout}>
+
           <Button style={{width: '100%'}} type="primary" htmlType="submit">注册</Button>
+          <Link to='/login'><Button style={{width: '100%'}}>立即登录</Button></Link>
         </Form.Item>
       </Form>
     )

@@ -1,9 +1,7 @@
 import jwt from 'jsonwebtoken'
 
-const config = {
-  secret: 'Jessie',
-  timeout: 1200000
-}
+const secret = 'Jessie'
+const timeout =  1200000
 
 /**
  * Create token
@@ -13,26 +11,26 @@ const config = {
 const signToken = (user) => {
   const token = jwt.sign({
     user_info: user.id
-  }, config.secret, {
-    expiresIn: config.timeout
+  }, secret, {
+    expiresIn: timeout
   })
 
   return {
     token,
-    expiresIn: config.timeout
+    expiresIn: timeout
   }
 }
 
 /**
  * Check and get token if exist
  * @param {Object} ctx 
- * @return {String} user ide
+ * @return {Object} user id
  */
 const verifyToken = async (ctx) => {
   const user_info = await ctx.cookies.get('user_info')
 
   if (user_info) {
-    return jwt.verify(user_info, config.secret)
+    return jwt.verify(user_info, secret)
   }
 }
 

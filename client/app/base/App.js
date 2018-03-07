@@ -4,6 +4,7 @@
 import React from 'react'
 import { Layout, Menu, Button, message } from 'antd'
 import { Route, Link, NavLink } from 'react-router-dom'
+import { login, logout, register } from './fn'
 
 // Custom styles, components and functions
 import './App.less'
@@ -20,7 +21,6 @@ import {
   Orientation,
   Teachers
 } from 'components'
-import Fn from './fn.js'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -32,56 +32,12 @@ export default class App extends React.Component {
     loading: false
   }
 
-  componentDidMount() {
-    this.login()
+  componentDidMount () {
+    login.call(this)
   }
 
   loading = () => { this.setState({ loading: true }) }
   loaded = () => { this.setState({ loading: false }) }
-
-  login = async (credentials = { username: null, password: null}) => {
-    this.loading()
-
-    const { username, password } = credentials
-
-    const header = {
-      method:"POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include',
-      body: JSON.stringify({ username, password }) 
-    }
-
-    const res = await fetch('/api/sessions', header)
-    const result = await res.json()
-
-    if (res.status === 200) {
-      this.setState({
-        user: result.data,
-      })
-    }
-
-    this.loaded()
-  }
-
-  logout = async () => {
-    this.loading()
-
-    const res = await fetch('/api/sessions', {
-      method:"DELETE",
-      credentials: 'include'
-    })
-
-    if (res.status === 200) {
-      this.setState({
-        user: null
-      })
-      this.loaded()
-    }
-  }
-
 
   render() {
     return (
@@ -95,15 +51,20 @@ export default class App extends React.Component {
             <Route exact path="/" render={() => <Welcome loaded={this.loaded}/>} />
             <Route path="/orientation" component={Orientation} />
             <Route path="/about" component={About} />
-            <Route path="/register" component={Register} />
             <Route path="/forgot" component={Forgot} />
+
+            <Route path="/register" render={(props) => <Register 
+              register={register.bind(this)} 
+              user={this.state.user} 
+              {...props} />} 
+            />
             <Route path="/login" render={(props) => <Login 
-              login={this.login} 
+              login={login.bind(this)} 
               user={this.state.user} 
               {...props} />} 
             />
             <Route path="/dashboard" render={props => <Dashboard 
-              logout={this.logout} 
+              logout={logout.bind(this)} 
               user={this.state.user} 
               {...props} />} 
             />

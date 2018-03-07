@@ -1,3 +1,5 @@
+'use strict'
+
 import Router from 'koa-router'
 import Sequelize from 'sequelize'
 
@@ -10,13 +12,7 @@ const router = Router()
 const getUser = async (username, password) => {
   let user = await User.findOne({
     where: {
-      [Op.or]: [{ 
-        username 
-      }, { 
-        email: username 
-      }, {
-        mobilephone: username 
-      }],
+      [Op.or]: [{ username }, { email: username }, { mobilephone: username }],
       password
     }
   })
@@ -46,20 +42,17 @@ router.post('/', async (ctx, next) => {
         ctx.status = 200
         ctx.body = {
           data: user,
-          code: 200,
           message: 'Success'
         }
       } else {
         ctx.status = 403
         ctx.body = {
-          code: 403,
           message: 'Failure'
         }
       }
     } catch (err) {
       ctx.status = 500
       ctx.body = {
-        code: 500,
         message: 'Internal Error'
       }
     }
@@ -72,13 +65,11 @@ router.post('/', async (ctx, next) => {
       ctx.status = 200
       ctx.body = {
         data: user,
-        code: 200,
         message: 'Success'
       }
     } catch (err) {
       ctx.status = 500
       ctx.body = {
-        code: 500,
         message: 'Internal Error'
       }
     }
@@ -88,7 +79,6 @@ router.post('/', async (ctx, next) => {
     ctx.status = 403
     ctx.body = {
       data: user,
-      code: 403,
       message: 'Failure'
     }
   }
@@ -100,14 +90,12 @@ router.delete('/', async (ctx, next) => {
     ctx.cookies.set('user_info', null)
     ctx.status = 200
     ctx.body = {
-      code: 200,
       message: 'Success'
     }
   } catch (err) {
     console.log('logout error', err)
     ctx.status = 500
     ctx.body = {
-      code: 500,
       message: 'Internal Error'
     }
   }

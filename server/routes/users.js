@@ -1,21 +1,21 @@
 import Router from 'koa-router'
-import Sequelize from 'sequelize';
+import Sequelize from 'sequelize'
 
-import { Users } from '../models';
+import { Users } from '../models'
 
 const router = Router()
-const Op = Sequelize.Op;
+const Op = Sequelize.Op
 
 const register = async (ctx) => {
   try {
-    let {
-      userInfo
-    } = ctx.request.body
+    let { userInfo } = ctx.request.body
+
     if(userInfo.type === "student"){
       await Student.create(userInfo)
     } else {
       await Teacher.create(userInfo)
     }
+
     return true
   } catch (error) {
     console.log(error)

@@ -2,19 +2,17 @@
 
 import Sequelize from 'sequelize'
 
-const info = {
-    databaseName: 'xfolio',
-    username: 'root',
-    password: 'root'
-}
+const databaseName = 'xfolio'
+const username = 'root'
+const password = 'root'
 
-export default new Sequelize(info.databaseName, info.username, info.password, {
-    host: 'localhost',
-    dialect: 'mysql',
-    port: 3306,
-    underscored: true,
-    timezone: '+08:00',
-    dialectOptions: {
-        ssl: false,
-    }
+export default new Sequelize(databaseName, username, password, {
+  host: 'localhost',
+  dialect: 'mysql',
+  port: 3306,
+  underscored: true,
+  timezone: '+08:00',
+  dialectOptions: {
+    ssl: false,
+  }
 })
