@@ -12,6 +12,7 @@ class Register extends React.Component {
 
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
+        const { username, mobilephone, password, role } = values
         console.log('Received values of form: ', values)
       }
     })
@@ -100,6 +101,14 @@ class Register extends React.Component {
               <Radio value="student">学生</Radio>
               <Radio value="teacher">老师</Radio>
             </Radio.Group>
+          )}
+        </Form.Item>
+
+        <Form.Item {...formItemLayout} label="用户名">
+          {getFieldDecorator('username', {
+            rules: [{ required: true, message: '用于登录的用户名', }],
+          })(
+            <Input type="text" />
           )}
         </Form.Item>
 

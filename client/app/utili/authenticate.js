@@ -1,64 +1,41 @@
-const fetchConfig = {
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  },
-  credentials: 'include',
-}
+'use strict'
 
-const fetch = (url, config = fetchConfig) => {
-  return new Promise((resolve, reject) => {
-    window.fetch(url, config)
-      .then(res => res.json())
-      .then(result => {
-        resolve(result)
-      })
-      .catch(error => {
-        reject(error)
-      })
-  })
+const createFetchConfig = (method = 'GET', body = {}) => {
+  return {
+    method,
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+    body
+  }
 }
 
 async function register () {
-  this.loading()
-
-  const header = {
-    method:"POST",
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    credentials: 'include',
-    body: JSON.stringify({ username, password }) 
-  }
+  const res = await window.fetch(
+    '/api/users', 
+    createFetchConfig('POST', JSON.stringify())
+  )
 }
 
 async function login (username, password) {
-  const header = {
-    method:"POST",
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    credentials: 'include',
-    body: JSON.stringify({ username, password }) 
-  }
-
-  const res = await window.fetch('/api/sessions', header)
+  const res = await window.fetch(
+    '/api/sessions', 
+    createFetchConfig('POST', JSON.stringify({ username, password }))
+  )
   return res
 }
 
 async function logout () {
-  const res = await window.fetch('/api/sessions', {
-    method:"DELETE",
-    credentials: 'include'
-  })
-
+  const res = await window.fetch(
+    '/api/sessions', 
+    createFetchConfig('DELETE')
+  )
   return res
 }
 
 export {
-  fetch,
   register,
   login,
   logout

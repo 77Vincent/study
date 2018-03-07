@@ -39,9 +39,21 @@ export default class App extends React.Component {
   loading = () => { this.setState({ loading: true }) }
   loaded = () => { this.setState({ loading: false }) }
 
-  login = async (username, password) => {
+  register = async (...rest) => {
     this.loading()
-    const res = await login(username, password)
+    const res = await register(...rest)
+    if (res.status === 200) {
+      const result = await res.json()
+      this.setState({
+        user: result.data,
+      })
+    }
+    this.loaded()
+  }
+
+  login = async (...rest) => {
+    this.loading()
+    const res = await login(...rest)
     if (res.status === 200) {
       const result = await res.json()
       this.setState({
