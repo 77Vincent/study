@@ -24,8 +24,7 @@ class Login extends React.Component {
 
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        const { username, password } = values 
-        this.props.login(username, password)
+        this.props.login(values)
       }
     })
   }

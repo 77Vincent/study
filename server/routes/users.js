@@ -1,46 +1,31 @@
+'use strict'
+
 import Router from 'koa-router'
 import Sequelize from 'sequelize'
 
-import { Users } from '../models'
+import { User } from '../models'
 
-const router = Router()
 const Op = Sequelize.Op
+const router = Router()
 
-const register = async (ctx) => {
+router.post('/', async (ctx, next) => {
+  console.log(ctx.request.body)
   try {
-    let { userInfo } = ctx.request.body
-
-    if(userInfo.type === "student"){
-      await Student.create(userInfo)
-    } else {
-      await Teacher.create(userInfo)
-    }
-
-    return true
-  } catch (error) {
-    console.log(error)
-    return false
-  }
-}
-
-const remove = async (ctx) => {
-}
-
-router.post('/register', async (ctx, next) => {
-  let result = await register(ctx)
-
-  if (result) {
+    await User.create(ctx.request.body)
     ctx.status = 200
     ctx.body = {
-      data: result,
-      message: 'create user success'
+      message: 'User Creation Success'
     }
-  } else {
+  } catch (err) {
+    console.log('User Creation Error', err)
     ctx.status = 500
+    ctx.body = {
+      message: 'Internal Error: User Creation Error'
+    }
   }
 })
 
-router.post('/remove', async (ctx, next) => {
+router.delete('/', async (ctx, next) => {
 })
 
 export default router

@@ -12,14 +12,17 @@ const createFetchConfig = (method = 'GET', body = {}) => {
   }
 }
 
-async function register () {
+async function register (values) {
+  const { prefix, username, mobilephone, password, role } = values
   const res = await window.fetch(
     '/api/users', 
-    createFetchConfig('POST', JSON.stringify())
+    createFetchConfig('POST', JSON.stringify({username, mobilephone, password, role}))
   )
+  return res
 }
 
-async function login (username, password) {
+async function login (values = { username: null, password: null}) {
+  const { username, password } = values
   const res = await window.fetch(
     '/api/sessions', 
     createFetchConfig('POST', JSON.stringify({ username, password }))

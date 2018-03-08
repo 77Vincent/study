@@ -4,16 +4,15 @@ import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Butto
 
 class Register extends React.Component {
   state = {
-    expand: false,
+    provisionDialog: false,
     confirmDirty: false,
   }
-  handleSubmit = (e) => {
+  submit = (e) => {
     e.preventDefault()
 
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        const { username, mobilephone, password, role } = values
-        console.log('Received values of form: ', values)
+        this.props.register(values)
       }
     })
   }
@@ -38,12 +37,12 @@ class Register extends React.Component {
   }
   openProvision = () => {
     this.setState({
-      expand: true
+      provisionDialog: true
     })
   }
   closeProvision = (e) => {
     this.setState({
-      expand: false,
+      provisionDialog: false,
     })
   }
   render() {
@@ -80,12 +79,12 @@ class Register extends React.Component {
     ) 
 
     return (
-      <Form onSubmit={this.handleSubmit} style={{maxWidth: '450px', margin: '0 auto'}}>
+      <Form onSubmit={this.submit} style={{maxWidth: '450px', margin: '0 auto'}}>
         <Modal
           title='服务条款'
           footer={null}
           width={800}
-          visible={this.state.expand}
+          visible={this.state.provisionDialog}
           onCancel={this.closeProvision}
         >
           ...
@@ -122,11 +121,7 @@ class Register extends React.Component {
 
         <Form.Item {...formItemLayout} label="密码">
           {getFieldDecorator('password', {
-            rules: [{
-              required: true, message: '请输入密码',
-            }, {
-              validator: this.checkConfirm,
-            }],
+            rules: [{ required: true, message: '请输入密码', }, { validator: this.checkConfirm, }],
           })(
             <Input type="password" />
           )}
@@ -134,11 +129,7 @@ class Register extends React.Component {
 
         <Form.Item {...formItemLayout} label="确认密码">
           {getFieldDecorator('confirm', {
-            rules: [{
-              required: true, message: '请再次输入密码',
-            }, {
-              validator: this.checkPassword,
-            }],
+            rules: [{ required: true, message: '请再次输入密码', }, { validator: this.checkPassword, }],
           })(
             <Input type="password" onBlur={this.handleConfirmBlur} />
           )}

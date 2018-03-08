@@ -4,7 +4,7 @@
 import React from 'react'
 import { Layout, Menu, Button, message } from 'antd'
 import { Route, Link, NavLink } from 'react-router-dom'
-import { login, logout, register } from '../utili/authenticate'
+import { login, logout, register } from '../utili/user'
 
 // Custom styles, components and functions
 import './App.less'
@@ -32,28 +32,40 @@ export default class App extends React.Component {
     loading: false
   }
 
-  componentDidMount () {
-    this.login()
+  componentWillMount () {
+    // Try to login if user has recently login
+    (async () => {
+      const res = await login()
+      if (res.status === 200) {
+        const result = await res.json()
+        this.setState({
+          user: result.data,
+        })
+      }
+    })()
   }
 
   loading = () => { this.setState({ loading: true }) }
   loaded = () => { this.setState({ loading: false }) }
 
-  register = async (...rest) => {
+  register = async (values) => {
     this.loading()
-    const res = await register(...rest)
+    const res = await register(values)
     if (res.status === 200) {
-      const result = await res.json()
-      this.setState({
-        user: result.data,
-      })
+      const res = await login(values)
+      if (res.status === 200) {
+        const result = await res.json()
+        this.setState({
+          user: result.data,
+        })
+      }
     }
     this.loaded()
   }
 
-  login = async (...rest) => {
+  login = async (values) => {
     this.loading()
-    const res = await login(...rest)
+    const res = await login(values)
     if (res.status === 200) {
       const result = await res.json()
       this.setState({
@@ -89,7 +101,7 @@ export default class App extends React.Component {
             <Route path="/forgot" component={Forgot} />
 
             <Route path="/register" render={(props) => <Register 
-              register={register.bind(this)} 
+              register={this.register} 
               user={this.state.user} 
               {...props} />} 
             />

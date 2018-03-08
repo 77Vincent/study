@@ -12,18 +12,21 @@ export default sequelize.define('user', {
     allowNull: false,
     unique: true
   },
-  password: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  name: {
+  mobilephone: {
     type: Sequelize.STRING,
     allowNull: false,
     unique: true
   },
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
   role: {
     type: Sequelize.STRING,
     allowNull: false
+  },
+  name: {
+    type: Sequelize.STRING,
   },
   avatar: {
     type: Sequelize.STRING
@@ -39,9 +42,6 @@ export default sequelize.define('user', {
   },
   birthday: {
     type: Sequelize.DATE,
-  },
-  mobilephone: {
-    type: Sequelize.STRING
   },
   email: {
     type: Sequelize.STRING
