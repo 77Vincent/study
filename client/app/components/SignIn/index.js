@@ -6,19 +6,16 @@ class SignIn extends React.Component {
   constructor(props) {
     super(props)
   }
-
   componentDidUpdate = () => {
     if (this.props.user) {
       this.props.history.push('./dashboard')
     }
   }
-
   componentWillMount = () => {
     if (this.props.user) {
       this.props.history.push('./dashboard')
     }
   }
-
   signIn = (e) => {
     e.preventDefault()
 
@@ -28,7 +25,6 @@ class SignIn extends React.Component {
       }
     })
   }
-
   render() {
     const { getFieldDecorator } = this.props.form
 

@@ -27,7 +27,8 @@ export default class Dashboard extends React.Component {
               <Menu.Item key='2'><Link to='/dashboard/schedule'>我的课程</Link></Menu.Item>
               <Menu.Item key='3'><Link to='/dashboard/order'>我的订单</Link></Menu.Item>
             </Menu>
-            <Button onClick={this.props.signOut}>登出</Button>
+            <Button onClick={this.props.signOut}>退出登录</Button>
+            <Button onClick={this.props.logout}>注销账户</Button>
           </Layout.Sider>
 
           <Layout.Content className='App-tile' style={{maxWidth: '900px'}}>

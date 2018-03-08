@@ -26,6 +26,21 @@ router.post('/', async (ctx, next) => {
 })
 
 router.delete('/', async (ctx, next) => {
+  const id = ctx.decoded.user_info
+  try {
+    await User.destroy({ where: { id } })
+    ctx.cookies.set('user_info', null)
+    ctx.status = 200
+    ctx.body = {
+      message: 'Logout Success'
+    }
+  } catch (err) {
+    console.log('Logout Error:', err)
+    ctx.status = 500
+    ctx.body = {
+      message: 'Internal Error: Logout Error'
+    }
+  }
 })
 
 export default router

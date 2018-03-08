@@ -4,7 +4,7 @@
 import React from 'react'
 import { Layout, Menu, Button, message } from 'antd'
 import { Route, Link, NavLink } from 'react-router-dom'
-import { signIn, signOut, signUp } from '../utili/user'
+import { signIn, signOut, signUp, logout } from '../utili/user'
 
 // Custom styles, components and functions
 import './App.less'

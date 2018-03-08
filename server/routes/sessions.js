@@ -78,19 +78,18 @@ router.post('/', async (ctx, next) => {
   }
 })
 
-// Logout 
 router.delete('/', async (ctx, next) => {
   try {
     ctx.cookies.set('user_info', null)
     ctx.status = 200
     ctx.body = {
-      message: 'Logout Success'
+      message: 'Sign Out Success'
     }
   } catch (err) {
-    console.log('Logout Error:', err)
+    console.log('Sign Out Error:', err)
     ctx.status = 500
     ctx.body = {
-      message: 'Internal Error: Logout Error'
+      message: 'Internal Error: Sign Out Error'
     }
   }
 })

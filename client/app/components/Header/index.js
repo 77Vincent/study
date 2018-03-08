@@ -1,10 +1,10 @@
-import React from 'react';
-import { Menu, Button, Icon } from 'antd';
-import { Route, Link, NavLink } from 'react-router-dom';
+import React from 'react'
+import { Menu, Button, Icon } from 'antd'
+import { Route, Link, NavLink } from 'react-router-dom'
 
 export default class Header extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
   }
 
   render() {
@@ -14,7 +14,7 @@ export default class Header extends React.Component {
       label: '寻找导师', to: '/teachers'
     }, {
       label: '关于我们', to: '/about'
-    }];
+    }]
 
     return (
       <div className='Header'>
