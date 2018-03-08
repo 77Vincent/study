@@ -7,36 +7,25 @@ export default class Welcome extends React.Component {
   constructor(props) {
     super(props);
   }
-
   state = {
     position: 'center',
-    ad: [{
-      text: '已辅导学生人数',
-      num: '200'
-    }, {
-      text: '认证老师人数',
-      num: '200'
-    }, {
-      text: '全网已预定课时',
-      num: '200'
-    }]     
   }
-
   componentDidMount = () => {
     this.props.loaded()
   }
-
-  effect = (e) => {
-    this.setState({
-      position: `-${e.pageX / 2}px -${e.pageY / 2}px`
-    });
-  }
-
+  promotion = [{
+    text: '已辅导学生人数',
+    num: '200'
+  }, {
+    text: '认证老师人数',
+    num: '200'
+  }, {
+    text: '全网已预定课时',
+    num: '200'
+  }]     
   render() {
     return (
-      <div className='Welcome' onMouseMove={this.effect} >
-        <div style={{backgroundPosition: `${this.state.position}`}} className='App-background-image' />
-
+      <div className='Welcome'>
         <hgroup>
           <h1>
             专注于<span>设计</span>辅导<br/>
@@ -53,7 +42,7 @@ export default class Welcome extends React.Component {
 
         <aside>
           {
-            this.state.ad.map((item, index) => (
+            this.promotion.map((item, index) => (
               <section key={index}>
                 <h3>{item.text}</h3>
                 <h2>{item.num}</h2>

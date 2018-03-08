@@ -70,6 +70,10 @@ export default class App extends React.Component {
       this.setState({
         user: result.data,
       })
+    } else if (res.status === 403) {
+      message.error('用户名/手机号/密码错误！')
+    } else if (res.status === 500) {
+      message.warning('网络连接失败，请稍后再试')
     }
     this.loaded()
   }

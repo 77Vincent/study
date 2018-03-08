@@ -158,7 +158,7 @@ class SignUp extends React.Component {
           )}
 
           <Button style={{width: '100%'}} type="primary" htmlType="submit">注册</Button>
-          <Link to='/sign-in'><Button style={{width: '100%'}}>立即登录</Button></Link>
+          <Link to='/sign-in' style={{float: 'right'}}>已有账号？立即登录</Link>
         </Form.Item>
       </Form>
     )

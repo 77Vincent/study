@@ -6,23 +6,21 @@ export default class Header extends React.Component {
   constructor(props) {
     super(props)
   }
-
+  links = [{
+    label: '寻找导师', to: '/teachers'
+  }, {
+    label: '关于我们', to: '/about'
+  }]
   render() {
-    const links = [{
-      label: '首页', to: '/'
-    }, {
-      label: '寻找导师', to: '/teachers'
-    }, {
-      label: '关于我们', to: '/about'
-    }]
 
     return (
       <div className='Header'>
-        <div className="App-logo"></div>
-
-        <Menu mode='horizontal' style={{lineHeight: '47px', borderBottom: 'none'}}>
+        <Menu mode='horizontal' style={{height: '47px', lineHeight: '47px', borderBottom: 'none'}}>
+          <Menu.Item>
+            <Link to='/'><div className="App-logo">Xfolio</div></Link>
+          </Menu.Item>
           {
-            links.map((link, index) => 
+            this.links.map((link, index) => 
               (
                 <Menu.Item key={index}>
                   <Link to={link.to}>{link.label}</Link>
@@ -30,7 +28,6 @@ export default class Header extends React.Component {
               )
             )
           }
-
           <Menu.Item style={{float: 'right'}}>
             <Link to='/dashboard'>
               <Icon type='user' style={{fontSize: '1.2em'}} />

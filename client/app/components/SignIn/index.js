@@ -46,11 +46,10 @@ class SignIn extends React.Component {
         </Form.Item>
 
         <Form.Item>
-          <Link to='/forgot' style={{float: 'right'}}>忘记密码</Link>
+          <Link to='/forgot' style={{float: 'left'}}>忘记密码</Link>
+          <Link to='/sign-up' style={{float: 'right'}}>立即注册</Link>
 
           <Button style={{width: '100%'}} type="primary" htmlType="submit">登录</Button>
-
-          <Link to='/sign-up'><Button style={{width: '100%'}}>立即注册</Button></Link>
         </Form.Item>
       </Form>
     )
