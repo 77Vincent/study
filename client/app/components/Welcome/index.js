@@ -1,11 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Button, Carousel } from 'antd';
-import './index.less';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { Button, Carousel } from 'antd'
+import './index.less'
 
 export default class Welcome extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
   }
   state = {
     position: 'center',
@@ -53,6 +53,6 @@ export default class Welcome extends React.Component {
           }
         </aside>
       </div>
-    );
+    )
   }
 }

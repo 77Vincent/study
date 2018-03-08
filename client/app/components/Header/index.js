@@ -1,6 +1,7 @@
 import React from 'react'
 import { Menu, Button, Icon } from 'antd'
 import { Route, Link, NavLink } from 'react-router-dom'
+import './index.less'
 
 export default class Header extends React.Component {
   constructor(props) {
@@ -15,7 +16,7 @@ export default class Header extends React.Component {
 
     return (
       <div className='Header'>
-        <Menu mode='horizontal' style={{height: '47px', lineHeight: '47px', borderBottom: 'none'}}>
+        <Menu mode='horizontal' className='Menu'>
           <Menu.Item>
             <Link to='/'><div className="App-logo">Xfolio</div></Link>
           </Menu.Item>
