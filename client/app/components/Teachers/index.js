@@ -122,7 +122,7 @@ export default class Teachers extends React.Component {
           <Filter />
         </Layout.Sider>
 
-        <Layout.Content style={{marginLeft: '7px', marginTop: '-7px'}}>
+        <Layout.Content style={{marginTop: '-10px'}}>
           <Row>
             {
               this.state.teachers.map((teacher, index) =>
