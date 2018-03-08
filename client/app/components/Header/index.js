@@ -13,7 +13,6 @@ export default class Header extends React.Component {
     label: '关于我们', to: '/about'
   }]
   render() {
-
     return (
       <div className='Header'>
         <Menu mode='horizontal' className='Menu'>
@@ -29,9 +28,9 @@ export default class Header extends React.Component {
               )
             )
           }
-          <Menu.Item style={{float: 'right'}}>
+          <Menu.Item className='Menu-user'>
             <Link to='/dashboard'>
-              <Icon type='user' style={{fontSize: '1.2em'}} />
+              <Icon type='user' className='Icon'/>
               {this.props.user ? this.props.user.name : '未登录'}
             </Link>
           </Menu.Item>

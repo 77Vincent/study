@@ -29,7 +29,7 @@ class SignIn extends React.Component {
     const { getFieldDecorator } = this.props.form
 
     return (
-      <Form onSubmit={this.signIn} style={{width: '240px', margin: '0 auto'}}>
+      <Form onSubmit={this.signIn} style={{maxWidth: '300px', margin: '0 auto'}}>
         <Form.Item>
           {getFieldDecorator('username', {
             rules: [{ required: true, message: '请输入用户名/手机号/邮箱' }],

@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Link } from 'react-router-dom'
 import { Layout, Menu, Button } from 'antd'
 import { Info, Schedule, Order } from 'components'
+import './index.less'
 
 export default class Dashboard extends React.Component {
   constructor(props) {
@@ -21,7 +22,7 @@ export default class Dashboard extends React.Component {
     return (
       <div className='Dashboard'>
         <Layout>
-          <Layout.Sider width='300' className='Dashboard-sider App-tile'>
+          <Layout.Sider width='210' className='Dashboard-Sider'>
             <Menu mode="inline" defaultSelectedKeys={['1']} style={{ borderRight: 0 }}>
               <Menu.Item key='1'><Link to='/dashboard'>基本信息</Link></Menu.Item>
               <Menu.Item key='2'><Link to='/dashboard/schedule'>我的课程</Link></Menu.Item>
@@ -31,8 +32,8 @@ export default class Dashboard extends React.Component {
             <Button onClick={this.props.logout}>注销账户</Button>
           </Layout.Sider>
 
-          <Layout.Content className='App-tile' style={{maxWidth: '900px'}}>
-            <Route path="/dashboard" render={props => <Info 
+          <Layout.Content className='Dashboard-Content'>
+            <Route exact path="/dashboard" render={props => <Info 
               user={this.props.user} 
               {...props} />} 
             />
