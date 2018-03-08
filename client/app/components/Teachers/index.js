@@ -32,7 +32,7 @@ export default class Teachers extends React.Component {
     })
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.loading()
 
     const teachers = [

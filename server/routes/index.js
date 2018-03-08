@@ -10,7 +10,6 @@ router.use('/api/users', users.routes())
 
 router.use('/api/majors', majors.routes())
 
-// Login / Logout
 router.use('/api/sessions', sessions.routes())
 
 export default router

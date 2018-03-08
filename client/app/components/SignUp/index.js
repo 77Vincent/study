@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, Radio, Modal } from 'antd'
 
-class Register extends React.Component {
+class SignUp extends React.Component {
   state = {
     provisionDialog: false,
     confirmDirty: false,
@@ -12,7 +12,7 @@ class Register extends React.Component {
 
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        this.props.register(values)
+        this.props.signUp(values)
       }
     })
   }
@@ -158,11 +158,11 @@ class Register extends React.Component {
           )}
 
           <Button style={{width: '100%'}} type="primary" htmlType="submit">注册</Button>
-          <Link to='/login'><Button style={{width: '100%'}}>立即登录</Button></Link>
+          <Link to='/sign-in'><Button style={{width: '100%'}}>立即登录</Button></Link>
         </Form.Item>
       </Form>
     )
   }
 }
 
-export default Form.create()(Register)
+export default Form.create()(SignUp)

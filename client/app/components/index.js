@@ -11,8 +11,8 @@ import Info from './Info';
 import Schedule from './Schedule';
 import Order from './Order';
 
-import Login from './Login';
-import Register from './Register';
+import SignIn from './SignIn';
+import SignUp from './SignUp';
 import Forgot from './Forgot';
 
 import Header from './Header';
@@ -33,8 +33,8 @@ export {
   Schedule,
   Order,
 
-  Login,
-  Register,
+  SignIn,
+  SignUp,
   Forgot,
 
   Header,

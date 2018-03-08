@@ -28,7 +28,7 @@ class Forgot extends React.Component {
 
         <Form.Item>
           <Button type="primary" htmlType="submit">找回密码</Button>
-          <Link to='/login'><Button>返回登录</Button></Link>
+          <Link to='/sign-in'><Button>返回登录</Button></Link>
         </Form.Item>
       </Form>
     );

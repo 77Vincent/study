@@ -4,7 +4,7 @@
 import React from 'react'
 import { Layout, Menu, Button, message } from 'antd'
 import { Route, Link, NavLink } from 'react-router-dom'
-import { login, logout, register } from '../utili/user'
+import { signIn, signOut, signUp } from '../utili/user'
 
 // Custom styles, components and functions
 import './App.less'
@@ -14,9 +14,9 @@ import {
   Loading, 
   Welcome, 
   About, 
-  Login, 
+  SignIn, 
   Forgot, 
-  Register, 
+  SignUp, 
   Dashboard,
   Orientation,
   Teachers
@@ -26,16 +26,14 @@ export default class App extends React.Component {
   constructor(props) {
     super(props)
   }
-
   state = {
     user: null,
     loading: false
   }
-
-  componentWillMount () {
-    // Try to login if user has recently login
+  componentDidMount () {
+    // Try to sign in if user has recently sign in
     (async () => {
-      const res = await login()
+      const res = await signIn()
       if (res.status === 200) {
         const result = await res.json()
         this.setState({
@@ -44,15 +42,17 @@ export default class App extends React.Component {
       }
     })()
   }
-
-  loading = () => { this.setState({ loading: true }) }
-  loaded = () => { this.setState({ loading: false }) }
-
-  register = async (values) => {
+  loading = () => { 
+    this.setState({ loading: true }) 
+  }
+  loaded = () => { 
+    this.setState({ loading: false }) 
+  }
+  signUp = async (values) => {
     this.loading()
-    const res = await register(values)
+    const res = await signUp(values)
     if (res.status === 200) {
-      const res = await login(values)
+      const res = await signIn(values)
       if (res.status === 200) {
         const result = await res.json()
         this.setState({
@@ -62,10 +62,9 @@ export default class App extends React.Component {
     }
     this.loaded()
   }
-
-  login = async (values) => {
+  signIn = async (values) => {
     this.loading()
-    const res = await login(values)
+    const res = await signIn(values)
     if (res.status === 200) {
       const result = await res.json()
       this.setState({
@@ -74,7 +73,16 @@ export default class App extends React.Component {
     }
     this.loaded()
   }
-
+  signOut = async () => {
+    this.loading()
+    const res = await signOut()
+    if (res.status === 200) {
+      this.setState({
+        user: null
+      })
+    }
+    this.loaded()
+  }
   logout = async () => {
     this.loading()
     const res = await logout()
@@ -85,7 +93,6 @@ export default class App extends React.Component {
     }
     this.loaded()
   }
-
   render() {
     return (
       <Layout className='App-Layout'>
@@ -100,17 +107,18 @@ export default class App extends React.Component {
             <Route path="/about" component={About} />
             <Route path="/forgot" component={Forgot} />
 
-            <Route path="/register" render={(props) => <Register 
-              register={this.register} 
+            <Route path="/sign-up" render={(props) => <SignUp 
+              signUp={this.signUp} 
               user={this.state.user} 
               {...props} />} 
             />
-            <Route path="/login" render={(props) => <Login 
-              login={this.login} 
+            <Route path="/sign-in" render={(props) => <SignIn 
+              signIn={this.signIn} 
               user={this.state.user} 
               {...props} />} 
             />
             <Route path="/dashboard" render={props => <Dashboard 
+              signOut={this.signOut} 
               logout={this.logout} 
               user={this.state.user} 
               {...props} />} 

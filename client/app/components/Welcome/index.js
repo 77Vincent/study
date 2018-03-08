@@ -48,7 +48,7 @@ export default class Welcome extends React.Component {
             <Link to='/orientation' >寻找导师</Link>
           </Button>
 
-          <Link to='/login'>成为导师 ></Link>
+          <Link to='/sign-in'>成为导师 ></Link>
         </hgroup>
 
         <aside>

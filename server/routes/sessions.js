@@ -9,7 +9,6 @@ import { signToken } from '../base/oauth'
 const Op = Sequelize.Op
 const router = Router()
 
-// Login 
 router.post('/', async (ctx, next) => {
   const id = ctx.decoded.user_info
   const { username, password } = ctx.request.body
@@ -36,19 +35,19 @@ router.post('/', async (ctx, next) => {
         ctx.status = 200
         ctx.body = {
           data: user,
-          message: 'Login Success'
+          message: 'Sign In Success'
         }
       } else {
         ctx.status = 403
         ctx.body = {
-          message: 'Login Failure'
+          message: 'Sign In Failure'
         }
       }
     } catch (err) {
-      console.log('Login Error:', err)
+      console.log('Sign In Error:', err)
       ctx.status = 500
       ctx.body = {
-        message: 'Internal Error: Login error'
+        message: 'Internal Error: Sign In error'
       }
     }
 
@@ -60,13 +59,13 @@ router.post('/', async (ctx, next) => {
       ctx.status = 200
       ctx.body = {
         data: user,
-        message: 'Login Success'
+        message: 'Sign In Success'
       }
     } catch (err) {
-      console.log('Login Error:', err)
+      console.log('Sign In Error:', err)
       ctx.status = 500
       ctx.body = {
-        message: 'Internal Error: Login Error'
+        message: 'Internal Error: Sign In Error'
       }
     }
 
@@ -74,7 +73,7 @@ router.post('/', async (ctx, next) => {
   } else {
     ctx.status = 403
     ctx.body = {
-      message: 'Login Failure'
+      message: 'Sign In Failure'
     }
   }
 })

@@ -2,7 +2,7 @@ import React from 'react'
 import { Form, Icon, Input, Button, Checkbox } from 'antd'
 import { Link } from 'react-router-dom'
 
-class Login extends React.Component {
+class SignIn extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -19,12 +19,12 @@ class Login extends React.Component {
     }
   }
 
-  login = (e) => {
+  signIn = (e) => {
     e.preventDefault()
 
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        this.props.login(values)
+        this.props.signIn(values)
       }
     })
   }
@@ -33,7 +33,7 @@ class Login extends React.Component {
     const { getFieldDecorator } = this.props.form
 
     return (
-      <Form onSubmit={this.login} style={{maxWidth: '300px', margin: '0 auto'}}>
+      <Form onSubmit={this.signIn} style={{maxWidth: '300px', margin: '0 auto'}}>
         <Form.Item>
           {getFieldDecorator('username', {
             rules: [{ required: true, message: '请输入用户名/手机号/邮箱' }],
@@ -53,11 +53,12 @@ class Login extends React.Component {
           <Link to='/forgot' style={{float: 'right'}}>忘记密码</Link>
 
           <Button style={{width: '100%'}} type="primary" htmlType="submit">登录</Button>
-          <Link to='/register'><Button style={{width: '100%'}}>立即注册</Button></Link>
+
+          <Link to='/sign-up'><Button style={{width: '100%'}}>立即注册</Button></Link>
         </Form.Item>
       </Form>
     )
   }
 }
 
-export default Form.create()(Login)
+export default Form.create()(SignIn)
