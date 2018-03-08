@@ -127,7 +127,7 @@ export default class Teachers extends React.Component {
             {
               this.state.teachers.map((teacher, index) =>
                 (
-                  <Col xl={12} lg={24} key={index}>
+                  <Col key={index}>
                     <div className='App-tile' onClick={() => this.openTeacher(teacher.id)}>
                       <Teacher type='overall' teacher={teacher} />
                     </div>
