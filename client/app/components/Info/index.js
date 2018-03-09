@@ -10,7 +10,6 @@ export default class Info extends React.Component {
 
   render() {
     const user = this.props.user
-    console.log(user)
 
     return (
       <div>

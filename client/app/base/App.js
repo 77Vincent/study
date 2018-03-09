@@ -4,7 +4,7 @@
 import React from 'react'
 import { Layout, Menu, Button, message } from 'antd'
 import { Route, Link, NavLink } from 'react-router-dom'
-import { signIn, signOut, signUp, logout } from '../utili/user'
+import { signIn, signUp, logout } from '../utili/user'
 
 // Custom styles, components and functions
 import './App.less'
@@ -36,9 +36,7 @@ export default class App extends React.Component {
       const res = await signIn()
       if (res.status === 200) {
         const result = await res.json()
-        this.setState({
-          user: result.data,
-        })
+        this.setUser(result.data)
       }
     })()
   }
@@ -47,6 +45,12 @@ export default class App extends React.Component {
   }
   loaded = () => { 
     this.setState({ loading: false }) 
+  }
+  setUser = (user) => {
+    this.setState({ user })
+  }
+  clearUser = () => {
+    this.setState({ user: null })
   }
   signUp = async (values) => {
     this.loading()
@@ -59,31 +63,6 @@ export default class App extends React.Component {
           user: result.data,
         })
       }
-    }
-    this.loaded()
-  }
-  signIn = async (values) => {
-    this.loading()
-    const res = await signIn(values)
-    if (res.status === 200) {
-      const result = await res.json()
-      this.setState({
-        user: result.data,
-      })
-    } else if (res.status === 403) {
-      message.error('用户名/手机号/密码错误！')
-    } else if (res.status === 500) {
-      message.warning('网络连接失败，请稍后再试')
-    }
-    this.loaded()
-  }
-  signOut = async () => {
-    this.loading()
-    const res = await signOut()
-    if (res.status === 200) {
-      this.setState({
-        user: null
-      })
     }
     this.loaded()
   }
@@ -117,13 +96,17 @@ export default class App extends React.Component {
               {...props} />} 
             />
             <Route path="/sign-in" render={(props) => <SignIn 
-              signIn={this.signIn} 
+              setUser={this.setUser} 
+              loading={this.loading}
+              loaded={this.loaded}
               user={this.state.user} 
               {...props} />} 
             />
             <Route path="/dashboard" render={props => <Dashboard 
-              signOut={this.signOut} 
               logout={this.logout} 
+              clearUser={this.clearUser} 
+              loading={this.loading}
+              loaded={this.loaded}
               user={this.state.user} 
               {...props} />} 
             />
