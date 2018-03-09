@@ -7,12 +7,17 @@ class SignIn extends React.Component {
   constructor(props) {
     super(props)
   }
+  componentDidMount = () => {
+    if (this.props.user) {
+      this.props.history.push('./dashboard')
+    }
+  }
   componentDidUpdate = () => {
     if (this.props.user) {
       this.props.history.push('./dashboard')
     }
   }
-  signIn = (e) => {
+  submit = (e) => {
     e.preventDefault()
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
@@ -35,7 +40,7 @@ class SignIn extends React.Component {
     const { getFieldDecorator } = this.props.form
 
     return (
-      <Form onSubmit={this.signIn} style={{maxWidth: '300px', margin: '0 auto'}}>
+      <Form onSubmit={this.submit} style={{maxWidth: '300px', margin: '0 auto'}}>
         <Form.Item>
           {getFieldDecorator('username', {
             rules: [{ required: true, message: '请输入用户名/手机号/邮箱' }],

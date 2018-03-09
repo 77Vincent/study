@@ -4,7 +4,7 @@
 import React from 'react'
 import { Layout, Menu, Button, message } from 'antd'
 import { Route, Link, NavLink } from 'react-router-dom'
-import { signIn, signUp, logout } from '../utili/user'
+import { signIn, logout } from '../utili/user'
 
 // Custom styles, components and functions
 import './App.less'
@@ -52,20 +52,6 @@ export default class App extends React.Component {
   clearUser = () => {
     this.setState({ user: null })
   }
-  signUp = async (values) => {
-    this.loading()
-    const res = await signUp(values)
-    if (res.status === 200) {
-      const res = await signIn(values)
-      if (res.status === 200) {
-        const result = await res.json()
-        this.setState({
-          user: result.data,
-        })
-      }
-    }
-    this.loaded()
-  }
   logout = async () => {
     this.loading()
     const res = await logout()
@@ -91,7 +77,9 @@ export default class App extends React.Component {
             <Route path="/forgot" component={Forgot} />
 
             <Route path="/sign-up" render={(props) => <SignUp 
-              signUp={this.signUp} 
+              setUser={this.setUser} 
+              loading={this.loading}
+              loaded={this.loaded}
               user={this.state.user} 
               {...props} />} 
             />

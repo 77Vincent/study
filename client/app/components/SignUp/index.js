@@ -1,18 +1,38 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, Radio, Modal } from 'antd'
+import { signUp, signIn } from '../../utili/user'
 
 class SignUp extends React.Component {
   state = {
     provisionDialog: false,
     confirmDirty: false,
   }
+  componentDidMount = () => {
+    if (this.props.user) {
+      this.props.history.push('./dashboard')
+    }
+  }
+  componentDidUpdate = () => {
+    if (this.props.user) {
+      this.props.history.push('./dashboard')
+    }
+  }
   submit = (e) => {
     e.preventDefault()
-
-    this.props.form.validateFieldsAndScroll((err, values) => {
+    this.props.form.validateFieldsAndScroll(async (err, values) => {
       if (!err) {
-        this.props.signUp(values)
+        this.props.loading()
+        const res = await signUp(values)
+        if (res.status === 200) {
+          const res = await signIn(values)
+          if (res.status === 200) {
+            const result = await res.json()
+            this.props.setUser(result.data)
+            this.props.history.push('./dashboard')
+          }
+        }
+        this.props.loaded()
       }
     })
   }
