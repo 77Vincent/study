@@ -4,7 +4,7 @@ import Router from 'koa-router'
 import Sequelize from 'sequelize'
 
 import { User } from '../models'
-import { signToken } from '../base/oauth'
+import { signToken } from '../utili/oauth'
 
 const Op = Sequelize.Op
 const router = Router()

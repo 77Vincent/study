@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize';
-import sequelize from '../base/database.js';
+import sequelize from '../utili/database.js';
 
 const User_Major = sequelize.define('user_major', {
     id: {
