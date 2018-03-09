@@ -46,6 +46,9 @@ export default sequelize.define('user', {
   email: {
     type: Sequelize.STRING
   },
+  bio: {
+    type: Sequelize.STRING
+  },
   last_logout: {
     type: Sequelize.DATE,
   },

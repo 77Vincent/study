@@ -12,6 +12,11 @@ class SignIn extends React.Component {
       this.props.history.push('./dashboard')
     }
   }
+  componentDidUpdate = () => {
+    if (this.props.user) {
+      this.props.history.push('./dashboard')
+    }
+  }
   submit = (e) => {
     e.preventDefault()
     this.props.form.validateFields(async (err, values) => {

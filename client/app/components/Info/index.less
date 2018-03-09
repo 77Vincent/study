@@ -1,15 +1,31 @@
 @import '../../theme.less';
 
 .Info {
+  section {
+    border-top: 1px solid @color-gray-light;
+    padding-top: 10px;
+    margin-top: 10px;
+
+    &:after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+    h4 {
+      max-width: 75px;
+      width: 10%;
+      min-width: 50px;
+      float: left;
+      font-weight: 700;
+    }
+    p {
+      float: left;
+    }
+  }
+
   .App-avatar {
     width: 100px;
     height: 100px;
-  }
-
-  section {
-    h3 {
-      display: inline;
-    }
   }
 }
 

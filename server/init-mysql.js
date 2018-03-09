@@ -41,24 +41,14 @@ import {
     await User.create({
       username: 'user1',
       password: '000000',
-      name: 'Vincent',
+      name: '测试用户1',
       role: 'teacher',
       school: '北京大学',
       title: '建筑师',
+      bio: '建筑师，或称画则师、图则师、则师，是负责设计建筑物平面图的专业人士。建筑师通过与工程投资方和施工方的合作，在技术、经济、功能和造型上实现建筑物的营造。',
       gender: true,
-      mobilephone: 18877778888,
+      mobilephone: 18811111111,
       email: 'user1@xfolio.cn'
-    })
-    await User.create({
-      username: 'user2',
-      password: '000000',
-      name: 'Jessie',
-      role: 'student',
-      school: '台北大学',
-      title: '插画师',
-      gender: false,
-      mobilephone: 16677776666,
-      email: 'user2@xfolio.cn'
     })
 
   } catch (err) {
