@@ -4,7 +4,7 @@
 import React from 'react'
 import { Layout, Menu, Button, message } from 'antd'
 import { Route, Link, NavLink } from 'react-router-dom'
-import { signIn, logout } from '../utili/user'
+import { signIn } from '../utili/user'
 
 // Custom styles, components and functions
 import './App.less'
@@ -28,7 +28,7 @@ export default class App extends React.Component {
   }
   state = {
     user: null,
-    loading: false
+    isLoading: false
   }
   componentDidMount () {
     // Try to sign in if user has recently sign in
@@ -40,27 +40,11 @@ export default class App extends React.Component {
       }
     })()
   }
-  loading = () => { 
-    this.setState({ loading: true }) 
+  setLoading = (boolean) => { 
+    this.setState({ isLoading: boolean }) 
   }
-  loaded = () => { 
-    this.setState({ loading: false }) 
-  }
-  setUser = (user) => {
+  setUser = (user = null) => {
     this.setState({ user })
-  }
-  clearUser = () => {
-    this.setState({ user: null })
-  }
-  logout = async () => {
-    this.loading()
-    const res = await logout()
-    if (res.status === 200) {
-      this.setState({
-        user: null
-      })
-    }
-    this.loaded()
   }
   render() {
     return (
@@ -70,35 +54,35 @@ export default class App extends React.Component {
         </Layout.Header>
 
         <Layout.Content className='App-Content'>
-          <Loading loading={this.state.loading}>
-            <Route exact path="/" render={() => <Welcome loaded={this.loaded}/>} />
+          <Loading isLoading={this.state.isLoading}>
+            <Route exact path="/" render={() => <Welcome
+              setLoading={this.setLoading}/>}
+            />
             <Route path="/orientation" component={Orientation} />
             <Route path="/about" component={About} />
             <Route path="/forgot" component={Forgot} />
 
             <Route path="/sign-up" render={(props) => <SignUp 
               setUser={this.setUser} 
-              loading={this.loading}
-              loaded={this.loaded}
+              setLoading={this.setLoading}
               user={this.state.user} 
               {...props} />} 
             />
             <Route path="/sign-in" render={(props) => <SignIn 
               setUser={this.setUser} 
-              loading={this.loading}
-              loaded={this.loaded}
+              setLoading={this.setLoading}
               user={this.state.user} 
               {...props} />} 
             />
             <Route path="/dashboard" render={props => <Dashboard 
-              logout={this.logout} 
-              clearUser={this.clearUser} 
-              loading={this.loading}
-              loaded={this.loaded}
+              setUser={this.setUser} 
+              setLoading={this.setLoading}
               user={this.state.user} 
               {...props} />} 
             />
-            <Route path="/teachers" render={() => <Teachers loading={this.loading} loaded={this.loaded}/>} />
+            <Route path="/teachers" render={() => <Teachers 
+              setLoading={this.setLoading} />}
+            />
           </Loading>
         </Layout.Content>
 

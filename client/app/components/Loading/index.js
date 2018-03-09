@@ -6,11 +6,11 @@ export default class Loading extends React.Component {
   }
 
   render() {
-    const loading = this.props.loading;
+    const isLoading = this.props.isLoading;
 
     return (
-      <div className={loading ? 'App-spinner' : null}>
-        <div className={loading ? 'App-translucent' : null}>
+      <div className={isLoading ? 'App-spinner' : null}>
+        <div className={isLoading ? 'App-translucent' : null}>
           {this.props.children}
         </div>
       </div>

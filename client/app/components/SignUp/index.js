@@ -13,16 +13,11 @@ class SignUp extends React.Component {
       this.props.history.push('./dashboard')
     }
   }
-  componentDidUpdate = () => {
-    if (this.props.user) {
-      this.props.history.push('./dashboard')
-    }
-  }
   submit = (e) => {
     e.preventDefault()
     this.props.form.validateFieldsAndScroll(async (err, values) => {
       if (!err) {
-        this.props.loading()
+        this.props.setLoading(true)
         const res = await signUp(values)
         if (res.status === 200) {
           const res = await signIn(values)
@@ -32,7 +27,7 @@ class SignUp extends React.Component {
             this.props.history.push('./dashboard')
           }
         }
-        this.props.loaded()
+        this.props.setLoading(false)
       }
     })
   }

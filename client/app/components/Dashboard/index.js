@@ -14,14 +14,14 @@ export default class Dashboard extends React.Component {
       this.props.history.push('./sign-in')
     }
   }
-  signOut = async () => {
-    this.props.loading()
+  submitSignOut = async () => {
+    this.props.setLoading(true)
     const res = await signOut()
     if (res.status === 200) {
-      this.props.clearUser()
+      this.props.setUser()
       this.props.history.push('./sign-in')
     }
-    this.props.loaded()
+    this.props.setLoading(false)
   }
   render() {
     return (
@@ -33,7 +33,7 @@ export default class Dashboard extends React.Component {
               <Menu.Item key='2'><Link to='/dashboard/schedule'><Icon type='calendar' />我的课程</Link></Menu.Item>
               <Menu.Item key='3'><Link to='/dashboard/order'><Icon type='bank' />我的订单</Link></Menu.Item>
               <Menu.Item key='4'><Link to='/dashboard/account'><Icon type='setting' />账户设置</Link></Menu.Item>
-              <Menu.Item key='5' ><div onClick={this.signOut}><Icon type='logout' />退出登录</div></Menu.Item>
+              <Menu.Item key='5' ><div onClick={this.submitSignOut}><Icon type='logout' />退出登录</div></Menu.Item>
             </Menu>
           </Layout.Sider>
 
@@ -45,7 +45,6 @@ export default class Dashboard extends React.Component {
             <Route path="/dashboard/schedule" component={Schedule} />
             <Route path="/dashboard/order" component={Order} />
             <Route path="/dashboard/account" render={props => <Account 
-              logout={this.props.logout} 
               {...props} />} 
             />
           </Layout.Content>

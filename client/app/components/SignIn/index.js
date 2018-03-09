@@ -12,16 +12,11 @@ class SignIn extends React.Component {
       this.props.history.push('./dashboard')
     }
   }
-  componentDidUpdate = () => {
-    if (this.props.user) {
-      this.props.history.push('./dashboard')
-    }
-  }
   submit = (e) => {
     e.preventDefault()
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        this.props.loading()
+        this.props.setLoading(true)
         const res = await signIn(values)
         if (res.status === 200) {
           const result = await res.json()
@@ -32,7 +27,7 @@ class SignIn extends React.Component {
         } else if (res.status === 500) {
           message.warning('网络连接失败，请稍后再试')
         }
-        this.props.loaded()
+        this.props.setLoading(false)
       }
     })
   }

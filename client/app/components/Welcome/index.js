@@ -7,11 +7,8 @@ export default class Welcome extends React.Component {
   constructor(props) {
     super(props)
   }
-  state = {
-    position: 'center',
-  }
   componentDidMount = () => {
-    this.props.loaded()
+    this.props.setLoading(false)
   }
   promotion = [{
     text: '已辅导学生人数',
