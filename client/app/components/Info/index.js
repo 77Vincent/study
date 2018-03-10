@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Tag, Row, Col } from 'antd'
+import { Tag } from 'antd'
 import './index.less'
 
 export default class Info extends React.Component {
@@ -26,7 +26,7 @@ export default class Info extends React.Component {
                 <h4>职位</h4> <span>{user.title}</span>
               </section>
               <section>
-                <h4>生日</h4> <span>{user.birthday}</span>
+                <h4>性别</h4> <span>{user.gender ? '男' : '女'}</span>
               </section>
             </div>
         }

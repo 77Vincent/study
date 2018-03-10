@@ -4,13 +4,21 @@ import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Butto
 import { signUp, signIn } from '../../utili/user'
 
 class SignUp extends React.Component {
+  constructor(props) {
+    super(props)
+  }
   state = {
     provisionDialog: false,
     confirmDirty: false,
   }
   componentDidMount = () => {
     if (this.props.user) {
-      this.props.history.push('./dashboard')
+      this.props.history.push('/dashboard')
+    }
+  }
+  componentDidUpdate = () => {
+    if (this.props.user) {
+      this.props.history.push('/dashboard')
     }
   }
   submit = (e) => {
@@ -24,7 +32,6 @@ class SignUp extends React.Component {
           if (res.status === 200) {
             const result = await res.json()
             this.props.setUser(result.data)
-            this.props.history.push('./dashboard')
           }
         }
         this.props.setLoading(false)
@@ -136,7 +143,11 @@ class SignUp extends React.Component {
 
         <Form.Item {...formItemLayout} label="密码">
           {getFieldDecorator('password', {
-            rules: [{ required: true, message: '请输入密码', }, { validator: this.checkConfirm, }],
+            rules: [
+              { required: true, message: '请输入密码', }, 
+              { min: 6, message: '不少于6个字符', }, 
+              { validator: this.checkConfirm, }
+             ],
           })(
             <Input type="password" />
           )}
@@ -144,7 +155,10 @@ class SignUp extends React.Component {
 
         <Form.Item {...formItemLayout} label="确认密码">
           {getFieldDecorator('confirm', {
-            rules: [{ required: true, message: '请再次输入密码', }, { validator: this.checkPassword, }],
+            rules: [
+              { required: true, message: '请再次输入密码', }, 
+              { validator: this.checkPassword, }
+            ],
           })(
             <Input type="password" onBlur={this.handleConfirmBlur} />
           )}

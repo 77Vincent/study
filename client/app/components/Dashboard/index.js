@@ -11,12 +11,12 @@ export default class Dashboard extends React.Component {
   }
   componentDidMount = () => {
     if (!this.props.user) {
-      this.props.history.push('./sign-in')
+      this.props.history.push('/sign-in')
     }
   }
   componentDidUpdate = () => {
     if (!this.props.user) {
-      this.props.history.push('./sign-in')
+      this.props.history.push('/sign-in')
     }
   }
   submitSignOut = async () => {
@@ -24,7 +24,6 @@ export default class Dashboard extends React.Component {
     const res = await signOut()
     if (res.status === 200) {
       this.props.setUser()
-      this.props.history.push('./sign-in')
     }
     this.props.setLoading(false)
   }

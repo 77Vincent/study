@@ -9,12 +9,12 @@ class SignIn extends React.Component {
   }
   componentDidMount = () => {
     if (this.props.user) {
-      this.props.history.push('./dashboard')
+      this.props.history.push('/dashboard')
     }
   }
   componentDidUpdate = () => {
     if (this.props.user) {
-      this.props.history.push('./dashboard')
+      this.props.history.push('/dashboard')
     }
   }
   submit = (e) => {
@@ -26,7 +26,6 @@ class SignIn extends React.Component {
         if (res.status === 200) {
           const result = await res.json()
           this.props.setUser(result.data)
-          this.props.history.push('./dashboard')
         } else if (res.status === 403) {
           message.error('用户名/手机号/密码错误！')
         } else if (res.status === 500) {
