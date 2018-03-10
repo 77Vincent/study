@@ -12,6 +12,28 @@
     border-bottom: none;
   }
 
+  .Menu-Item {
+    position: relative;
+
+    &:nth-last-of-type(2) {
+      &:after {
+        display: none;
+      }
+    }
+
+    &:after {
+      content: '';
+      display: inline-block;
+      background-color: @color-gray;
+      height: 20px;
+      width: 1px;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      margin-top: -10px;
+    }
+  }
+
   .Menu-user {
     float: right;
   }

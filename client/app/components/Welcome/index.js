@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Button, Carousel } from 'antd'
+import { Button } from 'components'
 import './index.less'
 
 export default class Welcome extends React.Component {
@@ -30,12 +30,12 @@ export default class Welcome extends React.Component {
             或成为导师，分享你的知识
           </h1>
 
-          <Button size='large' type='primary'>
+          <Button>
             <Link to='/orientation' >寻找导师</Link>
           </Button>
 
-          <Button size='large'>
-            <Link to='/sign-in'>成为导师 ></Link>
+          <Button>
+            <Link to='/sign-in'>成为导师</Link>
           </Button>
         </hgroup>
 

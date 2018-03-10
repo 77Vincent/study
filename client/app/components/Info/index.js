@@ -15,7 +15,10 @@ export default class Info extends React.Component {
         {
           !user ? null :
             <div>
-              <h1>{user.name}</h1>
+              <hgroup>
+                <h1>{user.name}</h1>
+                <h3>认证老师</h3>
+              </hgroup>
               <section>
                 <h4>简介</h4> <span>{user.bio}</span>
               </section>

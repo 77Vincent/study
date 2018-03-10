@@ -18,7 +18,8 @@ import Forgot from './Forgot'
 
 import Header from './Header'
 import Footer from './Footer'
-import Loading from './Loading'
+import Loading from './Loading.js'
+import Button from './Button'
 
 export {
   Welcome,
@@ -41,5 +42,6 @@ export {
 
   Header,
   Footer,
-  Loading
+  Loading,
+  Button
 }

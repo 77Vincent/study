@@ -22,7 +22,7 @@ export default class Header extends React.Component {
           {
             this.links.map((link, index) => 
               (
-                <Menu.Item key={index}>
+                <Menu.Item className='Menu-Item' key={index}>
                   <Link to={link.to}>{link.label}</Link>
                 </Menu.Item>
               )

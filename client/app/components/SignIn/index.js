@@ -1,6 +1,7 @@
 import React from 'react'
-import { message, Form, Icon, Input, Button, Checkbox } from 'antd'
+import { message, Form, Icon, Input, Checkbox } from 'antd'
 import { Link } from 'react-router-dom'
+import { Button } from 'components'
 import { signIn } from '../../utili/user'
 
 class SignIn extends React.Component {
@@ -59,7 +60,7 @@ class SignIn extends React.Component {
           <Link to='/forgot' style={{float: 'left'}}>忘记密码</Link>
           <Link to='/sign-up' style={{float: 'right'}}>立即注册</Link>
 
-          <Button style={{width: '100%'}} type="primary" htmlType="submit">登录</Button>
+          <Button style={{width: '100%'}} type="submit">登录</Button>
         </Form.Item>
       </Form>
     )

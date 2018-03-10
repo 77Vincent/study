@@ -1,13 +1,11 @@
-import React from 'react';
+import React from 'react'
 
 export default class Loading extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
   }
-
   render() {
-    const isLoading = this.props.isLoading;
-
+    const isLoading = this.props.isLoading
     return (
       <div className={isLoading ? 'App-spinner' : null}>
         <div className={isLoading ? 'App-translucent' : null}>
