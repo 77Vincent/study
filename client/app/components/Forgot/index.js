@@ -1,6 +1,7 @@
 import React from 'react';
-import { Form, Icon, Input, Button } from 'antd';
+import { Form, Icon, Input } from 'antd';
 import { Link } from 'react-router-dom';
+import { Button } from 'components'
 import './index.less';
 
 class Forgot extends React.Component {
@@ -27,8 +28,8 @@ class Forgot extends React.Component {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit">找回密码</Button>
-          <Link to='/sign-in'><Button>返回登录</Button></Link>
+          <Link to='/sign-in'>返回登录</Link>
+          <Button type="submit">找回密码</Button>
         </Form.Item>
       </Form>
     );

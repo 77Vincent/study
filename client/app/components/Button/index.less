@@ -9,19 +9,18 @@
   line-height: 1;
   .transition(all, 0.3s);
   color: #fff;
+  outline: 0;
 
   .Button-wrapper {
     background-color: @theme;
     padding: 0px 20px;
   }
-
   * {
     &:hover {
       color: #fff;
     }
     color: #fff;
   }
-
   &:before,
   &:after {
     content: '';
@@ -37,8 +36,10 @@
     border-width: 10px 10px 0 10px;
     border-color: @theme transparent transparent transparent;
   }
-
   &:hover {
-    opacity: 0.7;
+    opacity: 0.8;
+  }
+  &.Button-click {
+    opacity: 0.6;
   }
 }

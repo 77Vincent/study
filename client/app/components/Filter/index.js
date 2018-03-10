@@ -1,7 +1,5 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { Layout, Button, Row, Col, Tag, Checkbox, Select, Radio, Icon } from 'antd'
-import Components from 'components'
+import React from 'react'
+import { Checkbox, Select, Radio } from 'antd'
 import './index.less'
 
 export default class Filter extends React.Component {

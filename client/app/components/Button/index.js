@@ -5,9 +5,22 @@ export default class Button extends React.Component {
   constructor(props) {
     super(props)
   }
+  state = {
+    isClick: false
+  }
+  click = () => {
+    this.setState({
+      isClick: true
+    })
+    setTimeout(() => {
+      this.setState({
+        isClick: false
+      })
+    }, 300)
+  }
   render() {
     return (
-      <button className='Button' {...this.props}>
+      <button onClick={this.click} className={`Button ${this.state.isClick ? 'Button-click' : ''}`} {...this.props}>
         <div className='Button-wrapper'>
           {this.props.children}
         </div>
