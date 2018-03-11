@@ -1,21 +1,20 @@
-import React from 'react';
-import { Form, Icon, Input } from 'antd';
-import { Link } from 'react-router-dom';
-import { Button } from 'components'
-import './index.less';
+import React from 'react'
+import { Button, Form, Icon, Input } from 'antd'
+import { Link } from 'react-router-dom'
+import './index.less'
 
 class Forgot extends React.Component {
   handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        console.log('Received values of form: ', values)
       }
-    });
+    })
   }
   render() {
-    const { getFieldDecorator } = this.props.form;
+    const { getFieldDecorator } = this.props.form
 
     return (
       <Form onSubmit={this.handleSubmit} className='Forgot'>
@@ -29,11 +28,11 @@ class Forgot extends React.Component {
 
         <Form.Item>
           <Link to='/sign-in'>返回登录</Link>
-          <Button type="submit">找回密码</Button>
+          <Button type='primary' htmlType="submit">找回密码</Button>
         </Form.Item>
       </Form>
-    );
+    )
   }
 }
 
-export default Form.create()(Forgot);
+export default Form.create()(Forgot)

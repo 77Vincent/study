@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Radio, Modal, Button as Button_Antd } from 'antd'
-import { Button } from 'components'
+import { Button, Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Radio, Modal } from 'antd'
 import { signUp, signIn } from '../../utili/user'
 
 class SignUp extends React.Component {
@@ -175,7 +174,7 @@ class SignUp extends React.Component {
               )}
             </Col>
             <Col span={12}>
-              <Button_Antd>获取验证码</Button_Antd>
+              <Button>获取验证码</Button>
             </Col>
           </Row>
         </Form.Item>

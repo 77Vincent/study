@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Button } from 'components'
+import { Button } from 'antd'
 import './index.less'
 
 export default class Welcome extends React.Component {
@@ -25,13 +25,20 @@ export default class Welcome extends React.Component {
       <div className='Welcome'>
         <hgroup>
           <h1>
-            专注于设计辅导<br/>
-            在这寻找你需要的导师<br/>
-            或成为导师，分享你的知识
+            <span>
+              专注设计教育<br/>
+              寻找你的导师<br/>
+              分享你的知识 
+            </span>
           </h1>
 
-          <Link to={this.props.user ? './teachers' : './orientation'}><Button>寻找导师</Button></Link>
-          <Link to='/sign-in'><Button>成为导师</Button></Link>
+          <Button size='large' type='primary'>
+            <Link to={this.props.user ? './teachers' : './orientation'}>寻找导师</Link>
+          </Button>
+
+          <Button size='large'>
+            <Link to='/sign-in'>成为导师</Link>
+          </Button>
         </hgroup>
 
         <aside>
