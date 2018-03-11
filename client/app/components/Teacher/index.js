@@ -1,17 +1,16 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Layout, Button, Row, Col, Tag } from 'antd';
-import './index.less';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { Layout, Button, Row, Col, Tag } from 'antd'
+import './index.less'
 
 export default class Teacher extends React.Component {
   constructor(props) {
     super(props)
   }
-
   render() {
-    const teacher = this.props.teacher;
-    const isDetail = this.props.type === 'detail';
-    const introductionShort = teacher.introduction.length <= 50 ? teacher.introduction : `${teacher.introduction.slice(0, 50)}...`;
+    const teacher = this.props.teacher
+    const isDetail = this.props.type === 'detail'
+    const introductionShort = teacher.introduction.length <= 50 ? teacher.introduction : `${teacher.introduction.slice(0, 50)}...`
 
     return (
       <div className={this.props.type === 'overall' ? 'Teacher' : 'Teacher Teacher-detail'}>

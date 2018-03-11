@@ -30,21 +30,16 @@ export default class Welcome extends React.Component {
             或成为导师，分享你的知识
           </h1>
 
-          <Button>
-            <Link to='/orientation' >寻找导师</Link>
-          </Button>
-
-          <Button>
-            <Link to='/sign-in'>成为导师</Link>
-          </Button>
+          <Link to={this.props.user ? './teachers' : './orientation'}><Button>寻找导师</Button></Link>
+          <Link to='/sign-in'><Button>成为导师</Button></Link>
         </hgroup>
 
         <aside>
           {
             this.promotion.map((item, index) => (
               <section key={index}>
-                <h3>{item.text}</h3>
-                <h2>{item.num}</h2>
+                <h5>{item.text}</h5>
+                <h4>{item.num}</h4>
               </section>
             ))
           }

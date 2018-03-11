@@ -56,7 +56,8 @@ export default class App extends React.Component {
         <Layout.Content className='App-Content'>
           <Loading isLoading={this.state.isLoading}>
             <Route exact path="/" render={() => <Welcome
-              setLoading={this.setLoading}/>}
+              setLoading={this.setLoading}
+              user={this.state.user} />}
             />
             <Route path="/orientation" component={Orientation} />
             <Route path="/about" component={About} />

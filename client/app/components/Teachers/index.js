@@ -27,8 +27,6 @@ export default class Teachers extends React.Component {
       expand: false,
     })
   }
-  componentDidMount() {
-  }
   render() {
     return (
       <Layout>
