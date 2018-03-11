@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 
 const secret = 'Jessie'
-const timeout =  1200000
+const timeout = 30 * 60 * 1000 
 
 /**
  * Create token
@@ -11,9 +11,7 @@ const timeout =  1200000
 const signToken = (user) => {
   const token = jwt.sign({
     user_info: user.id
-  }, secret, {
-    expiresIn: timeout
-  })
+  }, secret, { expiresIn: timeout })
 
   return {
     token,

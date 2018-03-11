@@ -10,7 +10,7 @@ export default class Header extends React.Component {
   links = [{
     label: '寻找导师', to: '/teachers'
   }, {
-    label: '关于我们', to: '/about'
+    label: '关于Xfolio', to: '/about'
   }]
   render() {
     return (

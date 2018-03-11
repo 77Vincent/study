@@ -1,6 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { Tag } from 'antd'
+import { Tag, Icon } from 'antd'
 import './index.less'
 
 export default class Info extends React.Component {
@@ -16,7 +15,8 @@ export default class Info extends React.Component {
           !user ? null :
             <div>
               <hgroup>
-                <h1>{user.name}</h1>
+                <h2>{user.name}</h2>
+                <Icon type='form' />
                 <h3>认证老师</h3>
               </hgroup>
               <section>
@@ -27,6 +27,9 @@ export default class Info extends React.Component {
               </section>
               <section>
                 <h4>职位</h4> <span>{user.title}</span>
+              </section>
+              <section>
+                <h4>专业</h4> <span>{user.majors}</span>
               </section>
               <section>
                 <h4>性别</h4> <span>{user.gender ? '男' : '女'}</span>

@@ -14,66 +14,50 @@ router.post('/', async (ctx, next) => {
   const { username, password } = ctx.request.body
   let user
 
-  // Sign in with user input credentials
-  if (username && password) {
-    try {
+  try {
+    // Sign in with user input credentials
+    if (username && password) {
       user = await User.findOne({
         where: {
           [Op.or]: [{ username }, { email: username }, { mobilephone: username }],
           password
         }
       })
-
-      if (user) {
-        const { token, expiresIn } = signToken(user)
-
-        ctx.cookies.set("user_info", token, {
-          overwrite: true,
-          maxAge: expiresIn
-        })
-
-        ctx.status = 200
-        ctx.body = {
-          data: user,
-          message: 'Sign In Success'
-        }
-      } else {
-        ctx.status = 403
-        ctx.body = {
-          message: 'Sign In Failure'
-        }
-      }
-    } catch (err) {
-      console.log('Sign In Error:', err)
-      ctx.status = 500
+    // Sign in with credentials in cookies if exist 
+    } else if (id) {
+      user = await User.findOne({ where: { id } })
+    // Newly visit
+    } else {
+      ctx.status = 200
       ctx.body = {
-        message: 'Internal Error: Sign In error'
+        message: 'Newly visit'
       }
+      return
     }
 
-  // Sign in with credentials in cookies if exist 
-  } else if (id) {
-    try {
-      user = await User.findOne({ where: { id } })
+    if (user) {
+      const { token, expiresIn } = signToken(user)
 
+      ctx.cookies.set("user_info", token, {
+        overwrite: true,
+        maxAge: expiresIn
+      })
       ctx.status = 200
       ctx.body = {
         data: user,
         message: 'Sign In Success'
       }
-    } catch (err) {
-      console.log('Sign In Error:', err)
-      ctx.status = 500
+    } else {
+      ctx.status = 403
       ctx.body = {
-        message: 'Internal Error: Sign In Error'
+        message: 'Sign In Failure'
       }
     }
-
-  // Newly visit
-  } else {
-    ctx.status = 403
+  } catch (err) {
+    console.log('Sign In Error:', err)
+    ctx.status = 500
     ctx.body = {
-      message: 'Sign In Failure'
+      message: 'Internal Error: Sign In error'
     }
   }
 })
