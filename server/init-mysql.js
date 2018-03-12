@@ -14,27 +14,38 @@ import {
     await Major.sync({ force: true })
     await Major.create({
       name: '建筑',
+      label: 'architecture',
       description: '建筑设计'
     })
     await Major.create({
       name: '景观',
+      label: 'landscape',
       description: '景观设计'
     })
     await Major.create({
       name: '室内',
-      description: '室内设计'
+      label: 'interior',
+      description: '室内，装潢设计'
     })
     await Major.create({
       name: '平面',
-      description: '平面设计'
+      label: 'graphic',
+      description: '平面，视觉设计'
     })
     await Major.create({
       name: '工业',
-      description: '工业设计'
+      label: 'industry',
+      description: '工业产品设计'
     })
     await Major.create({
       name: '服装',
+      label: 'costume',
       description: '服装设计'
+    })
+    await Major.create({
+      name: 'UI/UX',
+      label: 'UI',
+      description: '界面及交互设计'
     })
 
     await User.sync({ force: true })
