@@ -8,38 +8,69 @@ import { User } from '../models'
 const Op = Sequelize.Op
 const router = Router()
 
+router.get('/', async (ctx, next) => {
+  const message = 'User Query All'
+  const users = await User.findAll({
+    limit: 20
+  })
+  try {
+    ctx.status = 200
+    ctx.body = {
+      data: users,
+      message: `${message} Success`
+    }
+  } catch (err) {
+    ctx.throw(500, `${message} Error: ${err}`)
+  }
+})
+
+router.get('/:id', async (ctx, next) => {
+  const message = 'User Query One'
+  console.log(Math.random())
+  console.log(ctx.request)
+  // const users = await User.findOne({
+  //   where: {id}
+  // })
+  // try {
+  //   ctx.status = 200
+  //   ctx.body = {
+  //     data: users,
+  //     message: `${message} Success`
+  //   }
+  // } catch (err) {
+  //   console.log(`${message} Error`, err)
+  //   ctx.status = 500
+  //   ctx.body = {
+  //     message: `Internal Error: ${message} Error`
+  //   }
+  // }
+})
+
 router.post('/', async (ctx, next) => {
-  console.log(ctx.request.body)
+  const message = 'User Creation'
   try {
     await User.create(ctx.request.body)
     ctx.status = 200
     ctx.body = {
-      message: 'User Creation Success'
+      message: `${message} Success`
     }
   } catch (err) {
-    console.log('User Creation Error', err)
-    ctx.status = 500
-    ctx.body = {
-      message: 'Internal Error: User Creation Error'
-    }
+    ctx.throw(500, `${message} Error: ${err}`)
   }
 })
 
 router.delete('/', async (ctx, next) => {
+  const message = 'User Deletion'
   const id = ctx.decoded.user_info
   try {
     await User.destroy({ where: { id } })
     ctx.cookies.set('user_info', null)
     ctx.status = 200
     ctx.body = {
-      message: 'Logout Success'
+      message: `${message} Success`
     }
   } catch (err) {
-    console.log('Logout Error:', err)
-    ctx.status = 500
-    ctx.body = {
-      message: 'Internal Error: Logout Error'
-    }
+    ctx.throw(500, `${message} Error: ${err}`)
   }
 })
 

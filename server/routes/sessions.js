@@ -10,6 +10,7 @@ const Op = Sequelize.Op
 const router = Router()
 
 router.post('/', async (ctx, next) => {
+  const message = 'Sign In'
   const id = ctx.decoded.user_info
   const { username, password } = ctx.request.body
   let user
@@ -45,36 +46,26 @@ router.post('/', async (ctx, next) => {
       ctx.status = 200
       ctx.body = {
         data: user,
-        message: 'Sign In Success'
+        message: `${message} Success` 
       }
     } else {
-      ctx.status = 403
-      ctx.body = {
-        message: 'Sign In Failure'
-      }
+      ctx.throw(403, `${message} Failure`)
     }
   } catch (err) {
-    console.log('Sign In Error:', err)
-    ctx.status = 500
-    ctx.body = {
-      message: 'Internal Error: Sign In error'
-    }
+    ctx.throw(500, `${message} Error: ${err}`)
   }
 })
 
 router.delete('/', async (ctx, next) => {
+  const message = 'Sign Out'
   try {
     ctx.cookies.set('user_info', null)
     ctx.status = 200
     ctx.body = {
-      message: 'Sign Out Success'
+      message: `${message} Success` 
     }
   } catch (err) {
-    console.log('Sign Out Error:', err)
-    ctx.status = 500
-    ctx.body = {
-      message: 'Internal Error: Sign Out Error'
-    }
+    ctx.throw(500, `${message} Error: ${err}`)
   }
 })
 

@@ -1,7 +1,7 @@
-import Sequelize from 'sequelize';
-import sequelize from '../utili/database.js';
+import Sequelize from 'sequelize'
+import sequelize from '../utili/database.js'
 
-const User_Major = sequelize.define('user_major', {
+export default sequelize.define('user_major', {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -15,6 +15,4 @@ const User_Major = sequelize.define('user_major', {
     }
 },{
     tableName: 'User_Major'
-});
-
-export default User_Major;
+})
