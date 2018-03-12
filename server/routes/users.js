@@ -10,15 +10,13 @@ const router = Router()
 
 router.get('/', async (ctx, next) => {
   const message = 'User Query All'
-  const users = await User.findAll({
-    limit: 20
-  })
+
   try {
+    const data = await User.findAll({
+      limit: 20
+    })
     ctx.status = 200
-    ctx.body = {
-      data: users,
-      message: `${message} Success`
-    }
+    ctx.body = { data, message: `${message} Success` }
   } catch (err) {
     ctx.throw(500, `${message} Error: ${err}`)
   }
@@ -26,34 +24,29 @@ router.get('/', async (ctx, next) => {
 
 router.get('/:id', async (ctx, next) => {
   const message = 'User Query One'
-  console.log(Math.random())
-  console.log(ctx.request)
-  // const users = await User.findOne({
-  //   where: {id}
-  // })
-  // try {
-  //   ctx.status = 200
-  //   ctx.body = {
-  //     data: users,
-  //     message: `${message} Success`
-  //   }
-  // } catch (err) {
-  //   console.log(`${message} Error`, err)
-  //   ctx.status = 500
-  //   ctx.body = {
-  //     message: `Internal Error: ${message} Error`
-  //   }
-  // }
+
+  try {
+    const data = await User.findOne({ 
+      where: { id: ctx.params.id }
+    })
+    if (data) {
+      ctx.status = 200
+      ctx.body = { data, message: `${message} Success` }
+    } else {
+      ctx.throw(404, `${message} Not Found`)
+    }
+  } catch (err) {
+    ctx.throw(500, `${message} Error: ${err}`)
+  }
 })
 
 router.post('/', async (ctx, next) => {
   const message = 'User Creation'
+
   try {
     await User.create(ctx.request.body)
     ctx.status = 200
-    ctx.body = {
-      message: `${message} Success`
-    }
+    ctx.body = { message: `${message} Success` }
   } catch (err) {
     ctx.throw(500, `${message} Error: ${err}`)
   }
@@ -61,14 +54,12 @@ router.post('/', async (ctx, next) => {
 
 router.delete('/', async (ctx, next) => {
   const message = 'User Deletion'
-  const id = ctx.decoded.user_info
+
   try {
-    await User.destroy({ where: { id } })
+    await User.destroy({ where: { id: ctx.decoded.user_info } })
     ctx.cookies.set('user_info', null)
     ctx.status = 200
-    ctx.body = {
-      message: `${message} Success`
-    }
+    ctx.body = { message: `${message} Success` }
   } catch (err) {
     ctx.throw(500, `${message} Error: ${err}`)
   }
