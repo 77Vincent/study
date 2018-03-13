@@ -1,4 +1,4 @@
-import { sequelize } from '../utili'
+import { connection } from '../utili'
 import {
   User,
   Major,
@@ -7,7 +7,7 @@ import {
 
 (async () => {
   try {
-    await sequelize.dropAllSchemas()
+    await connection.dropAllSchemas()
 
     await Major.sync({ force: true })
     await Major.create({

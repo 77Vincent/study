@@ -1,4 +1,4 @@
-import sequelize from './database.js'
+import connection from './database.js'
 import {
   signToken,
   verifyToken
@@ -8,7 +8,7 @@ import {
 } from './general.js'
 
 export {
-  sequelize,
+  connection,
   signToken,
   verifyToken,
   prettyJSON

@@ -4,7 +4,7 @@ const databaseName = 'xfolio'
 const username = 'root'
 const password = 'root'
 
-const sequelize = new Sequelize(databaseName, username, password, {
+export default new Sequelize(databaseName, username, password, {
   host: 'localhost',
   dialect: 'mysql',
   port: 3306,
@@ -18,5 +18,3 @@ const sequelize = new Sequelize(databaseName, username, password, {
     ssl: false,
   }
 })
-
-export default sequelize
