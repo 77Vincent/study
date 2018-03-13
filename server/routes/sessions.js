@@ -35,7 +35,6 @@ router.post('/', async (ctx, next) => {
 
     if (data) {
       const { token, expiresIn } = signToken(data)
-
       ctx.cookies.set("user_info", token, {
         overwrite: true,
         maxAge: expiresIn
