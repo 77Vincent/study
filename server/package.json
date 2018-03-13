@@ -2,9 +2,9 @@
   "name": "server",
   "version": "0.1.0",
   "scripts": {
-    "start": "./node_modules/.bin/nodemon bin/run",
+    "start": "nodemon --exec babel-node app.js",
     "database": "babel-node init-mysql",
-    "pm2": "pm2 start bin/run "
+    "pm2": "pm2 start bin/run"
   },
   "dependencies": {
     "co": "^4.6.0",
@@ -15,7 +15,6 @@
     "koa-cors": "0.0.16",
     "koa-json": "^1.1.1",
     "koa-logger": "^1.3.0",
-    "koa-onerror": "^1.3.1",
     "koa-router": "^7.0.0",
     "koa-static": "^1.5.2",
     "mysql2": "^1.5.2",

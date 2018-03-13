@@ -28,8 +28,7 @@ router.post('/', async (ctx, next) => {
       data = await User.findOne({ where: { id } })
     // Newly visit
     } else {
-      ctx.status = 200
-      ctx.body = { message: 'Newly visit' }
+      ctx.status = 204
       return
     }
 

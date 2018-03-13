@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Radio, Modal } from 'antd'
-import { signUp, signIn } from '../../utili/user'
+import { signUp, signIn } from '../../utili'
 
 class SignUp extends React.Component {
   constructor(props) {
