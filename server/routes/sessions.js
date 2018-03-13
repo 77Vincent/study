@@ -1,7 +1,6 @@
-'use strict'
-
 import Router from 'koa-router'
 import Sequelize from 'sequelize'
+import bcrypt from 'bcryptjs'
 
 import { User } from '../models'
 import { signToken, prettyJSON } from '../utili'
@@ -17,12 +16,14 @@ router.post('/', async (ctx, next) => {
   try {
     // Sign in with user input credentials
     if (username && password) {
-      data = await User.findOne({
+      const user = await User.findOne({
         where: {
-          [Op.or]: [{ username }, { email: username }, { mobilephone: username }],
-          password
+          [Op.or]: [{ username }, { mobilephone: username }],
         }
       })
+      if (bcrypt.compareSync(password, user.password)) {
+        data = user
+      }
     // Sign in with credentials in cookies if exist 
     } else if (id) {
       data = await User.findOne({ where: { id } })

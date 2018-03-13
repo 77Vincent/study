@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize'
+import bcryptjs from 'bcryptjs'
 import { connection } from '../utili'
 
 export default connection.define('user', {
@@ -26,7 +27,7 @@ export default connection.define('user', {
     allowNull: false
   },
   name: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING
   },
   avatar: {
     type: Sequelize.STRING
@@ -41,15 +42,21 @@ export default connection.define('user', {
     type: Sequelize.BOOLEAN
   },
   birthday: {
-    type: Sequelize.DATE,
+    type: Sequelize.DATE
   },
   email: {
     type: Sequelize.STRING
   },
   bio: {
-    type: Sequelize.STRING
+    type: Sequelize.TEXT
   },
   last_logout: {
-    type: Sequelize.DATE,
+    type: Sequelize.DATE
   },
+}, {
+  hooks: {
+    afterValidate(input) {
+      input.password = bcryptjs.hashSync(input.password, 8)
+    }
+  }
 })
