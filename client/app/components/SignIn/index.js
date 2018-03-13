@@ -24,8 +24,8 @@ class SignIn extends React.Component {
         this.props.setLoading(true)
         const res = await signIn(values)
         if (res.status === 200) {
-          const result = await res.json()
-          this.props.setUser(result.data)
+          const data = await res.json()
+          this.props.setUser(data)
         } else if (res.status === 403) {
           message.error('用户名/手机号/密码错误！')
         } else if (res.status === 500) {

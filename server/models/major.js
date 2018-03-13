@@ -1,7 +1,7 @@
 'use strict'
 
 import Sequelize from 'sequelize'
-import sequelize from '../utili/database.js'
+import { sequelize } from '../utili'
 
 const Major = sequelize.define('major', {
   id: {

@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize'
-import sequelize from '../utili/database.js'
+import { sequelize } from '../utili'
 
 export default sequelize.define('user', {
   id: {

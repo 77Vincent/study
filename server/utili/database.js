@@ -1,3 +1,4 @@
+'use strict'
 // Database configurations
 
 import Sequelize from 'sequelize'
@@ -6,7 +7,7 @@ const databaseName = 'xfolio'
 const username = 'root'
 const password = 'root'
 
-export default new Sequelize(databaseName, username, password, {
+const sequelize = new Sequelize(databaseName, username, password, {
   host: 'localhost',
   dialect: 'mysql',
   port: 3306,
@@ -16,3 +17,5 @@ export default new Sequelize(databaseName, username, password, {
     ssl: false,
   }
 })
+
+export default sequelize

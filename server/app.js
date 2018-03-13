@@ -11,7 +11,7 @@ import resource from 'koa-static' //静态资源托管
 import path from 'path'
 
 import routes from './routes'
-import { verifyToken } from './utili/oauth'
+import { verifyToken } from './utili'
 
 const app = new Koa()
 

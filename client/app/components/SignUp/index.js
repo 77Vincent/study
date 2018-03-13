@@ -30,8 +30,8 @@ class SignUp extends React.Component {
         if (res.status === 200) {
           const res = await signIn(values)
           if (res.status === 200) {
-            const result = await res.json()
-            this.props.setUser(result.data)
+            const data = await res.json()
+            this.props.setUser(data)
           }
         }
         this.props.setLoading(false)

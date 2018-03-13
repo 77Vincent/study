@@ -35,8 +35,8 @@ export default class App extends React.Component {
     (async () => {
       const res = await signIn()
       if (res.status === 200) {
-        const result = await res.json()
-        this.setUser(result.data)
+        const data = await res.json()
+        this.setUser(data)
       }
     })()
   }

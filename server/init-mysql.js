@@ -1,6 +1,6 @@
 'use strict'
 
-import sequelize from './utili/database'
+import sequelize from './utili'
 import {
   User,
   Major,
