@@ -52,6 +52,4 @@ export default sequelize.define('user', {
   last_logout: {
     type: Sequelize.DATE,
   },
-}, {
-  tableName: 'User'
 })

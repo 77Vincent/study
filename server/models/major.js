@@ -18,12 +18,9 @@ const Major = sequelize.define('major', {
     type: Sequelize.STRING,
     allowNull: false,
     unique: true
-  },
-  desc: {
-    type: Sequelize.STRING,
   }
 }, {
-  tableName: 'Major'
+  timestamps: false
 })
 
 export default Major

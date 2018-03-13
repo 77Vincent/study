@@ -13,6 +13,10 @@ const sequelize = new Sequelize(databaseName, username, password, {
   port: 3306,
   underscored: true,
   timezone: '+08:00',
+  define: {
+    freezeTableName: true,
+    charset: 'utf8'
+  },
   dialectOptions: {
     ssl: false,
   }
