@@ -1,17 +1,15 @@
-'use strict'
-
 import Router from 'koa-router'
-import Sequelize from 'sequelize'
 
 import { User } from '../models'
 import { prettyJSON } from '../utili'
 
-const Op = Sequelize.Op
 const router = Router()
 
 router.get('/', async (ctx, next) => {
   try {
-    const data = await User.findAll({ limit: 20 })
+    const data = await User.findAll({
+      limit: 20
+    })
     ctx.status = 200
     ctx.body = prettyJSON(data) 
   } catch (err) {
@@ -19,17 +17,17 @@ router.get('/', async (ctx, next) => {
   }
 })
 
-router.get('/:id', async (ctx, next) => {
+router.get('/:param', async (ctx, next) => {
   try {
     const data = await User.findOne({ 
-      where: { id: ctx.params.id }
+      where: { username: ctx.params.param }
     })
     if (data) {
       ctx.status = 200
       ctx.body = prettyJSON(data) 
     } else {
       ctx.status = 404 
-      ctx.body = { message: 'Not Found' }
+      ctx.body = prettyJSON({ message: 'Not Found' })
     }
   } catch (err) {
     ctx.throw(500, err)
@@ -40,7 +38,7 @@ router.post('/', async (ctx, next) => {
   try {
     await User.create(ctx.request.body)
     ctx.status = 201
-    ctx.body = { message: `Success` }
+    ctx.body = prettyJSON({ message: `Success` })
   } catch (err) {
     ctx.throw(500, err)
   }
@@ -51,7 +49,7 @@ router.delete('/', async (ctx, next) => {
     await User.destroy({ where: { id: ctx.decoded.user_info } })
     ctx.cookies.set('user_info', null)
     ctx.status = 200
-    ctx.body = { message: `Success` }
+    ctx.body = prettyJSON({ message: `Success` })
   } catch (err) {
     ctx.throw(500, err)
   }

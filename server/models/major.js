@@ -1,9 +1,7 @@
-'use strict'
-
 import Sequelize from 'sequelize'
 import { sequelize } from '../utili'
 
-const Major = sequelize.define('major', {
+export default sequelize.define('major', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -22,5 +20,3 @@ const Major = sequelize.define('major', {
 }, {
   timestamps: false
 })
-
-export default Major

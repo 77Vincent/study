@@ -1,6 +1,3 @@
-'use strict'
-// Database configurations
-
 import Sequelize from 'sequelize'
 
 const databaseName = 'xfolio'

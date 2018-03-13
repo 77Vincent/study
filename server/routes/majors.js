@@ -1,5 +1,3 @@
-'use strict'
-
 import Router from 'koa-router'
 
 import { Major } from '../models'
@@ -19,17 +17,17 @@ router.get('/', async (ctx, next) => {
   }
 })
 
-router.get('/:id', async (ctx, next) => {
+router.get('/:param', async (ctx, next) => {
   try {
     const data = await Major.findOne({ 
-      where: { id: ctx.params.id }
+      where: { label: ctx.params.param }
     })
     if (data) {
       ctx.status = 200
       ctx.body = prettyJSON(data) 
     } else {
       ctx.status = 404 
-      ctx.body = { message: 'Not Found' }
+      ctx.body = prettyJSON({ message: 'Not Found' })
     }
   } catch (err) {
     ctx.throw(500, err)

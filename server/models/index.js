@@ -1,6 +1,6 @@
 import User from './user'
-import User_Major from './user_major'
 import Major from './major'
+import User_Major from './user_major'
 
 User.belongsToMany(Major, {
   through: 'User_Major',

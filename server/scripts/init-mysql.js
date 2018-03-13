@@ -1,11 +1,9 @@
-'use strict'
-
-import sequelize from './utili'
+import { sequelize } from '../utili'
 import {
   User,
   Major,
   User_Major
-} from './models'
+} from '../models'
 
 (async () => {
   try {
