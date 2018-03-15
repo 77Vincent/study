@@ -1,4 +1,4 @@
-import connection from './database.js'
+import db from './db.js'
 import {
   signToken,
   verifyToken
@@ -8,7 +8,7 @@ import {
 } from './general.js'
 
 export {
-  connection,
+  db,
   signToken,
   verifyToken,
   prettyJSON

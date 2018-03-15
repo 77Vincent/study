@@ -1,12 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Radio, Progress, Carousel } from 'antd';
-import fetch from 'isomorphic-fetch';
-import './index.less';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { Radio, Progress, Carousel } from 'antd'
+import './index.less'
 
 export default class Orientation extends React.Component{
   constructor(props) {
-    super(props);
+    super(props)
   }
 
   state = {
@@ -42,12 +41,12 @@ export default class Orientation extends React.Component{
   ]
 
   progress = (e) => {
-    this.carousel.next();
+    this.carousel.next()
 
     this.setState({
       value: e.target.value,
       progress: this.state.progress + Math.ceil(100 / this.questions.length)
-    });
+    })
   }
 
   render() {

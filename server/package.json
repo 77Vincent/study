@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "start": "nodemon --exec babel-node index.js",
-    "database": "babel-node ./scripts/init-mysql"
+    "db": "babel-node ./scripts/init-db"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

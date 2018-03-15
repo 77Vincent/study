@@ -1,6 +1,7 @@
 import React from 'react'
 import { Layout, Button, Row, Col, Tag, Modal } from 'antd'
 import { Filter, Teacher } from 'components'
+import { getTeacher } from '../../utili'
 
 export default class Teachers extends React.Component {
   constructor(props) {
@@ -10,6 +11,17 @@ export default class Teachers extends React.Component {
     expand: false,
     teachers: [],
     teacher: {}
+  }
+  componentDidMount = () => {
+    (async () => {
+      const res = await fetch( '/api/users/teachers')
+      if (res.status === 200) {
+        const data = await res.json()
+        this.setState({
+          teachers: data
+        })
+      }
+    })()
   }
   openTeacher = (teacher_id) => {
     this.setState({
@@ -37,7 +49,6 @@ export default class Teachers extends React.Component {
           visible={this.state.expand}
           onCancel={this.closeTeacher}
         >
-          <Teacher type='detail' teacher={this.state.teacher} />
         </Modal>
         <Layout.Sider width='300'>
           <Filter />
@@ -50,7 +61,7 @@ export default class Teachers extends React.Component {
                 (
                   <Col key={index}>
                     <div className='App-tile' onClick={() => this.openTeacher(teacher.id)}>
-                      <Teacher type='overall' teacher={teacher} />
+                      <Teacher teacher={teacher} />
                     </div>
                   </Col>
                 )

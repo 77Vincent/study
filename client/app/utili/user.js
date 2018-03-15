@@ -1,5 +1,3 @@
-'use strict'
-
 const createFetchConfig = (method = 'GET', body = {}) => {
   return {
     method,

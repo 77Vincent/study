@@ -1,12 +1,13 @@
 import Sequelize from 'sequelize'
-import bcryptjs from 'bcryptjs'
-import { connection } from '../utili'
+import bcrypt from 'bcryptjs'
+import { db } from '../utili'
 
-export default connection.define('user', {
+export default db.define('user', {
   id: {
     type: Sequelize.INTEGER,
-    primaryKey: true,
     autoIncrement: true,
+    unique: true,
+    primaryKey: true
   },
   username: {
     type: Sequelize.STRING,
@@ -22,12 +23,22 @@ export default connection.define('user', {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  certified: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
   role: {
-    type: Sequelize.STRING,
+    type: Sequelize.ENUM,
+    values: ['teacher', 'student', 'admin'],
     allowNull: false
   },
+  active: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
+  },
   name: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING(12)
   },
   avatar: {
     type: Sequelize.STRING
@@ -41,9 +52,6 @@ export default connection.define('user', {
   gender: {
     type: Sequelize.BOOLEAN
   },
-  birthday: {
-    type: Sequelize.DATE
-  },
   email: {
     type: Sequelize.STRING
   },
@@ -54,9 +62,10 @@ export default connection.define('user', {
     type: Sequelize.DATE
   },
 }, {
+  paranoid: true,
   hooks: {
     afterValidate(input) {
-      input.password = bcryptjs.hashSync(input.password, 8)
+      input.password = bcrypt.hashSync(input.password, 8)
     }
   }
 })

@@ -1,16 +1,13 @@
 import Sequelize from 'sequelize'
-import { connection } from '../utili'
+import { db } from '../utili'
 
-export default connection.define('user_major', {
-  id: {
+export default db.define('user_major', {
+  user_id: {
     type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
+    primaryKey: true
   },
   major_id: {
-    type: Sequelize.INTEGER
-  },
-  user_id: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    primaryKey: true
   }
 })

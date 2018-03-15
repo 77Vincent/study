@@ -21,7 +21,7 @@ router.post('/', async (ctx, next) => {
           [Op.or]: [{ username }, { mobilephone: username }],
         }
       })
-      if (bcrypt.compareSync(password, user.password)) {
+      if (user && bcrypt.compareSync(password, user.password)) {
         data = user
       }
     // Sign in with credentials in cookies if exist 
@@ -42,7 +42,8 @@ router.post('/', async (ctx, next) => {
       ctx.status = 200
       ctx.body = prettyJSON(data) 
     } else {
-      ctx.throw(403, 'Authentication Failure')
+    ctx.status = 403
+    ctx.body = { message: 'Authentication Failure' }
     }
   } catch (err) {
     ctx.throw(500, err)
