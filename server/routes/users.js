@@ -98,11 +98,26 @@ router.get('/teachers/:username', async (ctx, next) => {
   }
 })
 
-router.post('/', async (ctx, next) => {
+// Create new user
+router.put('/', async (ctx, next) => {
   try {
     await User.create(ctx.request.body)
     ctx.status = 201
     ctx.body = prettyJSON({ message: `Success` })
+  } catch (err) {
+    ctx.throw(500, err)
+  }
+})
+
+// Update current user
+router.post('/:username', async (ctx, next) => {
+  try {
+    let data = await User.findOne({ 
+      where: { username: ctx.params.username }
+    })
+    data = await data.update(ctx.request.body)
+    ctx.status = 200
+    ctx.body = prettyJSON(data)
   } catch (err) {
     ctx.throw(500, err)
   }

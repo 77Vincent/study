@@ -11,10 +11,17 @@ const createFetchConfig = (method = 'GET', body = {}) => {
 }
 
 async function signUp (values) {
-  const { prefix, username, mobilephone, password, role } = values
   const res = await window.fetch(
     '/api/users', 
-    createFetchConfig('POST', JSON.stringify({username, mobilephone, password, role}))
+    createFetchConfig('PUT', JSON.stringify(values))
+  )
+  return res
+}
+
+async function userUpdate (values) {
+  const res = await window.fetch(
+    `/api/users/${values.username}`, 
+    createFetchConfig('POST', JSON.stringify(values))
   )
   return res
 }
@@ -28,10 +35,9 @@ async function logout () {
 }
 
 async function signIn (values = { username: null, password: null}) {
-  const { username, password } = values
   const res = await window.fetch(
     '/api/sessions', 
-    createFetchConfig('POST', JSON.stringify({ username, password }))
+    createFetchConfig('POST', JSON.stringify(values))
   )
   return res
 }
@@ -48,5 +54,6 @@ export {
   signIn,
   signOut,
   signUp,
-  logout
+  logout,
+  userUpdate
 }

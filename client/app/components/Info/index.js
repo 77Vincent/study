@@ -1,5 +1,6 @@
 import React from 'react'
-import { Radio, Form, Input, Tag, Icon } from 'antd'
+import { Radio, Form, Input, Tag, Icon, Button } from 'antd'
+import { userUpdate } from '../../utili'
 import './index.less'
 
 class Info extends React.Component {
@@ -14,8 +15,22 @@ class Info extends React.Component {
       isEdit: true
     })
   }
-  shouldComponentUpdate = () => {
-    return this.props.user
+  submit = (e) => {
+    e.preventDefault()
+    this.props.form.validateFields(async (err, values) => {
+      if (!err) {
+        this.props.setLoading(true)
+        values.username = this.props.user.username
+        const res = await userUpdate(values)
+        if (res.status === 200) {
+          const data = await res.json()
+          this.props.setUser(data)
+        } else if (res.status === 500) {
+          message.warning('网络连接失败，请稍后再试')
+        }
+        this.props.setLoading(false)
+      }
+    })
   }
   render() {
     const user = this.props.user
@@ -28,7 +43,7 @@ class Info extends React.Component {
           // Return nothing when user data has not been fetch yet
           // to prevent error from getting properties from null
           user &&
-            <Form>
+            <Form onSubmit={this.submit}>
               <hgroup>
                 {
                   isEdit ? 
@@ -93,15 +108,17 @@ class Info extends React.Component {
                 {
                   isEdit ? 
                     <Form.Item className='Info-Form'>
-                      {getFieldDecorator('gender')(
-                        <Radio.Group>
-                          <Radio value={true}>先生</Radio>
-                          <Radio value={false}>女士</Radio>
-                        </Radio.Group>
-                      )}
+                      <Radio.Group>
+                        <Radio value={true}>先生</Radio>
+                        <Radio value={false}>女士</Radio>
+                      </Radio.Group>
                     </Form.Item> : <span>{user.gender ? '先生' : '女士'}</span>
                 }
               </section>
+              {
+                isEdit &&
+                  <Button type='primary' style={{width: '300px'}} htmlType="submit">确认</Button>
+              }
             </Form>
         }
       </div>
