@@ -1,5 +1,5 @@
 // All server configs are stored here
 
-export const configRouter = {
+export default {
   limit: 20,
 }

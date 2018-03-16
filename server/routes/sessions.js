@@ -3,13 +3,14 @@ import Sequelize from 'sequelize'
 import bcrypt from 'bcryptjs'
 
 import { User } from '../models'
-import { signToken, prettyJSON } from '../utili'
+import { oauth, fn } from '../utili'
 
 const Op = Sequelize.Op
 export const sessions = Router()
 
 /** 
  * Sign in 
+ * @method POST 
  * @param {Object} ctx
  * @returns {Object} user model 
  */
@@ -41,13 +42,13 @@ sessions.post('/', async (ctx) => {
     }
 
     if (data) {
-      const { token, expiresIn } = signToken(data)
+      const { token, expiresIn } = oauth.signToken(data)
       ctx.cookies.set("user_info", token, {
         overwrite: true,
         maxAge: expiresIn
       })
       ctx.status = 200
-      ctx.body = prettyJSON(data) 
+      ctx.body = fn.prettyJSON(data) 
     } else {
     ctx.status = 403
     }
@@ -58,6 +59,7 @@ sessions.post('/', async (ctx) => {
 
 /** 
  * Sign out 
+ * @method DELETE 
  * @param {Object} ctx
  * @returns {void} status code
  */

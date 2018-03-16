@@ -5,7 +5,7 @@ import cors from 'koa-cors'
 import bodyParser from 'koa-bodyparser'
 
 import routes from './routes'
-import { verifyToken } from './utili'
+import { oauth } from './utili'
 
 const app = new Koa()
 
@@ -15,23 +15,23 @@ app.use(convert(logger()))
 app.use(bodyParser())
 
 app.use(async (ctx, next) => {
-	await next()
-	ctx.set('X-Powered-By', 'Koa2')
+  await next()
+  ctx.set('X-Powered-By', 'Koa2')
 })
 
 app.use(async (ctx, next) => {
-	ctx.decoded = {}
-	let id = await verifyToken(ctx)
-	if (id) {
-		ctx.decoded = id
-	}
-	await next()
+  ctx.decoded = {}
+  let id = await oauth.verifyToken(ctx)
+  if (id) {
+    ctx.decoded = id
+  }
+  await next()
 })
 
 app.use(routes.routes(), routes.allowedMethods())
 
-app.on('error', (error, ctx) => {
-	throw new Error('Server Internal Error:' + error)
+app.on('error', (error) => {
+  throw new Error(`Server Internal Error:${error}`)
 })
 
 app.listen(3001)
