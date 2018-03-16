@@ -6,9 +6,14 @@ import { User } from '../models'
 import { signToken, prettyJSON } from '../utili'
 
 const Op = Sequelize.Op
-const router = Router()
+export const sessions = Router()
 
-router.post('/', async (ctx, next) => {
+/** 
+ * Sign in 
+ * @param {Object} ctx
+ * @returns {Object} user model 
+ */
+sessions.post('/', async (ctx) => {
   const id = ctx.decoded.user_info
   const { username, password } = ctx.request.body
   let data 
@@ -17,9 +22,11 @@ router.post('/', async (ctx, next) => {
     // Sign in with user input credentials
     if (username && password) {
       const user = await User.findOne({
-        where: {
-          [Op.or]: [{ username }, { mobilephone: username }],
-        }
+        where: { [Op.or]: [
+          { username },
+          { mobilephone: username },
+          { email: username }
+        ]}
       })
       if (user && bcrypt.compareSync(password, user.password)) {
         data = user
@@ -43,21 +50,22 @@ router.post('/', async (ctx, next) => {
       ctx.body = prettyJSON(data) 
     } else {
     ctx.status = 403
-    ctx.body = { message: 'Authentication Failure' }
     }
   } catch (err) {
     ctx.throw(500, err)
   }
 })
 
-router.delete('/', async (ctx, next) => {
+/** 
+ * Sign out 
+ * @param {Object} ctx
+ * @returns {void} status code
+ */
+sessions.delete('/', async (ctx) => {
   try {
     ctx.cookies.set('user_info', null)
     ctx.status = 200
-    ctx.body = { message: `Success` }
   } catch (err) {
     ctx.throw(500, err)
   }
 })
-
-export default router

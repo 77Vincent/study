@@ -3,9 +3,9 @@ import Router from 'koa-router'
 import { Major } from '../models'
 import { prettyJSON } from '../utili'
 
-const router = Router()
+export const majors = Router()
 
-router.get('/', async (ctx, next) => {
+majors.get('/', async (ctx, next) => {
   try {
     const data = await Major.findAll({
       limit: 20
@@ -17,7 +17,7 @@ router.get('/', async (ctx, next) => {
   }
 })
 
-router.get('/:param', async (ctx, next) => {
+majors.get('/:param', async (ctx, next) => {
   try {
     const data = await Major.findOne({ 
       where: { label: ctx.params.param }
@@ -33,5 +33,3 @@ router.get('/:param', async (ctx, next) => {
     ctx.throw(500, err)
   }
 })
-
-export default router

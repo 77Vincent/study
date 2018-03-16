@@ -1,13 +1,18 @@
 import Router from 'koa-router'
 
-import majors from './majors'
-import users from './users'
-import sessions from './sessions'
+import './majors'
+import './users'
+import './teachers'
+import './sessions'
 
 const router = Router()
 
-router.use('/api/users', users.routes())
-router.use('/api/majors', majors.routes())
-router.use('/api/sessions', sessions.routes())
+// Automatically use each imported router
+module.children.map(item => {
+  const name = Object.keys(item.exports)[0] 
+  if (name !== 'url') {
+    router.use(`/api/${name}`, item.exports[name].routes())
+  }
+})
 
 export default router
