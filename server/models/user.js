@@ -27,9 +27,9 @@ export default db.define('user', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
-  role: {
-    type: Sequelize.ENUM,
-    values: ['teacher', 'student', 'admin'],
+  role_id: {
+    type: Sequelize.INTEGER,
+    defaultValue: 3,
     allowNull: false
   },
   active: {

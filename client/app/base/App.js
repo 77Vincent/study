@@ -28,15 +28,20 @@ export default class App extends React.Component {
   }
   state = {
     user: null,
+    majors: [],
     isLoading: false
   }
-  componentDidMount () {
-    // Try to sign in if user has recently sign in
+  componentDidMount = () => {
     (async () => {
-      const res = await signIn()
-      if (res.status === 200) {
-        const data = await res.json()
-        this.setUser(data)
+      const resUser = await signIn()
+      if (resUser.status === 200) {
+        const dataUser = await resUser.json()
+        this.setUser(dataUser)
+      }
+      const resMajors = await fetch( '/api/majors')
+      if (resMajors.status === 200) {
+        const dataMajors = await resMajors.json()
+        this.setState({ majors: dataMajors })
       }
     })()
   }
@@ -79,6 +84,7 @@ export default class App extends React.Component {
               setUser={this.setUser} 
               setLoading={this.setLoading}
               user={this.state.user} 
+              majors={this.state.majors}
               {...props} />} 
             />
             <Route path="/teachers" render={() => <Teachers 

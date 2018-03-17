@@ -1,7 +1,7 @@
 import Router from 'koa-router'
 import Sequelize from 'sequelize'
 
-import { User, Major } from '../models'
+import { User, Major, Role } from '../models'
 import { fn } from '../utili'
 import config from '../config.js'
 
@@ -16,22 +16,19 @@ export const users = Router()
  */
 users.get('/', async (ctx) => {
   try {
-    let data
-    const role = fn.parseQuerystring(ctx.request.querystring, 'role')
-    if (role) {
-      data = await User.findAll({ 
-        where: { role },
-        limit: config.limit
-      })
-    } else {
-      data = await User.findAll({ limit: config.limit })
-    }
-    if (data && data.length) {
-      data = data.map(item => {
-        // Do not show password to client
-        delete item.dataValues.password 
-        return item
-      })
+    const role_id = fn.parseQuerystring(ctx.request.querystring, 'role')
+    const page = fn.parseQuerystring(ctx.request.querystring, 'page')
+    const data = await User.findAll({ 
+      where: role_id ? { role_id } : null,
+      limit: config.limit,
+      offset: page ? ( page - 1 ) * config.limit : 0,
+      include: [{ 
+        model: Major,
+        attributes: ['id'] 
+      }],
+      attributes: { exclude: ['password'] }
+    })
+    if (data) {
       ctx.status = 200
       ctx.body = fn.prettyJSON(data)
     } else {
@@ -51,11 +48,14 @@ users.get('/', async (ctx) => {
 users.get('/:username', async (ctx) => {
   try {
     const data = await User.findOne({ 
-      where: { username: ctx.params.username }
+      where: { username: ctx.params.username },
+      include: [{ 
+        model: Major,
+        attributes: ['id'] 
+      }],
+      attributes: { exclude: ['password'] }
     })
     if (data) {
-      // Do not show password to client
-      delete data.dataValues.password
       ctx.status = 200
       ctx.body = fn.prettyJSON(data) 
     } else {
@@ -83,7 +83,7 @@ users.put('/', async (ctx) => {
 })
 
 /** 
- * Update a specific user 
+ * Update a user 
  * @method POST 
  * @param {Object} ctx
  * @returns {Object} updated user model if success

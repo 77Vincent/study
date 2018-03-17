@@ -1,5 +1,5 @@
 import React from 'react'
-import { Radio, Form, Input, Tag, Icon, Button } from 'antd'
+import { Checkbox, Radio, Form, Input, Tag, Icon, Button } from 'antd'
 import { userUpdate } from '../../utili'
 import './index.less'
 
@@ -29,8 +29,17 @@ class Info extends React.Component {
           message.warning('网络连接失败，请稍后再试')
         }
         this.props.setLoading(false)
+        this.setState({ isEdit: false })
       }
     })
+  }
+  cancel = () => {
+    this.setState({
+      isEdit: false
+    })
+  }
+  onCheck = (values) => {
+    console.log(values)
   }
   render() {
     const user = this.props.user
@@ -47,14 +56,17 @@ class Info extends React.Component {
               <hgroup>
                 {
                   isEdit ? 
-                    <Form.Item className='Info-Form'>
-                      {getFieldDecorator('name', {
-                        rules: [{ max: 5, message: '不能超过5个字符' }],
-                        initialValue: user.name
-                      })(
-                        <Input type="text" placeholder='站内对外显示的名称' />
-                      )}
-                    </Form.Item> : <h2>{user.name}</h2>
+                    <div>
+                      <h4>名称</h4>
+                      <Form.Item className='Info-Form'>
+                        {getFieldDecorator('name', {
+                          rules: [{ max: 10, message: '不能超过10个字符' }],
+                          initialValue: user.name
+                        })(
+                          <Input type="text" />
+                        )}
+                      </Form.Item>
+                    </div> : <h2>{user.name}</h2>
                 }
                 {
                   isEdit ? null : <Icon type='form' onClick={this.edit}/>
@@ -62,26 +74,12 @@ class Info extends React.Component {
                 <h3>{user.certified && '认证老师'}</h3>
               </hgroup>
               <section>
-                <h4>简介</h4>
-                {
-                  isEdit ? 
-                    <Form.Item className='Info-Form'>
-                      {getFieldDecorator('bio', {
-                        rules: [{ max: 100, message: '不能超过100个字符' }],
-                        initialValue: user.bio
-                      })(
-                        <Input.TextArea rows={5} />
-                      )}
-                    </Form.Item> : <span>{user.bio}</span>
-                }
-              </section>
-              <section>
                 <h4>学校</h4>
                 {
                   isEdit ? 
                     <Form.Item className='Info-Form'>
                       {getFieldDecorator('school', {
-                        rules: [{ max: 12, message: '不能超过12个字符' }],
+                        rules: [{ max: 20, message: '不能超过20个字符' }],
                         initialValue: user.school
                       })(
                         <Input type="text" />
@@ -95,7 +93,7 @@ class Info extends React.Component {
                   isEdit ? 
                     <Form.Item className='Info-Form'>
                       {getFieldDecorator('title', {
-                        rules: [{ max: 12, message: '不能超过12个字符' }],
+                        rules: [{ max: 20, message: '不能超过20个字符' }],
                         initialValue: user.title
                       })(
                         <Input type="text" />
@@ -108,16 +106,50 @@ class Info extends React.Component {
                 {
                   isEdit ? 
                     <Form.Item className='Info-Form'>
-                      <Radio.Group>
-                        <Radio value={true}>先生</Radio>
-                        <Radio value={false}>女士</Radio>
-                      </Radio.Group>
+                      {getFieldDecorator('gender', {
+                        initialValue: user.gender
+                      })(
+                        <Radio.Group>
+                          <Radio.Button value={true}>先生</Radio.Button>
+                          <Radio.Button value={false}>女士</Radio.Button>
+                        </Radio.Group>
+                      )}
                     </Form.Item> : <span>{user.gender ? '先生' : '女士'}</span>
+                }
+              </section>
+              <section>
+                <h4>简介</h4>
+                {
+                  isEdit ? 
+                    <Form.Item className='Info-Form'>
+                      {getFieldDecorator('bio', {
+                        rules: [{ max: 200, message: '不能超过200个字符' }],
+                        initialValue: user.bio
+                      })(
+                        <Input.TextArea rows={6} />
+                      )}
+                    </Form.Item> : <span>{user.bio}</span>
+                }
+              </section>
+              <section>
+                <h4>专业</h4>
+                {
+                  isEdit ? 
+                    <Form.Item className='Info-Form'>
+                      {getFieldDecorator('majors', {
+                        initialValue: user.majors
+                      })(
+                        <Checkbox.Group options={this.props.majors} onChange={this.onCheck} />
+                      )}
+                    </Form.Item> : <span>{user.bio}</span>
                 }
               </section>
               {
                 isEdit &&
-                  <Button type='primary' style={{width: '300px'}} htmlType="submit">确认</Button>
+                  <footer>
+                    <Button type='primary' htmlType="submit">确认</Button>
+                    <Button onClick={this.cancel}>取消</Button>
+                  </footer>
               }
             </Form>
         }

@@ -2,6 +2,7 @@ import { db } from '../utili'
 import {
   User,
   Major,
+  Role,
   User_Major
 } from '../models'
 
@@ -10,6 +11,13 @@ import {
     await db.dropAllSchemas()
     await db.sync({ force: true })
 
+    await Role.bulkCreate([{
+        name: 'admin'
+      }, {
+        name: 'teacher'
+      }, {
+        name: 'student'
+      }])
     await Major.bulkCreate([{
       name: '建筑',
       label: 'architecture',
@@ -39,12 +47,11 @@ import {
       label: 'UI',
       description: '界面及交互设计'
     }])
-
     await User.create({
       username: 'teacher1',
       password: '000000',
       name: '老师1',
-      role: 'teacher',
+      role_id: 2,
       school: '北京大学',
       title: '建筑师',
       bio: '建筑师，或称画则师、图则师、则师，是负责设计建筑物平面图的专业人士。建筑师通过与工程投资方和施工方的合作，在技术、经济、功能和造型上实现建筑物的营造。',
@@ -56,7 +63,7 @@ import {
       username: 'student1',
       password: '000000',
       name: '学生1',
-      role: 'student',
+      role_id: 3,
       school: '清华大学',
       title: '景观设计师',
       bio: '建筑师，或称画则师、图则师、则师，是负责设计建筑物平面图的专业人士。建筑师通过与工程投资方和施工方的合作，在技术、经济、功能和造型上实现建筑物的营造。',
@@ -64,13 +71,18 @@ import {
       mobilephone: 18822222222,
       email: 'user2@xfolio.cn'
     })
-
     await User_Major.bulkCreate([{
         user_id: 1,
         major_id: 1
       }, {
         user_id: 1,
         major_id: 2 
+      }, {
+        user_id: 2,
+        major_id: 3 
+      }, {
+        user_id: 2,
+        major_id: 4 
       }])
 
   } catch (err) {

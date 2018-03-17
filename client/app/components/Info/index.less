@@ -1,10 +1,16 @@
 @import '../../theme.less';
 
 .Info {
+  h4 {
+    max-width: 75px;
+    width: 10%;
+    min-width: 50px;
+    float: left;
+    font-weight: 700;
+  }
   hgroup {
     margin-bottom: 10px;
     padding-bottom: 10px;
-    border-bottom: 1px solid @color-gray;
 
     h2 {
       display: inline;
@@ -33,13 +39,6 @@
       display: block;
       clear: both;
     }
-    h4 {
-      max-width: 75px;
-      width: 10%;
-      min-width: 50px;
-      float: left;
-      font-weight: 700;
-    }
     p {
       float: left;
     }
@@ -55,6 +54,13 @@
   .App-avatar {
     width: 100px;
     height: 100px;
+  }
+  footer {
+    margin-top: 30px;
+
+    button {
+      margin-right: 20px;
+    }
   }
 }
 

@@ -16,7 +16,7 @@ export default class Teacher extends React.Component {
         <Row type='flex'>
           <Col>
             <aside>
-              <div className='App-avatar' style={{backgroundImage: `url(${teacher.avatar})`}} />
+              {/* <div className='App-avatar' style={{backgroundImage: `url(${teacher.avatar})`}} /> */}
               <h4>{teacher.name}</h4>
             </aside>
           </Col>
@@ -24,9 +24,9 @@ export default class Teacher extends React.Component {
           <Col style={{flex: 1}}>
             <article>
               <header>
-                {
+                {/* {
                   teacher.majors && teacher.majors.map((major, index) => <Tag key={index}>{major}</Tag> )
-                }
+                } */}
                 <h4>
                   {teacher.school ? <span>{teacher.school}</span> : null}
                   {teacher.title ? <span>{teacher.title}</span> : null}

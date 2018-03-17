@@ -46,6 +46,7 @@ export default class Dashboard extends React.Component {
               user={this.props.user} 
               setLoading={this.props.setLoading}
               setUser={this.props.setUser}
+              majors={this.props.majors}
               {...props} />} 
             />
             <Route path="/dashboard/schedule" component={Schedule} />
