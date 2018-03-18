@@ -20,7 +20,7 @@ export default {
   },
   userUpdate: async (values) => {
     const res = await window.fetch(
-      `/api/users/${values.username}`, 
+      `/api/users/${values.id}`, 
       createFetchConfig('POST', JSON.stringify(values))
     )
     return res

@@ -20,7 +20,7 @@ class Info extends React.Component {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         this.props.setLoading(true)
-        values.username = this.props.user.username
+        values.id = this.props.user.id
         const res = await UserUtili.userUpdate(values)
         if (res.status === 200) {
           const data = await res.json()
@@ -39,9 +39,18 @@ class Info extends React.Component {
   onCheck = (values) => {
     console.log(values)
   }
+  field = (value) => {
+    if (value) {
+      return <span>{value}</span>
+    } else {
+      return <span style={{opacity: 0.3}}>未填写</span>
+    }
+  }
   render() {
     const user = this.props.user
-    const majorsList = this.props.majors
+    const majorsList = this.props.majors && this.props.majors.map(major => {
+      return { label: major.label, value: major.id }
+    })
     const isEdit = this.state.isEdit
     const { getFieldDecorator } = this.props.form
 
@@ -59,13 +68,15 @@ class Info extends React.Component {
                       <h4>名称</h4>
                       <Form.Item className='Info-Form'>
                         {getFieldDecorator('name', {
-                          rules: [{ max: 10, message: '不能超过10个字符' }],
+                          rules: [
+                            { max: 10, message: '不能超过10个字符' },
+                            { required: true, message: '总得有个名字吧' }
+                          ],
                           initialValue: user.name
-                        })(
-                          <Input type="text" />
-                        )}
+                        })( <Input type="text" />)}
                       </Form.Item>
-                    </div> : <h2>{user.name}</h2>
+                    </div> : 
+                    <h2>{user.name}</h2>
                 }
                 {
                   isEdit ? null : <Icon type='form' onClick={this.edit}/>
@@ -83,7 +94,8 @@ class Info extends React.Component {
                       })(
                         <Input type="text" />
                       )}
-                    </Form.Item> : <span>{user.school}</span>
+                    </Form.Item> :
+                    this.field(user.school)
                 }
               </section>
               <section>
@@ -97,7 +109,8 @@ class Info extends React.Component {
                       })(
                         <Input type="text" />
                       )}
-                    </Form.Item> : <span>{user.title}</span>
+                    </Form.Item> :
+                    this.field(user.title)
                 }
               </section>
               <section>
@@ -125,9 +138,10 @@ class Info extends React.Component {
                         rules: [{ max: 200, message: '不能超过200个字符' }],
                         initialValue: user.bio
                       })(
-                        <Input.TextArea rows={6} />
+                        <Input.TextArea rows={5} />
                       )}
-                    </Form.Item> : <span>{user.bio}</span>
+                    </Form.Item> :
+                    this.field(user.bio)
                 }
               </section>
               <section>
@@ -136,11 +150,12 @@ class Info extends React.Component {
                   isEdit ? 
                     <Form.Item className='Info-Form'>
                       {getFieldDecorator('majors', {
-                        initialValue: user.majors
+                        initialValue: user.majors.map(major => major.id)
                       })(
-                        <Checkbox.Group options={this.props.majors} onChange={this.onCheck} />
+                        <Checkbox.Group options={majorsList} onChange={this.onCheck} />
                       )}
-                    </Form.Item> : user.majors.map((major, index) => <Tag key={index}>{majorsList[major.id].name}</Tag>)
+                    </Form.Item> : 
+                    user.majors.map((major, index) => <Tag key={index}>{majorsList[major.id].label}</Tag>)
                 }
               </section>
               {

@@ -1,7 +1,7 @@
 import Router from 'koa-router'
 import Sequelize from 'sequelize'
 
-import { User, Major } from '../models'
+import { User, Major, User_Major } from '../models'
 import { fn } from '../utili'
 import config from '../config.js'
 
@@ -82,9 +82,20 @@ users.put('/', async (ctx) => {
  */
 users.post('/:id', async (ctx) => {
   try {
+    await User_Major.destroy({
+      where: { user_id: ctx.params.id }
+    })
+    console.log(11111)
+    console.log(ctx.params.id)
+    await User_Major.create({
+      user_id: ctx.params.id,
+      major_id: ctx.request.body.majors[0]
+    })
     let data = await fn.getUser(ctx.params.id)
+    let info = ctx.request.body
+    delete info.majors
     if (data) {
-      data = await data.update(ctx.request.body)
+      data = await data.update(info)
       delete data.dataValues.password
       ctx.status = 200
       ctx.body = fn.prettyJSON(data)

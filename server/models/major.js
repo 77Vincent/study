@@ -10,10 +10,6 @@ export default db.define('major', {
   },
   label: {
     type: Sequelize.STRING,
-    unique: true
-  },
-  name: {
-    type: Sequelize.STRING,
     allowNull: false,
     unique: true
   },

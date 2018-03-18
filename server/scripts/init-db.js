@@ -1,4 +1,4 @@
-import { db } from '../utili'
+import db from '../utili/db.js'
 import {
   User,
   Major,
@@ -19,32 +19,25 @@ import {
         name: 'student'
       }])
     await Major.bulkCreate([{
-      name: '建筑',
-      label: 'architecture',
+      label: '建筑',
       description: '建筑设计'
     }, {
-      name: '景观',
-      label: 'landscape',
+      label: '景观',
       description: '景观设计'
     }, {
-      name: '室内',
-      label: 'interior',
+      label: '室内',
       description: '室内，装潢设计'
     }, {
-      name: '平面',
-      label: 'graphic',
+      label: '平面',
       description: '平面，视觉设计'
     }, {
-      name: '工业',
-      label: 'industry',
+      label: '工业',
       description: '工业产品设计'
     }, {
-      name: '服装',
-      label: 'costume',
+      label: '服装',
       description: '服装设计'
     }, {
-      name: 'UI/UX',
-      label: 'UI',
+      label: 'UI/UX',
       description: '界面及交互设计'
     }])
     await User.create({

@@ -1,10 +1,7 @@
 import Sequelize from 'sequelize'
+import config from '../config'
 
-const databaseName = 'xfolio'
-const username = 'root'
-const password = 'root'
-
-export default new Sequelize(databaseName, username, password, {
+export default new Sequelize(config.dbName, config.dbUser, config.dbPassword, {
   host: 'localhost',
   dialect: 'mysql',
   port: 3306,

@@ -2,4 +2,7 @@
 
 export default {
   limit: 20,
+  dbName: 'xfolio',
+  dbUser: 'root',
+  dbPassword: 'root'
 }
