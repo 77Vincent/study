@@ -2,7 +2,7 @@ import Router from 'koa-router'
 import Sequelize from 'sequelize'
 
 import { User, Major, User_Major } from '../models'
-import { fn } from '../utili'
+import { fn, db } from '../utili'
 import config from '../config.js'
 
 const Op = Sequelize.Op
@@ -85,12 +85,13 @@ users.post('/:id', async (ctx) => {
     await User_Major.destroy({
       where: { user_id: ctx.params.id }
     })
-    console.log(11111)
-    console.log(ctx.params.id)
-    await User_Major.create({
-      user_id: ctx.params.id,
-      major_id: ctx.request.body.majors[0]
+    ctx.request.body.majors.map(async item => {
+      await User_Major.create({
+        user_id: ctx.params.id,
+        major_id: item
+      })
     })
+    await db.sync()
     let data = await fn.getUser(ctx.params.id)
     let info = ctx.request.body
     delete info.majors

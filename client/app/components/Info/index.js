@@ -155,7 +155,7 @@ class Info extends React.Component {
                         <Checkbox.Group options={majorsList} onChange={this.onCheck} />
                       )}
                     </Form.Item> : 
-                    user.majors.map((major, index) => <Tag key={index}>{majorsList[major.id].label}</Tag>)
+                    user.majors.map((major, index) => <Tag key={index}>{majorsList[major.id - 1].label}</Tag>)
                 }
               </section>
               {
