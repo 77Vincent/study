@@ -1,13 +1,13 @@
-const path = require('path');
-const fs = require('fs');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin'); 
-const lessToJs = require('less-vars-to-js');
+const path = require('path')
+const fs = require('fs')
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin') 
+const lessToJs = require('less-vars-to-js')
 
-const resolve = path.resolve;
-const themeVariables = lessToJs(fs.readFileSync(resolve('./app/theme.less'), 'utf8'));
+const resolve = path.resolve
+const themeVariables = lessToJs(fs.readFileSync(resolve('./app/theme.less'), 'utf8'))
 
 const webpackConfigBase = {
   entry: {
@@ -108,6 +108,6 @@ const webpackConfigBase = {
       template: resolve('./app/index.html'),
     })
   ]
-};
+}
 
-module.exports = webpackConfigBase;
+module.exports = webpackConfigBase

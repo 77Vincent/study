@@ -1,10 +1,9 @@
-const path = require('path');
-const webpack = require('webpack');
-const merge = require('webpack-merge');
-const webpackConfigBase = require('./webpack.base.config');
-const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+const path = require('path')
+const webpack = require('webpack')
+const merge = require('webpack-merge')
+const webpackConfigBase = require('./webpack.base.config')
 
-const PORT = 3000;
+const PORT = 3000
 
 const webpackConfigDev = {
   plugins: [
@@ -12,10 +11,7 @@ const webpackConfigDev = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development'),
       IS_DEVELOPMETN: true,
-    }),
-    new OpenBrowserPlugin({
-      url: `http://localhost:${PORT}`,
-    }),
+    })
   ],
   devtool: 'source-map',
   devServer: {
@@ -36,6 +32,6 @@ const webpackConfigDev = {
       }
     }
   }
-};
+}
 
-module.exports = merge(webpackConfigBase, webpackConfigDev);
+module.exports = merge(webpackConfigBase, webpackConfigDev)
