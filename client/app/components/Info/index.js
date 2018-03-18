@@ -1,6 +1,6 @@
 import React from 'react'
 import { Checkbox, Radio, Form, Input, Tag, Icon, Button } from 'antd'
-import { userUpdate } from '../../utili'
+import { UserUtili } from '../../utili'
 import './index.less'
 
 class Info extends React.Component {
@@ -21,7 +21,7 @@ class Info extends React.Component {
       if (!err) {
         this.props.setLoading(true)
         values.username = this.props.user.username
-        const res = await userUpdate(values)
+        const res = await UserUtili.userUpdate(values)
         if (res.status === 200) {
           const data = await res.json()
           this.props.setUser(data)

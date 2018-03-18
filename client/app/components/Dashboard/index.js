@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Link } from 'react-router-dom'
 import { Layout, Menu, Icon } from 'antd'
 import { Info, Schedule, Order, Account } from 'components'
-import { signOut } from '../../utili'
+import { UserUtili } from '../../utili'
 import './index.less'
 
 export default class Dashboard extends React.Component {
@@ -21,7 +21,7 @@ export default class Dashboard extends React.Component {
   }
   submitSignOut = async () => {
     this.props.setLoading(true)
-    const res = await signOut()
+    const res = await UserUtili.signOut()
     if (res.status === 200) {
       this.props.setUser()
     }

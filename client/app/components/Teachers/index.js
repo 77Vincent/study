@@ -1,7 +1,6 @@
 import React from 'react'
 import { Layout, Button, Row, Col, Tag, Modal } from 'antd'
 import { Filter, Teacher } from 'components'
-import { getTeacher } from '../../utili'
 
 export default class Teachers extends React.Component {
   constructor(props) {

@@ -10,50 +10,40 @@ const createFetchConfig = (method = 'GET', body = {}) => {
   }
 }
 
-async function signUp (values) {
-  const res = await window.fetch(
-    '/api/users', 
-    createFetchConfig('PUT', JSON.stringify(values))
-  )
-  return res
-}
-
-async function userUpdate (values) {
-  const res = await window.fetch(
-    `/api/users/${values.username}`, 
-    createFetchConfig('POST', JSON.stringify(values))
-  )
-  return res
-}
-
-async function logout () {
-  const res = await window.fetch(
-    '/api/users', 
-    createFetchConfig('DELETE')
-  )
-  return res
-}
-
-async function signIn (values = { username: null, password: null}) {
-  const res = await window.fetch(
-    '/api/sessions', 
-    createFetchConfig('POST', JSON.stringify(values))
-  )
-  return res
-}
-
-async function signOut () {
-  const res = await window.fetch(
-    '/api/sessions', 
-    createFetchConfig('DELETE')
-  )
-  return res
-}
-
-export {
-  signIn,
-  signOut,
-  signUp,
-  logout,
-  userUpdate
+export default {
+  signUp: async (values) => {
+    const res = await window.fetch(
+      '/api/users', 
+      createFetchConfig('PUT', JSON.stringify(values))
+    )
+    return res
+  },
+  userUpdate: async (values) => {
+    const res = await window.fetch(
+      `/api/users/${values.username}`, 
+      createFetchConfig('POST', JSON.stringify(values))
+    )
+    return res
+  },
+  logout: async () => {
+    const res = await window.fetch(
+      '/api/users', 
+      createFetchConfig('DELETE')
+    )
+    return res
+  },
+  signIn: async (values = { username: null, password: null}) => {
+    const res = await window.fetch(
+      '/api/sessions', 
+      createFetchConfig('POST', JSON.stringify(values))
+    )
+    return res
+  },
+  signOut: async () => {
+    const res = await window.fetch(
+      '/api/sessions', 
+      createFetchConfig('DELETE')
+    )
+    return res
+  }
 }

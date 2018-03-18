@@ -1,15 +1,5 @@
-import {
-  signIn,
-  signOut,
-  signUp,
-  logout,
-  userUpdate
-} from './user.js'
+import UserUtili from './user.js'
 
 export {
-  signIn,
-  signOut,
-  signUp,
-  logout,
-  userUpdate
+  UserUtili
 }
