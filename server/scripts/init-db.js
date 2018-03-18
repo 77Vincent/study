@@ -12,11 +12,11 @@ import {
     await db.sync({ force: true })
 
     await Role.bulkCreate([{
-        name: 'admin'
+        label: 'admin'
       }, {
-        name: 'teacher'
+        label: 'teacher'
       }, {
-        name: 'student'
+        label: 'student'
       }])
     await Major.bulkCreate([{
       label: '建筑',
@@ -44,7 +44,7 @@ import {
       username: 'teacher1',
       password: '000000',
       name: '老师1',
-      role_id: 2,
+      role_id: 'teacher',
       school: '北京大学',
       title: '建筑师',
       bio: '建筑师，或称画则师、图则师、则师，是负责设计建筑物平面图的专业人士。建筑师通过与工程投资方和施工方的合作，在技术、经济、功能和造型上实现建筑物的营造。',
@@ -56,7 +56,7 @@ import {
       username: 'student1',
       password: '000000',
       name: '学生1',
-      role_id: 3,
+      role_id: 'student',
       school: '清华大学',
       title: '景观设计师',
       bio: '建筑师，或称画则师、图则师、则师，是负责设计建筑物平面图的专业人士。建筑师通过与工程投资方和施工方的合作，在技术、经济、功能和造型上实现建筑物的营造。',

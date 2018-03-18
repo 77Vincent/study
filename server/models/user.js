@@ -28,8 +28,8 @@ export default db.define('user', {
     defaultValue: false
   },
   role_id: {
-    type: Sequelize.INTEGER,
-    defaultValue: 3,
+    type: Sequelize.STRING,
+    defaultValue: 'student',
     allowNull: false
   },
   active: {

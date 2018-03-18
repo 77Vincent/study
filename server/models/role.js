@@ -6,10 +6,11 @@ export default db.define('role', {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     unique: true,
-    primaryKey: true
   },
-  name: {
+  label: {
+    primaryKey: true,
     type: Sequelize.STRING,
+    allowNull: false, 
     unique: true
   }
 }, {
