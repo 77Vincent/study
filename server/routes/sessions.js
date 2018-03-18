@@ -22,19 +22,13 @@ sessions.post('/', async (ctx) => {
   try {
     // Sign in with user input credentials
     if (username && password) {
-      const user = await User.findOne({
-        where: { [Op.or]: [
-          { username },
-          { mobilephone: username },
-          { email: username }
-        ]}
-      })
+      const user = await fn.getUser(username)
       if (user && bcrypt.compareSync(password, user.password)) {
         data = user
       }
     // Sign in with credentials in cookies if exist 
     } else if (id) {
-      data = await User.findOne({ where: { id } })
+      data = await fn.getUser(id)
     // Newly visit
     } else {
       ctx.status = 204
@@ -43,6 +37,7 @@ sessions.post('/', async (ctx) => {
 
     if (data) {
       const { token, expiresIn } = oauth.signToken(data)
+      delete data.dataValues.password
       ctx.cookies.set("user_info", token, {
         overwrite: true,
         maxAge: expiresIn

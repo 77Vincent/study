@@ -28,7 +28,7 @@ export default class App extends React.Component {
   }
   state = {
     user: null,
-    majors: [],
+    majors: null,
     isLoading: false
   }
   componentDidMount = () => {

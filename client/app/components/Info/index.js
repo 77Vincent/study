@@ -34,15 +34,14 @@ class Info extends React.Component {
     })
   }
   cancel = () => {
-    this.setState({
-      isEdit: false
-    })
+    this.setState({ isEdit: false })
   }
   onCheck = (values) => {
     console.log(values)
   }
   render() {
     const user = this.props.user
+    const majorsList = this.props.majors
     const isEdit = this.state.isEdit
     const { getFieldDecorator } = this.props.form
 
@@ -51,7 +50,7 @@ class Info extends React.Component {
         {
           // Return nothing when user data has not been fetch yet
           // to prevent error from getting properties from null
-          user &&
+          user && majorsList &&
             <Form onSubmit={this.submit}>
               <hgroup>
                 {
@@ -141,7 +140,7 @@ class Info extends React.Component {
                       })(
                         <Checkbox.Group options={this.props.majors} onChange={this.onCheck} />
                       )}
-                    </Form.Item> : <span>{user.bio}</span>
+                    </Form.Item> : user.majors.map((major, index) => <Tag key={index}>{majorsList[major.id].name}</Tag>)
                 }
               </section>
               {

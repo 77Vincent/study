@@ -1,20 +1,11 @@
 import Router from 'koa-router'
 import Sequelize from 'sequelize'
 
-import { User, Major, Role } from '../models'
+import { User, Major } from '../models'
 import { fn } from '../utili'
 import config from '../config.js'
 
 const Op = Sequelize.Op
-const findWhere = (id) => {
-  return {
-    [Op.or]: [
-      { username: id },
-      { mobilephone: id },
-      { email: id }
-    ]
-  }
-}
 export const users = Router()
 
 /** 
@@ -53,9 +44,7 @@ users.get('/', async (ctx) => {
  */
 users.get('/:id', async (ctx) => {
   try {
-    const data = await User.findOne({ 
-      where: findWhere(ctx.params.id),
-      include: [{ model: Major, attributes: ['id'] }],
+    const data = await fn.getUser(ctx.params.id, {
       attributes: { exclude: ['password'] }
     })
     if (data) {
@@ -93,10 +82,7 @@ users.put('/', async (ctx) => {
  */
 users.post('/:id', async (ctx) => {
   try {
-    let data = await User.findOne({ 
-      where: findWhere(ctx.params.id),
-      include: [{ model: Major, attributes: ['id'] }]
-    })
+    let data = await fn.getUser(ctx.params.id)
     if (data) {
       data = await data.update(ctx.request.body)
       delete data.dataValues.password
@@ -119,7 +105,7 @@ users.post('/:id', async (ctx) => {
 users.delete('/:id', async (ctx) => {
   try {
     await User.destroy({ 
-      where: findWhere(ctx.params.id)
+      where: { username: ctx.params.id }
     })
     ctx.cookies.set('user_info', null)
     ctx.status = 200

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 
 const secret = 'Jessie'
-const timeout = 30 * 60 * 1000
+const timeout = 60 * 60 * 1000
 
 export default {
   /**

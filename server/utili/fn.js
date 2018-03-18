@@ -1,3 +1,8 @@
+import Sequelize from 'sequelize'
+import { User, Major } from '../models'
+
+const Op = Sequelize.Op
+
 export default {
   prettyJSON(json) {
     return JSON.stringify(json, null, 2)
@@ -10,5 +15,18 @@ export default {
         return query[1]
       }
     }
+  },
+  getUser: async (id, config = {}) => {
+    const param = {
+      where: { [Op.or]: [ 
+        { id },
+        { username: id },
+        { mobilephone: id },
+        { email: id }]
+      },
+      include: [{ model: Major, attributes: ['id'] }],
+    }
+    const data = await User.findOne(Object.assign(param, config))
+    return data
   }
 }
