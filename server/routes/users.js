@@ -6,6 +6,15 @@ import { fn } from '../utili'
 import config from '../config.js'
 
 const Op = Sequelize.Op
+const findWhere = (id) => {
+  return {
+    [Op.or]: [
+      { username: id },
+      { mobilephone: id },
+      { email: id }
+    ]
+  }
+}
 export const users = Router()
 
 /** 
@@ -22,10 +31,7 @@ users.get('/', async (ctx) => {
       where: role_id ? { role_id } : null,
       limit: config.limit,
       offset: page ? ( page - 1 ) * config.limit : 0,
-      include: [{ 
-        model: Major,
-        attributes: ['id'] 
-      }],
+      include: [{ model: Major, attributes: ['id'] }],
       attributes: { exclude: ['password'] }
     })
     if (data) {
@@ -45,14 +51,11 @@ users.get('/', async (ctx) => {
  * @param {Object} ctx
  * @returns {Object} The user model
  */
-users.get('/:username', async (ctx) => {
+users.get('/:id', async (ctx) => {
   try {
     const data = await User.findOne({ 
-      where: { username: ctx.params.username },
-      include: [{ 
-        model: Major,
-        attributes: ['id'] 
-      }],
+      where: findWhere(ctx.params.id),
+      include: [{ model: Major, attributes: ['id'] }],
       attributes: { exclude: ['password'] }
     })
     if (data) {
@@ -88,14 +91,20 @@ users.put('/', async (ctx) => {
  * @param {Object} ctx
  * @returns {Object} updated user model if success
  */
-users.post('/:username', async (ctx) => {
+users.post('/:id', async (ctx) => {
   try {
     let data = await User.findOne({ 
-      where: { username: ctx.params.username }
+      where: findWhere(ctx.params.id),
+      include: [{ model: Major, attributes: ['id'] }]
     })
-    data = await data.update(ctx.request.body)
-    ctx.status = 200
-    ctx.body = fn.prettyJSON(data)
+    if (data) {
+      data = await data.update(ctx.request.body)
+      delete data.dataValues.password
+      ctx.status = 200
+      ctx.body = fn.prettyJSON(data)
+    } else {
+      ctx.status = 404
+    }
   } catch (err) {
     ctx.throw(500, err)
   }
@@ -107,9 +116,11 @@ users.post('/:username', async (ctx) => {
  * @param {Object} ctx
  * @returns {void} status code
  */
-users.delete('/', async (ctx) => {
+users.delete('/:id', async (ctx) => {
   try {
-    await User.destroy({ where: { id: ctx.decoded.user_info } })
+    await User.destroy({ 
+      where: findWhere(ctx.params.id)
+    })
     ctx.cookies.set('user_info', null)
     ctx.status = 200
   } catch (err) {

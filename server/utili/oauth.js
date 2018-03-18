@@ -28,7 +28,6 @@ export default {
    */
   verifyToken: async (ctx) => {
     const user_info = await ctx.cookies.get('user_info')
-
     if (user_info) {
       return jwt.verify(user_info, secret)
     }
