@@ -1,9 +1,7 @@
-'use strict'
-
 // External Dependencies
 import React from 'react'
-import { Layout, Menu, Button, message } from 'antd'
-import { Route, Link, NavLink } from 'react-router-dom'
+import { Layout } from 'antd'
+import { Route } from 'react-router-dom'
 import { UserUtili } from '../utili'
 
 // Custom styles, components and functions
@@ -31,19 +29,17 @@ export default class App extends React.Component {
     majors: null,
     isLoading: false
   }
-  componentDidMount = () => {
-    (async () => {
-      const resUser = await UserUtili.signIn()
-      if (resUser.status === 200) {
-        const dataUser = await resUser.json()
-        this.setUser(dataUser)
-      }
-      const resMajors = await fetch( '/api/majors')
-      if (resMajors.status === 200) {
-        const dataMajors = await resMajors.json()
-        this.setState({ majors: dataMajors })
-      }
-    })()
+  componentDidMount = async () => {
+    let res = await UserUtili.signIn()
+    if (res.status === 200) {
+      const data = await res.json()
+      this.setUser(data)
+    }
+    res = await fetch( '/api/majors')
+    if (res.status === 200) {
+      const data = await res.json()
+      this.setState({ majors: data })
+    }
   }
   setLoading = (boolean) => { 
     this.setState({ isLoading: boolean }) 

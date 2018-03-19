@@ -10,10 +10,10 @@ class Info extends React.Component {
   state = {
     isEdit: false
   }
-  edit = () => {
-    this.setState({
-      isEdit: true
-    })
+  setEdit = (boolean) => {
+    return () => {
+      this.setState({ isEdit: boolean })
+    }
   }
   submit = (e) => {
     e.preventDefault()
@@ -33,12 +33,6 @@ class Info extends React.Component {
       }
     })
   }
-  cancel = () => {
-    this.setState({ isEdit: false })
-  }
-  onCheck = (values) => {
-    console.log(values)
-  }
   field = (value) => {
     if (value) {
       return <span>{value}</span>
@@ -47,6 +41,7 @@ class Info extends React.Component {
     }
   }
   render() {
+    console.log(this.props.majors)
     const user = this.props.user
     const majorsList = this.props.majors && this.props.majors.map(major => {
       return { label: major.label, value: major.id }
@@ -79,7 +74,7 @@ class Info extends React.Component {
                     <h2>{user.name}</h2>
                 }
                 {
-                  isEdit ? null : <Icon type='form' onClick={this.edit}/>
+                  isEdit ? null : <Icon type='form' onClick={this.setEdit(true)}/>
                 }
                 <h3>{user.certified && '认证老师'}</h3>
               </hgroup>
@@ -152,7 +147,7 @@ class Info extends React.Component {
                       {getFieldDecorator('majors', {
                         initialValue: user.majors.map(major => major.id)
                       })(
-                        <Checkbox.Group options={majorsList} onChange={this.onCheck} />
+                        <Checkbox.Group options={majorsList} />
                       )}
                     </Form.Item> : 
                     user.majors.map((major, index) => <Tag key={index}>{majorsList[major.id - 1].label}</Tag>)
@@ -162,7 +157,7 @@ class Info extends React.Component {
                 isEdit &&
                   <footer>
                     <Button type='primary' htmlType="submit">确认</Button>
-                    <Button onClick={this.cancel}>取消</Button>
+                    <Button onClick={this.setEdit(false)}>取消</Button>
                   </footer>
               }
             </Form>

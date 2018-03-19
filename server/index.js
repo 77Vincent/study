@@ -10,8 +10,8 @@ import { oauth } from './utili'
 const app = new Koa()
 
 app.proxy = true
-app.use(convert(cors()))
-app.use(convert(logger()))
+app.use(cors())
+app.use(logger())
 app.use(bodyParser())
 
 app.use(async (ctx, next) => {

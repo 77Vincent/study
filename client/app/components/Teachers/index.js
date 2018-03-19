@@ -11,14 +11,12 @@ export default class Teachers extends React.Component {
     teachers: [],
     teacher: {}
   }
-  componentDidMount = () => {
-    (async () => {
-      const res = await fetch( '/api/users?role=2')
-      if (res.status === 200) {
-        const data = await res.json()
-        this.setState({ teachers: data })
-      }
-    })()
+  componentDidMount = async () => {
+    const res = await fetch( '/api/users?role=teacher')
+    if (res.status === 200) {
+      const data = await res.json()
+      this.setState({ teachers: data })
+    }
   }
   openTeacher = (teacher_id) => {
     this.setState({
