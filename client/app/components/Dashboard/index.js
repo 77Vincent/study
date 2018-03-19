@@ -19,6 +19,11 @@ export default class Dashboard extends React.Component {
       this.props.history.push('/sign-in')
     }
   }
+  setEdit = (boolean) => {
+    return () => {
+      this.setState({ isEdit: boolean })
+    }
+  }
   submitSignOut = async () => {
     this.props.setLoading(true)
     const res = await UserUtili.signOut()
@@ -44,14 +49,19 @@ export default class Dashboard extends React.Component {
           <Layout.Content className='Dashboard-Content'>
             <Route exact path="/dashboard" render={props => <Info 
               user={this.props.user} 
+              majors={this.props.majors}
               setLoading={this.props.setLoading}
               setUser={this.props.setUser}
-              majors={this.props.majors}
+              setEdit={this.setEdit}
               {...props} />} 
             />
             <Route path="/dashboard/schedule" component={Schedule} />
             <Route path="/dashboard/order" component={Order} />
             <Route path="/dashboard/account" render={props => <Account 
+              user={this.props.user} 
+              majors={this.props.majors}
+              setLoading={this.props.setLoading}
+              setUser={this.props.setUser}
               {...props} />} 
             />
           </Layout.Content>

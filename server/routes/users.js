@@ -94,6 +94,7 @@ users.post('/:id', async (ctx) => {
     await db.sync()
     let data = await fn.getUser(ctx.params.id)
     let info = ctx.request.body
+    // Delete majors because it's not updated here
     delete info.majors
     if (data) {
       data = await data.update(info)

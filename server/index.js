@@ -1,7 +1,9 @@
 import Koa from 'koa'
+import path from 'path'
 import convert from 'koa-convert'
 import logger from 'koa-logger'
 import cors from 'koa-cors'
+import serve from 'koa-static'
 import bodyParser from 'koa-bodyparser'
 
 import routes from './routes'
@@ -13,12 +15,12 @@ app.proxy = true
 app.use(cors())
 app.use(logger())
 app.use(bodyParser())
+app.use(serve('./static'))
 
 app.use(async (ctx, next) => {
   await next()
   ctx.set('X-Powered-By', 'Koa2')
 })
-
 app.use(async (ctx, next) => {
   ctx.decoded = {}
   let id = await oauth.verifyToken(ctx)

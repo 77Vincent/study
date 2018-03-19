@@ -41,12 +41,10 @@ class Info extends React.Component {
     }
   }
   render() {
-    console.log(this.props.majors)
     const user = this.props.user
     const majorsList = this.props.majors && this.props.majors.map(major => {
       return { label: major.label, value: major.id }
     })
-    const isEdit = this.state.isEdit
     const { getFieldDecorator } = this.props.form
 
     return (
@@ -58,7 +56,7 @@ class Info extends React.Component {
             <Form onSubmit={this.submit}>
               <hgroup>
                 {
-                  isEdit ? 
+                  this.state.isEdit ? 
                     <div>
                       <h4>名称</h4>
                       <Form.Item className='Info-Form'>
@@ -74,14 +72,14 @@ class Info extends React.Component {
                     <h2>{user.name}</h2>
                 }
                 {
-                  isEdit ? null : <Icon type='form' onClick={this.setEdit(true)}/>
+                  this.state.isEdit ? null : <Icon type='form' onClick={this.setEdit(true)}/>
                 }
                 <h3>{user.certified && '认证老师'}</h3>
               </hgroup>
               <section>
                 <h4>学校</h4>
                 {
-                  isEdit ? 
+                  this.state.isEdit ? 
                     <Form.Item className='Info-Form'>
                       {getFieldDecorator('school', {
                         rules: [{ max: 20, message: '不能超过20个字符' }],
@@ -96,7 +94,7 @@ class Info extends React.Component {
               <section>
                 <h4>职位</h4>
                 {
-                  isEdit ? 
+                  this.state.isEdit ? 
                     <Form.Item className='Info-Form'>
                       {getFieldDecorator('title', {
                         rules: [{ max: 20, message: '不能超过20个字符' }],
@@ -111,7 +109,7 @@ class Info extends React.Component {
               <section>
                 <h4>性别</h4>
                 {
-                  isEdit ? 
+                  this.state.isEdit ? 
                     <Form.Item className='Info-Form'>
                       {getFieldDecorator('gender', {
                         initialValue: user.gender
@@ -127,7 +125,7 @@ class Info extends React.Component {
               <section>
                 <h4>简介</h4>
                 {
-                  isEdit ? 
+                  this.state.isEdit ? 
                     <Form.Item className='Info-Form'>
                       {getFieldDecorator('bio', {
                         rules: [{ max: 200, message: '不能超过200个字符' }],
@@ -142,7 +140,7 @@ class Info extends React.Component {
               <section>
                 <h4>专业</h4>
                 {
-                  isEdit ? 
+                  this.state.isEdit ? 
                     <Form.Item className='Info-Form'>
                       {getFieldDecorator('majors', {
                         initialValue: user.majors.map(major => major.id)
@@ -154,7 +152,7 @@ class Info extends React.Component {
                 }
               </section>
               {
-                isEdit &&
+                this.state.isEdit &&
                   <footer>
                     <Button type='primary' htmlType="submit">确认</Button>
                     <Button onClick={this.setEdit(false)}>取消</Button>
