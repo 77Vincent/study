@@ -43,7 +43,6 @@ import {
       description: '界面及交互设计'
     }])
     await User.create({
-      username: 'teacher1',
       password: '000000',
       name: '老师1',
       role_id: 'teacher',
@@ -55,7 +54,6 @@ import {
       email: 'user1@xfolio.cn'
     })
     await User.create({
-      username: 'student1',
       password: '000000',
       name: '学生1',
       role_id: 'student',

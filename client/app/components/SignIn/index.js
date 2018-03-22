@@ -27,7 +27,7 @@ class SignIn extends React.Component {
           const data = await res.json()
           this.props.setUser(data)
         } else if (res.status === 403) {
-          message.error('用户名/手机号/密码错误！')
+          message.error('登录信息错误！')
         } else if (res.status === 500) {
           message.warning('网络连接失败，请稍后再试')
         }
@@ -35,23 +35,27 @@ class SignIn extends React.Component {
       }
     })
   }
+  message = {
+    id: '手机号/电子邮箱/用户名',
+    password: '密码'
+  }
   render() {
     const { getFieldDecorator } = this.props.form
 
     return (
       <Form onSubmit={this.submit} style={{maxWidth: '300px', margin: '0 auto'}}>
         <Form.Item>
-          {getFieldDecorator('username', {
-            rules: [{ required: true, message: '请输入用户名/手机号/邮箱' }],
+          {getFieldDecorator('id', {
+            rules: [{ required: true, message: `请输入${this.message.id}` }],
           })(
-            <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='用户名/手机号/电子邮箱' />
+            <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.message.id} />
           )}
         </Form.Item>
         <Form.Item>
           {getFieldDecorator('password', {
-            rules: [{ required: true, message: '请输入密码' }],
+            rules: [{ required: true, message: `请输入${this.message.password}` }],
           })(
-            <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="密码" />
+            <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder={this.message.password} />
           )}
         </Form.Item>
 

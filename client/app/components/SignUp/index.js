@@ -27,17 +27,24 @@ class SignUp extends React.Component {
       if (!err) {
         this.props.setLoading(true)
         const res = await UserUtili.signUp(values)
-        const data = await res.json()
-        if (res.status === 200) {
+        if (res.status === 201) {
+          const data = await res.json()
           this.props.setUser(data)
+        } else {
+          message.warning('网络连接失败，请稍后再试')
         }
         this.props.setLoading(false)
       }
     })
   }
-  handleConfirmBlur = (e) => {
-    const value = e.target.value
-    this.setState({ confirmDirty: this.state.confirmDirty || !!value })
+  checkUserID = async (rule, value, callback) => {
+    if (!value || value[0] === ' ') { return }
+    const res = await window.fetch(`/api/users/${value}`)
+    if (res.status === 200) {
+      callback('已被注册')
+    } else {
+      callback()
+    }
   }
   checkPassword = (rule, value, callback) => {
     const form = this.props.form
@@ -54,38 +61,22 @@ class SignUp extends React.Component {
     }
     callback()
   }
-  openProvision = () => {
-    this.setState({
-      provisionDialog: true
-    })
+  handleConfirmBlur = (e) => {
+    this.setState({ confirmDirty: this.state.confirmDirty || !!e.target.value });
   }
-  closeProvision = (e) => {
-    this.setState({
-      provisionDialog: false,
-    })
+  setProvision = (boolean) => {
+    return () => this.setState({ provisionDialog: boolean })
   }
   render() {
     const { getFieldDecorator } = this.props.form
     const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 8 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 },
-      },
+      labelCol: { xs: { span: 24 }, sm: { span: 8 }, },
+      wrapperCol: { xs: { span: 24 }, sm: { span: 16 }, },
     }
     const tailFormItemLayout = {
       wrapperCol: {
-        xs: {
-          span: 24,
-          offset: 0,
-        },
-        sm: {
-          span: 16,
-          offset: 8,
-        },
+        xs: { span: 24, offset: 0, },
+        sm: { span: 16, offset: 8, },
       },
     }
     return (
@@ -95,35 +86,26 @@ class SignUp extends React.Component {
           footer={null}
           width={800}
           visible={this.state.provisionDialog}
-          onCancel={this.closeProvision}
+          onCancel={this.setProvision(false)}
         >
           ...
         </Modal>
 
-        <Form.Item {...formItemLayout} label="用户类别">
-          {getFieldDecorator('role', {
-            rules: [{
-              required: true, message: '请选择用户类别'
-            }]
+        <Form.Item {...formItemLayout} label="怎么称呼">
+          {getFieldDecorator('name', {
+            rules: [{ required: true, message: '怎么称呼你呢？' }],
           })(
-            <Radio.Group>
-              <Radio value="student">学生</Radio>
-              <Radio value="teacher">老师</Radio>
-            </Radio.Group>
-          )}
-        </Form.Item>
-
-        <Form.Item {...formItemLayout} label="用户名">
-          {getFieldDecorator('username', {
-            rules: [{ required: true, message: '用于登录的用户名', }],
-          })(
-            <Input type="text" />
+            <Input type="text" placeholder='用于对外显示的名字'/>
           )}
         </Form.Item>
 
         <Form.Item {...formItemLayout} label="手机号">
           {getFieldDecorator('mobilephone', {
-            rules: [{ required: true, message: '请输入手机号' }],
+            rules: [
+              { required: true, message: '请输入手机号' },
+              { whitespace: true, message: '不能包含空格' },
+              { validator: this.checkUserID }
+            ],
           })(
             <Input />
           )}
@@ -137,7 +119,7 @@ class SignUp extends React.Component {
               { validator: this.checkConfirm, }
              ],
           })(
-            <Input type="password" />
+            <Input type="password" onBlur={this.handleConfirmBlur} />
           )}
         </Form.Item>
 
@@ -148,7 +130,7 @@ class SignUp extends React.Component {
               { validator: this.checkPassword, }
             ],
           })(
-            <Input type="password" onBlur={this.handleConfirmBlur} />
+            <Input type="password" />
           )}
         </Form.Item>
 
@@ -169,9 +151,10 @@ class SignUp extends React.Component {
 
         <Form.Item {...tailFormItemLayout}>
           {getFieldDecorator('agreement', {
+            rules: [{ required: true, message: '请阅读服务协议' }],
             valuePropName: 'checked',
           })(
-            <Checkbox>我已经阅读<a onClick={this.openProvision}>协议</a></Checkbox>
+            <Checkbox>我已经阅读<a onClick={this.setProvision(true)}>服务协议</a></Checkbox>
           )}
 
           <Button style={{width: '100%'}} type="primary" htmlType="submit">注册</Button>

@@ -2,7 +2,7 @@ import Router from 'koa-router'
 import Sequelize from 'sequelize'
 
 import { User, Major, User_Major } from '../models'
-import { fn, db } from '../utili'
+import { fn, db, oauth } from '../utili'
 import config from '../config.js'
 
 const Op = Sequelize.Op
@@ -51,7 +51,7 @@ users.get('/:id', async (ctx) => {
       ctx.status = 200
       ctx.body = fn.prettyJSON(data) 
     } else {
-      ctx.status = 404
+      ctx.status = 204
     }
   } catch (err) {
     ctx.throw(500, err)
@@ -66,9 +66,23 @@ users.get('/:id', async (ctx) => {
  */
 users.put('/', async (ctx) => {
   try {
-    const data = await User.create(ctx.request.body)
-    ctx.status = 201
-    ctx.body = fn.prettyJSON(data)
+    const { name, mobilephone, password } = ctx.request.body
+    const user = await User.create({ name,  mobilephone, password })
+    const data = await fn.getUser(user.id, {
+      attributes: { exclude: ['password'] }
+    })
+    if (data) {
+      delete data.dataValues.password
+      const { token, expiresIn } = oauth.signToken(data)
+      ctx.cookies.set("user_info", token, {
+        overwrite: true,
+        maxAge: expiresIn
+      })
+      ctx.status = 201
+      ctx.body = fn.prettyJSON(data) 
+    } else {
+      ctx.status = 204
+    }
   } catch (err) {
     ctx.throw(500, err)
   }
@@ -118,7 +132,7 @@ users.post('/:id', async (ctx) => {
 users.delete('/:id', async (ctx) => {
   try {
     await User.destroy({ 
-      where: { username: ctx.params.id }
+      where: { id: ctx.params.id }
     })
     ctx.cookies.set('user_info', null)
     ctx.status = 200

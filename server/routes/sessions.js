@@ -15,20 +15,20 @@ export const sessions = Router()
  * @returns {Object} user model 
  */
 sessions.post('/', async (ctx) => {
-  const id = ctx.decoded.user_info
-  const { username, password } = ctx.request.body
+  const user_info = ctx.decoded.user_info
+  const { id, password } = ctx.request.body
   let data 
 
   try {
     // Sign in with user input credentials
-    if (username && password) {
-      const user = await fn.getUser(username)
+    if (id && password) {
+      const user = await fn.getUser(id)
       if (user && bcrypt.compareSync(password, user.password)) {
         data = user
       }
     // Sign in with credentials in cookies if exist 
-    } else if (id) {
-      data = await fn.getUser(id)
+    } else if (user_info) {
+      data = await fn.getUser(user_info)
     // Newly visit
     } else {
       ctx.status = 204
@@ -36,8 +36,8 @@ sessions.post('/', async (ctx) => {
     }
 
     if (data) {
-      const { token, expiresIn } = oauth.signToken(data)
       delete data.dataValues.password
+      const { token, expiresIn } = oauth.signToken(data)
       ctx.cookies.set("user_info", token, {
         overwrite: true,
         maxAge: expiresIn
@@ -45,7 +45,7 @@ sessions.post('/', async (ctx) => {
       ctx.status = 200
       ctx.body = fn.prettyJSON(data) 
     } else {
-    ctx.status = 403
+      ctx.status = 403
     }
   } catch (err) {
     ctx.throw(500, err)

@@ -32,7 +32,7 @@ export default {
     )
     return res
   },
-  signIn: async (values = { username: null, password: null}) => {
+  signIn: async (values = { id: null, password: null}) => {
     const res = await window.fetch(
       '/api/sessions', 
       createFetchConfig('POST', JSON.stringify(values))

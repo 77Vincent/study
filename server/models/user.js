@@ -4,12 +4,9 @@ import { db } from '../utili'
 
 export default db.define('user', {
   id: {
-    type: Sequelize.UUID,
-    defaultValue: Sequelize.UUIDV1,
-    primaryKey: true
-  },
-  username: {
     type: Sequelize.STRING,
+    defaultValue: Sequelize.UUIDV1,
+    primaryKey: true,
     allowNull: false,
     unique: true
   },

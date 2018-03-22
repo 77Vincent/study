@@ -20,7 +20,6 @@ export default {
     const param = {
       where: { [Op.or]: [ 
         { id },
-        { username: id },
         { mobilephone: id },
         { email: id }]
       },
