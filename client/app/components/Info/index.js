@@ -151,6 +151,50 @@ class Info extends React.Component {
                     user.majors.map((major, index) => <Tag key={index}>{majorsList[major.id - 1].label}</Tag>)
                 }
               </section>
+              <section>
+                <h4>用户名</h4>
+                {
+                  this.state.isEdit ? 
+                    <Form.Item className='Info-Form'>
+                      {getFieldDecorator('username', {
+                        rules: [{ max: 20, message: '不能超过20个字符' }],
+                        initialValue: user.username
+                      })(
+                        <Input type="text" />
+                      )}
+                    </Form.Item> :
+                    this.field(user.username)
+                }
+              </section>
+              <section>
+                <h4>手机号</h4>
+                {
+                  this.state.isEdit ? 
+                    <Form.Item className='Info-Form'>
+                      {getFieldDecorator('mobilephone', {
+                        initialValue: user.mobilephone
+                      })(
+                        <Input />
+                      )}
+                    </Form.Item> :
+                    this.field(user.mobilephone)
+                }
+              </section>
+              <section>
+                <h4>邮箱</h4>
+                {
+                  this.state.isEdit ? 
+                    <Form.Item className='Info-Form'>
+                      {getFieldDecorator('email', {
+                        rules: [{ type: 'email', message: '请输入正确的邮箱地址' }],
+                        initialValue: user.email
+                      })(
+                        <Input type="text" />
+                      )}
+                    </Form.Item> :
+                    this.field(user.email)
+                }
+              </section>
               {
                 this.state.isEdit &&
                   <footer>

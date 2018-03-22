@@ -10,7 +10,6 @@ import Dashboard from './Dashboard'
 import Info from './Info'
 import Schedule from './Schedule'
 import Order from './Order'
-import Account from './Account'
 
 import SignIn from './SignIn'
 import SignUp from './SignUp'
@@ -34,7 +33,6 @@ export {
   Info,
   Schedule,
   Order,
-  Account,
 
   SignIn,
   SignUp,

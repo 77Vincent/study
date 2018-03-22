@@ -14,11 +14,11 @@ import {
     await db.sync({ force: true })
 
     await Role.bulkCreate([{
-        label: 'admin'
+        id: 'admin'
       }, {
-        label: 'teacher'
+        id: 'teacher'
       }, {
-        label: 'student'
+        id: 'student'
       }])
     await Major.bulkCreate([{
       label: '建筑',

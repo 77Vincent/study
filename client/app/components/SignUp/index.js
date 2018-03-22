@@ -88,14 +88,6 @@ class SignUp extends React.Component {
         },
       },
     }
-    const prefixSelector = getFieldDecorator('prefix', {
-      initialValue: '86',
-    })(
-      <Select style={{ width: 70 }}>
-        <Option value="86">+86</Option>
-      </Select>
-    ) 
-
     return (
       <Form onSubmit={this.submit} style={{maxWidth: '450px', margin: '0 auto'}}>
         <Modal
@@ -133,7 +125,7 @@ class SignUp extends React.Component {
           {getFieldDecorator('mobilephone', {
             rules: [{ required: true, message: '请输入手机号' }],
           })(
-            <Input addonBefore={prefixSelector}/>
+            <Input />
           )}
         </Form.Item>
 

@@ -38,11 +38,10 @@ export default class Dashboard extends React.Component {
         <Layout>
           <Layout.Sider width='210' className='Dashboard-Sider'>
             <Menu mode="vertical" defaultSelectedKeys={['1']} style={{ borderRight: 0 }}>
-              <Menu.Item key='1'><Link to='/dashboard'><Icon type='user' />基本信息</Link></Menu.Item>
+              <Menu.Item key='1'><Link to='/dashboard'><Icon type='user' />账户信息</Link></Menu.Item>
               <Menu.Item key='2'><Link to='/dashboard/schedule'><Icon type='calendar' />我的课程</Link></Menu.Item>
               <Menu.Item key='3'><Link to='/dashboard/order'><Icon type='bank' />我的订单</Link></Menu.Item>
-              <Menu.Item key='4'><Link to='/dashboard/account'><Icon type='setting' />账户设置</Link></Menu.Item>
-              <Menu.Item key='5' ><div onClick={this.submitSignOut}><Icon type='logout' />退出登录</div></Menu.Item>
+              <Menu.Item key='4' ><div onClick={this.submitSignOut}><Icon type='logout' />退出登录</div></Menu.Item>
             </Menu>
           </Layout.Sider>
 
