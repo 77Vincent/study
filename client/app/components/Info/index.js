@@ -156,12 +156,7 @@ class Info extends React.Component {
                 {
                   this.state.isEdit ? 
                     <Form.Item className='Info-Form'>
-                      {getFieldDecorator('id', {
-                        rules: [{ max: 20, message: '不能超过20个字符' }],
-                        initialValue: user.id
-                      })(
-                        <Input type="text" />
-                      )}
+                      {getFieldDecorator('id', { initialValue: user.id })( <Input type="text" />)}
                     </Form.Item> :
                     this.field(user.id)
                 }

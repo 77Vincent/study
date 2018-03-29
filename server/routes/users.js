@@ -96,18 +96,20 @@ users.put('/', async (ctx) => {
  */
 users.post('/:id', async (ctx) => {
   try {
+    const { id } = ctx.params
     await User_Major.destroy({
-      where: { user_id: ctx.params.id }
+      where: { user_id: id }
     })
     ctx.request.body.majors.map(async item => {
       await User_Major.create({
-        user_id: ctx.params.id,
+        user_id: id,
         major_id: item
       })
     })
     await db.sync()
-    let data = await fn.getUser(ctx.params.id)
+    let data = await fn.getUser(id)
     let info = ctx.request.body
+    console.log(info)
     // Delete majors because it's not updated here
     delete info.majors
     if (data) {
