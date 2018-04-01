@@ -17,6 +17,7 @@ export const sessions = Router()
 sessions.post('/', async (ctx) => {
   const user_info = ctx.decoded.user_info
   const { id, password } = ctx.request.body
+  console.log(id, password)
   let data 
 
   try {
