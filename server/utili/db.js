@@ -4,7 +4,7 @@ import config from '../config'
 export default new Sequelize(config.dbName, config.dbUser, config.dbPassword, {
   host: 'localhost',
   dialect: 'mysql',
-  port: 3306,
+  port: config.dbPort,
   timezone: '+08:00',
   define: {
     underscored: true,
