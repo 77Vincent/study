@@ -18,7 +18,7 @@
     "koa-router": "^7.0.0",
     "koa-static": "^4.0.2",
     "mysql2": "^1.5.2",
-    "sequelize": "^4.35.2"
+    "sequelize": "^4.37.5"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
