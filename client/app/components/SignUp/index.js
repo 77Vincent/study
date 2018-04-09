@@ -54,16 +54,6 @@ class SignUp extends React.Component {
       callback()
     }
   }
-  checkConfirm = (rule, value, callback) => {
-    const form = this.props.form
-    if (value && this.state.confirmDirty) {
-      form.validateFields(['confirm'], { force: true })
-    }
-    callback()
-  }
-  handleConfirmBlur = (e) => {
-    this.setState({ confirmDirty: this.state.confirmDirty || !!e.target.value });
-  }
   setProvision = (boolean) => {
     return () => this.setState({ provisionDialog: boolean })
   }
@@ -116,22 +106,8 @@ class SignUp extends React.Component {
             rules: [
               { required: true, message: '请输入密码', }, 
               { min: 6, message: '不少于6个字符', }, 
-              { validator: this.checkConfirm, }
              ],
-          })(
-            <Input type="password" onBlur={this.handleConfirmBlur} />
-          )}
-        </Form.Item>
-
-        <Form.Item {...formItemLayout} label="确认密码">
-          {getFieldDecorator('confirm', {
-            rules: [
-              { required: true, message: '请再次输入密码', }, 
-              { validator: this.checkPassword, }
-            ],
-          })(
-            <Input type="password" />
-          )}
+          })( <Input type="password"/>)}
         </Form.Item>
 
         <Form.Item {...formItemLayout} label="验证码">

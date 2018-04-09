@@ -27,7 +27,8 @@ export default class App extends React.Component {
   state = {
     user: null,
     majors: null,
-    isLoading: false
+    isLoading: false,
+    messages: null
   }
   componentDidMount = async () => {
     let res = await UserUtili.signIn()

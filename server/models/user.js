@@ -34,7 +34,7 @@ export default db.define('user', {
     defaultValue: true
   },
   name: {
-    type: Sequelize.STRING(12)
+    type: Sequelize.STRING
   },
   avatar: {
     type: Sequelize.STRING

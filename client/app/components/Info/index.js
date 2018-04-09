@@ -20,6 +20,9 @@ class Info extends React.Component {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         this.props.setLoading(true)
+        if (values.id !== this.props.user.id) {
+          values.newId = values.id
+        }
         values.id = this.props.user.id
         const res = await UserUtili.userUpdate(values)
         if (res.status === 200) {

@@ -74,7 +74,7 @@ users.put('/', async (ctx) => {
     if (data) {
       delete data.dataValues.password
       const { token, expiresIn } = oauth.signToken(data)
-      ctx.cookies.set("user_info", token, {
+      ctx.cookies.set("user_values", token, {
         overwrite: true,
         maxAge: expiresIn
       })
@@ -108,12 +108,14 @@ users.post('/:id', async (ctx) => {
     })
     await db.sync()
     let data = await fn.getUser(id)
-    let info = ctx.request.body
-    console.log(info)
+    let values = ctx.request.body
     // Delete majors because it's not updated here
-    delete info.majors
+    delete values.majors
+    values.id = values.newId || values.id 
+    delete values.newId
+    console.log(1111, values)
     if (data) {
-      data = await data.update(info)
+      data = await data.update(values)
       delete data.dataValues.password
       ctx.status = 200
       ctx.body = fn.prettyJSON(data)
@@ -136,7 +138,7 @@ users.delete('/:id', async (ctx) => {
     await User.destroy({ 
       where: { id: ctx.params.id }
     })
-    ctx.cookies.set('user_info', null)
+    ctx.cookies.set('user_values', null)
     ctx.status = 200
   } catch (err) {
     ctx.throw(500, err)

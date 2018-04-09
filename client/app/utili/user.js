@@ -19,6 +19,7 @@ export default {
     return res
   },
   userUpdate: async (values) => {
+    console.log(values)
     const res = await window.fetch(
       `/api/users/${values.id}`, 
       createFetchConfig('POST', JSON.stringify(values))
