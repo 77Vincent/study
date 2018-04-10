@@ -1,4 +1,4 @@
-# Server Development Instruction
+# SERVER DOCUMENTATION
 
 ## Run
 ```js
@@ -24,8 +24,8 @@ npm run db
 * Static files: ./static
 * Scripts for development: ./scripts
 
-## API
-#### sessions
+## REST API
+### sessions
 * POST: sign in
 ```bash
 /api/sessions
@@ -35,7 +35,7 @@ npm run db
 /api/sessions
 ```
 
-#### users
+### users
 * GET: all users
 ```bash
 /api/users
@@ -57,7 +57,7 @@ npm run db
 /api/users
 ```
 
-#### majors
+### majors
 * GET: all majors
 ```bash
 /api/majors
