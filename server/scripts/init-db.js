@@ -5,7 +5,9 @@ import {
   User,
   Major,
   Role,
+  Course,
   User_Major,
+  Course_Major,
 } from '../models'
 
 (async () => {
@@ -41,6 +43,35 @@ import {
     }, {
       label: 'UI/UX',
       description: '界面及交互设计'
+    }])
+    await Course.bulkCreate([{
+      label: '向导课',
+      description: '互相认识，了解学生需求，制定教学大纲。'
+    }, {
+      label: '画法几何',
+      description: '几何和阴影'
+    }, {
+      label: '字体课',
+      description: '认识字体与学会如何使用字体'
+    }])
+    await Course_Major.bulkCreate([{
+      course_id: 1,
+      major_id: 1 
+    }, {
+      course_id: 1,
+      major_id: 2
+    }, {
+      course_id: 1,
+      major_id: 3
+    }, {
+      course_id: 1,
+      major_id: 4 
+    }, {
+      course_id: 2,
+      major_id: 3 
+    }, {
+      course_id: 3,
+      major_id: 4
     }])
     await User.create({
       password: '000000',

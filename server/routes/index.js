@@ -2,6 +2,7 @@ import Router from 'koa-router'
 
 import './majors'
 import './users'
+import './courses'
 import './sessions'
 
 const router = Router()
