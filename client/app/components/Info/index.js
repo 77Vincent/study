@@ -159,9 +159,9 @@ class Info extends React.Component {
                 {
                   this.state.isEdit ? 
                     <Form.Item className='Info-Form'>
-                      {getFieldDecorator('id', { initialValue: user.id })( <Input type="text" />)}
+                      {getFieldDecorator('username', { initialValue: user.username })( <Input type="text" />)}
                     </Form.Item> :
-                    this.field(user.id)
+                    this.field(user.username)
                 }
               </section>
               <section>

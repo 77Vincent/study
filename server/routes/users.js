@@ -3,7 +3,7 @@ import Sequelize from 'sequelize'
 
 import { User, Major, User_Major } from '../models'
 import { fn, db, oauth } from '../utili'
-import config from '../config.js'
+import c from '../config.js'
 
 const Op = Sequelize.Op
 export const users = Router()
@@ -18,10 +18,11 @@ users.get('/', async (ctx) => {
   try {
     const role_id = fn.parseQuerystring(ctx.request.querystring, 'role')
     const page = fn.parseQuerystring(ctx.request.querystring, 'page')
+
     const data = await User.findAll({ 
       where: role_id ? { role_id } : null,
-      limit: config.limit,
-      offset: page ? ( page - 1 ) * config.limit : 0,
+      limit: c.limit,
+      offset: page ? ( page - 1 ) * c.limit : 0,
       include: [{ model: Major, attributes: ['id'] }],
       attributes: { exclude: ['password'] }
     })
