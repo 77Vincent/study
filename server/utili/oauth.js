@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken'
+import c from '../config'
 
-const secret = 'Jessie'
-const timeout = 60 * 60 * 1000
+const secret = c.tokenSecret
+const timeout = c.cookiesTimeout 
 
 export default {
   /**

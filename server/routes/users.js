@@ -111,9 +111,6 @@ users.post('/:id', async (ctx) => {
     let values = ctx.request.body
     // Delete majors because it's not updated here
     delete values.majors
-    values.id = values.newId || values.id 
-    delete values.newId
-    console.log(1111, values)
     if (data) {
       data = await data.update(values)
       delete data.dataValues.password
