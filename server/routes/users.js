@@ -11,8 +11,8 @@ export const users = Router()
 /** 
  * Fetch all users
  * @method GET
- * @param {Object} ctx
- * @returns {Object} All users model
+ * @param {object} ctx - koa http context object
+ * @returns {object} All users model
  */
 users.get('/', async (ctx) => {
   try {
@@ -37,10 +37,10 @@ users.get('/', async (ctx) => {
 })
 
 /** 
- * Fetch a specific user
+ * Fetch a user
  * @method GET
- * @param {Object} ctx
- * @returns {Object} The user model
+ * @param {object} ctx - koa http context object
+ * @returns {object} The user model
  */
 users.get('/:id', async (ctx) => {
   try {
@@ -61,8 +61,8 @@ users.get('/:id', async (ctx) => {
 /** 
  * Create a user 
  * @method PUT 
- * @param {Object} ctx
- * @returns {Object} Created user model
+ * @param {object} ctx - koa http context object
+ * @returns {object} Created user model
  */
 users.put('/', async (ctx) => {
   try {
@@ -91,8 +91,8 @@ users.put('/', async (ctx) => {
 /** 
  * Update a user 
  * @method POST 
- * @param {Object} ctx
- * @returns {Object} updated user model if success
+ * @param {object} ctx - koa http context object
+ * @returns {object} updated user model if success
  */
 users.post('/:id', async (ctx) => {
   try {
@@ -128,9 +128,9 @@ users.post('/:id', async (ctx) => {
 })
 
 /**
- * Delete a specific user
+ * Delete a user
  * @method DELETE
- * @param {Object} ctx
+ * @param {object} ctx - koa http context object
  * @returns {void} status code
  */
 users.delete('/:id', async (ctx) => {

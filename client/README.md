@@ -1,4 +1,4 @@
-# Client Instruction
+# Client Development Instruction
 
 ## Run
 ```js
@@ -11,16 +11,14 @@ npm start
 npm run build 
 ```
 
-## Specification
-* react@v16
-* react-route@v4
-* less
-
 ## Code Convention
 * No semi-colon
 * Use async / await instead of Promise
 
 ## Structure
-* Global less variables in ./theme.less
-* All functions in ./utili
-* All components in ./components
+* Entry file: ./app/index.js
+* Less variables: ./theme.less
+* Base layout: ./app/base
+* Functions: ./app/utili
+* Components: ./app/components
+* Static files: ./app/assets
