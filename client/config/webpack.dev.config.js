@@ -20,7 +20,22 @@ const webpackConfigDev = {
     port: PORT,
     host: '0.0.0.0',
     hot: false,
-    stats: { colors: true },    
+    stats: {
+      colors: true,
+      hash: false,
+      version: false,
+      timings: false,
+      assets: false,
+      chunks: false,
+      modules: false,
+      reasons: false,
+      children: false,
+      source: false,
+      errors: true,
+      errorDetails: false,
+      warnings: false,
+      publicPath: false
+    },  
     proxy: {
       '/api': {
         target: 'http://localhost:3001',

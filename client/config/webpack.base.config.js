@@ -25,6 +25,8 @@ const webpackConfigBase = {
       api: resolve('./app/api'),
       utils: resolve('./app/utils'),
       images: resolve('./app/assets/images'),
+      ducks: resolve('./app/ducks'),
+      store: resolve('./app/store'),
       /**
        * Todo: 先不上redux 
        */
