@@ -95,6 +95,19 @@ import {
       mobilephone: 18822222222,
       email: 'user2@xfolio.cn'
     })
+    await User_Major.bulkCreate([{
+      user_id: 1,
+      major_id: 1 
+    }, {
+      user_id: 1,
+      major_id: 2 
+    }, {
+      user_id: 2,
+      major_id: 3 
+    }, {
+      user_id: 2,
+      major_id: 4 
+    }])
     db.close()
 
   } catch (err) {

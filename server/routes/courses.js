@@ -1,6 +1,6 @@
 import Router from 'koa-router'
 
-import { Course, Major } from '../models'
+import { Course, Major, Course_Major } from '../models'
 import { fn } from '../utili'
 import c from '../config'
 
@@ -9,8 +9,7 @@ export const courses = Router()
 /** 
  * Fetch all courses
  * @method GET
- * @param {object} ctx - koa http context object
- * @returns {object} All courses
+ * @returns {object} all courses
  */
 courses.get('/', async (ctx, next) => {
   try {
@@ -28,29 +27,35 @@ courses.get('/', async (ctx, next) => {
 /** 
  * Create a course
  * @method PUT 
- * @param {object} ctx - koa http context object
+ * @param {string} label
+ * @param {string} description
+ * @param {number} major_id
  * @returns {object} the created course
  */
-// courses.put('/', async (ctx, next) => {
-//   try {
-//     const { label, description, major_id } = ctx.request.body
-//     const course = await Course.create({ label, description })
-//   } catch (err) {
-//     ctx.throw(500, err)
-//   }
-// })
+courses.put('/', async (ctx, next) => {
+  try {
+    const { label, description, major_id } = ctx.request.body
+    const course = await Course.create({ label, description })
+    await Course_Major.create({ 
+      course_id: course.id,
+      major_id
+    })
+    ctx.status = 201
+    ctx.body = fn.prettyJSON(course) 
+  } catch (err) {
+    ctx.throw(500, err)
+  }
+})
 
 /**
  * Delete a course
  * @method DELETE
- * @param {object} ctx - koa http context object
+ * @param {number} id the course id
  * @returns {void}
  */
 courses.delete('/:id', async (ctx) => {
   try {
-    await User.destroy({ 
-      where: { id: ctx.params.id }
-    })
+    await Course.destroy({ where: { id: ctx.params.id } })
     ctx.status = 200
   } catch (err) {
     ctx.throw(500, err)
