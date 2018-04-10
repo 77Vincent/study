@@ -10,15 +10,17 @@ import {
   Header, 
   Footer, 
   Loading, 
-  Welcome, 
+} from 'components';
+import {
   About, 
-  SignIn, 
-  Forgot, 
-  SignUp, 
   Dashboard,
+  Forgot, 
   Orientation,
-  Teachers
-} from 'components'
+  SignIn, 
+  SignUp, 
+  Teachers,
+  Welcome, 
+} from 'pages';
 
 export default class App extends React.Component {
   constructor(props) {
