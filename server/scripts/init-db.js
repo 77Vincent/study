@@ -33,6 +33,7 @@ import {
       title: '建筑师',
       bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       gender: 1,
+      cost: 300,
       mobilephone: 18811111111,
       email: 'teacher1@xfolio.cn'
     })
@@ -44,6 +45,7 @@ import {
       title: '插画师',
       bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       gender: 0,
+      cost: 200,
       mobilephone: 18822222222,
       email: 'teacher2@xfolio.cn'
     })
@@ -55,6 +57,7 @@ import {
       title: '服装设计师',
       bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       gender: 1,
+      cost: 400,
       mobilephone: 18833333333,
       email: 'teacher3@xfolio.cn'
     })

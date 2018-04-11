@@ -58,6 +58,10 @@ export default db.define('user', {
   bio: {
     type: Sequelize.TEXT
   },
+  cost: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0,
+  },
   last_logout: {
     type: Sequelize.DATE
   },

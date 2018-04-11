@@ -20,18 +20,28 @@ users.get('/', async (ctx) => {
     const qs = fn.parseQuerystring(ctx.request.querystring)
     const page = !isNaN(qs.page) && qs.page > 0 ? qs.page : 1
 
-    // only use query that's included in filters
-    const filters = ['role_id', 'gender', 'place', 'location', 'cost', 'majors']
-    let querys = [] 
+    // only use query that's included
+    const filters = ['role_id', 'gender', 'place', 'location', 'majors']
+    let filter = [] 
     for (let key in qs) {
       if (filters.indexOf(key) !== -1) {
-        querys.push({[key]: qs[key]})
+        filter.push({[key]: qs[key]})
+      }
+    }
+    const sortings = ['cost']
+    let sorting = []
+    for (let key in qs) {
+      // ASC as default order
+      qs[key] = qs[key] === 'DESC' ? 'DESC' : 'ASC'
+      if (sortings.indexOf(key) !== -1) {
+        sorting.push([key, qs[key]])
       }
     }
 
     const data = await User.findAll({ 
-      where: { [Op.and]: querys},
       limit: c.limit,
+      where: { [Op.and]: filter},
+      order: sorting,
       offset: page ? ( page - 1 ) * c.limit : 0,
       include: [{ model: Major, attributes: ['id'] }],
       attributes: { exclude: ['password'] }
