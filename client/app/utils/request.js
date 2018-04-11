@@ -10,7 +10,7 @@ const createFetchConfig = (method = 'GET', body = {}) => {
   }
 }
 
-export default {
+export const Request = {
   signUp: async (values) => {
     const res = await window.fetch(
       '/api/users', 

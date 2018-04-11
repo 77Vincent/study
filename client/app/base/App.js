@@ -2,7 +2,7 @@
 import React from 'react'
 import { Layout } from 'antd'
 import { Route } from 'react-router-dom'
-import { request } from 'utils'
+import { Request } from 'utils'
 
 // Custom styles, components and functions
 import './App.less'
@@ -33,7 +33,7 @@ export default class App extends React.Component {
     messages: null
   }
   componentDidMount = async () => {
-    let res = await request.signIn()
+    let res = await Request.signIn()
     if (res.status === 200) {
       const data = await res.json()
       this.setUser(data)

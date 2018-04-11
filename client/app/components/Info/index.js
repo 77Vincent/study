@@ -1,6 +1,6 @@
 import React from 'react'
 import { Checkbox, Radio, Form, Input, Tag, Icon, Button } from 'antd'
-import { request } from 'utils'
+import { Request } from 'utils'
 import './index.less'
 
 class Info extends React.Component {
@@ -24,7 +24,7 @@ class Info extends React.Component {
           values.newId = values.id
         }
         values.id = this.props.user.id
-        const res = await request.userUpdate(values)
+        const res = await Request.userUpdate(values)
         if (res.status === 200) {
           const data = await res.json()
           this.props.setUser(data)

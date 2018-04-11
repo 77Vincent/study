@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Radio, Modal } from 'antd'
-import { request } from 'utils'
+import { Request } from 'utils'
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class SignUp extends React.Component {
     this.props.form.validateFieldsAndScroll(async (err, values) => {
       if (!err) {
         this.props.setLoading(true)
-        const res = await request.signUp(values)
+        const res = await Request.signUp(values)
         if (res.status === 201) {
           const data = await res.json()
           this.props.setUser(data)

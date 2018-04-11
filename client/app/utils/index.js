@@ -1,5 +1,5 @@
-import request from './request'
+import { Request } from './request'
 
 export {
-  request,
+  Request,
 }
