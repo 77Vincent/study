@@ -1,4 +1,4 @@
-# Client Development Instruction
+# Client Documentation
 
 ## Run
 ```js
@@ -22,3 +22,6 @@ npm run build
 * Functions: ./app/utili
 * Components: ./app/components
 * Static files: ./app/assets
+
+## REST API
+* [For server REST API check here](https://github.com/77Vincent/xfolio/tree/master/server)
