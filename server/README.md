@@ -1,4 +1,4 @@
-# SERVER DOCUMENTATION
+# Server Documentation
 
 ## Run
 ```js
@@ -7,6 +7,7 @@ npm start
 ```
 
 ## Initialize database
+* Initial data in ./scripts/init-db.js
 ```js
 npm run db 
 ```
@@ -55,6 +56,26 @@ npm run db
 * DELETE: delete a user
 ```bash
 /api/users
+```
+
+### courses
+* GET: all courses
+```bash
+/api/sessions
+```
+* PUT: create a course
+```bash
+/api/sessions
+```
+
+* POST: update a course
+```bash
+/api/sessions/:id
+```
+
+* DELETE: a course
+```bash
+/api/sessions/:id
 ```
 
 ### majors
