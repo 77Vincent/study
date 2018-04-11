@@ -13,11 +13,7 @@ export const courses = Router()
  */
 courses.get('/', async (ctx) => {
   try {
-    const major_id = fn.parseQuerystring(ctx.request.querystring, 'major')
-    const data = await Course.findAll({
-      limit: c.limit,
-      // include: [{ model: Major, attributes: ['id'] }]
-    })
+    const data = await Course.findAll({ limit: c.limit })
     ctx.status = 200
     ctx.body = fn.prettyJSON(data) 
   } catch (err) {

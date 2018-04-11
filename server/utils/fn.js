@@ -7,14 +7,20 @@ export default {
   prettyJSON(json) {
     return JSON.stringify(json, null, 2)
   },
-  parseQuerystring(querystring = [], key = '') {
+  /**
+   * Parse url querystring and return requesting querystring values
+   * @param {string} querystring 
+   * @returns {object} containing the querystring key-value pairs
+   */
+  parseQuerystring(querystring) {
+    if (!querystring) { return {} }
     const arr = querystring.split('&')
+    let o = {}
     for (let i = 0; i < arr.length; i++) {
-      const query = arr[i].split('=')
-      if (query[0] === key) {
-        return query[1]
-      }
+      const pair = arr[i].split('=')
+      o[pair[0]] = pair[1]
     }
+    return o
   },
   getUser: async (id, config = {}) => {
     const param = {

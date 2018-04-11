@@ -16,16 +16,27 @@ export const users = Router()
  */
 users.get('/', async (ctx) => {
   try {
-    const role_id = fn.parseQuerystring(ctx.request.querystring, 'role')
-    const page = fn.parseQuerystring(ctx.request.querystring, 'page')
+    // fields that can be filtered
+    const qs = fn.parseQuerystring(ctx.request.querystring)
+    const page = !isNaN(qs.page) && qs.page > 0 ? qs.page : 1
+
+    // only use query that's included in filters
+    const filters = ['role_id', 'gender', 'place', 'location', 'cost', 'majors']
+    let querys = [] 
+    for (let key in qs) {
+      if (filters.indexOf(key) !== -1) {
+        querys.push({[key]: qs[key]})
+      }
+    }
 
     const data = await User.findAll({ 
-      where: role_id ? { role_id } : null,
+      where: { [Op.and]: querys},
       limit: c.limit,
       offset: page ? ( page - 1 ) * c.limit : 0,
       include: [{ model: Major, attributes: ['id'] }],
       attributes: { exclude: ['password'] }
     })
+
     if (data) {
       ctx.status = 200
       ctx.body = fn.prettyJSON(data)
@@ -33,6 +44,7 @@ users.get('/', async (ctx) => {
       ctx.status = 404
     }
   } catch (err) {
+    console.error(err)
     ctx.throw(500, err)
   }
 })
@@ -55,6 +67,7 @@ users.get('/:id', async (ctx) => {
       ctx.status = 204
     }
   } catch (err) {
+    console.error(err)
     ctx.throw(500, err)
   }
 })
@@ -82,6 +95,7 @@ users.put('/', async (ctx) => {
     ctx.status = 201
     ctx.body = fn.prettyJSON(data) 
   } catch (err) {
+    console.error(err)
     ctx.throw(500, err)
   }
 })
@@ -113,6 +127,7 @@ users.post('/:id', async (ctx) => {
     ctx.status = 200
     ctx.body = fn.prettyJSON(data)
   } catch (err) {
+    console.error(err)
     ctx.throw(500, err)
   }
 })
@@ -131,6 +146,7 @@ users.delete('/:id', async (ctx) => {
     ctx.cookies.set('user_info', null)
     ctx.status = 200
   } catch (err) {
+    console.error(err)
     ctx.throw(500, err)
   }
 })

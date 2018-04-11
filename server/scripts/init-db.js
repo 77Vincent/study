@@ -32,7 +32,7 @@ import {
       school: '北京大学',
       title: '建筑师',
       bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      gender: true,
+      gender: 1,
       mobilephone: 18811111111,
       email: 'teacher1@xfolio.cn'
     })
@@ -43,7 +43,7 @@ import {
       school: '哈佛大学',
       title: '插画师',
       bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      gender: false,
+      gender: 0,
       mobilephone: 18822222222,
       email: 'teacher2@xfolio.cn'
     })
@@ -54,7 +54,7 @@ import {
       school: '耶鲁大学',
       title: '服装设计师',
       bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      gender: false,
+      gender: 1,
       mobilephone: 18833333333,
       email: 'teacher3@xfolio.cn'
     })
@@ -65,7 +65,7 @@ import {
       school: '清华大学',
       title: '景观设计师',
       bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      gender: true,
+      gender: 0,
       mobilephone: 17711111111,
       email: 'student1@xfolio.cn'
     })

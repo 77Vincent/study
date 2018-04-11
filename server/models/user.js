@@ -50,7 +50,7 @@ export default db.define('user', {
     type: Sequelize.STRING
   },
   gender: {
-    type: Sequelize.BOOLEAN
+    type: Sequelize.INTEGER
   },
   email: {
     type: Sequelize.STRING
