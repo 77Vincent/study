@@ -33,13 +33,17 @@ npm run db
 | /api/sessions | DELETE | Sign out |
 
 ### users
-| URL | Method | Resource | Example |
-| - | - | - | - |
-| /api/users | GET | All users |  |
-| /api/users?role_id | GET | All users with specified role | /api/users?role=0 |
-| /api/users?id | GET | All users with specified id | /api/users?id=1,2,3 |
-| /api/users?gender | GET | All users with specified gender | /api/users?gender=0 |
-| /api/users?majors | GET | All users with specified majors | /api/users?majors=2,3,4 |
+| URL | Method | Resource |
+| - | - | - |
+| /api/users | GET | All users |
+| /api/users?id | GET | All users with specified id |
+| /api/users?role_id | GET | All users with specified role |
+| /api/users?gender | GET | All users with specified gender 
+| /api/users?majors | GET | All users with specified majors |
+| /api/users | PUT | Create a new user |
+| /api/users/:id | GET | A user |
+| /api/users/:id | POST | Update a user |
+| /api/users/:id | DELETE | Delete a user |
 
 ### majors
 | URL | Method | Resource |
