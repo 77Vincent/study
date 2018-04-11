@@ -33,9 +33,21 @@ npm run db
 | /api/sessions | DELETE | Sign out |
 
 ### users
+| URL | Method | Resource | Example |
+| - | - | - | - |
+| /api/users | GET | All users |  |
+| /api/users?role_id | GET | All users with specified role | /api/users?role=0 |
+| /api/users?id | GET | All users with specified id | /api/users?id=1,2,3 |
+| /api/users?gender | GET | All users with specified gender | /api/users?gender=0 |
+| /api/users?majors | GET | All users with specified majors | /api/users?majors=2,3,4 |
+
+### majors
 | URL | Method | Resource |
 | - | - | - |
-| /api/users | GET | All users |
-| /api/users?role_id=teacher | GET | All users with role of teacher |
-| /api/users?gender=0 | GET | All users with gender of 0 |
-| /api/users?majors=1,2 | GET | All users with majors of 1 and 2 |
+| /api/majors | GET | All majors |
+
+### courses
+| URL | Method | Resource |
+| - | - | - |
+| /api/courses | GET | All courses |
+
