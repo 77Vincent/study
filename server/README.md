@@ -26,6 +26,12 @@ npm run db
 * Scripts for development: ./scripts
 
 ## REST API
+* Querystring can be multiple values separated by comma and chained
+* Sorting has two possible value: **DESC** or **ASC**
+```
+/api/users?gender=0&majors=2,3,4&cost=DESC
+```
+
 ### sessions
 | URL | Method | Resource |
 | - | - | - |
@@ -46,11 +52,6 @@ npm run db
 | /api/users/:id | POST | Update a user |
 | /api/users/:id | DELETE | Delete a user |
 
-* Querystring can be multiple values separated by comma and chained
-* Sorting has two possible value: **DESC** or **ASC**
-```
-/api/users?gender=0&majors=2,3,4&cost=DESC
-```
 
 ### majors
 | URL | Method | Resource |
