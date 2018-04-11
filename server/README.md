@@ -27,59 +27,15 @@ npm run db
 
 ## REST API
 ### sessions
-* POST: sign in
-```bash
-/api/sessions
-```
-* DELETE: sign out
-```bash
-/api/sessions
-```
+| URL | Method | Resource |
+| - | - | - |
+| /api/sessions | POST | Sign in |
+| /api/sessions | DELETE | Sign out |
 
 ### users
-* GET: all users
-```bash
-/api/users
-```
-* GET: a user
-```bash
-/api/users/:id
-```
-* POST: update a user
-```bash
-/api/users/:id
-```
-* PUT: create a user
-```bash
-/api/users
-```
-* DELETE: delete a user
-```bash
-/api/users
-```
-
-### courses
-* GET: all courses
-```bash
-/api/sessions
-```
-* PUT: create a course
-```bash
-/api/sessions
-```
-
-* POST: update a course
-```bash
-/api/sessions/:id
-```
-
-* DELETE: a course
-```bash
-/api/sessions/:id
-```
-
-### majors
-* GET: all majors
-```bash
-/api/majors
-```
+| URL | Method | Resource |
+| - | - | - |
+| /api/users | GET | All users |
+| /api/users?role_id=teacher | GET | All users with role of teacher |
+| /api/users?gender=0 | GET | All users with gender of 0 |
+| /api/users?majors=1,2 | GET | All users with majors of 1 and 2 |
