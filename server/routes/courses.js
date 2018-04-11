@@ -1,6 +1,6 @@
 import Router from 'koa-router'
 
-import { Course, Major, Course_Major } from '../models'
+import { Course, Major, Course_Major, major } from '../models'
 import { fn } from '../utili'
 import c from '../config'
 
@@ -13,9 +13,10 @@ export const courses = Router()
  */
 courses.get('/', async (ctx, next) => {
   try {
+    const major_id = fn.parseQuerystring(ctx.request.querystring, 'major')
     const data = await Course.findAll({
       limit: c.limit,
-      include: [{ model: Major, attributes: ['id'] }]
+      // include: [{ model: Major, attributes: ['id'] }]
     })
     ctx.status = 200
     ctx.body = fn.prettyJSON(data) 

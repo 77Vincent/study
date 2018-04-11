@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, message, Form, Icon, Input, Checkbox } from 'antd'
 import { Link } from 'react-router-dom'
-import { UserUtili } from '../../utili'
+import { request } from 'utils'
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class SignIn extends React.Component {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         this.props.setLoading(true)
-        const res = await UserUtili.signIn(values)
+        const res = await request.signIn(values)
         if (res.status === 200) {
           const data = await res.json()
           this.props.setUser(data)

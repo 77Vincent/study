@@ -7,6 +7,8 @@ import Course_Major from './course_major'
 
 // Table Relationship
 
+// Each user has a role
+User.belongsTo(Role)
 // Each course has a user who created the course
 Course.belongsTo(User)
 

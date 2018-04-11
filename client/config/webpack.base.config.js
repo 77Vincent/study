@@ -23,17 +23,10 @@ const webpackConfigBase = {
     alias: {
       components: resolve('./app/components'),
       pages: resolve('./app/pages'),
-      api: resolve('./app/api'),
       utils: resolve('./app/utils'),
       images: resolve('./app/assets/images'),
       ducks: resolve('./app/ducks'),
       store: resolve('./app/store'),
-      /**
-       * Todo: 先不上redux 
-       */
-    //   controllers: path.join(__dirname, '/../app/controllers'),
-    //   actions: path.join(__dirname, '/../app/actions'),
-    //   reducers: path.join(__dirname, '/../app/reducers'),
     },
   },
   resolveLoader: {

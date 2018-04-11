@@ -2,7 +2,7 @@
 import React from 'react'
 import { Layout } from 'antd'
 import { Route } from 'react-router-dom'
-import { UserUtili } from '../utili'
+import { request } from 'utils'
 
 // Custom styles, components and functions
 import './App.less'
@@ -33,7 +33,7 @@ export default class App extends React.Component {
     messages: null
   }
   componentDidMount = async () => {
-    let res = await UserUtili.signIn()
+    let res = await request.signIn()
     if (res.status === 200) {
       const data = await res.json()
       this.setUser(data)

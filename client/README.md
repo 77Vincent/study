@@ -19,7 +19,7 @@ npm run build
 * Entry file: ./app/index.js
 * Less variables: ./theme.less
 * Base layout: ./app/base
-* Functions: ./app/utili
+* Functions: ./app/utils
 * Components: ./app/components
 * Static files: ./app/assets
 
