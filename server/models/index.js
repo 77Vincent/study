@@ -5,8 +5,10 @@ import Role from './role'
 import User_Major from './user_major'
 import Course_Major from './course_major'
 
-// Relations
-User.belongsTo(Role)
+// Table Relationship
+
+// Each course has a user who created the course
+Course.belongsTo(User)
 
 User.belongsToMany(Major, {through: 'user_major'})
 Major.belongsToMany(User, {through: 'user_major'})

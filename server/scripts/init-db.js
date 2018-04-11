@@ -15,13 +15,7 @@ import {
     await db.dropAllSchemas()
     await db.sync({ force: true })
 
-    await Role.bulkCreate([{
-        id: 'admin'
-      }, {
-        id: 'teacher'
-      }, {
-        id: 'student'
-      }])
+    await Role.bulkCreate([{ id: 'admin' }, { id: 'teacher' }, { id: 'student' }])
     await Major.bulkCreate([{
       label: '建筑',
       description: '建筑设计'
@@ -43,35 +37,6 @@ import {
     }, {
       label: 'UI/UX',
       description: '界面及交互设计'
-    }])
-    await Course.bulkCreate([{
-      label: '向导课',
-      description: '互相认识，了解学生需求，制定教学大纲。'
-    }, {
-      label: '画法几何',
-      description: '几何和阴影'
-    }, {
-      label: '字体课',
-      description: '认识字体与学会如何使用字体'
-    }])
-    await Course_Major.bulkCreate([{
-      course_id: 1,
-      major_id: 1 
-    }, {
-      course_id: 1,
-      major_id: 2
-    }, {
-      course_id: 1,
-      major_id: 3
-    }, {
-      course_id: 1,
-      major_id: 4 
-    }, {
-      course_id: 2,
-      major_id: 3 
-    }, {
-      course_id: 3,
-      major_id: 4
     }])
     await User.create({
       password: '000000',
@@ -95,19 +60,33 @@ import {
       mobilephone: 18822222222,
       email: 'user2@xfolio.cn'
     })
-    await User_Major.bulkCreate([{
-      user_id: 1,
-      major_id: 1 
+    await Course.bulkCreate([{
+      label: '向导课',
+      description: '互相认识，了解学生需求，制定教学大纲。',
+      user_id: 1
     }, {
-      user_id: 1,
-      major_id: 2 
+      label: '画法几何',
+      description: '几何和阴影',
+      user_id: 1
     }, {
-      user_id: 2,
-      major_id: 3 
-    }, {
-      user_id: 2,
-      major_id: 4 
+      label: '字体课',
+      description: '认识字体与学会如何使用字体',
+      user_id: 2 
     }])
+    await User_Major.bulkCreate([
+      { user_id: 1, major_id: 1 },
+      { user_id: 1, major_id: 2 },
+      { user_id: 2, major_id: 3 },
+      { user_id: 2, major_id: 4 }
+    ])
+    await Course_Major.bulkCreate([
+      { course_id: 1, major_id: 1 },
+      { course_id: 1, major_id: 2 },
+      { course_id: 1, major_id: 3 },
+      { course_id: 1, major_id: 4 },
+      { course_id: 2, major_id: 3 },
+      { course_id: 3, major_id: 4 }
+    ])
     db.close()
 
   } catch (err) {
