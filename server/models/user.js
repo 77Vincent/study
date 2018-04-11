@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize'
 import bcrypt from 'bcryptjs'
-import { db } from '../utili'
+import { db } from '../utils'
 
 export default db.define('user', {
   id: {

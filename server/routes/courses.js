@@ -1,7 +1,7 @@
 import Router from 'koa-router'
 
 import { Course, Major, Course_Major, major } from '../models'
-import { fn } from '../utili'
+import { fn } from '../utils'
 import c from '../config'
 
 export const courses = Router()

@@ -7,7 +7,7 @@ import serve from 'koa-static'
 import bodyParser from 'koa-bodyparser'
 
 import routes from './routes'
-import { oauth } from './utili'
+import { oauth } from './utils'
 
 const app = new Koa()
 

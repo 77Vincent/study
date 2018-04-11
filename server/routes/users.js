@@ -2,7 +2,7 @@ import Router from 'koa-router'
 import Sequelize from 'sequelize'
 
 import { User, Major, User_Major } from '../models'
-import { fn, db, oauth } from '../utili'
+import { fn, db, oauth } from '../utils'
 import c from '../config.js'
 
 const Op = Sequelize.Op

@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize'
-import { db } from '../utili'
+import { db } from '../utils'
 
 export default db.define('role', {
   id: {

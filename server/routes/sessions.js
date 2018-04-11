@@ -3,7 +3,7 @@ import Sequelize from 'sequelize'
 import bcrypt from 'bcryptjs'
 
 import { User } from '../models'
-import { oauth, fn } from '../utili'
+import { oauth, fn } from '../utils'
 
 const Op = Sequelize.Op
 export const sessions = Router()

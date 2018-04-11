@@ -19,7 +19,7 @@ npm run db
 ## Structure
 * Configurations: ./config.js
 * Entry file: ./index.js
-* Functions: ./utili
+* Functions: ./utils
 * Routes: ./routes
 * Models: ./models
 * Static files: ./static

@@ -2,7 +2,7 @@ import Router from 'koa-router'
 
 import c from '../config'
 import { Major } from '../models'
-import { fn } from '../utili'
+import { fn } from '../utils'
 
 export const majors = Router()
 
