@@ -36,14 +36,21 @@ npm run db
 | URL | Method | Resource |
 | - | - | - |
 | /api/users | GET | All users |
-| /api/users?id | GET | All users with specified id |
-| /api/users?role_id | GET | All users with specified role |
-| /api/users?gender | GET | All users with specified gender 
-| /api/users?majors | GET | All users with specified majors |
+| /api/users?id | GET | Filter: users with specified id |
+| /api/users?role_id | GET | Filter: users with specified role |
+| /api/users?gender | GET | Filter: users with specified gender 
+| /api/users?majors | GET | Filter: users with specified majors |
+| /api/users?cost | GET | Sorting: users ordered by cost |
 | /api/users | PUT | Create a new user |
 | /api/users/:id | GET | A user |
 | /api/users/:id | POST | Update a user |
 | /api/users/:id | DELETE | Delete a user |
+
+* Querystring can be multiple values separated by comma and chained
+* Sorting has two possible value: **DESC** or **ASC**
+```
+/api/users?gender=0&majors=2,3,4&cost=DESC
+```
 
 ### majors
 | URL | Method | Resource |
@@ -54,4 +61,6 @@ npm run db
 | URL | Method | Resource |
 | - | - | - |
 | /api/courses | GET | All courses |
-
+| /api/courses | PUT | Create a course |
+| /api/courses/:id | POST | Update a course |
+| /api/courses/:id | DELETE | Delete a course |
