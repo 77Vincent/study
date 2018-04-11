@@ -17,6 +17,7 @@ export default {
     const arr = querystring.split('&')
     let o = {}
     for (let i = 0; i < arr.length; i++) {
+      if (arr[i].indexOf('=') === -1) { break }
       const pair = arr[i].split('=')
       o[pair[0]] = pair[1]
     }
