@@ -31,6 +31,11 @@ npm run db
 ```
 /api/users?gender=0&majors=2,3,4&cost=DESC
 ```
+* Pagination, page start from 1
+* Each page is limited by 20 items by default
+```
+/api/users?page=1
+```
 
 ### sessions
 | URL | Method | Resource |
@@ -57,6 +62,9 @@ npm run db
 | URL | Method | Resource |
 | - | - | - |
 | /api/majors | GET | All majors |
+| /api/majors | PUT | Create a major |
+| /api/majors/:id | POST | Update a major |
+| /api/majors/:id | DELETE | Delete a major |
 
 ### courses
 | URL | Method | Resource |
