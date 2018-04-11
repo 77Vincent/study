@@ -108,7 +108,7 @@ users.post('/:id', async (ctx) => {
     // Delete majors because it's not updated here
     delete values.majors
     data = await data.update(values)
-    // do send password to client
+    // do not send password to client
     delete data.dataValues.password
     ctx.status = 200
     ctx.body = fn.prettyJSON(data)

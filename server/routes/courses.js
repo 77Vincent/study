@@ -11,7 +11,7 @@ export const courses = Router()
  * @method GET
  * @returns {object} all courses
  */
-courses.get('/', async (ctx, next) => {
+courses.get('/', async (ctx) => {
   try {
     const major_id = fn.parseQuerystring(ctx.request.querystring, 'major')
     const data = await Course.findAll({
@@ -31,16 +31,37 @@ courses.get('/', async (ctx, next) => {
  * @param {string} label
  * @param {string} description
  * @param {number} major_id
+ * @param {number} user_id
  * @returns {object} the created course
  */
-courses.put('/', async (ctx, next) => {
+courses.put('/', async (ctx) => {
   try {
-    const { label, description, major_id } = ctx.request.body
-    const course = await Course.create({ label, description })
+    const { label, description, major_id, user_id } = ctx.request.body
+    const course = await Course.create({ label, description, user_id })
     await Course_Major.create({ 
       course_id: course.id,
       major_id
     })
+    ctx.status = 201
+    ctx.body = fn.prettyJSON(course) 
+  } catch (err) {
+    ctx.throw(500, err)
+  }
+})
+
+/** 
+ * Update a course
+ * @method PUT 
+ * @param {string} label
+ * @param {string} description
+ * @returns {object} the updated course
+ */
+courses.post('/:id', async (ctx) => {
+  try {
+    const { id } = ctx.params
+    const { label, description } = ctx.request.body
+    let course = await Course.findOne({ where: { id } })
+    course = await course.update({ label, description })
     ctx.status = 201
     ctx.body = fn.prettyJSON(course) 
   } catch (err) {

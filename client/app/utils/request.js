@@ -11,6 +11,8 @@ const createFetchConfig = (method = 'GET', body = {}) => {
 }
 
 export const Request = {
+
+  // users
   signUp: async (values) => {
     const res = await window.fetch(
       '/api/users', 
@@ -25,6 +27,15 @@ export const Request = {
     )
     return res
   },
+  logout: async () => {
+    const res = await window.fetch(
+      '/api/users', 
+      createFetchConfig('DELETE')
+    )
+    return res
+  },
+
+  // sessions 
   signIn: async (values = { id: null, password: null}) => {
     const res = await window.fetch(
       '/api/sessions', 
@@ -35,13 +46,6 @@ export const Request = {
   signOut: async () => {
     const res = await window.fetch(
       '/api/sessions', 
-      createFetchConfig('DELETE')
-    )
-    return res
-  },
-  logout: async () => {
-    const res = await window.fetch(
-      '/api/users', 
       createFetchConfig('DELETE')
     )
     return res

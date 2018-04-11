@@ -6,7 +6,7 @@ import { fn } from '../utils'
 
 export const majors = Router()
 
-majors.get('/', async (ctx, next) => {
+majors.get('/', async (ctx) => {
   try {
     const data = await Major.findAll({ limit: c.limit })
     ctx.status = 200
