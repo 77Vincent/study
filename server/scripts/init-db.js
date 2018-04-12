@@ -46,6 +46,8 @@ import {
       bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       gender: 0,
       cost: 200,
+      province: 31,
+      city: 3101,
       mobilephone: 18822222222,
       email: 'teacher2@xfolio.cn'
     })
@@ -58,6 +60,8 @@ import {
       bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       gender: 1,
       cost: 400,
+      province: 11,
+      city: 1101,
       mobilephone: 18833333333,
       email: 'teacher3@xfolio.cn'
     })
@@ -70,6 +74,8 @@ import {
       bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       gender: 0,
       mobilephone: 17711111111,
+      province: 45,
+      city: 4503,
       email: 'student1@xfolio.cn'
     })
     await Course.bulkCreate([{

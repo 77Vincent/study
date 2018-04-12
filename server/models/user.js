@@ -52,6 +52,12 @@ export default db.define('user', {
   gender: {
     type: Sequelize.INTEGER
   },
+  province: {
+    type: Sequelize.INTEGER
+  },
+  city: {
+    type: Sequelize.INTEGER
+  },
   email: {
     type: Sequelize.STRING
   },
