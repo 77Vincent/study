@@ -58,6 +58,10 @@ export default db.define('user', {
   city: {
     type: Sequelize.INTEGER
   },
+  place: {
+    type: Sequelize.STRING,
+    defaultValue: 'both',
+  },
   email: {
     type: Sequelize.STRING
   },

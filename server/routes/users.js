@@ -21,7 +21,7 @@ users.get('/', async (ctx) => {
     const page = !isNaN(qs.page) && qs.page > 0 ? qs.page : 1
 
     // only use filters that's included
-    const filters = ['role_id', 'gender', 'place', 'location', 'id']
+    const filters = ['role_id', 'gender', 'place', 'province', 'city', 'id', 'place']
     let filter = []
     for (let key in qs) {
       if (filters.indexOf(key) !== -1) {

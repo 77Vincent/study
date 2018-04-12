@@ -34,6 +34,7 @@ import {
       bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       gender: 1,
       cost: 300,
+      place: 'online',
       mobilephone: 18811111111,
       email: 'teacher1@xfolio.cn'
     })
@@ -48,6 +49,7 @@ import {
       cost: 200,
       province: 31,
       city: 3101,
+      place: 'offline',
       mobilephone: 18822222222,
       email: 'teacher2@xfolio.cn'
     })
