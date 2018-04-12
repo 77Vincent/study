@@ -27,12 +27,10 @@ npm run db
 
 ## REST API
 * Querystring can be multiple values separated by comma and chained
-* Sorting has two possible value: **DESC** or **ASC**
 ```
 /api/users?gender=0&majors=2,3,4&cost=DESC
 ```
-* Pagination, page start from 1
-* Each page is limited by 20 items by default
+* Pagination, page start from 1, limit is 20 items per page by default
 ```
 /api/users?page=1
 ```
@@ -44,17 +42,17 @@ npm run db
 | /api/sessions | DELETE | Sign out |
 
 ### users
-| URL | Method | Resource |
-| - | - | - |
-| /api/users | GET | All users |
-| /api/users?id | GET | **Filter**: users with specified id |
-| /api/users?role_id | GET | **Filter**: users with specified role |
-| /api/users?gender | GET | **Filter**: users with specified gender 
-| /api/users?majors | GET | **Filter**: users with specified majors |
-| /api/users?province | GET | **Filter**: users with specified province |
-| /api/users?city | GET | **Filter**: users with specified city |
-| /api/users?place | GET | **Filter**: users with specified place to have the course |
-| /api/users?cost | GET | **Sorting**: users ordered by cost |
+| URL | Method | Resource | Params range |
+| - | - | - | - |
+| /api/users | GET | All users | |
+| /api/users?id | GET | **Filter**: users with specified id |  |
+| /api/users?majors | GET | **Filter**: users with specified majors |  |
+| /api/users?province | GET | **Filter**: users with specified province | [Check here](http://39.104.108.82:3001/location/zh/provinces.json) |
+| /api/users?city | GET | **Filter**: users with specified city | [Check here](http://39.104.108.82:3001/location/zh/cities.json) |
+| /api/users?role_id | GET | **Filter**: users with specified role | teacher, student, admin |
+| /api/users?gender | GET | **Filter**: users with specified gender | 0, 1 |
+| /api/users?place | GET | **Filter**: users with specified place to have the course | online, offline, both |
+| /api/users?cost | GET | **Sorting**: users ordered by cost | DESC, ASC |
 | /api/users | PUT | Create a new user |
 | /api/users/:id | GET | A user |
 | /api/users/:id | POST | Update a user |
