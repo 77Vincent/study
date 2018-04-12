@@ -71,6 +71,8 @@ npm run db
 | URL | Method | Resource |
 | - | - | - |
 | /api/courses | GET | All courses |
+| /api/courses?majors | GET | **Filter**: courses with specified majors |
+| /api/courses?label | GET | **Search (Strict match)**: courses with specified label |
 | /api/courses | PUT | Create a course |
 | /api/courses/:id | POST | Update a course |
 | /api/courses/:id | DELETE | Delete a course |
