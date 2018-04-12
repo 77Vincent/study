@@ -1,12 +1,10 @@
 import Router from 'koa-router'
 import Sequelize from 'sequelize'
 
-import { Course, Major, Course_Major, major } from '../models'
+import { Course, Course_Major } from '../models'
 import { fn } from '../utils'
 import c from '../config'
-import { decode } from 'punycode';
 
-const Op = Sequelize.Op
 export const courses = Router()
 
 /** 
@@ -28,9 +26,11 @@ courses.get('/', async (ctx) => {
       filter.push({ id: courses_id.map(item => item.dataValues.course_id) })
     }
 
-    filter.push({
-      label: { $like: `%${decodeURI(qs.label)}%` }
-    })
+    if (qs.label) {
+      filter.push({
+        label: { $like: `%${decodeURI(qs.label)}%` }
+      })
+    }
 
     const data = await Course.findAll({
       limit: c.queryLimit,
