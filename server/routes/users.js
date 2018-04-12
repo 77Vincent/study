@@ -5,7 +5,6 @@ import { User, Major, User_Major } from '../models'
 import { fn, db, oauth } from '../utils'
 import c from '../config.js'
 
-const Op = Sequelize.Op
 export const users = Router()
 
 /** 
@@ -45,10 +44,10 @@ users.get('/', async (ctx) => {
     }
 
     let data = await User.findAll({ 
-      limit: c.limit,
-      where: { [Op.and]: filter },
+      limit: c.queryLimit,
+      where: { $and: filter },
       order: sorting,
-      offset: fn.getOffset(page, c.limit),
+      offset: fn.getOffset(page, c.queryLimit),
       include: [{ model: Major, attributes: ['id'] }],
       attributes: { exclude: ['password'] }
     })

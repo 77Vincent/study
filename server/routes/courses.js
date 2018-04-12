@@ -4,6 +4,7 @@ import Sequelize from 'sequelize'
 import { Course, Major, Course_Major, major } from '../models'
 import { fn } from '../utils'
 import c from '../config'
+import { decode } from 'punycode';
 
 const Op = Sequelize.Op
 export const courses = Router()
@@ -19,6 +20,7 @@ courses.get('/', async (ctx) => {
     const page = !isNaN(qs.page) && qs.page > 0 ? qs.page : 1
 
     let filter = []
+    // this part is for majors filtering
     if (qs.majors) {
       const courses_id = await Course_Major.findAll({
         where: { major_id: qs.majors.split(',') }
@@ -26,10 +28,14 @@ courses.get('/', async (ctx) => {
       filter.push({ id: courses_id.map(item => item.dataValues.course_id) })
     }
 
+    filter.push({
+      label: { $like: `%${decodeURI(qs.label)}%` }
+    })
+
     const data = await Course.findAll({
-      limit: c.limit,
-      offset: fn.getOffset(page, c.limit),
-      where: { [Op.and]: filter }
+      limit: c.queryLimit,
+      offset: fn.getOffset(page, c.queryLimit),
+      where: { $and: filter }
     })
     ctx.status = 200
     ctx.body = fn.prettyJSON(data) 

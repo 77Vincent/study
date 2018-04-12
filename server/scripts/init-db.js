@@ -81,27 +81,27 @@ import {
       email: 'student1@xfolio.cn'
     })
     await Course.bulkCreate([{
-      label: '测试课程1',
+      label: 'test course 1',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       user_id: 1
     }, {
-      label: '测试课程2',
+      label: 'test course 2',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       user_id: 1
     }, {
-      label: '测试课程3',
+      label: 'test course 3 more',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       user_id: 2 
     }, {
-      label: '测试课程4',
+      label: 'test course 4 not a label',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       user_id: 2
     }, {
-      label: '测试课程5',
+      label: 'test course 5 some more',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       user_id: 3 
     }, {
-      label: '测试课程6',
+      label: 'test course 6 with label',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       user_id: 3 
     }])

@@ -1,7 +1,7 @@
 // All server configs are stored here
 
 export default {
-  limit: 20,
+  queryLimit: 50,
   host: '39.104.108.82',
   // Database
   db: 'mysql',

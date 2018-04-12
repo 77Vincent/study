@@ -41,9 +41,11 @@ export default {
   objToObjGroupsInArr(object = {}, keys = []) {
     let arr = []
     for (let key in object) {
-      arr.push({[key]: object[key].split(',')})
+      if (keys.indexOf(key) !== -1) {
+        arr.push({ [key]: decodeURI(object[key]).split(',') })
+      }
     }
-    return arr.filter(item => keys.indexOf(Object.keys(item)[0]) !== -1)
+    return arr
   },
   getUser: async (id, config = {}) => {
     const param = {
