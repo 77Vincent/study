@@ -47,11 +47,14 @@ npm run db
 | URL | Method | Resource |
 | - | - | - |
 | /api/users | GET | All users |
-| /api/users?id | GET | Filter: users with specified id |
-| /api/users?role_id | GET | Filter: users with specified role |
-| /api/users?gender | GET | Filter: users with specified gender 
-| /api/users?majors | GET | Filter: users with specified majors |
-| /api/users?cost | GET | Sorting: users ordered by cost |
+| /api/users?id | GET | **Filter**: users with specified id |
+| /api/users?role_id | GET | **Filter**: users with specified role |
+| /api/users?gender | GET | **Filter**: users with specified gender 
+| /api/users?majors | GET | **Filter**: users with specified majors |
+| /api/users?province | GET | **Filter**: users with specified province |
+| /api/users?city | GET | **Filter**: users with specified city |
+| /api/users?place | GET | **Filter**: users with specified place to have the course |
+| /api/users?cost | GET | **Sorting**: users ordered by cost |
 | /api/users | PUT | Create a new user |
 | /api/users/:id | GET | A user |
 | /api/users/:id | POST | Update a user |
@@ -73,3 +76,10 @@ npm run db
 | /api/courses | PUT | Create a course |
 | /api/courses/:id | POST | Update a course |
 | /api/courses/:id | DELETE | Delete a course |
+
+## Static Assets
+| URL | Resource |
+| - | - |
+| /location/zh/provinces.json | Provinces list |
+| /location/zh/cities.json | Cities list |
+
