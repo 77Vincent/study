@@ -1,9 +1,11 @@
 import Router from 'koa-router'
+import Sequelize from 'sequelize'
 
 import { Course, Major, Course_Major, major } from '../models'
 import { fn } from '../utils'
 import c from '../config'
 
+const Op = Sequelize.Op
 export const courses = Router()
 
 /** 
@@ -13,7 +15,22 @@ export const courses = Router()
  */
 courses.get('/', async (ctx) => {
   try {
-    const data = await Course.findAll({ limit: c.limit })
+    const qs = fn.parseQuerystring(ctx.request.querystring)
+    const page = !isNaN(qs.page) && qs.page > 0 ? qs.page : 1
+
+    let filter = []
+    if (qs.majors) {
+      const courses_id = await Course_Major.findAll({
+        where: { major_id: qs.majors.split(',') }
+      })
+      filter.push({ id: courses_id.map(item => item.dataValues.course_id) })
+    }
+
+    const data = await Course.findAll({
+      limit: c.limit,
+      offset: fn.getOffset(page, c.limit),
+      where: { [Op.and]: filter }
+    })
     ctx.status = 200
     ctx.body = fn.prettyJSON(data) 
   } catch (err) {

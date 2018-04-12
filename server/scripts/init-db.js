@@ -81,17 +81,29 @@ import {
       email: 'student1@xfolio.cn'
     })
     await Course.bulkCreate([{
-      label: '向导课',
-      description: '互相认识，了解学生需求，制定教学大纲。',
+      label: '测试课程1',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       user_id: 1
     }, {
-      label: '画法几何',
-      description: '几何和阴影',
+      label: '测试课程2',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       user_id: 1
     }, {
-      label: '字体课',
-      description: '认识字体与学会如何使用字体',
+      label: '测试课程3',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       user_id: 2 
+    }, {
+      label: '测试课程4',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      user_id: 2
+    }, {
+      label: '测试课程5',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      user_id: 3 
+    }, {
+      label: '测试课程6',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      user_id: 3 
     }])
     await User_Major.bulkCreate([
       { user_id: 1, major_id: 1 },
@@ -105,7 +117,13 @@ import {
       { course_id: 1, major_id: 3 },
       { course_id: 1, major_id: 4 },
       { course_id: 2, major_id: 3 },
-      { course_id: 3, major_id: 4 }
+      { course_id: 2, major_id: 6 },
+      { course_id: 3, major_id: 3 },
+      { course_id: 3, major_id: 5 },
+      { course_id: 4, major_id: 4 },
+      { course_id: 5, major_id: 5 },
+      { course_id: 6, major_id: 6 },
+      { course_id: 6, major_id: 1 },
     ])
     db.close()
 

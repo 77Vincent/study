@@ -22,14 +22,10 @@ users.get('/', async (ctx) => {
 
     // only use filters that's included
     const filters = ['role_id', 'gender', 'place', 'province', 'city', 'id', 'place']
-    let filter = []
-    for (let key in qs) {
-      if (filters.indexOf(key) !== -1) {
-        filter.push({[key]: qs[key].split(',')})
-      }
-    }
-
     const sortings = ['cost']
+
+    let filter = fn.objToObjGroupsInArr(qs, filters)
+
     let sorting = []
     for (let key in qs) {
       // ASC as default order
@@ -43,7 +39,7 @@ users.get('/', async (ctx) => {
     // if majors is given in the querystring then do the follow
     if (qs.majors) {
       const users_id = await User_Major.findAll({
-        where: { [Op.or]: qs.majors.split(',').map(major_id => { return { major_id } }) },
+        where: { major_id: qs.majors.split(',') }
       })
       filter.push({ id: users_id.map(user => user.dataValues.user_id) })
     }
@@ -52,7 +48,7 @@ users.get('/', async (ctx) => {
       limit: c.limit,
       where: { [Op.and]: filter },
       order: sorting,
-      offset: page ? ( page - 1 ) * c.limit : 0,
+      offset: fn.getOffset(page, c.limit),
       include: [{ model: Major, attributes: ['id'] }],
       attributes: { exclude: ['password'] }
     })
@@ -80,8 +76,12 @@ users.get('/:id', async (ctx) => {
     const data = await fn.getUser(ctx.params.id, {
       attributes: { exclude: ['password'] }
     })
-    ctx.status = 200
-    ctx.body = fn.prettyJSON(data) 
+    if (data) {
+      ctx.status = 200
+      ctx.body = fn.prettyJSON(data)
+    } else {
+      ctx.status = 404
+    }
   } catch (err) {
     console.error(err)
     ctx.throw(500, err)
