@@ -59,18 +59,9 @@ class SignUp extends React.Component {
   }
   render() {
     const { getFieldDecorator } = this.props.form
-    const formItemLayout = {
-      labelCol: { xs: { span: 24 }, sm: { span: 8 }, },
-      wrapperCol: { xs: { span: 24 }, sm: { span: 16 }, },
-    }
-    const tailFormItemLayout = {
-      wrapperCol: {
-        xs: { span: 24, offset: 0, },
-        sm: { span: 16, offset: 8, },
-      },
-    }
+
     return (
-      <Form onSubmit={this.submit} style={{maxWidth: '450px', margin: '0 auto'}}>
+      <Form onSubmit={this.submit} style={{maxWidth: '300px', margin: '0 auto'}}>
         <Modal
           title='服务条款'
           footer={null}
@@ -81,15 +72,8 @@ class SignUp extends React.Component {
           ...
         </Modal>
 
-        <Form.Item {...formItemLayout} label="怎么称呼">
-          {getFieldDecorator('name', {
-            rules: [{ required: true, message: '怎么称呼你呢？' }],
-          })(
-            <Input type="text" placeholder='用于对外显示的名字'/>
-          )}
-        </Form.Item>
 
-        <Form.Item {...formItemLayout} label="手机号">
+        <Form.Item className='has-success'>
           {getFieldDecorator('mobilephone', {
             rules: [
               { required: true, message: '请输入手机号' },
@@ -97,44 +81,54 @@ class SignUp extends React.Component {
               { validator: this.checkUserID }
             ],
           })(
-            <Input />
+            <Input type='text' placeholder='手机号'/>
           )}
         </Form.Item>
 
-        <Form.Item {...formItemLayout} label="密码">
+        <Form.Item>
           {getFieldDecorator('password', {
             rules: [
               { required: true, message: '请输入密码', }, 
               { min: 6, message: '不少于6个字符', }, 
              ],
-          })( <Input type="password"/>)}
+          })( <Input type='password' placeholder='密码'/>)}
         </Form.Item>
 
-        <Form.Item {...formItemLayout} label="验证码">
-          <Row gutter={8}>
-            <Col span={12}>
+        <Form.Item>
+          {getFieldDecorator('name', {
+            rules: [{ required: true, message: '怎么称呼你呢？' }],
+          })(
+            <Input type='text' placeholder='怎么称呼'/>
+          )}
+        </Form.Item>
+
+        <Form.Item>
+          <Row gutter={12}>
+            <Col span={15}>
               {getFieldDecorator('captcha', {
                 rules: [{ required: true, message: '请填写您收到的验证码' }],
               })(
-                <Input />
+                <Input type='text' placeholder='验证码'/>
               )}
             </Col>
-            <Col span={12}>
+            <Col span={9}>
               <Button>获取验证码</Button>
             </Col>
           </Row>
         </Form.Item>
 
-        <Form.Item {...tailFormItemLayout}>
-          {getFieldDecorator('agreement', {
+        <Form.Item >
+          {/* {getFieldDecorator('agreement', {
             rules: [{ required: true, message: '请阅读服务协议' }],
             valuePropName: 'checked',
           })(
             <Checkbox>我已经阅读<a onClick={this.setProvision(true)}>服务协议</a></Checkbox>
-          )}
+          )} */}
 
-          <Button style={{width: '100%'}} type="primary" htmlType="submit">注册</Button>
-          <Link to='/sign-in' style={{float: 'right'}}>已有账号？立即登录</Link>
+          <Button style={{width: '100%'}} type='primary' htmlType='submit'>注册</Button>
+          <Button style={{width: '100%'}} >
+            <Link to='/sign-in'>已有账号，立即登录</Link>
+          </Button>
         </Form.Item>
       </Form>
     )

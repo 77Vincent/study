@@ -63,7 +63,8 @@ class SignIn extends React.Component {
           <Link to='/forgot' style={{float: 'left'}}>忘记密码</Link>
           <Link to='/sign-up' style={{float: 'right'}}>立即注册</Link>
 
-          <Button type='primary' style={{width: '100%'}} htmlType="submit">登录</Button>
+          <Button type='primary' style={{width: '100%'}} htmlType="submit">账号登录</Button>
+          <Button style={{width: '100%'}} htmlType="submit">微信登录</Button>
         </Form.Item>
       </Form>
     )

@@ -20,7 +20,7 @@ users.get('/', async (ctx) => {
     const page = !isNaN(qs.page) && qs.page > 0 ? qs.page : 1
 
     // only use filters that's included
-    const filters = ['role_id', 'gender', 'place', 'province', 'city', 'id', 'place']
+    const filters = ['role_id', 'gender', 'place', 'province', 'city', 'id', 'place', 'mobilephone']
     const sortings = ['cost']
 
     let filter = fn.objToObjGroupsInArr(qs, filters)
