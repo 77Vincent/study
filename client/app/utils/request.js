@@ -13,6 +13,14 @@ const createFetchConfig = (method = 'GET', body = {}) => {
 export const Request = {
 
   // users
+  getUser: async (filter = {}) => {
+    let querystring = ''
+    for (let key in filter) {
+      querystring += `&${key}=${filter[key].toString()}`
+    }
+    const res = await window.fetch( `/api/users?${querystring.slice(1)}`)
+    return res
+  },
   signUp: async (values) => {
     const res = await window.fetch(
       '/api/users', 

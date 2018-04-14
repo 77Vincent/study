@@ -8,8 +8,7 @@ class SignUp extends React.Component {
     super(props)
   }
   state = {
-    provisionDialog: false,
-    confirmDirty: false,
+    provisionDialog: false
   }
   componentDidMount = () => {
     if (this.props.user) {
@@ -73,13 +72,14 @@ class SignUp extends React.Component {
         </Modal>
 
 
-        <Form.Item className='has-success'>
+        <Form.Item>
           {getFieldDecorator('mobilephone', {
             rules: [
               { required: true, message: '请输入手机号' },
               { whitespace: true, message: '不能包含空格' },
-              { validator: this.checkUserID }
+              { validator: this.checkUserID },
             ],
+            validateTrigger: 'onBlur'
           })(
             <Input type='text' placeholder='手机号'/>
           )}

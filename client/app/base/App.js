@@ -86,8 +86,10 @@ export default class App extends React.Component {
               majors={this.state.majors}
               {...props} />} 
             />
-            <Route path="/teachers" render={() => <Teachers 
-              setLoading={this.setLoading} />}
+            <Route path="/teachers" render={(props) => <Teachers 
+              majors={this.state.majors}
+              setLoading={this.setLoading}
+              {...props} />} 
             />
           </Loading>
         </Layout.Content>

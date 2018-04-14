@@ -62,6 +62,9 @@ export default db.define('user', {
     type: Sequelize.STRING,
     defaultValue: 'both',
   },
+  country: {
+    type: Sequelize.STRING,
+  },
   email: {
     type: Sequelize.STRING
   },

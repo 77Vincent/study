@@ -6,47 +6,23 @@ export default class Teachers extends React.Component {
   constructor(props) {
     super(props)
   }
-  state = {
-    expand: false,
-    teachers: [],
-    teacher: {}
-  }
+  state = { teachers: [] }
   componentDidMount = async () => {
     const res = await fetch( '/api/users?role_id=teacher')
     if (res.status === 200) {
       const data = await res.json()
-      this.setState({ teachers: data })
+      this.setTeachers(data)
     }
   }
-  openTeacher = (teacher_id) => {
-    this.setState({
-      expand: true,
-      teacher: this.state.teachers[teacher_id] 
-    })
-  }
-  handleOk = (e) => {
-    this.setState({
-      expand: false,
-    })
-  }
-  closeTeacher = (e) => {
-    this.setState({
-      expand: false,
-    })
+  setTeachers = (teachers) => {
+    console.log(this)
+    this.setState({ teachers })
   }
   render() {
     return (
       <Layout>
-        <Modal
-          title={this.state.teacher.name}
-          footer={null}
-          width={800}
-          visible={this.state.expand}
-          onCancel={this.closeTeacher}
-        >
-        </Modal>
         <Layout.Sider width='300'>
-          <Filter />
+          <Filter majors={this.props.majors} setTeachers={this.setTeachers}/>
         </Layout.Sider>
 
         <Layout.Content style={{marginTop: '-10px'}}>
@@ -55,7 +31,7 @@ export default class Teachers extends React.Component {
               this.state.teachers.map((teacher, index) =>
                 (
                   <Col key={index}>
-                    <div className='App-tile' onClick={() => this.openTeacher(teacher.id)}>
+                    <div className='App-tile'>
                       <Teacher teacher={teacher} />
                     </div>
                   </Col>

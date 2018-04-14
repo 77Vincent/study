@@ -36,7 +36,7 @@ class SignIn extends React.Component {
     })
   }
   message = {
-    id: '手机号/电子邮箱/用户名',
+    id: '手机号/电子邮箱',
     password: '密码'
   }
   render() {
