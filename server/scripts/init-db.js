@@ -69,6 +69,20 @@ import {
     })
     await User.create({
       password: '000000',
+      name: '老师4',
+      role_id: 'teacher',
+      school: 'MIT',
+      title: '工业设计师',
+      bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      gender: 0,
+      cost: 999,
+      province: 45,
+      city: 4501,
+      mobilephone: 18844444444,
+      email: 'teacher4@xfolio.cn'
+    })
+    await User.create({
+      password: '000000',
       name: '学生1',
       role_id: 'student',
       school: '清华大学',
@@ -109,7 +123,9 @@ import {
       { user_id: 1, major_id: 1 },
       { user_id: 1, major_id: 2 },
       { user_id: 2, major_id: 3 },
-      { user_id: 2, major_id: 4 }
+      { user_id: 2, major_id: 4 },
+      { user_id: 3, major_id: 5 },
+      { user_id: 4, major_id: 6 }
     ])
     await Course_Major.bulkCreate([
       { course_id: 1, major_id: 1 },

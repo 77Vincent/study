@@ -11,7 +11,6 @@ const createFetchConfig = (method = 'GET', body = {}) => {
 }
 
 export const Request = {
-
   // users
   getUser: async (filter = {}) => {
     console.log(filter)
