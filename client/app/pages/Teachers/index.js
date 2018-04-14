@@ -15,7 +15,6 @@ export default class Teachers extends React.Component {
     }
   }
   setTeachers = (teachers) => {
-    console.log(this)
     this.setState({ teachers })
   }
   render() {

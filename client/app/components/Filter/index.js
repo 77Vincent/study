@@ -7,23 +7,24 @@ export default class Filter extends React.Component {
   constructor(props) {
     super(props)
   }
-  state = {
-    sortings: [{
-      name: '按价格高低',
-      options: [{
-        label: '由低到高',
-        value: 0
-      }, {
-        label: '由高到低',
-        value: 1 
-      }]
-    }]
+  defaultFilters = {
+    majors: [],
+    cost: '',
+    role_id: 'teacher',
+    gender: [0, 1],
   }
-  onChange = async (e) => {
-    const res = await Request.getUser({
-      majors: e,
-      role_id: 'teacher'
-    })
+  state = {
+    filters: this.defaultFilters
+  }
+  onChangeMajors = async (e) => {
+    this.setState({ filters: Object.assign(this.state.filters, { majors: e }) })
+    const res = await Request.getUser(this.state.filters)
+    const data = await res.json()
+    this.props.setTeachers(data)
+  }
+  onChangeCost = async (e) => {
+    this.setState({ filters: Object.assign(this.state.filters, { cost: e.target.value }) })
+    const res = await Request.getUser(this.state.filters)
     const data = await res.json()
     this.props.setTeachers(data)
   }
@@ -38,19 +39,13 @@ export default class Filter extends React.Component {
           this.props.majors &&
           <section>
             <h4>专业</h4>
-            <Checkbox.Group options={majors} onChange={this.onChange}/>
+            <Checkbox.Group options={majors} onChange={this.onChangeMajors}/>
           </section>
         }
-        {
-          this.state.sortings && this.state.sortings.map((sorting, index) => 
-            (
-              <section key={index}>
-                <h4>{sorting.name}</h4>
-                <Radio.Group options={sorting.options}/>
-              </section>
-            )
-          )
-        }
+        <section>
+          <h4>价格排序</h4>
+          <Radio.Group options={[{ label: '由低到高', value: 'ASC' }, { label: '由高到低', value: 'DESC' }]} onChange={this.onChangeCost}/>
+        </section>
       </div>
     )
   }

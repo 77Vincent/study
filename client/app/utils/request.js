@@ -14,6 +14,7 @@ export const Request = {
 
   // users
   getUser: async (filter = {}) => {
+    console.log(filter)
     let querystring = ''
     for (let key in filter) {
       querystring += `&${key}=${filter[key].toString()}`
