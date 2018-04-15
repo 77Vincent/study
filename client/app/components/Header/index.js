@@ -15,7 +15,7 @@ export default class Header extends React.Component {
   render() {
     return (
       <div className='Header'>
-        <Menu mode='horizontal' className='Menu'>
+        <Menu mode='horizontal' theme='dark' className='Menu'>
           <Menu.Item>
             <Link to='/'><div className="App-logo">Xfolio</div></Link>
           </Menu.Item>

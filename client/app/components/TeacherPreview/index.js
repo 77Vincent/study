@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Layout, Button, Row, Col, Tag } from 'antd'
+import { Icon, Layout, Button, Row, Col, Tag } from 'antd'
 import './index.less'
 
 export default class extends React.Component {
@@ -12,34 +12,11 @@ export default class extends React.Component {
     const brief = teacher.bio.length <= 50 ? teacher.bio : `${teacher.bio.slice(0, 50)}...`
 
     return (
-      <div className='Teacher'>
-        <Row type='flex'>
-          <Col>
-            <aside>
-              {/* <div className='App-avatar' style={{backgroundImage: `url(${teacher.avatar})`}} /> */}
-              <h4>{teacher.name}</h4>
-            </aside>
-          </Col>
-
-          <Col style={{flex: 1}}>
-            <article>
-              <header>
-                {/* {
-                  teacher.majors && teacher.majors.map((major, index) => <Tag key={index}>{major}</Tag> )
-                } */}
-                <h4>
-                  {teacher.school ? <span>{teacher.school}</span> : null}
-                  {teacher.title ? <span>{teacher.title}</span> : null}
-                </h4>
-              </header>
-
-              <p>{brief}</p>
-
-              <Row type='flex' align='bottom'>
-              </Row>
-            </article>
-          </Col>
-        </Row>
+      <div className='Teacher-Preview'>
+        <h2>{teacher.name}</h2>
+        <p>{brief}</p>
+        <Icon type='heart' className='like' />
+        <Button type='primary'>跟ta学习</Button>
       </div>
     )
   }

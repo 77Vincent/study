@@ -6,32 +6,14 @@
   padding: 0 50px;
 
   .Menu {
-    height: 47px;
+    height: 48px;
     font-size: 12px;
-    line-height: 47px;
+    line-height: 48px;
     border-bottom: none;
   }
 
   .Menu-Item {
     position: relative;
-
-    &:nth-last-of-type(2) {
-      &:after {
-        display: none;
-      }
-    }
-
-    &:after {
-      content: '';
-      display: inline-block;
-      background-color: @color-gray;
-      height: 20px;
-      width: 1px;
-      position: absolute;
-      right: 0;
-      top: 50%;
-      margin-top: -10px;
-    }
   }
 
   .Menu-user {
