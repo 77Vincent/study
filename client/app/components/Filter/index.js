@@ -16,6 +16,10 @@ export default class Filter extends React.Component {
     res = await window.fetch('/cities/CN/provinces.json')
     const provinces = await res.json()
     this.setState({ provinces })
+
+    res = await window.fetch('/countries.json')
+    const countries = await res.json()
+    this.setState({ countries })
   }
   defaultFilters = {
     majors: [],
@@ -26,6 +30,7 @@ export default class Filter extends React.Component {
   state = {
     cities: [],
     provinces: [],
+    countries: [],
     filterValues: this.defaultFilters
   }
   onChangeFilter = (id) => {
@@ -41,6 +46,16 @@ export default class Filter extends React.Component {
       this.setState({ filters: delete this.state.filterValues.city })
     } else {
       this.setState({ filters: Object.assign(this.state.filterValues, { city: e }) })
+    }
+    const res = await Request.getUser(this.state.filterValues)
+    const data = await res.json()
+    this.props.setTeachers(data)
+  }
+  onChangeCountry = async (e) => {
+    if (!e) {
+      this.setState({ filters: delete this.state.filterValues.country })
+    } else {
+      this.setState({ filters: Object.assign(this.state.filterValues, { country: e }) })
     }
     const res = await Request.getUser(this.state.filterValues)
     const data = await res.json()
@@ -81,6 +96,25 @@ export default class Filter extends React.Component {
             )
           })
         }
+        <section>
+          <h4>国家</h4>
+          <Select 
+            showSearch
+            optionFilterProp='children'
+            filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+            style={{width: '200px'}}
+            placeholder='留学国家'
+            onChange={this.onChangeCountry}
+          >
+            <Select.Option value=''>不限</Select.Option>
+            {
+              this.state.countries.map((country, index) => {
+                return <Select.Option key={index} value={country.code}>{country.cn}</Select.Option>
+              })
+            }
+          </Select>
+        </section>
+
         <section>
           <h4>所在城市</h4>
           <Select 
