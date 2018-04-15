@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Layout, Button, Row, Col, Tag } from 'antd'
 import './index.less'
 
-export default class Teacher extends React.Component {
+export default class extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -36,9 +36,6 @@ export default class Teacher extends React.Component {
               <p>{brief}</p>
 
               <Row type='flex' align='bottom'>
-                <Col span={10}>
-                  <small>已授课时长: {teacher.sold}小时</small>
-                </Col>
               </Row>
             </article>
           </Col>

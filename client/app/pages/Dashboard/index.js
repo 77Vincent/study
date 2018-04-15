@@ -5,7 +5,7 @@ import { Info, Schedule, Order, Account } from 'components'
 import { Request } from 'utils'
 import './index.less'
 
-export default class Dashboard extends React.Component {
+export default class extends React.Component {
   constructor(props) {
     super(props)
   }

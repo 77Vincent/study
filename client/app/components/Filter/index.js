@@ -3,7 +3,7 @@ import { Checkbox, Select, Radio } from 'antd'
 import { Request } from 'utils'
 import './index.less'
 
-export default class Filter extends React.Component {
+export default class extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -102,7 +102,7 @@ export default class Filter extends React.Component {
             showSearch
             optionFilterProp='children'
             filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-            style={{width: '200px'}}
+            className='Filter-Select'
             placeholder='留学国家'
             onChange={this.onChangeCountry}
           >
@@ -121,7 +121,7 @@ export default class Filter extends React.Component {
             showSearch
             optionFilterProp='children'
             filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-            style={{width: '200px'}}
+            className='Filter-Select'
             placeholder='老师当前所在地'
             onChange={this.onChangeCity}
           >

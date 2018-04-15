@@ -1,8 +1,8 @@
 import React from 'react'
 import { Layout, Button, Row, Col, Tag, Modal } from 'antd'
-import { Filter, Teacher } from 'components'
+import { Filter, TeacherPreview } from 'components'
 
-export default class Teachers extends React.Component {
+export default class extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -14,9 +14,7 @@ export default class Teachers extends React.Component {
       this.setTeachers(data)
     }
   }
-  setTeachers = (teachers) => {
-    this.setState({ teachers })
-  }
+  setTeachers = (teachers) => this.setState({ teachers })
   render() {
     return (
       <Layout>
@@ -31,7 +29,7 @@ export default class Teachers extends React.Component {
                 (
                   <Col key={index}>
                     <div className='App-tile'>
-                      <Teacher teacher={teacher} />
+                      <TeacherPreview teacher={teacher} />
                     </div>
                   </Col>
                 )

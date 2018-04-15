@@ -1,4 +1,4 @@
-import Teacher from './Teacher'
+import TeacherPreview from './TeacherPreview'
 import Filter from './Filter'
 
 import Info from './Info'
@@ -11,7 +11,7 @@ import Loading from './Loading.js'
 import Button from './Button'
 
 export {
-  Teacher,
+  TeacherPreview,
   Filter,
 
   Info,

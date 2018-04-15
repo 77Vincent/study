@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Button } from 'antd'
 import './index.less'
 
-export default class Welcome extends React.Component {
+export default class extends React.Component {
   constructor(props) {
     super(props)
   }
