@@ -28,9 +28,7 @@ export default class extends React.Component {
               this.state.teachers.map((teacher, index) =>
                 (
                   <Col key={index}>
-                    <div className='App-tile'>
-                      <TeacherPreview teacher={teacher} />
-                    </div>
+                    <TeacherPreview teacher={teacher} />
                   </Col>
                 )
               )

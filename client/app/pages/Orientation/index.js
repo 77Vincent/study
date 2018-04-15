@@ -13,32 +13,25 @@ export default class Orientation extends React.Component{
     answers: []
   }
 
-  questions = [
-    {
+  questions = [{
       title: '目的',
       options: ['冲击大牛', '出国深造', '兴趣爱好'] 
-    },
-    {
+    }, {
       title: '申请学位',
       options: ['预科', '本科', '研究生'] 
-    },
-    {
+    }, {
       title: '专业',
       options: ['平面设计', '服装设计', '室内设计', '工业设计', '建筑设计', '插画设计', '动画设计', '纯艺术'] 
-    },
-    {
+    }, {
       title: '申请时间',
       options: [2018, 2019, 2020, 2021, 2022] 
-    },
-    {
+    }, {
       title: '上课方式',
       options: ['家里', '公共场所', '线上', '由导师决定'] 
-    },
-    {
+    }, {
       title: '上课时间',
       options: ['', '公共场所', '线上', '由导师决定'] 
-    },
-  ]
+    }]
 
   progress = (e) => {
     this.carousel.next()

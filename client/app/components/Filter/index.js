@@ -69,13 +69,13 @@ export default class extends React.Component {
   }
   render() {
     const filters = this.props.majors && [{
-      label: '专业',
+      label: '申请专业',
       id: 'majors',
       filter: this.props.majors.map(item => {
         return { label: item.label, value: item.id }
       })
     }, {
-      label: '性别',
+      label: '老师性别',
       id: 'gender',
       filter: [{ label: '先生', value: 1 }, { label: '女士', value: 0 }]
     }, {
@@ -97,13 +97,13 @@ export default class extends React.Component {
           })
         }
         <section>
-          <h4>国家</h4>
+          <h4>申请国家</h4>
           <Select 
             showSearch
             optionFilterProp='children'
             filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
             className='Filter-Select'
-            placeholder='留学国家'
+            placeholder='申请国家'
             onChange={this.onChangeCountry}
           >
             <Select.Option value=''>不限</Select.Option>

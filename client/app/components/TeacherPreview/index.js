@@ -15,8 +15,9 @@ export default class extends React.Component {
       <div className='Teacher-Preview'>
         <h2>{teacher.name}</h2>
         <p>{brief}</p>
-        <Icon type='heart' className='like' />
-        <Button type='primary'>跟ta学习</Button>
+
+        <Icon type='heart' className='btn-like' />
+        <Button className='btn-learn' size='large' type='primary'>跟ta学习</Button>
       </div>
     )
   }
