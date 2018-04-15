@@ -37,11 +37,7 @@ const webpackConfigDev = {
       publicPath: false
     },  
     proxy: {
-      '/api': {
-        target: 'http://localhost:3001',
-        changeOrigin: true
-      },
-      '/images': {
+      '/': {
         target: 'http://localhost:3001',
         changeOrigin: true
       }

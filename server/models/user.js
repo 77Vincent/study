@@ -50,13 +50,13 @@ export default db.define('user', {
     type: Sequelize.STRING
   },
   gender: {
-    type: Sequelize.INTEGER
+    type: Sequelize.STRING
   },
   province: {
-    type: Sequelize.INTEGER
+    type: Sequelize.STRING
   },
   city: {
-    type: Sequelize.INTEGER
+    type: Sequelize.STRING
   },
   place: {
     type: Sequelize.STRING,

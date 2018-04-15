@@ -7,6 +7,16 @@ export default class Filter extends React.Component {
   constructor(props) {
     super(props)
   }
+  componentDidMount = async () => {
+    // get cities and provinces list
+    let res = await window.fetch('/cities/CN/cities.json')
+    const cities = await res.json()
+    this.setState({ cities })
+
+    res = await window.fetch('/cities/CN/provinces.json')
+    const provinces = await res.json()
+    this.setState({ provinces })
+  }
   defaultFilters = {
     majors: [],
     cost: '',
@@ -14,6 +24,8 @@ export default class Filter extends React.Component {
     gender: [0, 1],
   }
   state = {
+    cities: [],
+    provinces: [],
     filterValues: this.defaultFilters
   }
   onChangeFilter = (id) => {
@@ -23,6 +35,16 @@ export default class Filter extends React.Component {
       const data = await res.json()
       this.props.setTeachers(data)
     }
+  }
+  onChangeCity = async (e) => {
+    if (!e) {
+      this.setState({ filters: delete this.state.filterValues.city })
+    } else {
+      this.setState({ filters: Object.assign(this.state.filterValues, { city: e }) })
+    }
+    const res = await Request.getUser(this.state.filterValues)
+    const data = await res.json()
+    this.props.setTeachers(data)
   }
   onChangeCost = async (e) => {
     this.setState({ filters: Object.assign(this.state.filterValues, { cost: e.target.value }) })
@@ -59,6 +81,35 @@ export default class Filter extends React.Component {
             )
           })
         }
+        <section>
+          <h4>所在城市</h4>
+          <Select 
+            showSearch
+            optionFilterProp='children'
+            filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+            style={{width: '200px'}}
+            placeholder='老师当前所在地'
+            onChange={this.onChangeCity}
+          >
+            <Select.Option value=''>全国</Select.Option>
+            {
+              this.state.provinces.map((province, index) => {
+                return (
+                  <Select.OptGroup label={province.name} key={index}>
+                    {
+                      this.state.cities.map((city, ind) => {
+                        if (province.code === city.provinceCode) {
+                          return <Select.Option key={ind} value={city.code}>{city.name}</Select.Option>
+                        }
+                      })
+                    }
+                  </Select.OptGroup>
+                )
+              })
+            }
+          </Select>
+        </section>
+
         <section>
           <h4>价格排序</h4>
           <Radio.Group options={[{ label: '由低到高', value: 'ASC' }, { label: '由高到低', value: 'DESC' }]} onChange={this.onChangeCost}/>

@@ -17,13 +17,13 @@ users.get('/', async (ctx) => {
   try {
     // fields that can be filtered
     const qs = fn.parseQuerystring(ctx.request.querystring)
-    const page = !isNaN(qs.page) && qs.page > 0 ? qs.page : 1
 
     // only use filters that's included
-    const filters = ['role_id', 'gender', 'place', 'province', 'city', 'id', 'place', 'mobilephone']
+    const filters = ['role_id', 'gender', 'place', 'province', 'city', 'id', 'mobilephone']
     const sortings = ['cost']
 
     let filter = fn.objToObjGroupsInArr(qs, filters)
+    console.log(filter)
 
     let sorting = []
     for (let key in qs) {
@@ -47,7 +47,7 @@ users.get('/', async (ctx) => {
       limit: c.queryLimit,
       where: { $and: filter },
       order: sorting,
-      offset: fn.getOffset(page, c.queryLimit),
+      offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
       include: [{ model: Major, attributes: ['id'] }],
       attributes: { exclude: ['password'] }
     })

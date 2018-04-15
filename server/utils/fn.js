@@ -1,12 +1,11 @@
 import Sequelize from 'sequelize'
 import { User, Major } from '../models'
 
-const Op = Sequelize.Op
-
 export default {
   prettyJSON(json) {
     return JSON.stringify(json, null, 2)
   },
+
   /**
    * Parse url querystring and return requesting querystring values
    * @param {string} querystring - format: &key=value&key=value1,value2 
@@ -23,6 +22,7 @@ export default {
     }
     return obj
   },
+
   /**
    * Count offset for db query pagination
    * @param {number} page - page number, start from 1
@@ -32,6 +32,16 @@ export default {
   getOffset(page, limit) {
     return page ? ( page - 1 ) * limit : 0
   },
+
+  /**
+   * Return an positive integer 
+   * @param {number} [input=1] input number
+   * @returns {number} positive integer
+   */
+  getPositiveInt(input = 1) {
+    return !isNaN(input) && input > 0 ? Math.round(input) : 1
+  },
+
   /**
    * 
    * @param {object} object - source normal object that needs to be converted
@@ -47,9 +57,10 @@ export default {
     }
     return arr
   },
+
   getUser: async (id, config = {}) => {
     const param = {
-      where: { [Op.or]: [ 
+      where: { $or: [ 
         { id },
         { username: id },
         { mobilephone: id },

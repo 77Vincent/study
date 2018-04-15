@@ -1,10 +1,10 @@
 [{
   "code": "1101",
-  "name": "市辖区",
+  "name": "北京市辖区",
   "provinceCode": "11"
 }, {
   "code": "1201",
-  "name": "市辖区",
+  "name": "天津市辖区",
   "provinceCode": "12"
 }, {
   "code": "1301",
@@ -292,7 +292,7 @@
   "provinceCode": "23"
 }, {
   "code": "3101",
-  "name": "市辖区",
+  "name": "上海市辖区",
   "provinceCode": "31"
 }, {
   "code": "3201",
@@ -948,7 +948,7 @@
   "provinceCode": "46"
 }, {
   "code": "5001",
-  "name": "市辖区",
+  "name": "重庆市辖区",
   "provinceCode": "50"
 }, {
   "code": "5002",

@@ -32,7 +32,7 @@ import {
       school: '北京大学',
       title: '建筑师',
       bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      gender: 1,
+      gender: '1',
       cost: 300,
       place: 'online',
       mobilephone: 18811111111,
@@ -45,10 +45,10 @@ import {
       school: '哈佛大学',
       title: '插画师',
       bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      gender: 0,
+      gender: '0',
       cost: 200,
-      province: 31,
-      city: 3101,
+      province: '31',
+      city: '3101',
       place: 'offline',
       mobilephone: 18822222222,
       email: 'teacher2@xfolio.cn'
@@ -60,10 +60,11 @@ import {
       school: '耶鲁大学',
       title: '服装设计师',
       bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      gender: 1,
+      gender: '1',
+      place: 'online',
       cost: 400,
-      province: 11,
-      city: 1101,
+      province: '11',
+      city: '1101',
       mobilephone: 18833333333,
       email: 'teacher3@xfolio.cn'
     })
@@ -74,10 +75,10 @@ import {
       school: 'MIT',
       title: '工业设计师',
       bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      gender: 0,
+      gender: '0',
       cost: 999,
-      province: 45,
-      city: 4501,
+      province: '45',
+      city: '4501',
       mobilephone: 18844444444,
       email: 'teacher4@xfolio.cn'
     })
@@ -88,10 +89,10 @@ import {
       school: '清华大学',
       title: '景观设计师',
       bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      gender: 0,
+      gender: '1',
       mobilephone: 17711111111,
-      province: 45,
-      city: 4503,
+      province: '45',
+      city: '4503',
       email: 'student1@xfolio.cn'
     })
     await Course.bulkCreate([{
