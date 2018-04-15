@@ -9,7 +9,6 @@ class Forgot extends React.Component {
 
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values)
       }
     })
   }

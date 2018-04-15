@@ -144,6 +144,6 @@ import {
     db.close()
 
   } catch (err) {
-    console.log('init Error', err)
+    console.error('init Error', err)
   }
 })()
