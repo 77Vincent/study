@@ -41,25 +41,17 @@ export default class extends React.Component {
       this.props.setTeachers(data)
     }
   }
-  onChangeCity = async (e) => {
-    if (!e) {
-      this.setState({ filters: delete this.state.filterValues.city })
-    } else {
-      this.setState({ filters: Object.assign(this.state.filterValues, { city: e }) })
+  onChangeSelect = (type) => {
+    return async (e) => {
+      if (!e) {
+        this.setState({ filters: delete this.state.filterValues[type] })
+      } else {
+        this.setState({ filters: Object.assign(this.state.filterValues, { [type]: e }) })
+      }
+      const res = await Request.getUser(this.state.filterValues)
+      const data = await res.json()
+      this.props.setTeachers(data)
     }
-    const res = await Request.getUser(this.state.filterValues)
-    const data = await res.json()
-    this.props.setTeachers(data)
-  }
-  onChangeCountry = async (e) => {
-    if (!e) {
-      this.setState({ filters: delete this.state.filterValues.country })
-    } else {
-      this.setState({ filters: Object.assign(this.state.filterValues, { country: e }) })
-    }
-    const res = await Request.getUser(this.state.filterValues)
-    const data = await res.json()
-    this.props.setTeachers(data)
   }
   onChangeCost = async (e) => {
     this.setState({ filters: Object.assign(this.state.filterValues, { cost: e.target.value }) })
@@ -104,7 +96,7 @@ export default class extends React.Component {
             filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
             className='Filter-Select'
             placeholder='申请国家'
-            onChange={this.onChangeCountry}
+            onChange={this.onChangeSelect('country')}
           >
             <Select.Option value=''>不限</Select.Option>
             {
@@ -123,7 +115,7 @@ export default class extends React.Component {
             filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
             className='Filter-Select'
             placeholder='老师当前所在地'
-            onChange={this.onChangeCity}
+            onChange={this.onChangeSelect('city')}
           >
             <Select.Option value=''>全国</Select.Option>
             {
