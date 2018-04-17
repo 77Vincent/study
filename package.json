@@ -1,10 +1,11 @@
 {
-  "name": "server",
+  "name": "xfolio-server",
   "version": "0.1.0",
   "private": true,
   "main": "index.js",
-  "keywords": [],
+  "keywords": ["backend", "node"],
   "author": "77Vincent@<wentianqi77@outlook.com>",
+  "contributors": [],
   "scripts": {
     "start": "nodemon --exec babel-node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",

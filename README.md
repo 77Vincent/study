@@ -1,9 +1,15 @@
 # Server Documentation
 
-## Run
+## Development 
 ```js
 npm i
 npm start
+```
+
+## Production
+```js
+npm i
+npm run server 
 ```
 
 ## Initialize database
@@ -11,10 +17,6 @@ npm start
 ```js
 npm run db 
 ```
-
-## Code Convention
-* No semi-colon
-* Use async / await instead of Promise
 
 ## Structure
 * Configurations: ./config.js
