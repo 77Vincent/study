@@ -21,21 +21,24 @@ export default class extends React.Component {
     const countries = await res.json()
     this.setState({ countries })
   }
-  defaultFilters = {
-    majors: [],
-    cost: '',
-    role_id: 'teacher',
-    gender: [0, 1],
-  }
   state = {
     cities: [],
     provinces: [],
     countries: [],
-    filterValues: this.defaultFilters
+    filterValues: {
+      majors: [],
+      cost: '',
+      role_id: 'teacher',
+      gender: [0, 1],
+    }
   }
-  onChangeFilter = (id) => {
+  onChangeFilter = (type) => {
     return async (e) => {
-      this.setState({ filters: Object.assign(this.state.filterValues, { [id]: e }) })
+      if (e.length) {
+        Object.assign(this.state.filterValues, { [type]: e })
+      } else {
+        delete this.state.filterValues[type]
+      }
       const res = await Request.getUser(this.state.filterValues)
       const data = await res.json()
       this.props.setTeachers(data)
@@ -43,10 +46,10 @@ export default class extends React.Component {
   }
   onChangeSelect = (type) => {
     return async (e) => {
-      if (!e) {
-        this.setState({ filters: delete this.state.filterValues[type] })
+      if (e) {
+        Object.assign(this.state.filterValues, { [type]: e })
       } else {
-        this.setState({ filters: Object.assign(this.state.filterValues, { [type]: e }) })
+        delete this.state.filterValues[type]
       }
       const res = await Request.getUser(this.state.filterValues)
       const data = await res.json()
@@ -54,7 +57,7 @@ export default class extends React.Component {
     }
   }
   onChangeCost = async (e) => {
-    this.setState({ filters: Object.assign(this.state.filterValues, { cost: e.target.value }) })
+    Object.assign(this.state.filterValues, { cost: e.target.value })
     const res = await Request.getUser(this.state.filterValues)
     const data = await res.json()
     this.props.setTeachers(data)
