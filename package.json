@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "main": "index.js",
-  "keywords": ["backend", "node"],
+  "keywords": [
+    "backend",
+    "node"
+  ],
   "author": "77Vincent@<wentianqi77@outlook.com>",
   "contributors": [],
   "scripts": {

@@ -4,6 +4,7 @@ import Course from './course'
 import Role from './role'
 import User_Major from './user_major'
 import Course_Major from './course_major'
+import Like_Teacher from './like_teacher'
 
 // Table Relationship
 
@@ -25,4 +26,5 @@ export {
   Course,
   User_Major,
   Course_Major,
+  Like_Teacher
 }
