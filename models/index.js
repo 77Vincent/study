@@ -4,7 +4,6 @@ import Course from './course'
 import Role from './role'
 import User_Major from './user_major'
 import Course_Major from './course_major'
-import Like_Teacher from './like_teacher'
 
 // Table Relationship
 
@@ -16,6 +15,8 @@ Course.belongsTo(User)
 User.belongsToMany(Major, {through: 'user_major'})
 Major.belongsToMany(User, {through: 'user_major'})
 
+User.belongsToMany(User, {as: 'Fan', through: 'user_fan'})
+
 Course.belongsToMany(Major, {through: 'course_major'})
 Major.belongsToMany(Course, {through: 'course_major'})
 
@@ -26,5 +27,4 @@ export {
   Course,
   User_Major,
   Course_Major,
-  Like_Teacher
 }

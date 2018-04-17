@@ -55,7 +55,10 @@ users.get('/', async (ctx) => {
       where: { $and: filter },
       order: sorting,
       offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
-      include: [{ model: Major, attributes: ['id'] }],
+      include: [
+        { model: Major, attributes: ['id'] },
+        { model: User, as: 'Fan', attributes: ['id'] }
+      ],
       attributes: { exclude: ['password'] }
     })
 
