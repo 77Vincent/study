@@ -8,9 +8,14 @@
     "sourceType": "module"
   },
   "rules": {
-    "indent": [ "error", 2 ],
-    "quotes": [ "error", "single" ],
-    "semi": [ "error", "never" ],
-    "no-console": ["error", { "allow": ["warn", "error"] }]    
+    "indent": ["error", 2],
+    "quotes": ["error", "single"],
+    "semi": ["error", "never"],
+    "no-console": ["error", {
+      "allow": ["warn", "error"]
+    }],
+    "max-len": ["error", {
+      "code": 120 
+    }]
   }
 }

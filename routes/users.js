@@ -18,16 +18,7 @@ users.get('/', async (ctx) => {
     const qs = fn.parseQuerystring(ctx.request.querystring)
 
     // only use filters that's included
-    const filters = [
-      'role_id',
-      'gender',
-      'place',
-      'province',
-      'city',
-      'country',
-      'id',
-      'mobilephone'
-    ]
+    const filters = [ 'role_id', 'gender', 'place', 'province', 'city', 'country', 'id', 'mobilephone' ]
     const sortings = ['cost']
 
     let filter = fn.objToObjGroupsInArr(qs, filters)

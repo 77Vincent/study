@@ -38,7 +38,7 @@ export default {
    * @returns {number} positive integer
    */
   getPositiveInt(input = 1) {
-    return !isNaN(input) && input > 0 ? Math.round(input) : 1
+    return !isNaN(input) ? Math.round(Math.abs(input)) : 1
   },
 
   /**

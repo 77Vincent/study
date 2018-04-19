@@ -27,7 +27,7 @@ import {
       role_id: 'teacher',
       school: '北京大学',
       title: '建筑师',
-      bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
       gender: '1',
       cost: 300,
       country: 'US',
@@ -41,7 +41,7 @@ import {
       role_id: 'teacher',
       school: '哈佛大学',
       title: '插画师',
-      bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
       gender: '0',
       cost: 200,
       province: '31',
@@ -57,7 +57,7 @@ import {
       role_id: 'teacher',
       school: '耶鲁大学',
       title: '服装设计师',
-      bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
       gender: '1',
       place: 'online',
       cost: 400,
@@ -73,7 +73,7 @@ import {
       role_id: 'teacher',
       school: 'MIT',
       title: '工业设计师',
-      bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
       gender: '0',
       cost: 999,
       province: '45',
@@ -88,7 +88,7 @@ import {
       role_id: 'student',
       school: '清华大学',
       title: '景观设计师',
-      bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
       gender: '1',
       mobilephone: 17711111111,
       province: '45',
@@ -97,29 +97,37 @@ import {
     })
     await Course.bulkCreate([{
       label: 'test course 1',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
       user_id: 1
     }, {
       label: 'test course 2',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
       user_id: 1
     }, {
       label: 'test course 3 more',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
       user_id: 2 
     }, {
       label: 'test course 4 not a label',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
       user_id: 2
     }, {
       label: 'test course 5 some more',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
       user_id: 3 
     }, {
       label: 'test course 6 with label',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
       user_id: 3 
     }])
+    await db.model('follower_following').bulkCreate([
+      { follower_id: 1, following_id: 2 },
+      { follower_id: 2, following_id: 3 },
+      { follower_id: 2, following_id: 1 },
+      { follower_id: 3, following_id: 4 },
+      { follower_id: 3, following_id: 2 },
+      { follower_id: 4, following_id: 1 }
+    ])
     await db.model('user_major').bulkCreate([
       { user_id: 1, major_id: 1 },
       { user_id: 1, major_id: 2 },
