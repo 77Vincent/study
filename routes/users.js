@@ -1,6 +1,6 @@
 import Router from 'koa-router'
 
-import { User, Major, User_Major } from '../models'
+import { User, Major } from '../models'
 import { fn, db, oauth } from '../utils'
 import c from '../config.js'
 
@@ -44,7 +44,7 @@ users.get('/', async (ctx) => {
     // this part is for majors filtering
     // if majors is given in the querystring then do the follow
     if (qs.majors) {
-      const users_id = await User_Major.findAll({
+      const users_id = await db.model('user_major').findAll({
         where: { major_id: qs.majors.split(',') }
       })
       filter.push({ id: users_id.map(user => user.dataValues.user_id) })
@@ -57,7 +57,8 @@ users.get('/', async (ctx) => {
       offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
       include: [
         { model: Major, attributes: ['id'] },
-        { model: User, as: 'Fan', attributes: ['id'] }
+        { model: User, as: 'Follower', attributes: ['id'] },
+        { model: User, as: 'Following', attributes: ['id'] }
       ],
       attributes: { exclude: ['password'] }
     })
@@ -136,11 +137,11 @@ users.post('/:id', async (ctx) => {
     const user_id = ctx.params.id
     let values = ctx.request.body
 
-    await User_Major.destroy({
+    await db.model('user_major').destroy({
       where: { user_id }
     })
     values.majors.map(async major_id => {
-      await User_Major.create({ user_id, major_id })
+      await db.model('user_major').create({ user_id, major_id })
     })
     await db.sync()
     let data = await fn.getUser(user_id)

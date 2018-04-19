@@ -4,8 +4,6 @@ import {
   Major,
   Role,
   Course,
-  User_Major,
-  Course_Major,
 } from '../models'
 
 (async () => {
@@ -122,7 +120,7 @@ import {
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       user_id: 3 
     }])
-    await User_Major.bulkCreate([
+    await db.model('user_major').bulkCreate([
       { user_id: 1, major_id: 1 },
       { user_id: 1, major_id: 2 },
       { user_id: 2, major_id: 3 },
@@ -130,7 +128,7 @@ import {
       { user_id: 3, major_id: 5 },
       { user_id: 4, major_id: 6 }
     ])
-    await Course_Major.bulkCreate([
+    await db.model('course_major').bulkCreate([
       { course_id: 1, major_id: 1 },
       { course_id: 1, major_id: 2 },
       { course_id: 1, major_id: 3 },

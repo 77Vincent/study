@@ -1,7 +1,7 @@
 import Router from 'koa-router'
 
-import { Course, Course_Major } from '../models'
-import { fn } from '../utils'
+import { Course } from '../models'
+import { db, fn } from '../utils'
 import c from '../config'
 
 export const courses = Router()
@@ -19,7 +19,7 @@ courses.get('/', async (ctx) => {
     let filter = []
     // this part is for majors filtering
     if (qs.majors) {
-      const courses_id = await Course_Major.findAll({
+      const courses_id = await db.model('course_major').findAll({
         where: { major_id: qs.majors.split(',') }
       })
       filter.push({ id: courses_id.map(item => item.dataValues.course_id) })
@@ -56,7 +56,7 @@ courses.put('/', async (ctx) => {
   try {
     const { label, description, major_id, user_id } = ctx.request.body
     const course = await Course.create({ label, description, user_id })
-    await Course_Major.create({ 
+    await db.model('course_major').create({ 
       course_id: course.id,
       major_id
     })
