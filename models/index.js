@@ -5,6 +5,7 @@ import Role from './role'
 import Post from './post'
 import Picture from './picture'
 import Comment from './comment'
+import Schedule from './schedule'
 
 // Table Relationship
 
@@ -20,6 +21,9 @@ Post.belongsTo(User)
 // Each comment has a user id and a post id
 Comment.belongsTo(User)
 Comment.belongsTo(Post)
+
+Schedule.belongsToMany(Course, {through: 'schedule_course'})
+Course.belongsToMany(Schedule, {through: 'schedule_course'})
 
 // Each picture has a post id
 Picture.belongsTo(Post)
@@ -43,5 +47,6 @@ export {
   Course,
   Post,
   Comment,
-  Picture
+  Picture,
+  Schedule
 }

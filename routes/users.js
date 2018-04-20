@@ -10,6 +10,7 @@ const FF = db.model('follower_following')
 const ST = db.model('student_teacher')
 const UM = db.model('user_major')
 const urls = ['followers', 'followings', 'students', 'teachers']
+const urlsByQuerystring = ['posts', 'courses']
 const filters = [
   'role_id',
   'gender',
@@ -65,10 +66,12 @@ users.get('/', async (ctx) => {
       current.majors = majors.map(major => major.major_id)
       current.followers = followers.length
       current.followings = followings.length
-      current.posts_url = fn.getDomain(`/api/posts?user_id=${current.id}`) 
 
-      urls.map(url => {
-        current[`${url}_url`] = fn.getDomain(`/api/users/${current.id}/${url}`)
+      urlsByQuerystring.map(each => {
+        current[`${each}_url`] = fn.getDomain(`/api/${each}?user_id=${current.id}`)
+      })
+      urls.map(each => {
+        current[`${each}_url`] = fn.getDomain(`/api/users/${current.id}/${each}`)
       })
     }
 
@@ -97,8 +100,10 @@ users.get('/:id', async (ctx) => {
     dv.majors = majors.map(major => major.major_id)
     dv.followers = followers.length
     dv.followings = followings.length
-    dv.posts_url = fn.getDomain(`/api/posts?user_id=${id}`) 
 
+    urlsByQuerystring.map(each => {
+      dv[`${each}_url`] = fn.getDomain(`/api/${each}?user_id=${id}`)
+    })
     urls.map(url => {
       dv[`${url}_url`] = fn.getDomain(`/api/users/${id}/${url}`)
     })
@@ -123,7 +128,8 @@ users.get('/:id/students', async (ctx) => {
     data = await User.findAll({
       limit: c.queryLimit,
       offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
-      where: { id: data.map(item => item.dataValues.student_id) }
+      where: { id: data.map(item => item.dataValues.student_id) },
+      attributes: { exclude: ['password'] }
     })
 
     if (data) {
@@ -146,7 +152,8 @@ users.get('/:id/teachers', async (ctx) => {
     data = await User.findAll({
       limit: c.queryLimit,
       offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
-      where: { id: data.map(item => item.dataValues.teacher_id) }
+      where: { id: data.map(item => item.dataValues.teacher_id) },
+      attributes: { exclude: ['password'] }
     })
 
     if (data) {
@@ -171,7 +178,8 @@ users.get('/:id/followers', async (ctx) => {
     data = await User.findAll({
       limit: c.queryLimit,
       offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
-      where: { id: data.map(item => item.dataValues.follower_id) }
+      where: { id: data.map(item => item.dataValues.follower_id) },
+      attributes: { exclude: ['password'] }
     })
 
     if (data) {
@@ -196,7 +204,8 @@ users.get('/:id/followings', async (ctx) => {
     data = await User.findAll({
       limit: c.queryLimit,
       offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
-      where: { id: data.map(item => item.dataValues.following_id) }
+      where: { id: data.map(item => item.dataValues.following_id) },
+      attributes: { exclude: ['password'] }
     })
 
     if (data) {

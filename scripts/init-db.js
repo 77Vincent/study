@@ -6,7 +6,8 @@ import {
   Course,
   Post,
   Comment,
-  Picture
+  Picture,
+  Schedule
 } from '../models'
 
 (async () => {
@@ -100,6 +101,19 @@ import {
       city: '4503',
       email: 'student1@xfolio.cn'
     })
+    await User.create({
+      password: '000000',
+      name: '学生2',
+      role_id: 'student',
+      school: '华侨大学',
+      title: '游戏设计',
+      bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      gender: '0',
+      mobilephone: 17722222222,
+      province: '22',
+      city: '2201',
+      email: 'student2@xfolio.cn'
+    })
     await Course.bulkCreate([{
       label: 'test course 1',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
@@ -124,6 +138,27 @@ import {
       label: 'test course 6 with label',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
       user_id: 3 
+    }, {
+      label: 'test course 7 with label',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      user_id: 4 
+    }])
+    await Schedule.bulkCreate([{
+      label: 'schedule 1',
+      teacher_id: '1',
+      student_id: '5'
+    }, {
+      label: 'schedule 2',
+      teacher_id: '2',
+      student_id: '5'
+    }, {
+      label: 'schedule 3',
+      teacher_id: '3',
+      student_id: '6'
+    }, {
+      label: 'schedule 4',
+      teacher_id: '4',
+      student_id: '6'
     }])
     await Post.bulkCreate([{
       user_id: 1,
@@ -244,6 +279,20 @@ import {
       { course_id: 5, major_id: 5 },
       { course_id: 6, major_id: 6 },
       { course_id: 6, major_id: 1 },
+    ])
+    await db.model('schedule_course').bulkCreate([
+      { schedule_id: 1, course_id: 1 },
+      { schedule_id: 1, course_id: 2 },
+      { schedule_id: 1, course_id: 3 },
+      { schedule_id: 2, course_id: 2 },
+      { schedule_id: 2, course_id: 3 },
+      { schedule_id: 2, course_id: 4 },
+      { schedule_id: 3, course_id: 5 },
+      { schedule_id: 3, course_id: 6 },
+      { schedule_id: 4, course_id: 2 },
+      { schedule_id: 4, course_id: 4 },
+      { schedule_id: 4, course_id: 5 },
+      { schedule_id: 4, course_id: 6 },
     ])
     db.close()
 

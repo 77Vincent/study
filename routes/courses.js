@@ -6,17 +6,14 @@ import c from '../config'
 
 export const courses = Router()
 
-/** 
- * Fetch all courses
- * @method GET
- * @returns {object} all courses
- */
+const filters = ['id', 'user_id']
+
 courses.get('/', async (ctx) => {
   try {
     const qs = fn.parseQuerystring(ctx.request.querystring)
+    const filter = fn.objToObjGroupsInArr(qs, filters)
     const page = !isNaN(qs.page) && qs.page > 0 ? qs.page : 1
 
-    let filter = []
     // this part is for majors filtering
     if (qs.majors) {
       const courses_id = await db.model('course_major').findAll({
@@ -43,37 +40,6 @@ courses.get('/', async (ctx) => {
   }
 })
 
-/** 
- * Create a course
- * @method PUT 
- * @param {string} label
- * @param {string} description
- * @param {number} major_id
- * @param {number} user_id
- * @returns {object} the created course
- */
-courses.put('/', async (ctx) => {
-  try {
-    const { label, description, major_id, user_id } = ctx.request.body
-    const course = await Course.create({ label, description, user_id })
-    await db.model('course_major').create({ 
-      course_id: course.id,
-      major_id
-    })
-    ctx.status = 201
-    ctx.body = fn.prettyJSON(course) 
-  } catch (err) {
-    ctx.throw(500, err)
-  }
-})
-
-/** 
- * Update a course
- * @method PUT 
- * @param {string} label
- * @param {string} description
- * @returns {object} the updated course
- */
 courses.post('/:id', async (ctx) => {
   try {
     const { id } = ctx.params
@@ -87,12 +53,6 @@ courses.post('/:id', async (ctx) => {
   }
 })
 
-/**
- * Delete a course
- * @method DELETE
- * @param {number} id the course id
- * @returns {void}
- */
 courses.delete('/:id', async (ctx) => {
   try {
     await Course.destroy({ where: { id: ctx.params.id } })
