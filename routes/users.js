@@ -1,11 +1,13 @@
 import Router from 'koa-router'
 
-import { User, Major } from '../models'
+import { User } from '../models'
 import { fn, db, oauth } from '../utils'
 import c from '../config.js'
 
 export const users = Router()
 
+const FF = db.model('follower_following')
+const UM = db.model('user_major')
 /** 
  * Fetch all users
  * @method GET
@@ -34,7 +36,7 @@ users.get('/', async (ctx) => {
     // this part is for majors filtering
     // if majors is given in the querystring then do the follow
     if (qs.majors) {
-      const users_id = await db.model('user_major').findAll({
+      const users_id = await UM.findAll({
         where: { major_id: qs.majors.split(',') }
       })
       filter.push({ id: users_id.map(user => user.dataValues.user_id) })
@@ -45,15 +47,21 @@ users.get('/', async (ctx) => {
       offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
       where: { $and: filter },
       order: sorting,
-      include: [
-        { model: Major, attributes: ['id'] }
-      ],
       attributes: { exclude: ['password'] }
     })
 
+    // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      data[i].dataValues.followers_url = fn.getDomain(`/api/${data[i].dataValues.id}/followers`)
-      data[i].dataValues.followings_url = fn.getDomain(`/api/${data[i].dataValues.id}/followings`)
+      let current = data[i].dataValues
+      let followers = await FF.findAll({ where: { following_id: current.id } })
+      let followings = await FF.findAll({ where: { follower_id: current.id } })
+      let majors = await UM.findAll({ where: { user_id: current.id } })
+
+      current.majors = majors.map(major => major.major_id)
+      current.followers = followers.length
+      current.followings = followings.length
+      current.followers_url = fn.getDomain(`/api/${current.id}/followers`)
+      current.followings_url = fn.getDomain(`/api/${current.id}/followings`)
     }
 
     if (data) {
@@ -76,9 +84,20 @@ users.get('/', async (ctx) => {
  */
 users.get('/:id', async (ctx) => {
   try {
-    const data = await fn.getUser(ctx.params.id, {
-      attributes: { exclude: ['password'] }
-    })
+    let id = ctx.params.id
+    let data = await fn.getUser(id, { attributes: { exclude: ['password'] } })
+    let dv = data.dataValues
+    
+    let followers = await FF.findAll({ where: { following_id: id } })
+    let followings = await FF.findAll({ where: { follower_id: id } })
+    let majors = await UM.findAll({ where: { user_id: id } })
+
+    dv.majors = majors.map(major => major.major_id)
+    dv.followers = followers.length
+    dv.followings = followings.length
+    dv.followers_url = fn.getDomain(`/api/${id}/followers`)
+    dv.followings_url = fn.getDomain(`/api/${id}/followings`)
+
     if (data) {
       ctx.status = 200
       ctx.body = fn.prettyJSON(data)
@@ -100,7 +119,7 @@ users.get('/:id', async (ctx) => {
 users.get('/:id/followers', async (ctx) => {
   try {
     const qs = fn.parseQuerystring(ctx.request.querystring)
-    let data = await db.model('follower_following').findAll({
+    let data = await FF.findAll({
       where: { following_id: ctx.params.id }
     })
 
@@ -131,7 +150,7 @@ users.get('/:id/followers', async (ctx) => {
 users.get('/:id/followings', async (ctx) => {
   try {
     const qs = fn.parseQuerystring(ctx.request.querystring)
-    let data = await db.model('follower_following').findAll({
+    let data = await FF.findAll({
       where: { follower_id: ctx.params.id }
     })
 
@@ -192,11 +211,11 @@ users.post('/:id', async (ctx) => {
     const user_id = ctx.params.id
     let values = ctx.request.body
 
-    await db.model('user_major').destroy({
+    await UM.destroy({
       where: { user_id }
     })
     values.majors.map(async major_id => {
-      await db.model('user_major').create({ user_id, major_id })
+      await UM.create({ user_id, major_id })
     })
     await db.sync()
     let data = await fn.getUser(user_id)

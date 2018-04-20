@@ -1,5 +1,5 @@
 import c from '../config'
-import { User, Major } from '../models'
+import { User } from '../models'
 
 export default {
   prettyJSON(json) {
@@ -58,7 +58,7 @@ export default {
     return arr
   },
 
-  getDomain(custom) {
+  getDomain(custom = '') {
     return `${c.protocol}://${c.host}:${c.port}${custom}`
   },
 
@@ -69,8 +69,7 @@ export default {
         { username: id },
         { mobilephone: id },
         { email: id }]
-      },
-      include: [{ model: Major, attributes: ['id'] }],
+      }
     }
     const data = await User.findOne(Object.assign(param, config))
     return data
