@@ -1,6 +1,6 @@
 import Router from 'koa-router'
 
-import { User } from '../models'
+import { User, Post } from '../models'
 import { fn, db, oauth } from '../utils'
 import c from '../config.js'
 
@@ -62,6 +62,7 @@ users.get('/', async (ctx) => {
       current.followings = followings.length
       current.followers_url = fn.getDomain(`/api/${current.id}/followers`)
       current.followings_url = fn.getDomain(`/api/${current.id}/followings`)
+      current.posts_url = fn.getDomain(`/api/${current.id}/posts`)
     }
 
     if (data) {
@@ -97,6 +98,7 @@ users.get('/:id', async (ctx) => {
     dv.followings = followings.length
     dv.followers_url = fn.getDomain(`/api/${id}/followers`)
     dv.followings_url = fn.getDomain(`/api/${id}/followings`)
+    dv.posts_url = fn.getDomain(`/api/${id}/posts`)
 
     if (data) {
       ctx.status = 200
@@ -158,6 +160,33 @@ users.get('/:id/followings', async (ctx) => {
       limit: c.queryLimit,
       offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
       where: { id: data.map(item => item.dataValues.following_id) }
+    })
+
+    if (data) {
+      ctx.status = 200
+      ctx.body = fn.prettyJSON(data)
+    } else {
+      ctx.status = 404
+    }
+  } catch (err) {
+    console.error(err)
+    ctx.throw(500, err)
+  }
+})
+
+/** 
+ * Fetch a user's posts
+ * @method GET
+ * @param {number} id - user id
+ * @returns {object} the user
+ */
+users.get('/:id/posts', async (ctx) => {
+  try {
+    const qs = fn.parseQuerystring(ctx.request.querystring)
+    let data = await Post.findAll({
+      limit: c.queryLimit,
+      offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
+      where: { user_id: ctx.params.id }
     })
 
     if (data) {

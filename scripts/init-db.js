@@ -4,6 +4,7 @@ import {
   Major,
   Role,
   Course,
+  Post
 } from '../models'
 
 (async () => {
@@ -120,6 +121,9 @@ import {
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
       user_id: 3 
     }])
+    await Post.bulkCreate([
+      { user_id: 1, text: 'hhh', pictures: 'jjj'}
+    ])
     await db.model('follower_following').bulkCreate([
       { follower_id: 1, following_id: 2 },
       { follower_id: 1, following_id: 3 },

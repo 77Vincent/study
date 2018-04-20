@@ -8,15 +8,12 @@ export default db.define('post', {
     unique: true,
     primaryKey: true
   },
-  title: {
+  text: {
     type: Sequelize.STRING,
-    allowNull: false,
-    unique: true
   },
-  description: {
+  pictures: {
     type: Sequelize.STRING
   }
 }, {
-  paranoid: true,
-  timestamps: false
+  paranoid: true
 })

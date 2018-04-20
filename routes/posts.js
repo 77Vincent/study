@@ -1,15 +1,15 @@
 import Router from 'koa-router'
 
 import c from '../config'
-import { Major } from '../models'
+import { Post } from '../models'
 import { fn } from '../utils'
 
-export const majors = Router()
+export const posts = Router()
 
-majors.get('/', async (ctx) => {
+posts.get('/', async (ctx) => {
   try {
     const qs = fn.parseQuerystring(ctx.request.querystring)
-    const data = await Major.findAll({
+    const data = await Post.findAll({
       limit: c.queryLimit,
       offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
     })
