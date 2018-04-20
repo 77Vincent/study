@@ -3,7 +3,7 @@
 export default {
   queryLimit: 50,
   protocol: 'http',
-  host: '39.104.108.82',
+  host: 'localhost',
   domain: 'xfolio.cn',
   port: 3001,
   // Database

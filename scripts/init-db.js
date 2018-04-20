@@ -5,6 +5,7 @@ import {
   Role,
   Course,
   Post,
+  Comment,
   Picture
 } from '../models'
 
@@ -124,28 +125,28 @@ import {
     }])
     await Post.bulkCreate([{
       user_id: 1,
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
     }, {
       user_id: 1,
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
     }, {
       user_id: 2,
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
     }, {
       user_id: 3,
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
     }, {
       user_id: 3,
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
     }, {
       user_id: 2,
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
     }, {
       user_id: 4,
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
     }, {
       user_id: 4,
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
     }])
     await Picture.bulkCreate([
       { post_id: 1, url: 'http://url' },
@@ -163,6 +164,47 @@ import {
       { post_id: 5, url: 'http://url' },
       { post_id: 5, url: 'http://url' },
     ])
+    await Comment.bulkCreate([{
+      user_id: 1,
+      post_id: 1,
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+    }, {
+      user_id: 1,
+      post_id: 2,
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+    }, {
+      user_id: 1,
+      post_id: 3,
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+    }, {
+      user_id: 2,
+      post_id: 1,
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+    }, {
+      user_id: 2,
+      post_id: 2,
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+    }, {
+      user_id: 2,
+      post_id: 4,
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+    }, {
+      user_id: 3,
+      post_id: 2,
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+    }, {
+      user_id: 4,
+      post_id: 3,
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+    }, {
+      user_id: 4,
+      post_id: 4,
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+    }, {
+      user_id: 4,
+      post_id: 5,
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+    }])
     await db.model('follower_following').bulkCreate([
       { follower_id: 1, following_id: 2 },
       { follower_id: 1, following_id: 3 },

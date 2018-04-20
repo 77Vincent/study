@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
 import { db } from '../utils'
 
-export default db.define('post', {
+export default db.define('comment', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,

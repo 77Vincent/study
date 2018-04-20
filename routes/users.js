@@ -1,6 +1,6 @@
 import Router from 'koa-router'
 
-import { User, Post } from '../models'
+import { User } from '../models'
 import { fn, db, oauth } from '../utils'
 import c from '../config.js'
 
@@ -9,18 +9,16 @@ export const users = Router()
 const FF = db.model('follower_following')
 const ST = db.model('student_teacher')
 const UM = db.model('user_major')
+const urls = ['followers', 'followings', 'students', 'teachers']
+const filters = [ 'role_id', 'gender', 'place', 'province', 'city', 'country', 'id', 'mobilephone' ]
+const sortings = ['cost']
 
 users.get('/', async (ctx) => {
   try {
     const qs = fn.parseQuerystring(ctx.request.querystring)
-
-    // only use filters that's included
-    const filters = [ 'role_id', 'gender', 'place', 'province', 'city', 'country', 'id', 'mobilephone' ]
-    const sortings = ['cost']
-
     let filter = fn.objToObjGroupsInArr(qs, filters)
-
     let sorting = []
+
     for (let key in qs) {
       // ASC as default order
       if (sortings.indexOf(key) !== -1) {
@@ -56,11 +54,11 @@ users.get('/', async (ctx) => {
       current.majors = majors.map(major => major.major_id)
       current.followers = followers.length
       current.followings = followings.length
-      current.followers_url = fn.getDomain(`/api/${current.id}/followers`)
-      current.followings_url = fn.getDomain(`/api/${current.id}/followings`)
-      current.students_url = fn.getDomain(`/api/${current.id}/students`)
-      current.teachers_url = fn.getDomain(`/api/${current.id}/teachers`)
-      current.posts_url = fn.getDomain(`/api/${current.id}/posts`)
+      current.posts_url = fn.getDomain(`/api/posts?user_id=${current.id}`) 
+
+      urls.map(url => {
+        current[`${url}_url`] = fn.getDomain(`/api/users/${current.id}/${url}`)
+      })
     }
 
     if (data) {
@@ -88,11 +86,11 @@ users.get('/:id', async (ctx) => {
     dv.majors = majors.map(major => major.major_id)
     dv.followers = followers.length
     dv.followings = followings.length
-    dv.followers_url = fn.getDomain(`/api/${id}/followers`)
-    dv.followings_url = fn.getDomain(`/api/${id}/followings`)
-    dv.students_url = fn.getDomain(`/api/${id}/students`)
-    dv.teachers_url = fn.getDomain(`/api/${id}/teachers`)
-    dv.posts_url = fn.getDomain(`/api/${id}/posts`)
+    dv.posts_url = fn.getDomain(`/api/posts?user_id=${id}`) 
+
+    urls.map(url => {
+      dv[`${url}_url`] = fn.getDomain(`/api/users/${id}/${url}`)
+    })
 
     if (data) {
       ctx.status = 200
@@ -189,33 +187,6 @@ users.get('/:id/followings', async (ctx) => {
       offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
       where: { id: data.map(item => item.dataValues.following_id) }
     })
-
-    if (data) {
-      ctx.status = 200
-      ctx.body = fn.prettyJSON(data)
-    } else {
-      ctx.status = 404
-    }
-  } catch (err) {
-    console.error(err)
-    ctx.throw(500, err)
-  }
-})
-
-users.get('/:id/posts', async (ctx) => {
-  try {
-    const id = ctx.params.id
-    const limit = 5
-    const qs = fn.parseQuerystring(ctx.request.querystring)
-    const data = await Post.findAll({
-      limit,
-      offset: fn.getOffset(fn.getPositiveInt(qs.page), limit),
-      where: { user_id: id }
-    })
-    for (let i = 0; i < data.length; i++) {
-      let current = data[i].dataValues
-      current.pictures_url = fn.getDomain(`/api/posts/${current.id}/pictures`) 
-    }
 
     if (data) {
       ctx.status = 200

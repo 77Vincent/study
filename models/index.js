@@ -4,6 +4,7 @@ import Course from './course'
 import Role from './role'
 import Post from './post'
 import Picture from './picture'
+import Comment from './comment'
 
 // Table Relationship
 
@@ -13,8 +14,12 @@ User.belongsTo(Role)
 // Each course has a user who created the course
 Course.belongsTo(User)
 
-// Each has a user id
+// Each post has a user id
 Post.belongsTo(User)
+
+// Each comment has a user id and a post id
+Comment.belongsTo(User)
+Comment.belongsTo(Post)
 
 // Each picture has a post id
 Picture.belongsTo(Post)
@@ -37,5 +42,6 @@ export {
   Role,
   Course,
   Post,
+  Comment,
   Picture
 }
