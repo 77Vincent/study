@@ -46,12 +46,15 @@ users.get('/', async (ctx) => {
       where: { $and: filter },
       order: sorting,
       include: [
-        { model: Major, attributes: ['id'] },
-        { model: User, as: 'Follower', attributes: ['id'] },
-        { model: User, as: 'Following', attributes: ['id'] }
+        { model: Major, attributes: ['id'] }
       ],
       attributes: { exclude: ['password'] }
     })
+
+    for (let i = 0; i < data.length; i++) {
+      data[i].dataValues.followers_url = fn.getDomain(`/api/${data[i].dataValues.id}/followers`)
+      data[i].dataValues.followings_url = fn.getDomain(`/api/${data[i].dataValues.id}/followings`)
+    }
 
     if (data) {
       ctx.status = 200

@@ -2,7 +2,9 @@
 
 export default {
   queryLimit: 50,
+  protocol: 'http',
   host: '39.104.108.82',
+  port: 3001,
   // Database
   db: 'mysql',
   dbName: 'xfolio',

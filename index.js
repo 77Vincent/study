@@ -6,6 +6,7 @@ import bodyParser from 'koa-bodyparser'
 
 import routes from './routes'
 import { oauth } from './utils'
+import c from './config'
 
 const app = new Koa()
 
@@ -34,4 +35,4 @@ app.on('error', (error) => {
   throw new Error(`Server Internal Error:${error}`)
 })
 
-app.listen(3001)
+app.listen(c.port)

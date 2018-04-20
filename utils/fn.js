@@ -1,3 +1,4 @@
+import c from '../config'
 import { User, Major } from '../models'
 
 export default {
@@ -55,6 +56,10 @@ export default {
       }
     }
     return arr
+  },
+
+  getDomain(custom) {
+    return `${c.protocol}://${c.host}:${c.port}${custom}`
   },
 
   getUser: async (id, config = {}) => {
