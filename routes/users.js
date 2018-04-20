@@ -7,13 +7,9 @@ import c from '../config.js'
 export const users = Router()
 
 const FF = db.model('follower_following')
+const ST = db.model('student_teacher')
 const UM = db.model('user_major')
-/** 
- * Fetch all users
- * @method GET
- * @param {string} role_id
- * @returns {object} all users
- */
+
 users.get('/', async (ctx) => {
   try {
     const qs = fn.parseQuerystring(ctx.request.querystring)
@@ -62,6 +58,8 @@ users.get('/', async (ctx) => {
       current.followings = followings.length
       current.followers_url = fn.getDomain(`/api/${current.id}/followers`)
       current.followings_url = fn.getDomain(`/api/${current.id}/followings`)
+      current.students_url = fn.getDomain(`/api/${current.id}/students`)
+      current.teachers_url = fn.getDomain(`/api/${current.id}/teachers`)
       current.posts_url = fn.getDomain(`/api/${current.id}/posts`)
     }
 
@@ -77,12 +75,6 @@ users.get('/', async (ctx) => {
   }
 })
 
-/** 
- * Fetch a user
- * @method GET
- * @param {number} id - user id
- * @returns {object} the user
- */
 users.get('/:id', async (ctx) => {
   try {
     let id = ctx.params.id
@@ -98,6 +90,8 @@ users.get('/:id', async (ctx) => {
     dv.followings = followings.length
     dv.followers_url = fn.getDomain(`/api/${id}/followers`)
     dv.followings_url = fn.getDomain(`/api/${id}/followings`)
+    dv.students_url = fn.getDomain(`/api/${id}/students`)
+    dv.teachers_url = fn.getDomain(`/api/${id}/teachers`)
     dv.posts_url = fn.getDomain(`/api/${id}/posts`)
 
     if (data) {
@@ -112,12 +106,52 @@ users.get('/:id', async (ctx) => {
   }
 })
 
-/** 
- * Fetch a user's followers 
- * @method GET
- * @param {number} id - user id
- * @returns {object} the user
- */
+users.get('/:id/students', async (ctx) => {
+  try {
+    const qs = fn.parseQuerystring(ctx.request.querystring)
+    let data = await ST.findAll({ where: { teacher_id: ctx.params.id } })
+
+    data = await User.findAll({
+      limit: c.queryLimit,
+      offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
+      where: { id: data.map(item => item.dataValues.student_id) }
+    })
+
+    if (data) {
+      ctx.status = 200
+      ctx.body = fn.prettyJSON(data)
+    } else {
+      ctx.status = 404
+    }
+  } catch (err) {
+    console.error(err)
+    ctx.throw(500, err)
+  }
+})
+
+users.get('/:id/teachers', async (ctx) => {
+  try {
+    const qs = fn.parseQuerystring(ctx.request.querystring)
+    let data = await ST.findAll({ where: { student_id: ctx.params.id } })
+
+    data = await User.findAll({
+      limit: c.queryLimit,
+      offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
+      where: { id: data.map(item => item.dataValues.teacher_id) }
+    })
+
+    if (data) {
+      ctx.status = 200
+      ctx.body = fn.prettyJSON(data)
+    } else {
+      ctx.status = 404
+    }
+  } catch (err) {
+    console.error(err)
+    ctx.throw(500, err)
+  }
+})
+
 users.get('/:id/followers', async (ctx) => {
   try {
     const qs = fn.parseQuerystring(ctx.request.querystring)
@@ -143,12 +177,6 @@ users.get('/:id/followers', async (ctx) => {
   }
 })
 
-/** 
- * Fetch a user's followings
- * @method GET
- * @param {number} id - user id
- * @returns {object} the user
- */
 users.get('/:id/followings', async (ctx) => {
   try {
     const qs = fn.parseQuerystring(ctx.request.querystring)
@@ -174,12 +202,6 @@ users.get('/:id/followings', async (ctx) => {
   }
 })
 
-/** 
- * Fetch a user's posts
- * @method GET
- * @param {number} id - user id
- * @returns {object} the user
- */
 users.get('/:id/posts', async (ctx) => {
   try {
     const id = ctx.params.id
@@ -207,14 +229,6 @@ users.get('/:id/posts', async (ctx) => {
   }
 })
 
-/** 
- * Create a user 
- * @method PUT 
- * @param {string} name - displayed name
- * @param {string} mobilephone
- * @param {string} password
- * @returns {object} the created user
- */
 users.put('/', async (ctx) => {
   try {
     const { name, mobilephone, password } = ctx.request.body
@@ -235,12 +249,6 @@ users.put('/', async (ctx) => {
   }
 })
 
-/** 
- * Update a user 
- * @method POST 
- * @param {object} values - new user info
- * @returns {object} the updated user if success
- */
 users.post('/:id', async (ctx) => {
   try {
     const user_id = ctx.params.id
@@ -267,12 +275,6 @@ users.post('/:id', async (ctx) => {
   }
 })
 
-/**
- * Delete a user
- * @method DELETE
- * @param {number} id - user id
- * @returns {void}
- */
 users.delete('/:id', async (ctx) => {
   try {
     await User.destroy({ 

@@ -1,7 +1,7 @@
 import Router from 'koa-router'
 
 import c from '../config'
-import { Post } from '../models'
+import { Post, Picture } from '../models'
 import { fn } from '../utils'
 
 export const posts = Router()
@@ -30,6 +30,18 @@ posts.get('/:id', async (ctx) => {
     const id = ctx.params.id
     const data = await Post.findOne({ where: { id } })
     data.dataValues.pictures_url = fn.getDomain(`/api/posts/${id}/pictures`) 
+
+    ctx.status = 200
+    ctx.body = fn.prettyJSON(data) 
+  } catch (err) {
+    ctx.throw(500, err)
+  }
+})
+
+posts.get('/:id/pictures', async (ctx) => {
+  try {
+    const id = ctx.params.id
+    const data = await Picture.findAll({ where: { post_id: id } })
 
     ctx.status = 200
     ctx.body = fn.prettyJSON(data) 

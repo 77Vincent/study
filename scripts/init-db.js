@@ -173,6 +173,12 @@ import {
       { follower_id: 3, following_id: 2 },
       { follower_id: 4, following_id: 1 }
     ])
+    await db.model('student_teacher').bulkCreate([
+      { student_id: 5, teacher_id: 1 },
+      { student_id: 5, teacher_id: 2 },
+      { student_id: 5, teacher_id: 3 },
+      { student_id: 5, teacher_id: 4 }
+    ])
     await db.model('user_major').bulkCreate([
       { user_id: 1, major_id: 1 },
       { user_id: 1, major_id: 2 },
