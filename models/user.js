@@ -37,10 +37,15 @@ export default db.define('user', {
     allowNull: false,
     defaultValue: true
   },
+  available: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
+  },
   name: {
     type: Sequelize.STRING
   },
-  avatar: {
+  avatar_url: {
     type: Sequelize.STRING
   },
   school: {

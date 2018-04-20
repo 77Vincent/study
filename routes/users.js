@@ -10,7 +10,18 @@ const FF = db.model('follower_following')
 const ST = db.model('student_teacher')
 const UM = db.model('user_major')
 const urls = ['followers', 'followings', 'students', 'teachers']
-const filters = [ 'role_id', 'gender', 'place', 'province', 'city', 'country', 'id', 'mobilephone' ]
+const filters = [
+  'role_id',
+  'gender',
+  'place',
+  'province',
+  'city',
+  'country',
+  'id',
+  'mobilephone',
+  'active',
+  'available'
+]
 const sortings = ['cost']
 
 users.get('/', async (ctx) => {
