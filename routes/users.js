@@ -14,7 +14,6 @@ export const users = Router()
  */
 users.get('/', async (ctx) => {
   try {
-    // fields that can be filtered
     const qs = fn.parseQuerystring(ctx.request.querystring)
 
     // only use filters that's included
@@ -43,9 +42,9 @@ users.get('/', async (ctx) => {
 
     let data = await User.findAll({ 
       limit: c.queryLimit,
+      offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
       where: { $and: filter },
       order: sorting,
-      offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
       include: [
         { model: Major, attributes: ['id'] },
         { model: User, as: 'Follower', attributes: ['id'] },
@@ -77,6 +76,68 @@ users.get('/:id', async (ctx) => {
     const data = await fn.getUser(ctx.params.id, {
       attributes: { exclude: ['password'] }
     })
+    if (data) {
+      ctx.status = 200
+      ctx.body = fn.prettyJSON(data)
+    } else {
+      ctx.status = 404
+    }
+  } catch (err) {
+    console.error(err)
+    ctx.throw(500, err)
+  }
+})
+
+/** 
+ * Fetch a user's followers 
+ * @method GET
+ * @param {number} id - user id
+ * @returns {object} the user
+ */
+users.get('/:id/followers', async (ctx) => {
+  try {
+    const qs = fn.parseQuerystring(ctx.request.querystring)
+    let data = await db.model('follower_following').findAll({
+      where: { following_id: ctx.params.id }
+    })
+
+    data = await User.findAll({
+      limit: c.queryLimit,
+      offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
+      where: { id: data.map(item => item.dataValues.follower_id) }
+    })
+
+    if (data) {
+      ctx.status = 200
+      ctx.body = fn.prettyJSON(data)
+    } else {
+      ctx.status = 404
+    }
+  } catch (err) {
+    console.error(err)
+    ctx.throw(500, err)
+  }
+})
+
+/** 
+ * Fetch a user's followings
+ * @method GET
+ * @param {number} id - user id
+ * @returns {object} the user
+ */
+users.get('/:id/followings', async (ctx) => {
+  try {
+    const qs = fn.parseQuerystring(ctx.request.querystring)
+    let data = await db.model('follower_following').findAll({
+      where: { follower_id: ctx.params.id }
+    })
+
+    data = await User.findAll({
+      limit: c.queryLimit,
+      offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
+      where: { id: data.map(item => item.dataValues.following_id) }
+    })
+
     if (data) {
       ctx.status = 200
       ctx.body = fn.prettyJSON(data)
