@@ -3,14 +3,21 @@ import Major from './major'
 import Course from './course'
 import Role from './role'
 import Post from './post'
+import Picture from './picture'
 
 // Table Relationship
 
 // Each user has a role
 User.belongsTo(Role)
+
 // Each course has a user who created the course
 Course.belongsTo(User)
+
+// Each has a user id
 Post.belongsTo(User)
+
+// Each picture has a post id
+Picture.belongsTo(Post)
 
 User.belongsToMany(Major, {through: 'user_major'})
 Major.belongsToMany(User, {through: 'user_major'})
@@ -26,5 +33,6 @@ export {
   Major,
   Role,
   Course,
-  Post
+  Post,
+  Picture
 }

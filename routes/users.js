@@ -182,12 +182,18 @@ users.get('/:id/followings', async (ctx) => {
  */
 users.get('/:id/posts', async (ctx) => {
   try {
+    const id = ctx.params.id
+    const limit = 5
     const qs = fn.parseQuerystring(ctx.request.querystring)
-    let data = await Post.findAll({
-      limit: c.queryLimit,
-      offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
-      where: { user_id: ctx.params.id }
+    const data = await Post.findAll({
+      limit,
+      offset: fn.getOffset(fn.getPositiveInt(qs.page), limit),
+      where: { user_id: id }
     })
+    for (let i = 0; i < data.length; i++) {
+      let current = data[i].dataValues
+      current.pictures_url = fn.getDomain(`/api/posts/${current.id}/pictures`) 
+    }
 
     if (data) {
       ctx.status = 200

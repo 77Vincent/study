@@ -4,6 +4,7 @@ export default {
   queryLimit: 50,
   protocol: 'http',
   host: '39.104.108.82',
+  domain: 'xfolio.cn',
   port: 3001,
   // Database
   db: 'mysql',

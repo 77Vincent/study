@@ -4,7 +4,8 @@ import {
   Major,
   Role,
   Course,
-  Post
+  Post,
+  Picture
 } from '../models'
 
 (async () => {
@@ -121,8 +122,46 @@ import {
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
       user_id: 3 
     }])
-    await Post.bulkCreate([
-      { user_id: 1, text: 'hhh', pictures: 'jjj'}
+    await Post.bulkCreate([{
+      user_id: 1,
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+    }, {
+      user_id: 1,
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+    }, {
+      user_id: 2,
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+    }, {
+      user_id: 3,
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+    }, {
+      user_id: 3,
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+    }, {
+      user_id: 2,
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+    }, {
+      user_id: 4,
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+    }, {
+      user_id: 4,
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+    }])
+    await Picture.bulkCreate([
+      { post_id: 1, url: 'http://url' },
+      { post_id: 1, url: 'http://url' },
+      { post_id: 1, url: 'http://url' },
+      { post_id: 2, url: 'http://url' },
+      { post_id: 2, url: 'http://url' },
+      { post_id: 2, url: 'http://url' },
+      { post_id: 3, url: 'http://url' },
+      { post_id: 3, url: 'http://url' },
+      { post_id: 4, url: 'http://url' },
+      { post_id: 4, url: 'http://url' },
+      { post_id: 4, url: 'http://url' },
+      { post_id: 5, url: 'http://url' },
+      { post_id: 5, url: 'http://url' },
+      { post_id: 5, url: 'http://url' },
     ])
     await db.model('follower_following').bulkCreate([
       { follower_id: 1, following_id: 2 },
