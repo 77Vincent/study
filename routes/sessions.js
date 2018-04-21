@@ -12,7 +12,7 @@ export const sessions = Router()
  * @apiParam {string} password User password 
  * @apiParamExample {json} Request-example:
  *  {
- *    "id": "12345678901" 
+ *    "id": "12345678901",
  *    "password": "000000" 
  *  }
  * @apiSuccess (200) {object} void User Object 
@@ -60,7 +60,7 @@ sessions.post('/', async (ctx) => {
 /** 
  * @api {delete} /api/sessions Sign out
  * @apiGroup Sessions
- * @apiSuccess (200) {void} void No returned object
+ * @apiSuccess (200) {void} void void
  */
 sessions.delete('/', async (ctx) => {
   try {

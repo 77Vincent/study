@@ -30,17 +30,17 @@ const sortings = ['cost']
 /** 
  * @api {get} /api/users Get all users
  * @apiGroup Users 
- * @apiParam {string} id User ID
- * @apiParam {string} id User mobilephone
- * @apiParam {string='teacher', 'student', 'admin'} role_id User's role
- * @apiParam {string='0', '1'} [gender='0,1'] User gender
- * @apiParam {string='online', 'offline', 'both'} [place='both'] Where do the users want to have the class
- * @apiParam {string} [city] The city a user is currently living in, check cities list
- * @apiParam {string} [province] The province a user is currently living in, check provinces list
- * @apiParam {string} [countries] The countries a user is currently living in, check countries list
- * @apiParam {boolean} [active=0,1] Is a user wished to be found
- * @apiParam {boolean} [available=0,1] Is a user opened for booking
- * @apiParam {integer} [page=1] Pagination
+ * @apiParam (Query String) {string} [id] User ID
+ * @apiParam (Query String) {string} [mobilephone] User mobilephone
+ * @apiParam (Query String) {string='teacher', 'student', 'admin'} [role_id='teacher,student'] User's role
+ * @apiParam (Query String) {boolean=0,1} [gender=0,1] User gender
+ * @apiParam (Query String) {string='online','offline','both'} [place='both'] Where do the users want to have the class
+ * @apiParam (Query String) {string} [city] The city a user is currently living in, check cities list
+ * @apiParam (Query String) {string} [province] The province a user is currently living in, check provinces list
+ * @apiParam (Query String) {string} [countries] The countries a user is currently living in, check countries list
+ * @apiParam (Query String) {boolean} [active=0,1] Is a user wished to be found
+ * @apiParam (Query String) {boolean} [available=0,1] Is a user opened for booking
+ * @apiParam (Query String) {integer} [page=1] Pagination
  * @apiParamExample {json} Request-example:
  * /api/users?id=1&gender=1,0&place=online&role_id=teacher&city=4503,1101
  * @apiSuccess (200) {object[]} void Array contains all users object
@@ -108,11 +108,8 @@ users.get('/', async (ctx) => {
 })
 
 /** 
- * @api {get} /api/users:id Get a user
+ * @api {get} /api/users/:id Get a user
  * @apiGroup Users 
- * @apiParam {string} id User ID, can be id, username, mobilephone, email
- * @apiParamExample {json} Request-example:
- * /api/users/1
  * @apiSuccess (200) {object} void User object
  */
 users.get('/:id', async (ctx) => {
@@ -149,12 +146,9 @@ users.get('/:id', async (ctx) => {
 })
 
 /** 
- * @api {get} /api/users:id/students Get a user's students
+ * @api {get} /api/users/:id/students Get a user's students
  * @apiGroup Users 
- * @apiParam {string} id User ID, can be id, username, mobilephone, email
- * @apiParam {string} page Pagination
- * @apiParamExample {json} Request-example:
- * /api/users/1/students?page=1
+ * @apiParam (Query String) {integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array containing a user's students
  */
 users.get('/:id/students', async (ctx) => {
@@ -181,6 +175,12 @@ users.get('/:id/students', async (ctx) => {
   }
 })
 
+/** 
+ * @api {get} /api/users/:id/teachers Get a user's teachers
+ * @apiGroup Users 
+ * @apiParam (Query String) {integer} [page=1] Pagination
+ * @apiSuccess (200) {object[]} void Array containing a user's teachers
+ */
 users.get('/:id/teachers', async (ctx) => {
   try {
     const qs = fn.parseQuerystring(ctx.request.querystring)
@@ -205,6 +205,12 @@ users.get('/:id/teachers', async (ctx) => {
   }
 })
 
+/** 
+ * @api {get} /api/users/:id/followers Get a user's followers
+ * @apiGroup Users 
+ * @apiParam (Query String) {integer} [page=1] Pagination
+ * @apiSuccess (200) {object[]} void Array containing a user's followers
+ */
 users.get('/:id/followers', async (ctx) => {
   try {
     const qs = fn.parseQuerystring(ctx.request.querystring)
@@ -231,6 +237,12 @@ users.get('/:id/followers', async (ctx) => {
   }
 })
 
+/** 
+ * @api {get} /api/users/:id/followings Get a user's followings
+ * @apiGroup Users 
+ * @apiParam (Query String) {integer} [page=1] Pagination
+ * @apiSuccess (200) {object[]} void Array containing a user's followings
+ */
 users.get('/:id/followings', async (ctx) => {
   try {
     const qs = fn.parseQuerystring(ctx.request.querystring)
@@ -257,6 +269,20 @@ users.get('/:id/followings', async (ctx) => {
   }
 })
 
+/** 
+ * @api {put} /api/users Create a new user
+ * @apiGroup Users 
+ * @apiParam {string} name User name
+ * @apiParam {string} mobilephone User mobilephone number
+ * @apiParam {string} password User passowrd
+ * @apiParamExample {json} Request-example:
+ *  {
+ *    "name": "Tony",
+ *    "mobilephone": "12345678901",
+ *    "password": "000000" 
+ *  }
+ * @apiSuccess (201) {object} void The newly created user object
+ */
 users.put('/', async (ctx) => {
   try {
     const { name, mobilephone, password } = ctx.request.body
@@ -277,6 +303,11 @@ users.put('/', async (ctx) => {
   }
 })
 
+/** 
+ * @api {post} /api/users/:id Update a user
+ * @apiGroup Users 
+ * @apiSuccess (200) {object} void The updated user object
+ */
 users.post('/:id', async (ctx) => {
   try {
     const user_id = ctx.params.id
@@ -303,6 +334,11 @@ users.post('/:id', async (ctx) => {
   }
 })
 
+/** 
+ * @api {delete} /api/users/:id Delete a user
+ * @apiGroup Users 
+ * @apiSuccess (200) {void} void void
+ */
 users.delete('/:id', async (ctx) => {
   try {
     await User.destroy({ 
