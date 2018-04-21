@@ -62,6 +62,20 @@ export default {
     return arr
   },
 
+  simpleSend(ctx, data) {
+    if (data) {
+      ctx.status = 200
+      ctx.body = this.prettyJSON(data)
+    } else {
+      ctx.status = 404
+    }
+  },
+
+  logError(ctx, err) {
+    console.error(err)
+    ctx.throw(500, err)
+  },
+
   getDomain(custom = '') {
     return `${c.protocol}://${c.host}:${c.port}${custom}`
   },

@@ -95,15 +95,9 @@ users.get('/', async (ctx) => {
       })
     }
 
-    if (data) {
-      ctx.status = 200
-      ctx.body = fn.prettyJSON(data)
-    } else {
-      ctx.status = 404
-    }
+    fn.simpleSend(ctx, data)
   } catch (err) {
-    console.error(err)
-    ctx.throw(500, err)
+    fn.logError(ctx, err)
   }
 })
 
@@ -116,32 +110,31 @@ users.get('/:id', async (ctx) => {
   try {
     let id = ctx.params.id
     let data = await fn.getUser(id, { attributes: { exclude: ['password'] } })
-    let dv = data.dataValues
-    
-    let followers = await FF.findAll({ where: { following_id: id } })
-    let followings = await FF.findAll({ where: { follower_id: id } })
-    let majors = await UM.findAll({ where: { user_id: id } })
-
-    dv.majors = majors.map(major => major.major_id)
-    dv.followers = followers.length
-    dv.followings = followings.length
-
-    urlsByQuerystring.map(each => {
-      dv[`${each}_url`] = fn.getDomain(`/api/${each}?user_id=${id}`)
-    })
-    urls.map(url => {
-      dv[`${url}_url`] = fn.getDomain(`/api/users/${id}/${url}`)
-    })
 
     if (data) {
-      ctx.status = 200
-      ctx.body = fn.prettyJSON(data)
+      let dv = data.dataValues
+      
+      let followers = await FF.findAll({ where: { following_id: id } })
+      let followings = await FF.findAll({ where: { follower_id: id } })
+      let majors = await UM.findAll({ where: { user_id: id } })
+
+      dv.majors = majors.map(major => major.major_id)
+      dv.followers = followers.length
+      dv.followings = followings.length
+
+      urlsByQuerystring.map(each => {
+        dv[`${each}_url`] = fn.getDomain(`/api/${each}?user_id=${id}`)
+      })
+      urls.map(url => {
+        dv[`${url}_url`] = fn.getDomain(`/api/users/${id}/${url}`)
+      })
+
+      fn.simpleSend(ctx, data)
     } else {
       ctx.status = 404
     }
   } catch (err) {
-    console.error(err)
-    ctx.throw(500, err)
+    fn.logError(ctx, err)
   }
 })
 
@@ -163,15 +156,9 @@ users.get('/:id/students', async (ctx) => {
       attributes: { exclude: ['password'] }
     })
 
-    if (data) {
-      ctx.status = 200
-      ctx.body = fn.prettyJSON(data)
-    } else {
-      ctx.status = 404
-    }
+    fn.simpleSend(ctx, data)
   } catch (err) {
-    console.error(err)
-    ctx.throw(500, err)
+    fn.logError(ctx, err)
   }
 })
 
@@ -193,15 +180,9 @@ users.get('/:id/teachers', async (ctx) => {
       attributes: { exclude: ['password'] }
     })
 
-    if (data) {
-      ctx.status = 200
-      ctx.body = fn.prettyJSON(data)
-    } else {
-      ctx.status = 404
-    }
+    fn.simpleSend(ctx, data)
   } catch (err) {
-    console.error(err)
-    ctx.throw(500, err)
+    fn.logError(ctx, err)
   }
 })
 
@@ -225,15 +206,9 @@ users.get('/:id/followers', async (ctx) => {
       attributes: { exclude: ['password'] }
     })
 
-    if (data) {
-      ctx.status = 200
-      ctx.body = fn.prettyJSON(data)
-    } else {
-      ctx.status = 404
-    }
+    fn.simpleSend(ctx, data)
   } catch (err) {
-    console.error(err)
-    ctx.throw(500, err)
+    fn.logError(ctx, err)
   }
 })
 
@@ -257,15 +232,9 @@ users.get('/:id/followings', async (ctx) => {
       attributes: { exclude: ['password'] }
     })
 
-    if (data) {
-      ctx.status = 200
-      ctx.body = fn.prettyJSON(data)
-    } else {
-      ctx.status = 404
-    }
+    fn.simpleSend(ctx, data)
   } catch (err) {
-    console.error(err)
-    ctx.throw(500, err)
+    fn.logError(ctx, err)
   }
 })
 
@@ -290,16 +259,21 @@ users.put('/', async (ctx) => {
     const data = await fn.getUser(user.id, {
       attributes: { exclude: ['password'] }
     })
+
+    // Add majors list
+    const majors = await db.model('user_major').findAll({ where: { user_id: user.id } })
+    data.dataValues.majors = majors.map(each => each.major_id)
+
     const { token, expiresIn } = oauth.signToken(data)
     ctx.cookies.set('user_info', token, {
       overwrite: true,
       maxAge: expiresIn
     })
+
     ctx.status = 201
     ctx.body = fn.prettyJSON(data) 
   } catch (err) {
-    console.error(err)
-    ctx.throw(500, err)
+    fn.logError(ctx, err)
   }
 })
 
@@ -330,14 +304,12 @@ users.post('/:id', async (ctx) => {
     delete data.dataValues.password
 
     // Add majors list
-    let majors = await db.model('user_major').findAll({ where: { user_id } })
+    const majors = await db.model('user_major').findAll({ where: { user_id } })
     data.dataValues.majors = majors.map(each => each.major_id)
 
-    ctx.status = 200
-    ctx.body = fn.prettyJSON(data)
+    fn.simpleSend(ctx, data)
   } catch (err) {
-    console.error(err)
-    ctx.throw(500, err)
+    fn.logError(ctx, err)
   }
 })
 
@@ -354,7 +326,6 @@ users.delete('/:id', async (ctx) => {
     ctx.cookies.set('user_info', null)
     ctx.status = 200
   } catch (err) {
-    console.error(err)
-    ctx.throw(500, err)
+    fn.logError(ctx, err)
   }
 })

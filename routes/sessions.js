@@ -43,6 +43,7 @@ sessions.post('/', async (ctx) => {
     if (data) {
       delete data.dataValues.password
 
+      // add majors list to the model
       let majors = await db.model('user_major').findAll({ where: { user_id: user_info } })
       data.dataValues.majors = majors.map(each => each.major_id)
 
