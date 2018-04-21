@@ -7,11 +7,17 @@ export const sessions = Router()
 
 /** 
  * @api {post} /api/sessions Sign in
- * @apiGroup Session 
- * @apiParam {String} id User's unique ID (id, mobilephone, email)
- * @apiParam {String} password User's password 
- * @apiSuccess (200) {Object} object user object
- * @apiSuccess (204) {void} void
+ * @apiGroup Sessions
+ * @apiParam {string} id User ID (id, mobilephone, email)
+ * @apiParam {string} password User password 
+ * @apiParamExample {json} Request-example:
+ *  {
+ *    "id": "12345678901" 
+ *    "password": "000000" 
+ *  }
+ * @apiSuccess (200) {object} void User Object 
+ * @apiSuccess (204) {void} void No returned object when no params are passed
+ * @apiSuccess (403) {void} void No Access denied
  */
 sessions.post('/', async (ctx) => {
   const user_info = ctx.decoded.user_info
@@ -53,8 +59,8 @@ sessions.post('/', async (ctx) => {
 
 /** 
  * @api {delete} /api/sessions Sign out
- * @apiGroup Session 
- * @apiSuccess (200) {void} void
+ * @apiGroup Sessions
+ * @apiSuccess (200) {void} void No returned object
  */
 sessions.delete('/', async (ctx) => {
   try {

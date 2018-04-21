@@ -25,6 +25,11 @@ const filters = [
 ]
 const sortings = ['cost']
 
+/** 
+ * @api {get} /api/users Get all users
+ * @apiGroup Users 
+ * @apiSuccess (200) {Object[]} void Array contains all users object
+ */
 users.get('/', async (ctx) => {
   try {
     const qs = fn.parseQuerystring(ctx.request.querystring)
