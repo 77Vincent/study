@@ -13,6 +13,7 @@
     "start": "nodemon --exec babel-node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./",
+    "doc": "apidoc -i routes/ -o static/doc/",
     "server": "pm2 start npm --name xfolio -- start",
     "db": "babel-node ./scripts/init-db"
   },

@@ -6,10 +6,12 @@ import { oauth, fn } from '../utils'
 export const sessions = Router()
 
 /** 
- * Sign in 
- * @method POST 
- * @param {Object} ctx
- * @returns {Object} user model 
+ * @api {post} /api/sessions Sign in
+ * @apiGroup Session 
+ * @apiParam {String} id User's unique ID (id, mobilephone, email)
+ * @apiParam {String} password User's password 
+ * @apiSuccess (200) {Object} object user object
+ * @apiSuccess (204) {void} void
  */
 sessions.post('/', async (ctx) => {
   const user_info = ctx.decoded.user_info
@@ -50,10 +52,9 @@ sessions.post('/', async (ctx) => {
 })
 
 /** 
- * Sign out 
- * @method DELETE 
- * @param {Object} ctx
- * @returns {void} status code
+ * @api {delete} /api/sessions Sign out
+ * @apiGroup Session 
+ * @apiSuccess (200) {void} void
  */
 sessions.delete('/', async (ctx) => {
   try {
