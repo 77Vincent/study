@@ -8,7 +8,7 @@ export const sessions = Router()
 /** 
  * @api {post} /api/sessions Sign in
  * @apiGroup Sessions
- * @apiParam {string} id User ID (id, mobilephone, email)
+ * @apiParam {string} id User ID, can be id, username, mobilephone, email
  * @apiParam {string} password User password 
  * @apiParamExample {json} Request-example:
  *  {

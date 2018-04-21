@@ -18,3 +18,26 @@ module.children.map(item => {
 })
 
 export default router
+
+
+/*
+ * Never delete these comments, these are for API documentation generation !!!
+ */
+
+/** 
+ * @api {get} /cities/CN/cities.json Cities list
+ * @apiGroup Cities 
+ * @apiSuccess (200) {object} void Cities list
+ */
+
+/** 
+ * @api {get} /cities/CN/provinces.json Provinces list
+ * @apiGroup Cities 
+ * @apiSuccess (200) {object} void Provinces list
+ */
+
+/** 
+ * @api {get} /countries.json Countries list
+ * @apiGroup Countries
+ * @apiSuccess (200) {object} void Countries list
+ */

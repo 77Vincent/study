@@ -52,7 +52,11 @@ export default {
     let arr = []
     for (let key in object) {
       if (keys.indexOf(key) !== -1) {
-        arr.push({ [key]: decodeURI(object[key]).split(',') })
+        let value = decodeURI(object[key])
+        // Do not filter with empty string
+        if (value !== '') {
+          arr.push({ [key]: value.split(',') })
+        }
       }
     }
     return arr

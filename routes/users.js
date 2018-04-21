@@ -9,17 +9,19 @@ export const users = Router()
 const FF = db.model('follower_following')
 const ST = db.model('student_teacher')
 const UM = db.model('user_major')
+
 const urls = ['followers', 'followings', 'students', 'teachers']
 const urlsByQuerystring = ['posts', 'courses']
+
 const filters = [
+  'id',
+  'mobilephone',
   'role_id',
   'gender',
   'place',
   'province',
   'city',
   'country',
-  'id',
-  'mobilephone',
   'active',
   'available'
 ]
@@ -28,7 +30,20 @@ const sortings = ['cost']
 /** 
  * @api {get} /api/users Get all users
  * @apiGroup Users 
- * @apiSuccess (200) {Object[]} void Array contains all users object
+ * @apiParam {string} id User ID
+ * @apiParam {string} id User mobilephone
+ * @apiParam {string='teacher', 'student', 'admin'} role_id User's role
+ * @apiParam {string='0', '1'} [gender='0,1'] User gender
+ * @apiParam {string='online', 'offline', 'both'} [place='both'] Where do the users want to have the class
+ * @apiParam {string} [city] The city a user is currently living in, check cities list
+ * @apiParam {string} [province] The province a user is currently living in, check provinces list
+ * @apiParam {string} [countries] The countries a user is currently living in, check countries list
+ * @apiParam {boolean} [active=0,1] Is a user wished to be found
+ * @apiParam {boolean} [available=0,1] Is a user opened for booking
+ * @apiParam {integer} [page=1] Pagination
+ * @apiParamExample {json} Request-example:
+ * /api/users?id=1&gender=1,0&place=online&role_id=teacher&city=4503,1101
+ * @apiSuccess (200) {object[]} void Array contains all users object
  */
 users.get('/', async (ctx) => {
   try {
@@ -92,6 +107,14 @@ users.get('/', async (ctx) => {
   }
 })
 
+/** 
+ * @api {get} /api/users:id Get a user
+ * @apiGroup Users 
+ * @apiParam {string} id User ID, can be id, username, mobilephone, email
+ * @apiParamExample {json} Request-example:
+ * /api/users/1
+ * @apiSuccess (200) {object} void User object
+ */
 users.get('/:id', async (ctx) => {
   try {
     let id = ctx.params.id
@@ -125,6 +148,15 @@ users.get('/:id', async (ctx) => {
   }
 })
 
+/** 
+ * @api {get} /api/users:id/students Get a user's students
+ * @apiGroup Users 
+ * @apiParam {string} id User ID, can be id, username, mobilephone, email
+ * @apiParam {string} page Pagination
+ * @apiParamExample {json} Request-example:
+ * /api/users/1/students?page=1
+ * @apiSuccess (200) {object[]} void Array containing a user's students
+ */
 users.get('/:id/students', async (ctx) => {
   try {
     const qs = fn.parseQuerystring(ctx.request.querystring)

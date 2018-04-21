@@ -23,10 +23,6 @@ export default db.define('user', {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  certified: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false
-  },
   role_id: {
     type: Sequelize.STRING,
     defaultValue: 'student',
@@ -42,6 +38,9 @@ export default db.define('user', {
     allowNull: false,
     defaultValue: true
   },
+  gender: {
+    type: Sequelize.BOOLEAN
+  },
   name: {
     type: Sequelize.STRING
   },
@@ -52,9 +51,6 @@ export default db.define('user', {
     type: Sequelize.STRING
   },
   title: {
-    type: Sequelize.STRING
-  },
-  gender: {
     type: Sequelize.STRING
   },
   province: {
