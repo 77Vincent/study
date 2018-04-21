@@ -320,12 +320,19 @@ users.post('/:id', async (ctx) => {
       await UM.create({ user_id, major_id })
     })
     await db.sync()
+
     let data = await fn.getUser(user_id)
     // Delete majors because it's not updated here
     delete values.majors
     data = await data.update(values)
+
     // do not send password to client
     delete data.dataValues.password
+
+    // Add majors list
+    let majors = await db.model('user_major').findAll({ where: { user_id } })
+    data.dataValues.majors = majors.map(each => each.major_id)
+
     ctx.status = 200
     ctx.body = fn.prettyJSON(data)
   } catch (err) {

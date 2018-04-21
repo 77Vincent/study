@@ -1,7 +1,7 @@
 import Router from 'koa-router'
 import bcrypt from 'bcryptjs'
 
-import { oauth, fn } from '../utils'
+import { db, oauth, fn } from '../utils'
 
 export const sessions = Router()
 
@@ -42,11 +42,16 @@ sessions.post('/', async (ctx) => {
 
     if (data) {
       delete data.dataValues.password
+
+      let majors = await db.model('user_major').findAll({ where: { user_id: user_info } })
+      data.dataValues.majors = majors.map(each => each.major_id)
+
       const { token, expiresIn } = oauth.signToken(data)
       ctx.cookies.set('user_info', token, {
         overwrite: true,
         maxAge: expiresIn
       })
+
       ctx.status = 200
       ctx.body = fn.prettyJSON(data) 
     } else {
