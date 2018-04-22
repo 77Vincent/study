@@ -44,7 +44,7 @@ const sortings = ['cost']
  * @apiParam (Query String) {integer} [page=1] Pagination
  * @apiParamExample {json} Request-example:
  * /api/users?id=1&gender=1,0&place=online&role_id=teacher&city=4503,1101
- * @apiSuccess (200) {object[]} void Array contains all users object
+ * @apiSuccess (200) {object[]} void Array contains all user objects
  */
 users.get('/', async (ctx) => {
   try {

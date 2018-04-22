@@ -8,6 +8,13 @@ export const posts = Router()
 
 const filters = [ 'user_id' ]
 
+/** 
+ * @api {get} /api/posts Get all posts
+ * @apiGroup Posts 
+ * @apiParam (Query String) {string} [user_id] Filtered by user ID
+ * @apiParam (Query String) {integer} [page=1] Pagination
+ * @apiSuccess (200) {object[]} void Array contains all post objects
+ */
 posts.get('/', async (ctx) => {
   try {
     const qs = fn.parseQuerystring(ctx.request.querystring)
@@ -24,13 +31,17 @@ posts.get('/', async (ctx) => {
       each.dataValues.comments_url = fn.getDomain(`/api/posts/${id}/comments`) 
     })
 
-    ctx.status = 200
-    ctx.body = fn.prettyJSON(data) 
+    fn.simpleSend(ctx, data)
   } catch (err) {
-    ctx.throw(500, err)
+    fn.logError(ctx, err)
   }
 })
 
+/** 
+ * @api {get} /api/posts/:id Get a post
+ * @apiGroup Posts 
+ * @apiSuccess (200) {object} void A post object
+ */
 posts.get('/:id', async (ctx) => {
   try {
     const id = ctx.params.id
@@ -38,25 +49,34 @@ posts.get('/:id', async (ctx) => {
     data.dataValues.pictures_url = fn.getDomain(`/api/posts/${id}/pictures`) 
     data.dataValues.comments_url = fn.getDomain(`/api/posts/${id}/comments`) 
 
-    ctx.status = 200
-    ctx.body = fn.prettyJSON(data) 
+    fn.simpleSend(ctx, data)
   } catch (err) {
-    ctx.throw(500, err)
+    fn.logError(ctx, err)
   }
 })
 
+/** 
+ * @api {get} /api/posts/:id/pictures Get a post's pictures
+ * @apiGroup Posts 
+ * @apiSuccess (200) {object} void Array contains all pictures from a post
+ */
 posts.get('/:id/pictures', async (ctx) => {
   try {
     const id = ctx.params.id
     const data = await Picture.findAll({ where: { post_id: id } })
 
-    ctx.status = 200
-    ctx.body = fn.prettyJSON(data) 
+    fn.simpleSend(ctx, data)
   } catch (err) {
-    ctx.throw(500, err)
+    fn.logError(ctx, err)
   }
 })
 
+/** 
+ * @api {get} /api/posts/:id/comments Get a post's comments
+ * @apiGroup Posts 
+ * @apiParam (Query String) {integer} [page=1] Pagination
+ * @apiSuccess (200) {object} void Array contains all comments under a post
+ */
 posts.get('/:id/comments', async (ctx) => {
   try {
     const qs = fn.parseQuerystring(ctx.request.querystring)
@@ -67,9 +87,8 @@ posts.get('/:id/comments', async (ctx) => {
       where: { post_id: id } 
     })
 
-    ctx.status = 200
-    ctx.body = fn.prettyJSON(data) 
+    fn.simpleSend(ctx, data)
   } catch (err) {
-    ctx.throw(500, err)
+    fn.logError(ctx, err)
   }
 })
