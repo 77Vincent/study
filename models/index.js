@@ -6,6 +6,7 @@ import Post from './post'
 import Picture from './picture'
 import Comment from './comment'
 import Schedule from './schedule'
+import Tag from './tag'
 
 // Table Relationship
 
@@ -17,6 +18,9 @@ Course.belongsTo(User)
 
 // Each post has a user id
 Post.belongsTo(User)
+
+// Each tag has a user id
+Tag.belongsTo(User)
 
 // Each comment has a user id and a post id
 Comment.belongsTo(User)
@@ -48,5 +52,6 @@ export {
   Post,
   Comment,
   Picture,
-  Schedule
+  Schedule,
+  Tag
 }
