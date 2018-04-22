@@ -6,7 +6,7 @@ import { Fn } from '../utils'
 
 export const posts = Router()
 
-const filters = [ 'user_id' ]
+const filters = ['user_id']
 
 /** 
  * @api {get} /api/posts Get all posts

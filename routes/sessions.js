@@ -68,7 +68,7 @@ sessions.post('/', async (ctx) => {
  * @apiGroup Sessions
  * @apiSuccess (200) {void} void void
  */
-sessions.delete('/', async (ctx) => {
+sessions.delete('/', (ctx) => {
   try {
     ctx.cookies.set('user_info', null)
     ctx.status = 200
