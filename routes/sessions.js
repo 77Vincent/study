@@ -59,7 +59,7 @@ sessions.post('/', async (ctx) => {
       ctx.status = 403
     }
   } catch (err) {
-    ctx.throw(500, err)
+    fn.logError(ctx, err)
   }
 })
 
@@ -73,6 +73,6 @@ sessions.delete('/', async (ctx) => {
     ctx.cookies.set('user_info', null)
     ctx.status = 200
   } catch (err) {
-    ctx.throw(500, err)
+    fn.logError(ctx, err)
   }
 })

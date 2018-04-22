@@ -30,16 +30,17 @@ const sortings = ['cost']
 /** 
  * @api {get} /api/users Get all users
  * @apiGroup Users 
- * @apiParam (Query String) {string} [id] User ID
- * @apiParam (Query String) {string} [mobilephone] User mobilephone
- * @apiParam (Query String) {string='teacher', 'student', 'admin'} [role_id='teacher,student'] User's role
- * @apiParam (Query String) {boolean=0,1} [gender=0,1] User gender
+ * @apiParam (Query String) {string} [id] Filtered by user ID
+ * @apiParam (Query String) {string} [mobilephone] Filtered by user mobilephone
+ * @apiParam (Query String) {string='teacher', 'student', 'admin'} [role_id='teacher,student'] Filtered by user's role
+ * @apiParam (Query String) {boolean=0,1} [gender=0,1] Filtered by user gender
  * @apiParam (Query String) {string='online','offline','both'} [place='both'] Where do the users want to have the class
- * @apiParam (Query String) {string} [city] The city a user is currently living in, check cities list
- * @apiParam (Query String) {string} [province] The province a user is currently living in, check provinces list
- * @apiParam (Query String) {string} [countries] The countries a user is currently living in, check countries list
+ * @apiParam (Query String) {string} [city] The city a user is currently living in, check "Cities list"
+ * @apiParam (Query String) {string} [province] The province a user is currently living in, check "Provinces list"
+ * @apiParam (Query String) {string} [countries] The countries a user is currently living in, check "Countries list"
  * @apiParam (Query String) {boolean} [active=0,1] Is a user wished to be found
  * @apiParam (Query String) {boolean} [available=0,1] Is a user opened for booking
+ * @apiParam (Query String) {string='DESC', 'ASC'} [cost] Sorting by cost
  * @apiParam (Query String) {integer} [page=1] Pagination
  * @apiParamExample {json} Request-example:
  * /api/users?id=1&gender=1,0&place=online&role_id=teacher&city=4503,1101

@@ -8,6 +8,14 @@ export const courses = Router()
 
 const filters = ['id', 'user_id']
 
+/** 
+ * @api {get} /api/courses Get all courses
+ * @apiGroup Courses 
+ * @apiParam (Query String) {string} [id] Filtered by the major ID
+ * @apiParam (Query String) {string} [user_id] Filtered by the creator's id
+ * @apiParam (Query String) {string} [label] Search by course name
+ * @apiSuccess (200) {object[]} void Array contains all course objects
+ */
 courses.get('/', async (ctx) => {
   try {
     const qs = fn.parseQuerystring(ctx.request.querystring)
@@ -22,6 +30,7 @@ courses.get('/', async (ctx) => {
       filter.push({ id: courses_id.map(item => item.dataValues.course_id) })
     }
 
+    // Search
     if (qs.label) {
       filter.push({
         label: { $like: `%${decodeURI(qs.label)}%` }
@@ -33,32 +42,49 @@ courses.get('/', async (ctx) => {
       offset: fn.getOffset(page, c.queryLimit),
       where: { $and: filter }
     })
-    ctx.status = 200
-    ctx.body = fn.prettyJSON(data) 
+    fn.simpleSend(ctx, data)
   } catch (err) {
-    ctx.throw(500, err)
+    fn.logError(ctx, err)
   }
 })
 
+/** 
+ * @api {post} /api/courses/:id Update a course
+ * @apiGroup Courses 
+ * @apiParam {string} [label] The course name
+ * @apiParam {string} [description] The course description
+ * @apiParamExample {json} Request-example:
+ *  {
+ *    "label": "course name",
+ *    "description": "course description" 
+ *  }
+ * @apiSuccess (200) {object} void The updated course object
+ */
 courses.post('/:id', async (ctx) => {
   try {
     const { id } = ctx.params
     const { label, description } = ctx.request.body
     let course = await Course.findOne({ where: { id } })
     course = await course.update({ label, description })
-    ctx.status = 201
+
+    ctx.status = 200
     ctx.body = fn.prettyJSON(course) 
   } catch (err) {
-    ctx.throw(500, err)
+    fn.logError(ctx, err)
   }
 })
 
+/** 
+ * @api {delete} /api/courses/:id Delete a course
+ * @apiGroup Courses 
+ * @apiSuccess (200) {void} void void
+ */
 courses.delete('/:id', async (ctx) => {
   try {
     await Course.destroy({ where: { id: ctx.params.id } })
     ctx.status = 200
   } catch (err) {
-    ctx.throw(500, err)
+    fn.logError(ctx, err)
   }
 })
 
