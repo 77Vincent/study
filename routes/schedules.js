@@ -10,6 +10,14 @@ const SC = db.model('schedule_course')
 const filters = ['teacher_id', 'student_id']
 const urls = ['courses']
 
+/** 
+ * @api {get} /api/schedules Get all schedules
+ * @apiGroup Schedules 
+ * @apiParam (Query String) {string} [teacher_id] Filtered by teacher ID
+ * @apiParam (Query String) {string} [student_id] Filtered by student ID
+ * @apiParam (Query String) {integer} [page=1] Pagination
+ * @apiSuccess (200) {object[]} void Array contains all schedules
+ */
 schedules.get('/', async (ctx) => {
   try {
     const qs = fn.parseQuerystring(ctx.request.querystring)
@@ -31,13 +39,17 @@ schedules.get('/', async (ctx) => {
       })
     }
 
-    ctx.status = 200
-    ctx.body = fn.prettyJSON(data) 
+    fn.simpleSend(ctx, data)
   } catch (err) {
-    ctx.throw(500, err)
+    fn.logError(ctx, err)
   }
 })
 
+/** 
+ * @api {get} /api/schedules/:id Get a schedule
+ * @apiGroup Schedules 
+ * @apiSuccess (200) {object} void A schedule
+ */
 schedules.get('/:id', async (ctx) => {
   try {
     let { id } = ctx.params
@@ -47,13 +59,17 @@ schedules.get('/:id', async (ctx) => {
       data.dataValues[`${each}_url`] = fn.getDomain(`/api/schedules/${id}/${each}`)
     })
 
-    ctx.status = 200
-    ctx.body = fn.prettyJSON(data) 
+    fn.simpleSend(ctx, data)
   } catch (err) {
-    ctx.throw(500, err)
+    fn.logError(ctx, err)
   }
 })
 
+/** 
+ * @api {get} /api/schedules Get a schedule's courses
+ * @apiGroup Schedules 
+ * @apiSuccess (200) {object[]} void Array contains a schedule's courses
+ */
 schedules.get('/:id/courses', async (ctx) => {
   try {
     const courses_id = await SC.findAll({
@@ -62,9 +78,8 @@ schedules.get('/:id/courses', async (ctx) => {
     const data = await Course.findAll({
       where: { id: courses_id.map(item => item.dataValues.course_id) }
     })
-    ctx.status = 200
-    ctx.body = fn.prettyJSON(data) 
+    fn.simpleSend(ctx, data)
   } catch (err) {
-    ctx.throw(500, err)
+    fn.logError(ctx, err)
   }
 })

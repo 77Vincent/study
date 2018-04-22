@@ -13,7 +13,7 @@ const filters = [ 'user_id' ]
  * @apiGroup Posts 
  * @apiParam (Query String) {string} [user_id] Filtered by user ID
  * @apiParam (Query String) {integer} [page=1] Pagination
- * @apiSuccess (200) {object[]} void Array contains all post objects
+ * @apiSuccess (200) {object[]} void Array contains all posts
  */
 posts.get('/', async (ctx) => {
   try {

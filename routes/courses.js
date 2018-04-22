@@ -14,7 +14,7 @@ const filters = ['id', 'user_id']
  * @apiParam (Query String) {string} [id] Filtered by the major ID
  * @apiParam (Query String) {string} [user_id] Filtered by the creator's id
  * @apiParam (Query String) {string} [label] Search by course name
- * @apiSuccess (200) {object[]} void Array contains all course objects
+ * @apiSuccess (200) {object[]} void Array contains all courses
  */
 courses.get('/', async (ctx) => {
   try {

@@ -44,7 +44,7 @@ const sortings = ['cost']
  * @apiParam (Query String) {integer} [page=1] Pagination
  * @apiParamExample {json} Request-example:
  * /api/users?id=1&gender=1,0&place=online&role_id=teacher&city=4503,1101
- * @apiSuccess (200) {object[]} void Array contains all user objects
+ * @apiSuccess (200) {object[]} void Array contains all users
  */
 users.get('/', async (ctx) => {
   try {
@@ -143,7 +143,7 @@ users.get('/:id', async (ctx) => {
  * @api {get} /api/users/:id/students Get a user's students
  * @apiGroup Users 
  * @apiParam (Query String) {integer} [page=1] Pagination
- * @apiSuccess (200) {object[]} void Array containing a user's students
+ * @apiSuccess (200) {object[]} void Array contains a user's students
  */
 users.get('/:id/students', async (ctx) => {
   try {
@@ -167,7 +167,7 @@ users.get('/:id/students', async (ctx) => {
  * @api {get} /api/users/:id/teachers Get a user's teachers
  * @apiGroup Users 
  * @apiParam (Query String) {integer} [page=1] Pagination
- * @apiSuccess (200) {object[]} void Array containing a user's teachers
+ * @apiSuccess (200) {object[]} void Array contains a user's teachers
  */
 users.get('/:id/teachers', async (ctx) => {
   try {
@@ -191,7 +191,7 @@ users.get('/:id/teachers', async (ctx) => {
  * @api {get} /api/users/:id/followers Get a user's followers
  * @apiGroup Users 
  * @apiParam (Query String) {integer} [page=1] Pagination
- * @apiSuccess (200) {object[]} void Array containing a user's followers
+ * @apiSuccess (200) {object[]} void Array contains a user's followers
  */
 users.get('/:id/followers', async (ctx) => {
   try {
@@ -217,7 +217,7 @@ users.get('/:id/followers', async (ctx) => {
  * @api {get} /api/users/:id/followings Get a user's followings
  * @apiGroup Users 
  * @apiParam (Query String) {integer} [page=1] Pagination
- * @apiSuccess (200) {object[]} void Array containing a user's followings
+ * @apiSuccess (200) {object[]} void Array contains a user's followings
  */
 users.get('/:id/followings', async (ctx) => {
   try {

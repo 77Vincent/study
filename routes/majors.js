@@ -8,7 +8,7 @@ export const majors = Router()
 /** 
  * @api {get} /api/majors/ Get all majors
  * @apiGroup Majors 
- * @apiSuccess (200) {object[]} void Array containning all major objects
+ * @apiSuccess (200) {object[]} void Array contains all majors
  */
 majors.get('/', async (ctx) => {
   try {
