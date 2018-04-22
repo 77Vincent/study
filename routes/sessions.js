@@ -1,7 +1,7 @@
 import Router from 'koa-router'
 import bcrypt from 'bcryptjs'
 
-import { db, oauth, fn } from '../utils'
+import { Db, Oauth, Fn } from '../utils'
 
 export const sessions = Router()
 
@@ -27,13 +27,13 @@ sessions.post('/', async (ctx) => {
   try {
     // Sign in with user input credentials
     if (id && password) {
-      const user = await fn.getUser(id)
+      const user = await Fn.getUser(id)
       if (user && bcrypt.compareSync(password, user.password)) {
         data = user
       }
     // Sign in with credentials in cookies if exist 
     } else if (user_info) {
-      data = await fn.getUser(user_info)
+      data = await Fn.getUser(user_info)
     // Newly visit
     } else {
       ctx.status = 204
@@ -44,22 +44,22 @@ sessions.post('/', async (ctx) => {
       delete data.dataValues.password
 
       // add majors list to the model
-      let majors = await db.model('user_major').findAll({ where: { user_id: user_info } })
+      let majors = await Db.model('user_major').findAll({ where: { user_id: user_info } })
       data.dataValues.majors = majors.map(each => each.major_id)
 
-      const { token, expiresIn } = oauth.signToken(data)
+      const { token, expiresIn } = Oauth.signToken(data)
       ctx.cookies.set('user_info', token, {
         overwrite: true,
         maxAge: expiresIn
       })
 
       ctx.status = 200
-      ctx.body = fn.prettyJSON(data) 
+      ctx.body = Fn.prettyJSON(data) 
     } else {
       ctx.status = 403
     }
   } catch (err) {
-    fn.logError(ctx, err)
+    Fn.logError(ctx, err)
   }
 })
 
@@ -73,6 +73,6 @@ sessions.delete('/', async (ctx) => {
     ctx.cookies.set('user_info', null)
     ctx.status = 200
   } catch (err) {
-    fn.logError(ctx, err)
+    Fn.logError(ctx, err)
   }
 })

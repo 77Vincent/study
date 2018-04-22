@@ -1,4 +1,4 @@
-import db from '../utils/db.js'
+import Db from '../utils/database.js'
 import {
   User,
   Major,
@@ -12,8 +12,8 @@ import {
 
 (async () => {
   try {
-    await db.dropAllSchemas()
-    await db.sync({ force: true })
+    await Db.dropAllSchemas()
+    await Db.sync({ force: true })
 
     await Role.bulkCreate([{ id: 'admin' }, { id: 'teacher' }, { id: 'student' }])
     await Major.bulkCreate([
@@ -242,7 +242,7 @@ import {
       post_id: 5,
       content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
     }])
-    await db.model('follower_following').bulkCreate([
+    await Db.model('follower_following').bulkCreate([
       { follower_id: 1, following_id: 2 },
       { follower_id: 1, following_id: 3 },
       { follower_id: 1, following_id: 4 },
@@ -252,13 +252,13 @@ import {
       { follower_id: 3, following_id: 2 },
       { follower_id: 4, following_id: 1 }
     ])
-    await db.model('student_teacher').bulkCreate([
+    await Db.model('student_teacher').bulkCreate([
       { student_id: 5, teacher_id: 1 },
       { student_id: 5, teacher_id: 2 },
       { student_id: 5, teacher_id: 3 },
       { student_id: 5, teacher_id: 4 }
     ])
-    await db.model('user_major').bulkCreate([
+    await Db.model('user_major').bulkCreate([
       { user_id: 1, major_id: 1 },
       { user_id: 1, major_id: 2 },
       { user_id: 2, major_id: 3 },
@@ -266,7 +266,7 @@ import {
       { user_id: 3, major_id: 5 },
       { user_id: 4, major_id: 6 }
     ])
-    await db.model('course_major').bulkCreate([
+    await Db.model('course_major').bulkCreate([
       { course_id: 1, major_id: 1 },
       { course_id: 1, major_id: 2 },
       { course_id: 1, major_id: 3 },
@@ -280,7 +280,7 @@ import {
       { course_id: 6, major_id: 6 },
       { course_id: 6, major_id: 1 },
     ])
-    await db.model('schedule_course').bulkCreate([
+    await Db.model('schedule_course').bulkCreate([
       { schedule_id: 1, course_id: 1 },
       { schedule_id: 1, course_id: 2 },
       { schedule_id: 1, course_id: 3 },
@@ -294,7 +294,7 @@ import {
       { schedule_id: 4, course_id: 5 },
       { schedule_id: 4, course_id: 6 },
     ])
-    db.close()
+    Db.close()
 
   } catch (err) {
     console.error('init Error', err)

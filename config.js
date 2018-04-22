@@ -7,12 +7,12 @@ export default {
   domain: 'xfolio.cn',
   port: 3001,
   // Database
-  db: 'mysql',
-  dbName: 'xfolio',
-  dbUser: 'root',
-  dbTimezone: '+8:00',
-  dbPassword: '$Xf0li0Xf0li0',
-  dbPort: 3306,
+  database: 'mysql',
+  databaseName: 'xfolio',
+  databaseUser: 'root',
+  databaseTimezone: '+8:00',
+  databasePassword: '$Xf0li0Xf0li0',
+  databasePort: 3306,
   // Oauth and token
   cookiesTimeout: 60 * 60 * 1000,
   tokenSecret: 'Jessie'

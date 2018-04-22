@@ -1,7 +1,7 @@
 import Router from 'koa-router'
 
 import { Major } from '../models'
-import { fn } from '../utils'
+import { Fn } from '../utils'
 
 export const majors = Router()
 
@@ -14,8 +14,8 @@ majors.get('/', async (ctx) => {
   try {
     const data = await Major.findAll()
 
-    fn.simpleSend(ctx, data)
+    Fn.simpleSend(ctx, data)
   } catch (err) {
-    fn.logError(ctx, err)
+    Fn.logError(ctx, err)
   }
 })

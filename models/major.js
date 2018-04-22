@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
-import { db } from '../utils'
+import { Db } from '../utils'
 
-export default db.define('major', {
+export default Db.define('major', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,

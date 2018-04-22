@@ -1,9 +1,9 @@
-import db from './db'
-import oauth from './oauth'
-import fn from './fn'
+import Db from './database'
+import Oauth from './oauth'
+import Fn from './fn'
 
 export {
-  db,
-  oauth,
-  fn
+  Db,
+  Oauth,
+  Fn
 }

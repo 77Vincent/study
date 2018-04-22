@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
-import { db } from '../utils'
+import { Db } from '../utils'
 
-export default db.define('role', {
+export default Db.define('role', {
   id: {
     primaryKey: true,
     type: Sequelize.STRING,

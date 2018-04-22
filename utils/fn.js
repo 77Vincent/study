@@ -24,7 +24,7 @@ export default {
   },
 
   /**
-   * Count offset for db query pagination
+   * Count offset for database query pagination
    * @param {number} page - page number, start from 1
    * @param {number} limit - items to display per page 
    * @returns 

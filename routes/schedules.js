@@ -1,12 +1,12 @@
 import Router from 'koa-router'
 
 import { Schedule, Course } from '../models'
-import { db, fn } from '../utils'
+import { Db, Fn } from '../utils'
 import c from '../config'
 
 export const schedules = Router()
 
-const SC = db.model('schedule_course')
+const SC = Db.model('schedule_course')
 const filters = ['teacher_id', 'student_id']
 const urls = ['courses']
 
@@ -20,13 +20,13 @@ const urls = ['courses']
  */
 schedules.get('/', async (ctx) => {
   try {
-    const qs = fn.parseQuerystring(ctx.request.querystring)
-    const filter = fn.objToObjGroupsInArr(qs, filters)
+    const qs = Fn.parseQuerystring(ctx.request.querystring)
+    const filter = Fn.objToObjGroupsInArr(qs, filters)
     const page = !isNaN(qs.page) && qs.page > 0 ? qs.page : 1
 
     const data = await Schedule.findAll({
       limit: c.queryLimit,
-      offset: fn.getOffset(page, c.queryLimit),
+      offset: Fn.getOffset(page, c.queryLimit),
       where: { $and: filter }
     })
 
@@ -35,13 +35,13 @@ schedules.get('/', async (ctx) => {
       let current = data[i].dataValues
 
       urls.map(each => {
-        current[`${each}_url`] = fn.getDomain(`/api/schedules/${current.id}/${each}`)
+        current[`${each}_url`] = Fn.getDomain(`/api/schedules/${current.id}/${each}`)
       })
     }
 
-    fn.simpleSend(ctx, data)
+    Fn.simpleSend(ctx, data)
   } catch (err) {
-    fn.logError(ctx, err)
+    Fn.logError(ctx, err)
   }
 })
 
@@ -56,17 +56,17 @@ schedules.get('/:id', async (ctx) => {
     const data = await Schedule.findOne({ where: { id } })
 
     urls.map(each => {
-      data.dataValues[`${each}_url`] = fn.getDomain(`/api/schedules/${id}/${each}`)
+      data.dataValues[`${each}_url`] = Fn.getDomain(`/api/schedules/${id}/${each}`)
     })
 
-    fn.simpleSend(ctx, data)
+    Fn.simpleSend(ctx, data)
   } catch (err) {
-    fn.logError(ctx, err)
+    Fn.logError(ctx, err)
   }
 })
 
 /** 
- * @api {get} /api/schedules Get a schedule's courses
+ * @api {get} /api/schedules/:id/courses Get a schedule's courses
  * @apiGroup Schedules 
  * @apiSuccess (200) {object[]} void Array contains a schedule's courses
  */
@@ -78,8 +78,8 @@ schedules.get('/:id/courses', async (ctx) => {
     const data = await Course.findAll({
       where: { id: courses_id.map(item => item.dataValues.course_id) }
     })
-    fn.simpleSend(ctx, data)
+    Fn.simpleSend(ctx, data)
   } catch (err) {
-    fn.logError(ctx, err)
+    Fn.logError(ctx, err)
   }
 })

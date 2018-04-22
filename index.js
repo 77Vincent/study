@@ -5,7 +5,7 @@ import serve from 'koa-static'
 import bodyParser from 'koa-bodyparser'
 
 import routes from './routes'
-import { oauth } from './utils'
+import { Oauth } from './utils'
 import c from './config'
 
 const app = new Koa()
@@ -22,7 +22,7 @@ app.use(async (ctx, next) => {
 })
 app.use(async (ctx, next) => {
   ctx.decoded = {}
-  let id = await oauth.verifyToken(ctx)
+  let id = await Oauth.verifyToken(ctx)
   if (id) {
     ctx.decoded = id
   }

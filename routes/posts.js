@@ -2,7 +2,7 @@ import Router from 'koa-router'
 
 import c from '../config'
 import { Post, Picture, Comment } from '../models'
-import { fn } from '../utils'
+import { Fn } from '../utils'
 
 export const posts = Router()
 
@@ -17,23 +17,23 @@ const filters = [ 'user_id' ]
  */
 posts.get('/', async (ctx) => {
   try {
-    const qs = fn.parseQuerystring(ctx.request.querystring)
-    let filter = fn.objToObjGroupsInArr(qs, filters)
+    const qs = Fn.parseQuerystring(ctx.request.querystring)
+    let filter = Fn.objToObjGroupsInArr(qs, filters)
 
     const data = await Post.findAll({
       limit: c.queryLimit,
-      offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
+      offset: Fn.getOffset(Fn.getPositiveInt(qs.page), c.queryLimit),
       where: { $and: filter },
     })
     data.map(each => {
       const { id } = each.dataValues
-      each.dataValues.pictures_url = fn.getDomain(`/api/posts/${id}/pictures`) 
-      each.dataValues.comments_url = fn.getDomain(`/api/posts/${id}/comments`) 
+      each.dataValues.pictures_url = Fn.getDomain(`/api/posts/${id}/pictures`) 
+      each.dataValues.comments_url = Fn.getDomain(`/api/posts/${id}/comments`) 
     })
 
-    fn.simpleSend(ctx, data)
+    Fn.simpleSend(ctx, data)
   } catch (err) {
-    fn.logError(ctx, err)
+    Fn.logError(ctx, err)
   }
 })
 
@@ -46,12 +46,12 @@ posts.get('/:id', async (ctx) => {
   try {
     const id = ctx.params.id
     const data = await Post.findOne({ where: { id } })
-    data.dataValues.pictures_url = fn.getDomain(`/api/posts/${id}/pictures`) 
-    data.dataValues.comments_url = fn.getDomain(`/api/posts/${id}/comments`) 
+    data.dataValues.pictures_url = Fn.getDomain(`/api/posts/${id}/pictures`) 
+    data.dataValues.comments_url = Fn.getDomain(`/api/posts/${id}/comments`) 
 
-    fn.simpleSend(ctx, data)
+    Fn.simpleSend(ctx, data)
   } catch (err) {
-    fn.logError(ctx, err)
+    Fn.logError(ctx, err)
   }
 })
 
@@ -65,9 +65,9 @@ posts.get('/:id/pictures', async (ctx) => {
     const id = ctx.params.id
     const data = await Picture.findAll({ where: { post_id: id } })
 
-    fn.simpleSend(ctx, data)
+    Fn.simpleSend(ctx, data)
   } catch (err) {
-    fn.logError(ctx, err)
+    Fn.logError(ctx, err)
   }
 })
 
@@ -79,16 +79,16 @@ posts.get('/:id/pictures', async (ctx) => {
  */
 posts.get('/:id/comments', async (ctx) => {
   try {
-    const qs = fn.parseQuerystring(ctx.request.querystring)
+    const qs = Fn.parseQuerystring(ctx.request.querystring)
     const id = ctx.params.id
     const data = await Comment.findAll({
       limit: c.queryLimit,
-      offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
+      offset: Fn.getOffset(Fn.getPositiveInt(qs.page), c.queryLimit),
       where: { post_id: id } 
     })
 
-    fn.simpleSend(ctx, data)
+    Fn.simpleSend(ctx, data)
   } catch (err) {
-    fn.logError(ctx, err)
+    Fn.logError(ctx, err)
   }
 })

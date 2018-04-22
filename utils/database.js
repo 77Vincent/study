@@ -1,11 +1,11 @@
 import Sequelize from 'sequelize'
 import c from '../config'
 
-export default new Sequelize(c.dbName, c.dbUser, c.dbPassword, {
+export default new Sequelize(c.databaseName, c.databaseUser, c.databasePassword, {
   host: c.host,
-  dialect: c.db,
-  port: c.dbPort,
-  timezone: c.dbTimezone,
+  dialect: c.database,
+  port: c.databasePort,
+  timezone: c.databaseTimezone,
   define: {
     underscored: true,
     freezeTableName: true,

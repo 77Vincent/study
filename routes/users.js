@@ -1,14 +1,14 @@
 import Router from 'koa-router'
 
 import { User } from '../models'
-import { fn, db, oauth } from '../utils'
+import { Fn, Db, Oauth } from '../utils'
 import c from '../config.js'
 
 export const users = Router()
 
-const FF = db.model('follower_following')
-const ST = db.model('student_teacher')
-const UM = db.model('user_major')
+const FF = Db.model('follower_following')
+const ST = Db.model('student_teacher')
+const UM = Db.model('user_major')
 
 const urls = ['followers', 'followings', 'students', 'teachers']
 const urlsByQuerystring = ['posts', 'courses']
@@ -48,8 +48,8 @@ const sortings = ['cost']
  */
 users.get('/', async (ctx) => {
   try {
-    const qs = fn.parseQuerystring(ctx.request.querystring)
-    let filter = fn.objToObjGroupsInArr(qs, filters)
+    const qs = Fn.parseQuerystring(ctx.request.querystring)
+    let filter = Fn.objToObjGroupsInArr(qs, filters)
     let sorting = []
 
     for (let key in qs) {
@@ -71,7 +71,7 @@ users.get('/', async (ctx) => {
 
     let data = await User.findAll({ 
       limit: c.queryLimit,
-      offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
+      offset: Fn.getOffset(Fn.getPositiveInt(qs.page), c.queryLimit),
       where: { $and: filter },
       order: sorting,
       attributes: { exclude: ['password'] }
@@ -89,16 +89,16 @@ users.get('/', async (ctx) => {
       current.followings = followings.length
 
       urlsByQuerystring.map(each => {
-        current[`${each}_url`] = fn.getDomain(`/api/${each}?user_id=${current.id}`)
+        current[`${each}_url`] = Fn.getDomain(`/api/${each}?user_id=${current.id}`)
       })
       urls.map(each => {
-        current[`${each}_url`] = fn.getDomain(`/api/users/${current.id}/${each}`)
+        current[`${each}_url`] = Fn.getDomain(`/api/users/${current.id}/${each}`)
       })
     }
 
-    fn.simpleSend(ctx, data)
+    Fn.simpleSend(ctx, data)
   } catch (err) {
-    fn.logError(ctx, err)
+    Fn.logError(ctx, err)
   }
 })
 
@@ -110,7 +110,7 @@ users.get('/', async (ctx) => {
 users.get('/:id', async (ctx) => {
   try {
     let id = ctx.params.id
-    let data = await fn.getUser(id, { attributes: { exclude: ['password'] } })
+    let data = await Fn.getUser(id, { attributes: { exclude: ['password'] } })
 
     if (data) {
       let dv = data.dataValues
@@ -124,18 +124,18 @@ users.get('/:id', async (ctx) => {
       dv.followings = followings.length
 
       urlsByQuerystring.map(each => {
-        dv[`${each}_url`] = fn.getDomain(`/api/${each}?user_id=${id}`)
+        dv[`${each}_url`] = Fn.getDomain(`/api/${each}?user_id=${id}`)
       })
       urls.map(url => {
-        dv[`${url}_url`] = fn.getDomain(`/api/users/${id}/${url}`)
+        dv[`${url}_url`] = Fn.getDomain(`/api/users/${id}/${url}`)
       })
 
-      fn.simpleSend(ctx, data)
+      Fn.simpleSend(ctx, data)
     } else {
       ctx.status = 404
     }
   } catch (err) {
-    fn.logError(ctx, err)
+    Fn.logError(ctx, err)
   }
 })
 
@@ -147,19 +147,19 @@ users.get('/:id', async (ctx) => {
  */
 users.get('/:id/students', async (ctx) => {
   try {
-    const qs = fn.parseQuerystring(ctx.request.querystring)
+    const qs = Fn.parseQuerystring(ctx.request.querystring)
     let data = await ST.findAll({ where: { teacher_id: ctx.params.id } })
 
     data = await User.findAll({
       limit: c.queryLimit,
-      offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
+      offset: Fn.getOffset(Fn.getPositiveInt(qs.page), c.queryLimit),
       where: { id: data.map(item => item.dataValues.student_id) },
       attributes: { exclude: ['password'] }
     })
 
-    fn.simpleSend(ctx, data)
+    Fn.simpleSend(ctx, data)
   } catch (err) {
-    fn.logError(ctx, err)
+    Fn.logError(ctx, err)
   }
 })
 
@@ -171,19 +171,19 @@ users.get('/:id/students', async (ctx) => {
  */
 users.get('/:id/teachers', async (ctx) => {
   try {
-    const qs = fn.parseQuerystring(ctx.request.querystring)
+    const qs = Fn.parseQuerystring(ctx.request.querystring)
     let data = await ST.findAll({ where: { student_id: ctx.params.id } })
 
     data = await User.findAll({
       limit: c.queryLimit,
-      offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
+      offset: Fn.getOffset(Fn.getPositiveInt(qs.page), c.queryLimit),
       where: { id: data.map(item => item.dataValues.teacher_id) },
       attributes: { exclude: ['password'] }
     })
 
-    fn.simpleSend(ctx, data)
+    Fn.simpleSend(ctx, data)
   } catch (err) {
-    fn.logError(ctx, err)
+    Fn.logError(ctx, err)
   }
 })
 
@@ -195,21 +195,21 @@ users.get('/:id/teachers', async (ctx) => {
  */
 users.get('/:id/followers', async (ctx) => {
   try {
-    const qs = fn.parseQuerystring(ctx.request.querystring)
+    const qs = Fn.parseQuerystring(ctx.request.querystring)
     let data = await FF.findAll({
       where: { following_id: ctx.params.id }
     })
 
     data = await User.findAll({
       limit: c.queryLimit,
-      offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
+      offset: Fn.getOffset(Fn.getPositiveInt(qs.page), c.queryLimit),
       where: { id: data.map(item => item.dataValues.follower_id) },
       attributes: { exclude: ['password'] }
     })
 
-    fn.simpleSend(ctx, data)
+    Fn.simpleSend(ctx, data)
   } catch (err) {
-    fn.logError(ctx, err)
+    Fn.logError(ctx, err)
   }
 })
 
@@ -221,21 +221,21 @@ users.get('/:id/followers', async (ctx) => {
  */
 users.get('/:id/followings', async (ctx) => {
   try {
-    const qs = fn.parseQuerystring(ctx.request.querystring)
+    const qs = Fn.parseQuerystring(ctx.request.querystring)
     let data = await FF.findAll({
       where: { follower_id: ctx.params.id }
     })
 
     data = await User.findAll({
       limit: c.queryLimit,
-      offset: fn.getOffset(fn.getPositiveInt(qs.page), c.queryLimit),
+      offset: Fn.getOffset(Fn.getPositiveInt(qs.page), c.queryLimit),
       where: { id: data.map(item => item.dataValues.following_id) },
       attributes: { exclude: ['password'] }
     })
 
-    fn.simpleSend(ctx, data)
+    Fn.simpleSend(ctx, data)
   } catch (err) {
-    fn.logError(ctx, err)
+    Fn.logError(ctx, err)
   }
 })
 
@@ -257,24 +257,24 @@ users.put('/', async (ctx) => {
   try {
     const { name, mobilephone, password } = ctx.request.body
     const user = await User.create({ name, mobilephone, password })
-    const data = await fn.getUser(user.id, {
+    const data = await Fn.getUser(user.id, {
       attributes: { exclude: ['password'] }
     })
 
     // Add majors list
-    const majors = await db.model('user_major').findAll({ where: { user_id: user.id } })
+    const majors = await Db.model('user_major').findAll({ where: { user_id: user.id } })
     data.dataValues.majors = majors.map(each => each.major_id)
 
-    const { token, expiresIn } = oauth.signToken(data)
+    const { token, expiresIn } = Oauth.signToken(data)
     ctx.cookies.set('user_info', token, {
       overwrite: true,
       maxAge: expiresIn
     })
 
     ctx.status = 201
-    ctx.body = fn.prettyJSON(data) 
+    ctx.body = Fn.prettyJSON(data) 
   } catch (err) {
-    fn.logError(ctx, err)
+    Fn.logError(ctx, err)
   }
 })
 
@@ -294,9 +294,9 @@ users.post('/:id', async (ctx) => {
     values.majors.map(async major_id => {
       await UM.create({ user_id, major_id })
     })
-    await db.sync()
+    await Db.sync()
 
-    let data = await fn.getUser(user_id)
+    let data = await Fn.getUser(user_id)
     // Delete majors because it's not updated here
     delete values.majors
     data = await data.update(values)
@@ -305,12 +305,12 @@ users.post('/:id', async (ctx) => {
     delete data.dataValues.password
 
     // Add majors list
-    const majors = await db.model('user_major').findAll({ where: { user_id } })
+    const majors = await Db.model('user_major').findAll({ where: { user_id } })
     data.dataValues.majors = majors.map(each => each.major_id)
 
-    fn.simpleSend(ctx, data)
+    Fn.simpleSend(ctx, data)
   } catch (err) {
-    fn.logError(ctx, err)
+    Fn.logError(ctx, err)
   }
 })
 
@@ -327,6 +327,6 @@ users.delete('/:id', async (ctx) => {
     ctx.cookies.set('user_info', null)
     ctx.status = 200
   } catch (err) {
-    fn.logError(ctx, err)
+    Fn.logError(ctx, err)
   }
 })

@@ -1,8 +1,8 @@
 import Sequelize from 'sequelize'
 import bcrypt from 'bcryptjs'
-import { db } from '../utils'
+import { Db } from '../utils'
 
-export default db.define('user', {
+export default Db.define('user', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
