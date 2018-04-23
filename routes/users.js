@@ -1,6 +1,6 @@
 import Router from 'koa-router'
 
-import { User } from '../models'
+import { User, Schedule } from '../models'
 import { Fn, Db, Oauth } from '../utils'
 import c from '../config.js'
 
@@ -83,11 +83,16 @@ users.get('/', async (ctx) => {
       let followers = await FF.findAll({ where: { following_id: current.id } })
       let followings = await FF.findAll({ where: { follower_id: current.id } })
       let majors = await UM.findAll({ where: { user_id: current.id } })
+      let students = await ST.findAll({ where: { teacher_id: current.id } })
+      let students_onboard = await Schedule.findAll({ where: { teacher_id: current.id } })
 
       current.majors = majors.map(major => major.major_id)
       current.followers = followers.length
       current.followings = followings.length
+      current.students = students.length
+      current.students_onboard = students_onboard.length
 
+      current.students_onboard_url = `${c.protocol}://${c.host}:${c.port}/api/schedules?teacher_id=${current.id}`
       urlsByQuerystring.map(each => {
         current[`${each}_url`] = Fn.getDomain(`/api/${each}?user_id=${current.id}`)
       })
@@ -118,11 +123,16 @@ users.get('/:id', async (ctx) => {
       let followers = await FF.findAll({ where: { following_id: id } })
       let followings = await FF.findAll({ where: { follower_id: id } })
       let majors = await UM.findAll({ where: { user_id: id } })
+      let students = await ST.findAll({ where: { teacher_id: id } })
+      let students_onboard = await Schedule.findAll({ where: { teacher_id: id } })
 
       dv.majors = majors.map(major => major.major_id)
       dv.followers = followers.length
       dv.followings = followings.length
+      dv.students = students.length
+      dv.students_onboard = students_onboard.length
 
+      dv.students_onboard_url = `${c.protocol}://${c.host}:${c.port}/api/schedules?teacher_id=${dv.id}`
       urlsByQuerystring.map(each => {
         dv[`${each}_url`] = Fn.getDomain(`/api/${each}?user_id=${id}`)
       })
