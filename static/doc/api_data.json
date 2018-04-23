@@ -50,6 +50,14 @@
             "optional": true,
             "field": "label",
             "description": "<p>Search by course name</p>"
+          },
+          {
+            "group": "Query String",
+            "type": "integer",
+            "optional": true,
+            "field": "page",
+            "defaultValue": "1",
+            "description": "<p>Pagination</p>"
           }
         ]
       }
@@ -83,14 +91,14 @@
           {
             "group": "Parameter",
             "type": "string",
-            "optional": true,
+            "optional": false,
             "field": "label",
             "description": "<p>The course name</p>"
           },
           {
             "group": "Parameter",
             "type": "string",
-            "optional": true,
+            "optional": false,
             "field": "description",
             "description": "<p>The course description</p>"
           }
@@ -121,6 +129,56 @@
     "filename": "routes/courses.js",
     "groupTitle": "Courses",
     "name": "PostApiCoursesId"
+  },
+  {
+    "type": "put",
+    "url": "/api/courses",
+    "title": "Create a course",
+    "group": "Courses",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "label",
+            "description": "<p>The course name</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "description",
+            "description": "<p>The course description</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-example:",
+          "content": "{\n  \"label\": \"course name\",\n  \"description\": \"course description\" \n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "object",
+            "optional": false,
+            "field": "void",
+            "description": "<p>The created course object</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/courses.js",
+    "groupTitle": "Courses",
+    "name": "PutApiCourses"
   },
   {
     "type": "get",

@@ -14,6 +14,7 @@ const filters = ['id', 'user_id']
  * @apiParam (Query String) {string} [id] Filtered by the major ID
  * @apiParam (Query String) {string} [user_id] Filtered by the creator's id
  * @apiParam (Query String) {string} [label] Search by course name
+ * @apiParam (Query String) {integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all courses
  */
 courses.get('/', async (ctx) => {
@@ -48,10 +49,33 @@ courses.get('/', async (ctx) => {
 })
 
 /** 
+ * @api {put} /api/courses Create a course
+ * @apiGroup Courses 
+ * @apiParam {string} label The course name
+ * @apiParam {string} [description] The course description
+ * @apiParamExample {json} Request-example:
+ *  {
+ *    "label": "course name",
+ *    "description": "course description" 
+ *  }
+ * @apiSuccess (200) {object} void The created course object
+ */
+courses.put('/', async (ctx) => {
+  try {
+    const { label, description } = ctx.request.body
+    const data = await Course.create({ label, description })
+
+    General.simpleSend(ctx, data)
+  } catch (err) {
+    General.logError(ctx, err)
+  }
+})
+
+/** 
  * @api {post} /api/courses/:id Update a course
  * @apiGroup Courses 
- * @apiParam {string} [label] The course name
- * @apiParam {string} [description] The course description
+ * @apiParam {string} label The course name
+ * @apiParam {string} description The course description
  * @apiParamExample {json} Request-example:
  *  {
  *    "label": "course name",
