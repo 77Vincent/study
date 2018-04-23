@@ -15,7 +15,7 @@ export const classes = Router()
  */
 classes.get('/', async (ctx) => {
   try {
-    const filters = ['finished']
+    const filters = ['finished', 'schedule_id']
     const qs = General.parseQuerystring(ctx.request.querystring)
     const filter = General.objToObjGroupsInArr(qs, filters)
 
@@ -26,6 +26,26 @@ classes.get('/', async (ctx) => {
       order: [['start', 'ASC']],
       include: [{ model: Course, attributes: ['label', 'description'] }]
     })
+    General.simpleSend(ctx, data)
+  } catch (err) {
+    General.logError(ctx, err)
+  }
+})
+
+/** 
+ * @api {put} /api/classes Create a class
+ * @apiGroup Classes 
+ * @apiParam {date} start Class start time 
+ * @apiParam {date} end Class end time 
+ * @apiParam {double} length Duration of the class in hours 
+ * @apiParam {integer} schedule_id Which schedule is this class belong to
+ * @apiSuccess (200) {object} void The created class
+ */
+classes.put('/', async (ctx) => {
+  try {
+    const { start, end, length, schedule_id } = ctx.request.body
+    const data = await Class.create({ start, end, length, schedule_id })
+
     General.simpleSend(ctx, data)
   } catch (err) {
     General.logError(ctx, err)

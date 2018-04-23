@@ -1,6 +1,6 @@
 import Router from 'koa-router'
 
-import { Schedule, Course, Class } from '../models'
+import { Schedule, Class } from '../models'
 import { General } from '../utils'
 import c from '../config'
 
@@ -40,41 +40,13 @@ schedules.get('/', async (ctx) => {
  */
 schedules.get('/:id', async (ctx) => {
   try {
-    const urls = ['classes']
     const { id } = ctx.params
     const data = await Schedule.findOne({ where: { id } })
     const classes = await Class.findAll({ where: { schedule_id: id } })
 
     data.dataValues.classes = classes.length
-    urls.map(each => {
-      data.dataValues[`${each}_url`] = General.getDomain(`/api/schedules/${id}/${each}`)
-    })
+    data.dataValues.classes_url = General.getDomain(`/api/classes?teacher_id=${id}`) 
 
-    General.simpleSend(ctx, data)
-  } catch (err) {
-    General.logError(ctx, err)
-  }
-})
-
-/** 
- * @api {get} /api/schedules/:id/classes Get a schedule's classes
- * @apiGroup Schedules 
- * @apiParam (Query String) {boolean} [finished=0,1] Filtered by if the class is finished 
- * @apiSuccess (200) {object[]} void Array contains a schedule's classes
- */
-schedules.get('/:id/classes', async (ctx) => {
-  try {
-    const { id } = ctx.params
-    const filters = ['finished']
-    const qs = General.parseQuerystring(ctx.request.querystring)
-    const filter = General.objToObjGroupsInArr(qs, filters)
-    filter.push({ schedule_id: id })
-
-    const data = await Class.findAll({
-      where: { $and: filter },
-      order: [['start', 'ASC']],
-      include: [{ model: Course, attributes: ['label', 'description'] }]
-    })
     General.simpleSend(ctx, data)
   } catch (err) {
     General.logError(ctx, err)
@@ -91,7 +63,7 @@ schedules.get('/:id/classes', async (ctx) => {
  */
 schedules.put('/', async (ctx) => {
   try {
-    const { label, teacher_id, student_id } = ctx.params
+    const { label, teacher_id, student_id } = ctx.request.body
     const data = await Schedule.create({ label, teacher_id, student_id })
 
     General.simpleSend(ctx, data)
@@ -101,15 +73,16 @@ schedules.put('/', async (ctx) => {
 })
 
 /** 
- * @api {post} /api/schedules Update a schedule
+ * @api {post} /api/schedules/:id Update a schedule
  * @apiGroup Schedules 
  * @apiParam {string} label The schedule name
  * @apiSuccess (200) {object} void The updated schedule 
  */
-schedules.put('/', async (ctx) => {
+schedules.post('/:id', async (ctx) => {
   try {
-    const { label } = ctx.params
-    const data = await Schedule.create({ label })
+    const { label } = ctx.request.body
+    let data = await Schedule.findOne({ where: { id: ctx.params.id } })
+    data = await data.update({ label })
 
     General.simpleSend(ctx, data)
   } catch (err) {

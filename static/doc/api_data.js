@@ -45,6 +45,63 @@ define({ "api": [
     "name": "GetApiClasses"
   },
   {
+    "type": "put",
+    "url": "/api/classes",
+    "title": "Create a class",
+    "group": "Classes",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "date",
+            "optional": false,
+            "field": "start",
+            "description": "<p>Class start time</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "date",
+            "optional": false,
+            "field": "end",
+            "description": "<p>Class end time</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "double",
+            "optional": false,
+            "field": "length",
+            "description": "<p>Duration of the class in hours</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "integer",
+            "optional": false,
+            "field": "schedule_id",
+            "description": "<p>Which schedule is this class belong to</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "object",
+            "optional": false,
+            "field": "void",
+            "description": "<p>The created class</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/classes.js",
+    "groupTitle": "Classes",
+    "name": "PutApiClasses"
+  },
+  {
     "type": "delete",
     "url": "/api/courses/:id",
     "title": "Delete a course",
@@ -749,45 +806,8 @@ define({ "api": [
     "name": "GetApiSchedulesId"
   },
   {
-    "type": "get",
-    "url": "/api/schedules/:id/classes",
-    "title": "Get a schedule's classes",
-    "group": "Schedules",
-    "parameter": {
-      "fields": {
-        "Query String": [
-          {
-            "group": "Query String",
-            "type": "boolean",
-            "optional": true,
-            "field": "finished",
-            "defaultValue": "0,1",
-            "description": "<p>Filtered by if the class is finished</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "200": [
-          {
-            "group": "200",
-            "type": "object[]",
-            "optional": false,
-            "field": "void",
-            "description": "<p>Array contains a schedule's classes</p>"
-          }
-        ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "routes/schedules.js",
-    "groupTitle": "Schedules",
-    "name": "GetApiSchedulesIdClasses"
-  },
-  {
     "type": "post",
-    "url": "/api/schedules",
+    "url": "/api/schedules/:id",
     "title": "Update a schedule",
     "group": "Schedules",
     "parameter": {
@@ -819,7 +839,7 @@ define({ "api": [
     "version": "0.0.0",
     "filename": "routes/schedules.js",
     "groupTitle": "Schedules",
-    "name": "PostApiSchedules"
+    "name": "PostApiSchedulesId"
   },
   {
     "type": "put",
