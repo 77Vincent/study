@@ -1,20 +1,58 @@
 define({ "api": [
   {
+    "type": "delete",
+    "url": "/api/classes/:id",
+    "title": "Delete a class",
+    "group": "Classes",
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "void",
+            "optional": false,
+            "field": "void",
+            "description": "<p>void</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/classes.js",
+    "groupTitle": "Classes",
+    "name": "DeleteApiClassesId"
+  },
+  {
     "type": "get",
     "url": "/api/classes",
     "title": "Get all classes",
     "group": "Classes",
-    "description": "<p>Class is ordered by start time in ascend order</p>",
     "parameter": {
       "fields": {
         "Query String": [
           {
             "group": "Query String",
             "type": "boolean",
+            "allowedValues": [
+              "0",
+              "1"
+            ],
             "optional": true,
             "field": "finished",
             "defaultValue": "0,1",
             "description": "<p>Filtered by if the schedule is finished</p>"
+          },
+          {
+            "group": "Query String",
+            "type": "string",
+            "allowedValues": [
+              "ASC",
+              "DESC"
+            ],
+            "optional": true,
+            "field": "start",
+            "defaultValue": "ASC",
+            "description": "<p>Ordered by start time of the class</p>"
           },
           {
             "group": "Query String",
@@ -46,9 +84,9 @@ define({ "api": [
     "name": "GetApiClasses"
   },
   {
-    "type": "put",
-    "url": "/api/classes",
-    "title": "Create a class",
+    "type": "post",
+    "url": "/api/classes/:id",
+    "title": "Update a class",
     "group": "Classes",
     "parameter": {
       "fields": {
@@ -76,13 +114,101 @@ define({ "api": [
           },
           {
             "group": "Parameter",
-            "type": "integer",
+            "type": "boolean",
+            "allowedValues": [
+              "0",
+              "1"
+            ],
             "optional": false,
-            "field": "schedule_id",
-            "description": "<p>Which schedule is this class belong to</p>"
+            "field": "finished",
+            "description": "<p>Is the class finished or not</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-example:",
+          "content": "{\n  \"start\": new Date(),\n  \"end\": new Date('2018/05/01'),\n  \"length\": 2.5,\n  \"finished\": 0\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "object",
+            "optional": false,
+            "field": "void",
+            "description": "<p>The updated class</p>"
           }
         ]
       }
+    },
+    "version": "0.0.0",
+    "filename": "routes/classes.js",
+    "groupTitle": "Classes",
+    "name": "PostApiClassesId"
+  },
+  {
+    "type": "put",
+    "url": "/api/classes",
+    "title": "Create a class",
+    "group": "Classes",
+    "description": "<p>The property &quot;finished&quot; is set to false by default</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "date",
+            "optional": false,
+            "field": "start",
+            "description": "<p>Class start time</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "date",
+            "optional": true,
+            "field": "end",
+            "description": "<p>Class end time</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "double",
+            "optional": false,
+            "field": "length",
+            "description": "<p>Duration of the class in hours</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "boolean",
+            "allowedValues": [
+              "0",
+              "1"
+            ],
+            "optional": true,
+            "field": "finished",
+            "defaultValue": "0",
+            "description": "<p>Duration of the class in hours</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "integer",
+            "optional": false,
+            "field": "schedule_id",
+            "description": "<p>Which schedule does this class belong to</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-example:",
+          "content": "{\n  \"start\": new Date(),\n  \"end\": new Date('2018/05/01'),\n  \"length\": 2.5,\n  \"finished\": 0,\n  \"schedule_id\": 3 \n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "fields": {

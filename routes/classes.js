@@ -9,9 +9,8 @@ export const classes = Router()
 /** 
  * @api {get} /api/classes Get all classes
  * @apiGroup Classes 
- * @apiDescription A class belongs to a schedule, which contains several courses
- * @apiParam (Query String) {boolean} [finished=0,1] Filtered by if the schedule is finished 
- * @apiParam (Query String) {string} [start=ASC] Ordered by start time of the class 
+ * @apiParam (Query String) {boolean=0,1} [finished=0,1] Filtered by if the schedule is finished 
+ * @apiParam (Query String) {string=ASC,DESC} [start=ASC] Ordered by start time of the class 
  * @apiParam (Query String) {integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all schedules
  */
@@ -48,10 +47,20 @@ classes.get('/', async (ctx) => {
 /** 
  * @api {put} /api/classes Create a class
  * @apiGroup Classes 
+ * @apiDescription The property "finished" is set to false by default
  * @apiParam {date} start Class start time 
- * @apiParam {date} end Class end time 
+ * @apiParam {date} [end] Class end time 
  * @apiParam {double} length Duration of the class in hours 
- * @apiParam {integer} schedule_id Which schedule this class belongs to
+ * @apiParam {boolean=0,1} [finished=0] Duration of the class in hours 
+ * @apiParam {integer} schedule_id Which schedule does this class belong to
+ * @apiParamExample {json} Request-example:
+ *  {
+ *    "start": new Date(),
+ *    "end": new Date('2018/05/01'),
+ *    "length": 2.5,
+ *    "finished": 0,
+ *    "schedule_id": 3 
+ *  }
  * @apiSuccess (200) {object} void The created class
  */
 classes.put('/', async (ctx) => {
@@ -60,6 +69,50 @@ classes.put('/', async (ctx) => {
     const data = await Class.create({ start, end, length, schedule_id })
 
     General.simpleSend(ctx, data)
+  } catch (err) {
+    General.logError(ctx, err)
+  }
+})
+
+/** 
+ * @api {post} /api/classes/:id Update a class
+ * @apiGroup Classes 
+ * @apiParam {date} start Class start time 
+ * @apiParam {date} end Class end time 
+ * @apiParam {double} length Duration of the class in hours 
+ * @apiParam {boolean=0,1} finished Is the class finished or not
+ * @apiParamExample {json} Request-example:
+ *  {
+ *    "start": new Date(),
+ *    "end": new Date('2018/05/01'),
+ *    "length": 2.5,
+ *    "finished": 0
+ *  }
+ * @apiSuccess (200) {object} void The updated class
+ */
+classes.post('/:id', async (ctx) => {
+  try {
+    const { start, end, length, finished } = ctx.request.body
+    let data = await Class.findOne({
+      where: { id: ctx.params.id }
+    })
+    data = await data.update({ start, end, length, finished })
+
+    General.simpleSend(ctx, data)
+  } catch (err) {
+    General.logError(ctx, err)
+  }
+})
+
+/** 
+ * @api {delete} /api/classes/:id Delete a class
+ * @apiGroup Classes 
+ * @apiSuccess (200) {void} void void
+ */
+classes.delete('/:id', async (ctx) => {
+  try {
+    await Class.destroy({ where: { id: ctx.params.id } })
+    ctx.status = 200
   } catch (err) {
     General.logError(ctx, err)
   }
