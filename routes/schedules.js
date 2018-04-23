@@ -72,6 +72,7 @@ schedules.get('/:id/classes', async (ctx) => {
 
     const data = await Class.findAll({
       where: { $and: filter },
+      order: [['start', 'ASC']],
       include: [{ model: Course }]
     })
     General.simpleSend(ctx, data)

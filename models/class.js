@@ -8,7 +8,10 @@ export default Db.define('class', {
     unique: true,
     primaryKey: true
   },
-  date: {
+  start: {
+    type: Sequelize.DATE,
+  },
+  end: {
     type: Sequelize.DATE,
   },
   length: {
@@ -18,6 +21,4 @@ export default Db.define('class', {
     type: Sequelize.BOOLEAN,
     defaultValue: false    
   }
-}, {
-  paranoid: true
 })
