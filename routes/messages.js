@@ -13,7 +13,7 @@ const filters = ['user_id', 'recipient_id', 'read']
  * @apiGroup Messages 
  * @apiParam (Query String) {integer} [user_id] Filtered by the sender's user ID 
  * @apiParam (Query String) {integer} [recipient_id] Filtered by the recipient's user ID
- * @apiParam (Query String) {boolean} [read] Filtered by if the message is read 
+ * @apiParam (Query String) {boolean=0,1} [read=0,1] Filtered by if the message is read 
  * @apiParam (Query String) {string} [content] Search by message content
  * @apiSuccess (200) {object[]} void Array contains all messages 
  */
@@ -41,7 +41,7 @@ messages.get('/', async (ctx) => {
 })
 
 /** 
- * @api {put} /api/users Create a new message
+ * @api {put} /api/messages Create a new message
  * @apiGroup Messages 
  * @apiParam {string} content Message content
  * @apiParam {string} user_id The sender's user ID 
@@ -52,7 +52,7 @@ messages.get('/', async (ctx) => {
  *    "user_id": 1,
  *    "recipient_id": 2 
  *  }
- * @apiSuccess (201) {object} void The newly created user object
+ * @apiSuccess (201) {object} void The newly created message
  */
 messages.put('/', async (ctx) => {
   try {

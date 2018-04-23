@@ -239,8 +239,13 @@ define({ "api": [
           {
             "group": "Query String",
             "type": "boolean",
+            "allowedValues": [
+              "0",
+              "1"
+            ],
             "optional": true,
             "field": "read",
+            "defaultValue": "0,1",
             "description": "<p>Filtered by if the message is read</p>"
           },
           {
@@ -273,7 +278,7 @@ define({ "api": [
   },
   {
     "type": "put",
-    "url": "/api/users",
+    "url": "/api/messages",
     "title": "Create a new message",
     "group": "Messages",
     "parameter": {
@@ -318,7 +323,7 @@ define({ "api": [
             "type": "object",
             "optional": false,
             "field": "void",
-            "description": "<p>The newly created user object</p>"
+            "description": "<p>The newly created message</p>"
           }
         ]
       }
@@ -326,7 +331,7 @@ define({ "api": [
     "version": "0.0.0",
     "filename": "routes/messages.js",
     "groupTitle": "Messages",
-    "name": "PutApiUsers"
+    "name": "PutApiMessages"
   },
   {
     "type": "get",
