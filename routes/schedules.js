@@ -11,7 +11,7 @@ export const schedules = Router()
  * @apiGroup Schedules 
  * @apiParam (Query String) {string} [teacher_id] Filtered by teacher ID
  * @apiParam (Query String) {string} [student_id] Filtered by student ID
- * @apiParam (Query String) {boolean} [finished=0,1] Filtered by if the schedule is finished 
+ * @apiParam (Query String) {boolean=0,1} [finished=0,1] Filtered by if the schedule is finished 
  * @apiParam (Query String) {integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all schedules
  */
@@ -92,7 +92,7 @@ schedules.post('/:id', async (ctx) => {
 
 /** 
  * @api {delete} /api/schedules/:id Delete a schedule
- * @apiGroup Schedule 
+ * @apiGroup Schedules
  * @apiSuccess (200) {void} void void
  */
 schedules.delete('/:id', async (ctx) => {

@@ -35,8 +35,8 @@ const sortings = ['cost']
  * @apiParam (Query String) {string} [city] Filtered by the city a user is living in, check "Cities list"
  * @apiParam (Query String) {string} [province] Filtered by the province a user is living in, check "Provinces list"
  * @apiParam (Query String) {string} [countries] Filtered by the country a user is living in, check "Countries list"
- * @apiParam (Query String) {boolean} [active=0,1] Filtered by if a user wished to be found
- * @apiParam (Query String) {boolean} [available=0,1] Filtered by if a user is opened for booking
+ * @apiParam (Query String) {boolean=0,1} [active=0,1] Filtered by if a user wished to be found
+ * @apiParam (Query String) {boolean=0,1} [available=0,1] Filtered by if a user is opened for booking
  * @apiParam (Query String) {string='DESC', 'ASC'} [cost] Sorting by cost
  * @apiParam (Query String) {integer} [page=1] Pagination
  * @apiParamExample {json} Request-example:

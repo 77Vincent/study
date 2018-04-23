@@ -87,11 +87,11 @@ courses.post('/:id', async (ctx) => {
   try {
     const { id } = ctx.params
     const { label, description } = ctx.request.body
-    let course = await Course.findOne({ where: { id } })
-    course = await course.update({ label, description })
+    let data = await Course.findOne({ where: { id } })
+    data = await data.update({ label, description })
 
     ctx.status = 200
-    ctx.body = General.prettyJSON(course) 
+    ctx.body = General.prettyJSON(data) 
   } catch (err) {
     General.logError(ctx, err)
   }

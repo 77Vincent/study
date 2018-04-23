@@ -8,6 +8,7 @@ export const sessions = Router()
 /** 
  * @api {post} /api/sessions Sign in
  * @apiGroup Sessions
+ * @apiDescription If now params are passed (id and password), a 204 respond will be returned
  * @apiParam {string} id User ID, can be id, username, mobilephone, email
  * @apiParam {string} password User password 
  * @apiParamExample {json} Request-example:
@@ -17,7 +18,7 @@ export const sessions = Router()
  *  }
  * @apiSuccess (200) {object} void User Object 
  * @apiSuccess (204) {void} void No returned object when no params are passed
- * @apiSuccess (403) {void} void No Access denied
+ * @apiSuccess (403) {void} void Access denied
  */
 sessions.post('/', async (ctx) => {
   const user_info = ctx.decoded.user_info

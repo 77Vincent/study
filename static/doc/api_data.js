@@ -831,7 +831,7 @@ define({ "api": [
     "type": "delete",
     "url": "/api/schedules/:id",
     "title": "Delete a schedule",
-    "group": "Schedule",
+    "group": "Schedules",
     "success": {
       "fields": {
         "200": [
@@ -847,7 +847,7 @@ define({ "api": [
     },
     "version": "0.0.0",
     "filename": "routes/schedules.js",
-    "groupTitle": "Schedule",
+    "groupTitle": "Schedules",
     "name": "DeleteApiSchedulesId"
   },
   {
@@ -875,6 +875,10 @@ define({ "api": [
           {
             "group": "Query String",
             "type": "boolean",
+            "allowedValues": [
+              "0",
+              "1"
+            ],
             "optional": true,
             "field": "finished",
             "defaultValue": "0,1",
@@ -1046,6 +1050,7 @@ define({ "api": [
     "url": "/api/sessions",
     "title": "Sign in",
     "group": "Sessions",
+    "description": "<p>If now params are passed (id and password), a 204 respond will be returned</p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -1099,7 +1104,7 @@ define({ "api": [
             "type": "void",
             "optional": false,
             "field": "void",
-            "description": "<p>No Access denied</p>"
+            "description": "<p>Access denied</p>"
           }
         ]
       }
@@ -1216,6 +1221,10 @@ define({ "api": [
           {
             "group": "Query String",
             "type": "boolean",
+            "allowedValues": [
+              "0",
+              "1"
+            ],
             "optional": true,
             "field": "active",
             "defaultValue": "0,1",
@@ -1224,6 +1233,10 @@ define({ "api": [
           {
             "group": "Query String",
             "type": "boolean",
+            "allowedValues": [
+              "0",
+              "1"
+            ],
             "optional": true,
             "field": "available",
             "defaultValue": "0,1",
