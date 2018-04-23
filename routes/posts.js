@@ -22,7 +22,7 @@ posts.get('/', async (ctx) => {
 
     const data = await Post.findAll({
       limit: c.queryLimit,
-      offset: General.getOffset(General.getPositiveInt(qs.page), c.queryLimit),
+      offset: General.getOffset(qs.page, c.queryLimit),
       where: { $and: filter },
     })
     data.map(each => {
@@ -83,7 +83,7 @@ posts.get('/:id/comments', async (ctx) => {
     const id = ctx.params.id
     const data = await Comment.findAll({
       limit: c.queryLimit,
-      offset: General.getOffset(General.getPositiveInt(qs.page), c.queryLimit),
+      offset: General.getOffset(qs.page, c.queryLimit),
       where: { post_id: id } 
     })
 

@@ -20,7 +20,6 @@ courses.get('/', async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
     const filter = General.objToObjGroupsInArr(qs, filters)
-    const page = !isNaN(qs.page) && qs.page > 0 ? qs.page : 1
 
     // this part is for majors filtering
     if (qs.majors) {
@@ -39,7 +38,7 @@ courses.get('/', async (ctx) => {
 
     const data = await Course.findAll({
       limit: c.queryLimit,
-      offset: General.getOffset(page, c.queryLimit),
+      offset: General.getOffset(qs.page, c.queryLimit),
       where: { $and: filter }
     })
     General.simpleSend(ctx, data)

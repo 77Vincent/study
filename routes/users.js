@@ -68,7 +68,7 @@ users.get('/', async (ctx) => {
 
     let data = await User.findAll({ 
       limit: c.queryLimit,
-      offset: General.getOffset(General.getPositiveInt(qs.page), c.queryLimit),
+      offset: General.getOffset(qs.page, c.queryLimit),
       where: { $and: filter },
       order: sorting,
       attributes: { exclude: ['password'] }
@@ -120,7 +120,7 @@ users.get('/:id/students', async (ctx) => {
 
     data = await User.findAll({
       limit: c.queryLimit,
-      offset: General.getOffset(General.getPositiveInt(qs.page), c.queryLimit),
+      offset: General.getOffset(qs.page, c.queryLimit),
       where: { id: data.map(item => item.dataValues.student_id) },
       attributes: { exclude: ['password'] }
     })
@@ -144,7 +144,7 @@ users.get('/:id/teachers', async (ctx) => {
 
     data = await User.findAll({
       limit: c.queryLimit,
-      offset: General.getOffset(General.getPositiveInt(qs.page), c.queryLimit),
+      offset: General.getOffset(qs.page, c.queryLimit),
       where: { id: data.map(item => item.dataValues.teacher_id) },
       attributes: { exclude: ['password'] }
     })
@@ -170,7 +170,7 @@ users.get('/:id/followers', async (ctx) => {
 
     data = await User.findAll({
       limit: c.queryLimit,
-      offset: General.getOffset(General.getPositiveInt(qs.page), c.queryLimit),
+      offset: General.getOffset(qs.page, c.queryLimit),
       where: { id: data.map(item => item.dataValues.follower_id) },
       attributes: { exclude: ['password'] }
     })
@@ -196,7 +196,7 @@ users.get('/:id/followings', async (ctx) => {
 
     data = await User.findAll({
       limit: c.queryLimit,
-      offset: General.getOffset(General.getPositiveInt(qs.page), c.queryLimit),
+      offset: General.getOffset(qs.page, c.queryLimit),
       where: { id: data.map(item => item.dataValues.following_id) },
       attributes: { exclude: ['password'] }
     })

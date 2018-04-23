@@ -29,6 +29,7 @@ export default {
    * @returns 
    */
   getOffset(page, limit) {
+    page = this.getPositiveInt(page)
     return page ? ( page - 1 ) * limit : 0
   },
 
