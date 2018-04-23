@@ -1,7 +1,7 @@
 import Router from 'koa-router'
 
 import { Course } from '../models'
-import { Db, Fn } from '../utils'
+import { Db, General } from '../utils'
 import c from '../config'
 
 export const courses = Router()
@@ -18,8 +18,8 @@ const filters = ['id', 'user_id']
  */
 courses.get('/', async (ctx) => {
   try {
-    const qs = Fn.parseQuerystring(ctx.request.querystring)
-    const filter = Fn.objToObjGroupsInArr(qs, filters)
+    const qs = General.parseQuerystring(ctx.request.querystring)
+    const filter = General.objToObjGroupsInArr(qs, filters)
     const page = !isNaN(qs.page) && qs.page > 0 ? qs.page : 1
 
     // this part is for majors filtering
@@ -39,12 +39,12 @@ courses.get('/', async (ctx) => {
 
     const data = await Course.findAll({
       limit: c.queryLimit,
-      offset: Fn.getOffset(page, c.queryLimit),
+      offset: General.getOffset(page, c.queryLimit),
       where: { $and: filter }
     })
-    Fn.simpleSend(ctx, data)
+    General.simpleSend(ctx, data)
   } catch (err) {
-    Fn.logError(ctx, err)
+    General.logError(ctx, err)
   }
 })
 
@@ -68,9 +68,9 @@ courses.post('/:id', async (ctx) => {
     course = await course.update({ label, description })
 
     ctx.status = 200
-    ctx.body = Fn.prettyJSON(course) 
+    ctx.body = General.prettyJSON(course) 
   } catch (err) {
-    Fn.logError(ctx, err)
+    General.logError(ctx, err)
   }
 })
 
@@ -84,7 +84,7 @@ courses.delete('/:id', async (ctx) => {
     await Course.destroy({ where: { id: ctx.params.id } })
     ctx.status = 200
   } catch (err) {
-    Fn.logError(ctx, err)
+    General.logError(ctx, err)
   }
 })
 

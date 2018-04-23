@@ -1,7 +1,7 @@
 import Router from 'koa-router'
 
 import { Schedule, Course } from '../models'
-import { Db, Fn } from '../utils'
+import { Db, General } from '../utils'
 import c from '../config'
 
 export const schedules = Router()
@@ -20,13 +20,13 @@ const urls = ['courses']
  */
 schedules.get('/', async (ctx) => {
   try {
-    const qs = Fn.parseQuerystring(ctx.request.querystring)
-    const filter = Fn.objToObjGroupsInArr(qs, filters)
+    const qs = General.parseQuerystring(ctx.request.querystring)
+    const filter = General.objToObjGroupsInArr(qs, filters)
     const page = !isNaN(qs.page) && qs.page > 0 ? qs.page : 1
 
     const data = await Schedule.findAll({
       limit: c.queryLimit,
-      offset: Fn.getOffset(page, c.queryLimit),
+      offset: General.getOffset(page, c.queryLimit),
       where: { $and: filter }
     })
 
@@ -35,13 +35,13 @@ schedules.get('/', async (ctx) => {
       let current = data[i].dataValues
 
       urls.map(each => {
-        current[`${each}_url`] = Fn.getDomain(`/api/schedules/${current.id}/${each}`)
+        current[`${each}_url`] = General.getDomain(`/api/schedules/${current.id}/${each}`)
       })
     }
 
-    Fn.simpleSend(ctx, data)
+    General.simpleSend(ctx, data)
   } catch (err) {
-    Fn.logError(ctx, err)
+    General.logError(ctx, err)
   }
 })
 
@@ -56,12 +56,12 @@ schedules.get('/:id', async (ctx) => {
     const data = await Schedule.findOne({ where: { id } })
 
     urls.map(each => {
-      data.dataValues[`${each}_url`] = Fn.getDomain(`/api/schedules/${id}/${each}`)
+      data.dataValues[`${each}_url`] = General.getDomain(`/api/schedules/${id}/${each}`)
     })
 
-    Fn.simpleSend(ctx, data)
+    General.simpleSend(ctx, data)
   } catch (err) {
-    Fn.logError(ctx, err)
+    General.logError(ctx, err)
   }
 })
 
@@ -78,8 +78,8 @@ schedules.get('/:id/courses', async (ctx) => {
     const data = await Course.findAll({
       where: { id: courses_id.map(item => item.dataValues.course_id) }
     })
-    Fn.simpleSend(ctx, data)
+    General.simpleSend(ctx, data)
   } catch (err) {
-    Fn.logError(ctx, err)
+    General.logError(ctx, err)
   }
 })

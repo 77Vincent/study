@@ -1,7 +1,7 @@
 import Router from 'koa-router'
 import bcrypt from 'bcryptjs'
 
-import { Db, Oauth, Fn } from '../utils'
+import { Db, Oauth, General, UserUtils } from '../utils'
 
 export const sessions = Router()
 
@@ -27,13 +27,13 @@ sessions.post('/', async (ctx) => {
   try {
     // Sign in with user input credentials
     if (id && password) {
-      const user = await Fn.getUser(id)
+      const user = await UserUtils.getOneUser(id)
       if (user && bcrypt.compareSync(password, user.password)) {
         data = user
       }
     // Sign in with credentials in cookies if exist 
     } else if (user_info) {
-      data = await Fn.getUser(user_info)
+      data = await UserUtils.getOneUser(user_info)
     // Newly visit
     } else {
       ctx.status = 204
@@ -54,12 +54,12 @@ sessions.post('/', async (ctx) => {
       })
 
       ctx.status = 200
-      ctx.body = Fn.prettyJSON(data) 
+      ctx.body = General.prettyJSON(data) 
     } else {
       ctx.status = 403
     }
   } catch (err) {
-    Fn.logError(ctx, err)
+    General.logError(ctx, err)
   }
 })
 
@@ -73,6 +73,6 @@ sessions.delete('/', (ctx) => {
     ctx.cookies.set('user_info', null)
     ctx.status = 200
   } catch (err) {
-    Fn.logError(ctx, err)
+    General.logError(ctx, err)
   }
 })

@@ -1,5 +1,4 @@
 import c from '../config'
-import { User } from '../models'
 
 export default {
   prettyJSON(json) {
@@ -79,17 +78,4 @@ export default {
   getDomain(custom = '') {
     return `${c.protocol}://${c.host}:${c.port}${custom}`
   },
-
-  getUser: async (id, config = {}) => {
-    const param = {
-      where: { $or: [ 
-        { id },
-        { username: id },
-        { mobilephone: id },
-        { email: id }]
-      }
-    }
-    const data = await User.findOne(Object.assign(param, config))
-    return data
-  }
 }

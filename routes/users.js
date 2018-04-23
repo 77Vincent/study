@@ -1,7 +1,7 @@
 import Router from 'koa-router'
 
-import { User, Schedule } from '../models'
-import { Fn, Db, Oauth } from '../utils'
+import { User } from '../models'
+import { General, Db, Oauth, UserUtils } from '../utils'
 import c from '../config.js'
 
 export const users = Router()
@@ -9,9 +9,6 @@ export const users = Router()
 const FF = Db.model('follower_following')
 const ST = Db.model('student_teacher')
 const UM = Db.model('user_major')
-
-const urls = ['followers', 'followings', 'students', 'teachers']
-const urlsByQuerystring = ['posts', 'courses']
 
 const filters = [
   'id',
@@ -48,8 +45,8 @@ const sortings = ['cost']
  */
 users.get('/', async (ctx) => {
   try {
-    const qs = Fn.parseQuerystring(ctx.request.querystring)
-    let filter = Fn.objToObjGroupsInArr(qs, filters)
+    const qs = General.parseQuerystring(ctx.request.querystring)
+    let filter = General.objToObjGroupsInArr(qs, filters)
     let sorting = []
 
     for (let key in qs) {
@@ -71,7 +68,7 @@ users.get('/', async (ctx) => {
 
     let data = await User.findAll({ 
       limit: c.queryLimit,
-      offset: Fn.getOffset(Fn.getPositiveInt(qs.page), c.queryLimit),
+      offset: General.getOffset(General.getPositiveInt(qs.page), c.queryLimit),
       where: { $and: filter },
       order: sorting,
       attributes: { exclude: ['password'] }
@@ -79,31 +76,12 @@ users.get('/', async (ctx) => {
 
     // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      let current = data[i].dataValues
-      let followers = await FF.findAll({ where: { following_id: current.id } })
-      let followings = await FF.findAll({ where: { follower_id: current.id } })
-      let majors = await UM.findAll({ where: { user_id: current.id } })
-      let students = await ST.findAll({ where: { teacher_id: current.id } })
-      let students_onboard = await Schedule.findAll({ where: { teacher_id: current.id } })
-
-      current.majors = majors.map(major => major.major_id)
-      current.followers = followers.length
-      current.followings = followings.length
-      current.students = students.length
-      current.students_onboard = students_onboard.length
-
-      current.students_onboard_url = `${c.protocol}://${c.host}:${c.port}/api/schedules?teacher_id=${current.id}`
-      urlsByQuerystring.map(each => {
-        current[`${each}_url`] = Fn.getDomain(`/api/${each}?user_id=${current.id}`)
-      })
-      urls.map(each => {
-        current[`${each}_url`] = Fn.getDomain(`/api/users/${current.id}/${each}`)
-      })
+      await UserUtils.addFields(data[i].dataValues, data[i].dataValues.id)
     }
 
-    Fn.simpleSend(ctx, data)
+    General.simpleSend(ctx, data)
   } catch (err) {
-    Fn.logError(ctx, err)
+    General.logError(ctx, err)
   }
 })
 
@@ -115,37 +93,17 @@ users.get('/', async (ctx) => {
 users.get('/:id', async (ctx) => {
   try {
     let id = ctx.params.id
-    let data = await Fn.getUser(id, { attributes: { exclude: ['password'] } })
+    let data = await UserUtils.getOneUser(id, { attributes: { exclude: ['password'] } })
 
     if (data) {
-      let dv = data.dataValues
+      await UserUtils.addFields(data.dataValues, id)
       
-      let followers = await FF.findAll({ where: { following_id: id } })
-      let followings = await FF.findAll({ where: { follower_id: id } })
-      let majors = await UM.findAll({ where: { user_id: id } })
-      let students = await ST.findAll({ where: { teacher_id: id } })
-      let students_onboard = await Schedule.findAll({ where: { teacher_id: id } })
-
-      dv.majors = majors.map(major => major.major_id)
-      dv.followers = followers.length
-      dv.followings = followings.length
-      dv.students = students.length
-      dv.students_onboard = students_onboard.length
-
-      dv.students_onboard_url = `${c.protocol}://${c.host}:${c.port}/api/schedules?teacher_id=${dv.id}`
-      urlsByQuerystring.map(each => {
-        dv[`${each}_url`] = Fn.getDomain(`/api/${each}?user_id=${id}`)
-      })
-      urls.map(url => {
-        dv[`${url}_url`] = Fn.getDomain(`/api/users/${id}/${url}`)
-      })
-
-      Fn.simpleSend(ctx, data)
+      General.simpleSend(ctx, data)
     } else {
       ctx.status = 404
     }
   } catch (err) {
-    Fn.logError(ctx, err)
+    General.logError(ctx, err)
   }
 })
 
@@ -157,19 +115,19 @@ users.get('/:id', async (ctx) => {
  */
 users.get('/:id/students', async (ctx) => {
   try {
-    const qs = Fn.parseQuerystring(ctx.request.querystring)
+    const qs = General.parseQuerystring(ctx.request.querystring)
     let data = await ST.findAll({ where: { teacher_id: ctx.params.id } })
 
     data = await User.findAll({
       limit: c.queryLimit,
-      offset: Fn.getOffset(Fn.getPositiveInt(qs.page), c.queryLimit),
+      offset: General.getOffset(General.getPositiveInt(qs.page), c.queryLimit),
       where: { id: data.map(item => item.dataValues.student_id) },
       attributes: { exclude: ['password'] }
     })
 
-    Fn.simpleSend(ctx, data)
+    General.simpleSend(ctx, data)
   } catch (err) {
-    Fn.logError(ctx, err)
+    General.logError(ctx, err)
   }
 })
 
@@ -181,19 +139,19 @@ users.get('/:id/students', async (ctx) => {
  */
 users.get('/:id/teachers', async (ctx) => {
   try {
-    const qs = Fn.parseQuerystring(ctx.request.querystring)
+    const qs = General.parseQuerystring(ctx.request.querystring)
     let data = await ST.findAll({ where: { student_id: ctx.params.id } })
 
     data = await User.findAll({
       limit: c.queryLimit,
-      offset: Fn.getOffset(Fn.getPositiveInt(qs.page), c.queryLimit),
+      offset: General.getOffset(General.getPositiveInt(qs.page), c.queryLimit),
       where: { id: data.map(item => item.dataValues.teacher_id) },
       attributes: { exclude: ['password'] }
     })
 
-    Fn.simpleSend(ctx, data)
+    General.simpleSend(ctx, data)
   } catch (err) {
-    Fn.logError(ctx, err)
+    General.logError(ctx, err)
   }
 })
 
@@ -205,21 +163,21 @@ users.get('/:id/teachers', async (ctx) => {
  */
 users.get('/:id/followers', async (ctx) => {
   try {
-    const qs = Fn.parseQuerystring(ctx.request.querystring)
+    const qs = General.parseQuerystring(ctx.request.querystring)
     let data = await FF.findAll({
       where: { following_id: ctx.params.id }
     })
 
     data = await User.findAll({
       limit: c.queryLimit,
-      offset: Fn.getOffset(Fn.getPositiveInt(qs.page), c.queryLimit),
+      offset: General.getOffset(General.getPositiveInt(qs.page), c.queryLimit),
       where: { id: data.map(item => item.dataValues.follower_id) },
       attributes: { exclude: ['password'] }
     })
 
-    Fn.simpleSend(ctx, data)
+    General.simpleSend(ctx, data)
   } catch (err) {
-    Fn.logError(ctx, err)
+    General.logError(ctx, err)
   }
 })
 
@@ -231,21 +189,21 @@ users.get('/:id/followers', async (ctx) => {
  */
 users.get('/:id/followings', async (ctx) => {
   try {
-    const qs = Fn.parseQuerystring(ctx.request.querystring)
+    const qs = General.parseQuerystring(ctx.request.querystring)
     let data = await FF.findAll({
       where: { follower_id: ctx.params.id }
     })
 
     data = await User.findAll({
       limit: c.queryLimit,
-      offset: Fn.getOffset(Fn.getPositiveInt(qs.page), c.queryLimit),
+      offset: General.getOffset(General.getPositiveInt(qs.page), c.queryLimit),
       where: { id: data.map(item => item.dataValues.following_id) },
       attributes: { exclude: ['password'] }
     })
 
-    Fn.simpleSend(ctx, data)
+    General.simpleSend(ctx, data)
   } catch (err) {
-    Fn.logError(ctx, err)
+    General.logError(ctx, err)
   }
 })
 
@@ -267,7 +225,7 @@ users.put('/', async (ctx) => {
   try {
     const { name, mobilephone, password } = ctx.request.body
     const user = await User.create({ name, mobilephone, password })
-    const data = await Fn.getUser(user.id, {
+    const data = await UserUtils.getOneUser(user.id, {
       attributes: { exclude: ['password'] }
     })
 
@@ -282,9 +240,9 @@ users.put('/', async (ctx) => {
     })
 
     ctx.status = 201
-    ctx.body = Fn.prettyJSON(data) 
+    ctx.body = General.prettyJSON(data) 
   } catch (err) {
-    Fn.logError(ctx, err)
+    General.logError(ctx, err)
   }
 })
 
@@ -306,7 +264,7 @@ users.post('/:id', async (ctx) => {
     })
     await Db.sync()
 
-    let data = await Fn.getUser(user_id)
+    let data = await UserUtils.getOneUser(user_id)
     // Delete majors because it's not updated here
     delete values.majors
     data = await data.update(values)
@@ -318,9 +276,9 @@ users.post('/:id', async (ctx) => {
     const majors = await Db.model('user_major').findAll({ where: { user_id } })
     data.dataValues.majors = majors.map(each => each.major_id)
 
-    Fn.simpleSend(ctx, data)
+    General.simpleSend(ctx, data)
   } catch (err) {
-    Fn.logError(ctx, err)
+    General.logError(ctx, err)
   }
 })
 
@@ -337,6 +295,6 @@ users.delete('/:id', async (ctx) => {
     ctx.cookies.set('user_info', null)
     ctx.status = 200
   } catch (err) {
-    Fn.logError(ctx, err)
+    General.logError(ctx, err)
   }
 })

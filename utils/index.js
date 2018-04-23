@@ -1,9 +1,11 @@
 import Db from './database'
 import Oauth from './oauth'
-import Fn from './fn'
+import General from './general'
+import UserUtils from './user'
 
 export {
   Db,
   Oauth,
-  Fn
+  General,
+  UserUtils
 }
