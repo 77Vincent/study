@@ -8,23 +8,23 @@ import Comment from './comment'
 import Schedule from './schedule'
 import Tag from './tag'
 import Message from './message'
+import Class from './class'
 
 // Table Relationship
 User.belongsTo(Role)
 Course.belongsTo(User)
 Post.belongsTo(User)
+Picture.belongsTo(Post)
 Tag.belongsTo(User)
 Message.belongsTo(User)
+Class.belongsTo(Schedule)
 
 // Each comment has a user id and a post id
 Comment.belongsTo(User)
 Comment.belongsTo(Post)
 
-Schedule.belongsToMany(Course, {through: 'schedule_course'})
-Course.belongsToMany(Schedule, {through: 'schedule_course'})
-
-// Each picture has a post id
-Picture.belongsTo(Post)
+Class.belongsToMany(Course, {through: 'class_course'})
+Course.belongsToMany(Class, {through: 'class_course'})
 
 User.belongsToMany(Major, {through: 'user_major'})
 Major.belongsToMany(User, {through: 'user_major'})
@@ -48,5 +48,6 @@ export {
   Picture,
   Schedule,
   Tag,
-  Message
+  Message,
+  Class
 }

@@ -622,6 +622,14 @@
           },
           {
             "group": "Query String",
+            "type": "boolean",
+            "optional": true,
+            "field": "finished",
+            "defaultValue": "0,1",
+            "description": "<p>Filtered by if the schedule is finished</p>"
+          },
+          {
+            "group": "Query String",
             "type": "integer",
             "optional": true,
             "field": "page",
@@ -674,9 +682,23 @@
   },
   {
     "type": "get",
-    "url": "/api/schedules/:id/courses",
-    "title": "Get a schedule's courses",
+    "url": "/api/schedules/:id/classes",
+    "title": "Get a schedule's classes",
     "group": "Schedules",
+    "parameter": {
+      "fields": {
+        "Query String": [
+          {
+            "group": "Query String",
+            "type": "boolean",
+            "optional": true,
+            "field": "finished",
+            "defaultValue": "0,1",
+            "description": "<p>Filtered by if the class is finished</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "200": [
@@ -685,7 +707,7 @@
             "type": "object[]",
             "optional": false,
             "field": "void",
-            "description": "<p>Array contains a schedule's courses</p>"
+            "description": "<p>Array contains a schedule's classes</p>"
           }
         ]
       }
@@ -693,7 +715,7 @@
     "version": "0.0.0",
     "filename": "routes/schedules.js",
     "groupTitle": "Schedules",
-    "name": "GetApiSchedulesIdCourses"
+    "name": "GetApiSchedulesIdClasses"
   },
   {
     "type": "delete",

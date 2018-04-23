@@ -54,6 +54,9 @@ posts.get('/:id', async (ctx) => {
   try {
     const id = ctx.params.id
     const data = await Post.findOne({ where: { id } })
+    const comments = await Comment.findAll({ where: { post_id: id } })
+
+    data.dataValues.comments = comments.length
     data.dataValues.pictures_url = General.getDomain(`/api/posts/${id}/pictures`) 
     data.dataValues.comments_url = General.getDomain(`/api/posts/${id}/comments`) 
 

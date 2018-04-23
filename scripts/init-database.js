@@ -9,11 +9,13 @@ import {
   Picture,
   Schedule,
   Tag,
-  Message
+  Message,
+  Class
 } from '../models'
 
 (async () => {
   try {
+    await Db.dropSchema('schedule_course')
     await Db.dropAllSchemas()
     await Db.sync({ force: true })
 
@@ -167,7 +169,8 @@ import {
     }, {
       label: 'schedule 2',
       teacher_id: '2',
-      student_id: '5'
+      student_id: '5',
+      finished: true 
     }, {
       label: 'schedule 3',
       teacher_id: '3',
@@ -177,6 +180,18 @@ import {
       teacher_id: '4',
       student_id: '6'
     }])
+    await Class.bulkCreate([
+      { date: new Date(), length: 1, schedule_id: 1 },
+      { date: new Date(), length: 1.5, schedule_id: 1 },
+      { date: new Date(), length: 2, schedule_id: 2, finished: 1 },
+      { date: new Date(), length: 1, schedule_id: 2 },
+      { date: new Date(), length: 3, schedule_id: 2 },
+      { date: new Date(), length: 2, schedule_id: 3, finished: 1 },
+      { date: new Date(), length: 2.5, schedule_id: 3 },
+      { date: new Date(), length: 1.5, schedule_id: 4, finished: 1 },
+      { date: new Date(), length: 1, schedule_id: 4 },
+      { date: new Date(), length: 2, schedule_id: 4 },
+    ])
     await Post.bulkCreate([{
       user_id: 1,
       content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
@@ -363,19 +378,35 @@ import {
       { course_id: 6, major_id: 6 },
       { course_id: 6, major_id: 1 },
     ])
-    await Db.model('schedule_course').bulkCreate([
-      { schedule_id: 1, course_id: 1 },
-      { schedule_id: 1, course_id: 2 },
-      { schedule_id: 1, course_id: 3 },
-      { schedule_id: 2, course_id: 2 },
-      { schedule_id: 2, course_id: 3 },
-      { schedule_id: 2, course_id: 4 },
-      { schedule_id: 3, course_id: 5 },
-      { schedule_id: 3, course_id: 6 },
-      { schedule_id: 4, course_id: 2 },
-      { schedule_id: 4, course_id: 4 },
-      { schedule_id: 4, course_id: 5 },
-      { schedule_id: 4, course_id: 6 },
+    await Db.model('class_course').bulkCreate([
+      { class_id: 1, course_id: 1 },
+      { class_id: 1, course_id: 2 },
+      { class_id: 1, course_id: 3 },
+      { class_id: 2, course_id: 2 },
+      { class_id: 2, course_id: 3 },
+      { class_id: 2, course_id: 4 },
+      { class_id: 3, course_id: 3 },
+      { class_id: 3, course_id: 4 },
+      { class_id: 4, course_id: 4 },
+      { class_id: 4, course_id: 5 },
+      { class_id: 4, course_id: 6 },
+      { class_id: 4, course_id: 7 },
+      { class_id: 5, course_id: 1 },
+      { class_id: 5, course_id: 3 },
+      { class_id: 6, course_id: 2 },
+      { class_id: 6, course_id: 4 },
+      { class_id: 6, course_id: 6 },
+      { class_id: 7, course_id: 2 },
+      { class_id: 7, course_id: 5 },
+      { class_id: 7, course_id: 6 },
+      { class_id: 8, course_id: 1 },
+      { class_id: 8, course_id: 7 },
+      { class_id: 9, course_id: 3 },
+      { class_id: 9, course_id: 4 },
+      { class_id: 9, course_id: 7 },
+      { class_id: 10, course_id: 1 },
+      { class_id: 10, course_id: 5 },
+      { class_id: 10, course_id: 6 },
     ])
     Db.close()
 

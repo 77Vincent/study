@@ -1,25 +1,22 @@
 import Sequelize from 'sequelize'
 import { Db } from '../utils'
 
-export default Db.define('schedule', {
+export default Db.define('class', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     unique: true,
     primaryKey: true
   },
-  label: {
-    type: Sequelize.STRING,
+  date: {
+    type: Sequelize.DATE,
   },
-  teacher_id: {
-    type: Sequelize.INTEGER,
-  },
-  student_id: {
-    type: Sequelize.INTEGER,
+  length: {
+    type: Sequelize.DOUBLE
   },
   finished: {
     type: Sequelize.BOOLEAN,
-    defaultValue: false
+    defaultValue: false    
   }
 }, {
   paranoid: true
