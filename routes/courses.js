@@ -11,8 +11,8 @@ const filters = ['id', 'user_id']
 /** 
  * @api {get} /api/courses Get all courses
  * @apiGroup Courses 
- * @apiParam (Query String) {string} [id] Filtered by the major ID
- * @apiParam (Query String) {string} [user_id] Filtered by the creator's id
+ * @apiParam (Query String) {integer} [id] Filtered by the major ID
+ * @apiParam (Query String) {integer} [user_id] Filtered by the creator's user ID
  * @apiParam (Query String) {string} [label] Search by course name
  * @apiParam (Query String) {integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all courses
@@ -58,7 +58,7 @@ courses.get('/', async (ctx) => {
  *    "label": "course name",
  *    "description": "course description" 
  *  }
- * @apiSuccess (200) {object} void The created course object
+ * @apiSuccess (200) {object} void The created course
  */
 courses.put('/', async (ctx) => {
   try {
@@ -81,7 +81,7 @@ courses.put('/', async (ctx) => {
  *    "label": "course name",
  *    "description": "course description" 
  *  }
- * @apiSuccess (200) {object} void The updated course object
+ * @apiSuccess (200) {object} void The updated course
  */
 courses.post('/:id', async (ctx) => {
   try {

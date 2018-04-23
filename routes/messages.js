@@ -44,8 +44,8 @@ messages.get('/', async (ctx) => {
  * @api {put} /api/messages Create a new message
  * @apiGroup Messages 
  * @apiParam {string} content Message content
- * @apiParam {string} user_id The sender's user ID 
- * @apiParam {string} recipient_id The recipient's user ID
+ * @apiParam {integer} user_id The sender's user ID 
+ * @apiParam {integer} recipient_id The recipient's user ID
  * @apiParamExample {json} Request-example:
  *  {
  *    "content": "Hellow world",

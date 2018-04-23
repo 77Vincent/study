@@ -32,17 +32,17 @@ define({ "api": [
         "Query String": [
           {
             "group": "Query String",
-            "type": "string",
+            "type": "integer",
             "optional": true,
             "field": "id",
             "description": "<p>Filtered by the major ID</p>"
           },
           {
             "group": "Query String",
-            "type": "string",
+            "type": "integer",
             "optional": true,
             "field": "user_id",
-            "description": "<p>Filtered by the creator's id</p>"
+            "description": "<p>Filtered by the creator's user ID</p>"
           },
           {
             "group": "Query String",
@@ -120,7 +120,7 @@ define({ "api": [
             "type": "object",
             "optional": false,
             "field": "void",
-            "description": "<p>The updated course object</p>"
+            "description": "<p>The updated course</p>"
           }
         ]
       }
@@ -170,7 +170,7 @@ define({ "api": [
             "type": "object",
             "optional": false,
             "field": "void",
-            "description": "<p>The created course object</p>"
+            "description": "<p>The created course</p>"
           }
         ]
       }
@@ -351,14 +351,14 @@ define({ "api": [
           },
           {
             "group": "Parameter",
-            "type": "string",
+            "type": "integer",
             "optional": false,
             "field": "user_id",
             "description": "<p>The sender's user ID</p>"
           },
           {
             "group": "Parameter",
-            "type": "string",
+            "type": "integer",
             "optional": false,
             "field": "recipient_id",
             "description": "<p>The recipient's user ID</p>"
@@ -392,6 +392,29 @@ define({ "api": [
     "name": "PutApiMessages"
   },
   {
+    "type": "delete",
+    "url": "/api/posts/:id",
+    "title": "Delete a post",
+    "group": "Posts",
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "void",
+            "optional": false,
+            "field": "void",
+            "description": "<p>void</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/posts.js",
+    "groupTitle": "Posts",
+    "name": "DeleteApiPostsId"
+  },
+  {
     "type": "get",
     "url": "/api/posts",
     "title": "Get all posts",
@@ -401,10 +424,17 @@ define({ "api": [
         "Query String": [
           {
             "group": "Query String",
-            "type": "string",
+            "type": "integer",
             "optional": true,
             "field": "user_id",
             "description": "<p>Filtered by user ID</p>"
+          },
+          {
+            "group": "Query String",
+            "type": "string",
+            "optional": true,
+            "field": "content",
+            "description": "<p>Search by posts' content</p>"
           },
           {
             "group": "Query String",
@@ -482,7 +512,7 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "object",
+            "type": "object[]",
             "optional": false,
             "field": "void",
             "description": "<p>Array contains all comments under a post</p>"
@@ -505,7 +535,7 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "object",
+            "type": "object[]",
             "optional": false,
             "field": "void",
             "description": "<p>Array contains all pictures from a post</p>"
@@ -517,6 +547,56 @@ define({ "api": [
     "filename": "routes/posts.js",
     "groupTitle": "Posts",
     "name": "GetApiPostsIdPictures"
+  },
+  {
+    "type": "put",
+    "url": "/api/posts",
+    "title": "Create a post",
+    "group": "Posts",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "user_id",
+            "description": "<p>The creator's user ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "content",
+            "description": "<p>The post content</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-example:",
+          "content": "{\n  \"user_id\": 1,\n  \"content\": \"post content\" \n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "object",
+            "optional": false,
+            "field": "void",
+            "description": "<p>The created post</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/posts.js",
+    "groupTitle": "Posts",
+    "name": "PutApiPosts"
   },
   {
     "type": "get",
