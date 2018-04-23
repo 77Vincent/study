@@ -73,9 +73,59 @@ schedules.get('/:id/classes', async (ctx) => {
     const data = await Class.findAll({
       where: { $and: filter },
       order: [['start', 'ASC']],
-      include: [{ model: Course }]
+      include: [{ model: Course, attributes: ['label', 'description'] }]
     })
     General.simpleSend(ctx, data)
+  } catch (err) {
+    General.logError(ctx, err)
+  }
+})
+
+/** 
+ * @api {put} /api/schedules Create a schedule
+ * @apiGroup Schedules 
+ * @apiParam {string} [label] The schedule name
+ * @apiParam {integer} teacher_id The teacher user ID
+ * @apiParam {integer} student_id The student user ID
+ * @apiSuccess (200) {object} void The created schedule 
+ */
+schedules.put('/', async (ctx) => {
+  try {
+    const { label, teacher_id, student_id } = ctx.params
+    const data = await Schedule.create({ label, teacher_id, student_id })
+
+    General.simpleSend(ctx, data)
+  } catch (err) {
+    General.logError(ctx, err)
+  }
+})
+
+/** 
+ * @api {post} /api/schedules Update a schedule
+ * @apiGroup Schedules 
+ * @apiParam {string} label The schedule name
+ * @apiSuccess (200) {object} void The updated schedule 
+ */
+schedules.put('/', async (ctx) => {
+  try {
+    const { label } = ctx.params
+    const data = await Schedule.create({ label })
+
+    General.simpleSend(ctx, data)
+  } catch (err) {
+    General.logError(ctx, err)
+  }
+})
+
+/** 
+ * @api {delete} /api/schedules/:id Delete a schedule
+ * @apiGroup Schedule 
+ * @apiSuccess (200) {void} void void
+ */
+schedules.delete('/:id', async (ctx) => {
+  try {
+    await Schedule.destroy({ where: { id: ctx.params.id } })
+    ctx.status = 200
   } catch (err) {
     General.logError(ctx, err)
   }

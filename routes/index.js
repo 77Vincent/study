@@ -7,6 +7,7 @@ import './sessions'
 import './posts'
 import './schedules'
 import './messages'
+import './classes'
 
 const router = Router()
 

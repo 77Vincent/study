@@ -110,4 +110,3 @@ courses.delete('/:id', async (ctx) => {
     General.logError(ctx, err)
   }
 })
-

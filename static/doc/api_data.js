@@ -1,5 +1,50 @@
 define({ "api": [
   {
+    "type": "get",
+    "url": "/api/classes",
+    "title": "Get all classes",
+    "group": "Classes",
+    "parameter": {
+      "fields": {
+        "Query String": [
+          {
+            "group": "Query String",
+            "type": "boolean",
+            "optional": true,
+            "field": "finished",
+            "defaultValue": "0,1",
+            "description": "<p>Filtered by if the schedule is finished</p>"
+          },
+          {
+            "group": "Query String",
+            "type": "integer",
+            "optional": true,
+            "field": "page",
+            "defaultValue": "1",
+            "description": "<p>Pagination</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "object[]",
+            "optional": false,
+            "field": "void",
+            "description": "<p>Array contains all schedules</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/classes.js",
+    "groupTitle": "Classes",
+    "name": "GetApiClasses"
+  },
+  {
     "type": "delete",
     "url": "/api/courses/:id",
     "title": "Delete a course",
@@ -599,6 +644,29 @@ define({ "api": [
     "name": "PutApiPosts"
   },
   {
+    "type": "delete",
+    "url": "/api/schedules/:id",
+    "title": "Delete a schedule",
+    "group": "Schedule",
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "void",
+            "optional": false,
+            "field": "void",
+            "description": "<p>void</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/schedules.js",
+    "groupTitle": "Schedule",
+    "name": "DeleteApiSchedulesId"
+  },
+  {
     "type": "get",
     "url": "/api/schedules",
     "title": "Get all schedules",
@@ -716,6 +784,92 @@ define({ "api": [
     "filename": "routes/schedules.js",
     "groupTitle": "Schedules",
     "name": "GetApiSchedulesIdClasses"
+  },
+  {
+    "type": "post",
+    "url": "/api/schedules",
+    "title": "Update a schedule",
+    "group": "Schedules",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "label",
+            "description": "<p>The schedule name</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "object",
+            "optional": false,
+            "field": "void",
+            "description": "<p>The updated schedule</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/schedules.js",
+    "groupTitle": "Schedules",
+    "name": "PostApiSchedules"
+  },
+  {
+    "type": "put",
+    "url": "/api/schedules",
+    "title": "Create a schedule",
+    "group": "Schedules",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "label",
+            "description": "<p>The schedule name</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "integer",
+            "optional": false,
+            "field": "teacher_id",
+            "description": "<p>The teacher user ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "integer",
+            "optional": false,
+            "field": "student_id",
+            "description": "<p>The student user ID</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "object",
+            "optional": false,
+            "field": "void",
+            "description": "<p>The created schedule</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/schedules.js",
+    "groupTitle": "Schedules",
+    "name": "PutApiSchedules"
   },
   {
     "type": "delete",

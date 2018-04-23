@@ -163,7 +163,7 @@ import {
       user_id: 4 
     }])
     await Schedule.bulkCreate([{
-      label: 'schedule 1',
+      label: null,
       teacher_id: '1',
       student_id: '5'
     }, {
