@@ -4,6 +4,7 @@ define({ "api": [
     "url": "/api/classes",
     "title": "Get all classes",
     "group": "Classes",
+    "description": "<p>Class is ordered by start time in ascend order</p>",
     "parameter": {
       "fields": {
         "Query String": [

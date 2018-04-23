@@ -53,7 +53,7 @@ users.get('/', async (ctx) => {
       // ASC as default order
       if (sortings.indexOf(key) !== -1) {
         qs[key] = qs[key] === 'DESC' ? 'DESC' : 'ASC'
-        sorting.push([key, qs[key]])
+        sorting.splice(0, 0, [key, qs[key]])
       }
     }
 
