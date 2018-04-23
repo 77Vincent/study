@@ -1,1 +1,16 @@
-define({  "name": "Xfolio",  "version": "0.0.0",  "description": "Xfolio RESTful API",  "title": "Xfolio RESTful API",  "url": "http://39.104.108.82:3001",  "sampleUrl": false,  "defaultVersion": "0.0.0",  "apidoc": "0.3.0",  "generator": {    "name": "apidoc",    "time": "2018-04-22T07:52:13.956Z",    "url": "http://apidocjs.com",    "version": "0.17.6"  }});
+define({
+  "name": "Xfolio",
+  "version": "0.0.0",
+  "description": "Xfolio RESTful API",
+  "title": "Xfolio RESTful API",
+  "url": "http://39.104.108.82:3001",
+  "sampleUrl": false,
+  "defaultVersion": "0.0.0",
+  "apidoc": "0.3.0",
+  "generator": {
+    "name": "apidoc",
+    "time": "2018-04-23T04:26:32.615Z",
+    "url": "http://apidocjs.com",
+    "version": "0.17.6"
+  }
+});

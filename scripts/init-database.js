@@ -8,7 +8,8 @@ import {
   Comment,
   Picture,
   Schedule,
-  Tag
+  Tag,
+  Message
 } from '../models'
 
 (async () => {
@@ -217,6 +218,72 @@ import {
       { post_id: 5, url: 'http://url' },
       { post_id: 5, url: 'http://url' },
     ])
+    await Message.bulkCreate([{
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      read: false,
+      user_id: 2,
+      recipient_id: 1 
+    }, {
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      read: false,
+      user_id: 1,
+      recipient_id: 2 
+    }, {
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      read: true,
+      user_id: 1,
+      recipient_id: 2 
+    }, {
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      read: true,
+      user_id: 1,
+      recipient_id: 2 
+    }, {
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      user_id: 1,
+      recipient_id: 2 
+    }, {
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      read: true,
+      user_id: 1,
+      recipient_id: 2 
+    }, {
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      read: true,
+      user_id: 1,
+      recipient_id: 2 
+    }, {
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      read: true,
+      user_id: 3,
+      recipient_id: 2 
+    }, {
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      read: true,
+      user_id: 5,
+      recipient_id: 3 
+    }, {
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      read: true,
+      user_id: 4,
+      recipient_id: 3 
+    }, {
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      user_id: 2,
+      recipient_id: 3 
+    }, {
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      user_id: 1,
+      recipient_id: 4
+    }, {
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      user_id: 3,
+      recipient_id: 4 
+    }, {
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
+      user_id: 2,
+      recipient_id: 5 
+    }])
     await Comment.bulkCreate([{
       user_id: 1,
       post_id: 1,

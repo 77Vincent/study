@@ -7,20 +7,14 @@ import Picture from './picture'
 import Comment from './comment'
 import Schedule from './schedule'
 import Tag from './tag'
+import Message from './message'
 
 // Table Relationship
-
-// Each user has a role
 User.belongsTo(Role)
-
-// Each course has a user who created the course
 Course.belongsTo(User)
-
-// Each post has a user id
 Post.belongsTo(User)
-
-// Each tag has a user id
 Tag.belongsTo(User)
+Message.belongsTo(User)
 
 // Each comment has a user id and a post id
 Comment.belongsTo(User)
@@ -53,5 +47,6 @@ export {
   Comment,
   Picture,
   Schedule,
-  Tag
+  Tag,
+  Message
 }
