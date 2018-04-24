@@ -51,7 +51,7 @@ export default {
   objToObjGroupsInArr(object = {}, keys = []) {
     let arr = []
     for (let key in object) {
-      if (Object.prototype.hasOwnProperty.call(object, key) && keys.indexOf(key) !== -1) {
+      if (object.hasOwnProperty(key) && keys.indexOf(key) !== -1) {
         let value = decodeURI(object[key])
         // Do not filter with empty string
         if (value !== '') {

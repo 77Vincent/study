@@ -27,6 +27,14 @@ schedules.get('/', async (ctx) => {
       where: { $and: filter }
     })
 
+    for (let i = 0; i < data.length; i++) {
+      const current = data[i].dataValues
+      const { id } = current
+      const classes = await Class.findAll({ where: { schedule_id: id } })
+      current.classes = classes.length
+      current.classes_url = General.getDomain(`/api/classes?teacher_id=${id}`) 
+    }
+
     General.simpleSend(ctx, data)
   } catch (err) {
     General.logError(ctx, err)

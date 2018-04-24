@@ -1,12 +1,14 @@
 // All server configs are stored here
 
 export default {
+  // database query
   queryLimit: 50,
+  // http
   protocol: 'http',
   host: 'localhost',
   domain: 'xfolio.cn',
   port: 3001,
-  // Database
+  // Database basic config
   database: 'mysql',
   databaseName: 'xfolio',
   databaseUser: 'root',
