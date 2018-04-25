@@ -61,14 +61,15 @@ classes.get('/', async (ctx) => {
  *    "finished": 0,
  *    "schedule_id": 3 
  *  }
- * @apiSuccess (200) {object} void The created class
+ * @apiSuccess (201) {object} void The created class
  */
 classes.put('/', async (ctx) => {
   try {
     const { start, end, length, schedule_id } = ctx.request.body
     const data = await Class.create({ start, end, length, schedule_id })
 
-    General.simpleSend(ctx, data)
+    ctx.body = General.prettyJSON(data)
+    ctx.status = 201
   } catch (err) {
     General.logError(ctx, err)
   }

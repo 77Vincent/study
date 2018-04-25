@@ -114,14 +114,15 @@ posts.get('/:id/comments', async (ctx) => {
  *    "user_id": 1,
  *    "content": "post content" 
  *  }
- * @apiSuccess (200) {object} void The created post
+ * @apiSuccess (201) {object} void The created post
  */
 posts.put('/', async (ctx) => {
   try {
     const { content, user_id } = ctx.request.body
     const data = await Post.create({ content, user_id })
 
-    General.simpleSend(ctx, data)
+    ctx.body = General.prettyJSON(data)
+    ctx.status = 201
   } catch (err) {
     General.logError(ctx, err)
   }

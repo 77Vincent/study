@@ -56,8 +56,8 @@ messages.get('/', async (ctx) => {
  */
 messages.put('/', async (ctx) => {
   try {
-    const { content, recipient_id, user_id } = ctx.request.body
-    const data = await Message.create({ content, recipient_id, user_id })
+    const { content, recipient_id, user_id, read } = ctx.request.body
+    const data = await Message.create({ content, recipient_id, user_id, read })
 
     ctx.status = 201
     ctx.body = General.prettyJSON(data) 

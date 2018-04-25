@@ -58,14 +58,15 @@ courses.get('/', async (ctx) => {
  *    "label": "course name",
  *    "description": "course description" 
  *  }
- * @apiSuccess (200) {object} void The created course
+ * @apiSuccess (201) {object} void The created course
  */
 courses.put('/', async (ctx) => {
   try {
-    const { label, description } = ctx.request.body
-    const data = await Course.create({ label, description })
+    const { label, description, user_id } = ctx.request.body
+    const data = await Course.create({ label, description, user_id })
 
-    General.simpleSend(ctx, data)
+    ctx.body = General.prettyJSON(data)
+    ctx.status = 201
   } catch (err) {
     General.logError(ctx, err)
   }

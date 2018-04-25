@@ -1,14 +1,16 @@
 import Router from 'koa-router'
 
-import './majors'
-import './users'
+import './classes'
+import './comments'
 import './courses'
-import './sessions'
+import './majors'
+import './messages'
+import './pictures'
 import './posts'
 import './schedules'
-import './messages'
-import './classes'
+import './sessions'
 import './tags'
+import './users'
 
 const router = Router()
 

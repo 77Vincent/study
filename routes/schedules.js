@@ -71,10 +71,11 @@ schedules.get('/:id', async (ctx) => {
  */
 schedules.put('/', async (ctx) => {
   try {
-    const { label, teacher_id, student_id } = ctx.request.body
-    const data = await Schedule.create({ label, teacher_id, student_id })
+    const { label, teacher_id, student_id, finished } = ctx.request.body
+    const data = await Schedule.create({ label, teacher_id, student_id, finished })
 
-    General.simpleSend(ctx, data)
+    ctx.body = General.prettyJSON(data)
+    ctx.status = 201
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -84,7 +85,7 @@ schedules.put('/', async (ctx) => {
  * @api {post} /api/schedules/:id Update a schedule
  * @apiGroup Schedules 
  * @apiParam {string} label The schedule name
- * @apiSuccess (200) {object} void The updated schedule 
+ * @apiSuccess (201) {object} void The updated schedule 
  */
 schedules.post('/:id', async (ctx) => {
   try {

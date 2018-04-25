@@ -23,14 +23,15 @@ tags.get('/', async (ctx) => {
 /** 
  * @api {put} /api/tags/ Create a tag
  * @apiGroup Tag 
- * @apiSuccess (200) {object} void The created tag
+ * @apiSuccess (201) {object} void The created tag
  */
 tags.put('/', async (ctx) => {
   try {
     const { content, user_id } = ctx.request.body
     const data = await Tag.create({ content, user_id })
 
-    General.simpleSend(ctx, data)
+    ctx.body = General.prettyJSON(data)
+    ctx.status = 201
   } catch (err) {
     General.logError(ctx, err)
   }

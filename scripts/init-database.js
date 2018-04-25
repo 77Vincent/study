@@ -13,8 +13,22 @@ import tags from './data/tags'
 import schedules from './data/schedules'
 import pictures from './data/pictures'
 
-import { Major, Role, Course, Post, Comment, Picture, Schedule, Message, Class, } from '../models'
+import { Major, Role } from '../models'
 
+const toCreate = [
+  'users', 'tags',
+  'courses', 'schedules',
+  'classes', 'posts',
+  'pictures', 'messages',
+  'comments'
+]
+const dommyData = [
+  users, tags,
+  courses, schedules,
+  classes, posts,
+  pictures, messages,
+  comments
+]
 const url = `${c.protocol}://${c.host}:${c.port}/api`;
 
 (async () => {
@@ -24,19 +38,12 @@ const url = `${c.protocol}://${c.host}:${c.port}/api`;
 
     await Role.bulkCreate([{ id: 'admin' }, { id: 'teacher' }, { id: 'student' }])
     await Major.bulkCreate(majors)
-    for (let i = 0; i < users.length; i++) {
-      await rq({ method: 'PUT', url: `${url}/users`, body: users[i], json: true })
+
+    for (let ind = 0; ind < toCreate.length; ind++) {
+      for (let i = 0; i < dommyData[ind].length; i++) {
+        await rq({ method: 'PUT', url: `${url}/${toCreate[ind]}`, body: dommyData[ind][i], json: true })
+      }
     }
-    for (let i = 0; i < tags.length; i++) {
-      await rq({ method: 'PUT', url: `${url}/tags`, body: tags[i], json: true })
-    }
-    await Course.bulkCreate(courses)
-    await Schedule.bulkCreate(schedules)
-    await Class.bulkCreate(classes)
-    await Post.bulkCreate(posts)
-    await Picture.bulkCreate(pictures)
-    await Message.bulkCreate(messages)
-    await Comment.bulkCreate(comments)
 
     await Db.model('follower_following').bulkCreate([
       { follower_id: 1, following_id: 2 }, { follower_id: 1, following_id: 3 },
