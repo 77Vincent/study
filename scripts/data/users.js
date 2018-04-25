@@ -1,7 +1,7 @@
-export default [{
+export const dummyUsers = [{
   password: '000000',
   name: '老师1',
-  role_id: 'teacher',
+  role_id: 1,
   school: '北京大学',
   title: '建筑师',
   bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
@@ -14,7 +14,7 @@ export default [{
 }, {
   password: '000000',
   name: '老师2',
-  role_id: 'teacher',
+  role_id: 1,
   school: '哈佛大学',
   title: '插画师',
   bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
@@ -29,7 +29,7 @@ export default [{
 }, {
   password: '000000',
   name: '老师3',
-  role_id: 'teacher',
+  role_id: 1,
   school: '耶鲁大学',
   title: '服装设计师',
   bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
@@ -45,7 +45,7 @@ export default [{
 }, {
   password: '000000',
   name: '老师4',
-  role_id: 'teacher',
+  role_id: 1,
   school: 'MIT',
   title: '工业设计师',
   bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
@@ -60,7 +60,7 @@ export default [{
 }, {
   password: '000000',
   name: '学生1',
-  role_id: 'student',
+  role_id: 2,
   school: '清华大学',
   title: '景观设计师',
   bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
@@ -72,7 +72,7 @@ export default [{
 }, {
   password: '000000',
   name: '学生2',
-  role_id: 'student',
+  role_id: 2,
   school: '华侨大学',
   title: '游戏设计',
   bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',

@@ -1,4 +1,4 @@
-export default [
+export const dummyTags = [
   { content: '风趣', user_id: 1 },
   { content: '冷幽默', user_id: 1 },
   { content: '专业', user_id: 1 },

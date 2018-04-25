@@ -24,9 +24,8 @@ export default Db.define('user', {
     allowNull: false,
   },
   role_id: {
-    type: Sequelize.STRING,
-    defaultValue: 'student',
-    allowNull: false
+    type: Sequelize.INTEGER,
+    defaultValue: 2,
   },
   active: {
     type: Sequelize.BOOLEAN,

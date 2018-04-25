@@ -1,4 +1,4 @@
-export default [{
+export const dummySchedules = [{
   label: null,
   teacher_id: '1',
   student_id: '5'

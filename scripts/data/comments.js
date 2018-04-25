@@ -1,4 +1,4 @@
-export default [{
+export const dummyComments = [{
   user_id: 1,
   post_id: 1,
   content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',

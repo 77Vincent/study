@@ -1,4 +1,4 @@
-export default [{
+export const dummyMajors = [{
   label: '建筑',
   description: '建筑设计'
 }, {

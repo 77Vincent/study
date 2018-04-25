@@ -29,7 +29,7 @@ const sortings = ['cost']
  * @apiGroup Users 
  * @apiParam (Query String) {string} [id] Filtered by user ID
  * @apiParam (Query String) {string} [mobilephone] Filtered by user mobilephone
- * @apiParam (Query String) {string='teacher', 'student', 'admin'} [role_id='teacher,student'] Filtered by user's role
+ * @apiParam (Query String) {integer=0,1,2} [role_id=1,2] Filtered by user's role
  * @apiParam (Query String) {boolean=0,1} [gender=0,1] Filtered by user gender
  * @apiParam (Query String) {string='online','offline','both'} [place='both'] Filtered by the place to have the class
  * @apiParam (Query String) {string} [city] Filtered by the city a user is living in, check "Cities list"
@@ -40,7 +40,7 @@ const sortings = ['cost']
  * @apiParam (Query String) {string='DESC', 'ASC'} [cost] Sorting by cost
  * @apiParam (Query String) {integer} [page=1] Pagination
  * @apiParamExample {json} Request-example:
- * /api/users?id=1&gender=1,0&place=online&role_id=teacher&city=4503,1101
+ * /api/users?id=1&gender=1,0&place=online&role_id=1&city=4503,1101
  * @apiSuccess (200) {object[]} void Array contains all users
  */
 users.get('/', async (ctx) => {
@@ -227,8 +227,8 @@ users.get('/:id/followings', async (ctx) => {
  */
 users.put('/', async (ctx) => {
   try {
-    const { name, mobilephone, password } = ctx.request.body
-    const user = await User.create({ name, mobilephone, password })
+    const { name, mobilephone, password, role_id } = ctx.request.body
+    const user = await User.create({ name, mobilephone, password, role_id })
     const data = await UserUtils.getOneUser(user.id, {
       attributes: { exclude: ['password'] }
     })

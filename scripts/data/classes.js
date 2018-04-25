@@ -1,4 +1,4 @@
-export default [
+export const dummyClasses = [
   { start: new Date('2018/04/13'), length: 1, schedule_id: 1 },
   { start: new Date('2018/02/19'), length: 1.5, schedule_id: 1 },
   { start: new Date('2018/08/14'), length: 2, schedule_id: 2, finished: 1 },

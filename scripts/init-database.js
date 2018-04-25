@@ -2,87 +2,71 @@ import Db from '../utils/database.js'
 import rq from 'request-promise-native'
 import c from '../config'
 
-import users from './data/users'
-import majors from './data/majors'
-import courses from './data/courses'
-import posts from './data/posts'
-import classes from './data/classes'
-import messages from './data/messages'
-import comments from './data/comments'
-import tags from './data/tags'
-import schedules from './data/schedules'
-import pictures from './data/pictures'
+import { dummyUsers } from './data/users'
+import { dummyMajors } from './data/majors'
+import { dummyCourses } from './data/courses'
+import { dummyPosts } from './data/posts'
+import { dummyPictures } from './data/pictures'
+import { dummyComments } from './data/comments'
+import { dummySchedules } from './data/schedules'
+import { dummyClasses } from './data/classes'
+import { dummyMessages } from './data/messages'
+import { dummyTags } from './data/tags'
 
-import { Major, Role } from '../models'
+import { Role } from '../models'
 
-const toCreate = [
-  'users', 'tags',
-  'courses', 'schedules',
-  'classes', 'posts',
-  'pictures', 'messages',
-  'comments'
-]
-const dommyData = [
-  users, tags,
-  courses, schedules,
-  classes, posts,
-  pictures, messages,
-  comments
-]
-const url = `${c.protocol}://${c.host}:${c.port}/api`;
+const url = `${c.protocol}://${c.host}:${c.port}/api`
+const modules = module.children;
 
 (async () => {
   try {
     await Db.dropAllSchemas()
     await Db.sync({ force: true })
 
-    await Role.bulkCreate([{ id: 'admin' }, { id: 'teacher' }, { id: 'student' }])
-    await Major.bulkCreate(majors)
+    await Role.bulkCreate([{ label: 'admin' }, { label: 'teacher' }, { label: 'student' }])
 
-    for (let ind = 0; ind < toCreate.length; ind++) {
-      for (let i = 0; i < dommyData[ind].length; i++) {
-        await rq({ method: 'PUT', url: `${url}/${toCreate[ind]}`, body: dommyData[ind][i], json: true })
+    for (let r = 0; r < modules.length; r++) {
+      let current = modules[r].exports
+      let name = Object.keys(current)[0]
+
+      if (name.indexOf('dummy') !== -1) {
+        let resource = name.slice(5).toLowerCase()
+        for (let i = 0; i < current[name].length; i++) {
+          await rq({ method: 'PUT', url: `${url}/${resource}`, body: current[name][i], json: true })
+        }
       }
     }
 
     await Db.model('follower_following').bulkCreate([
-      { follower_id: 1, following_id: 2 }, { follower_id: 1, following_id: 3 },
-      { follower_id: 1, following_id: 4 }, { follower_id: 2, following_id: 3 },
-      { follower_id: 2, following_id: 1 }, { follower_id: 3, following_id: 4 },
+      { follower_id: 1, following_id: 2 }, { follower_id: 1, following_id: 3 }, { follower_id: 1, following_id: 4 },
+      { follower_id: 2, following_id: 3 }, { follower_id: 2, following_id: 1 }, { follower_id: 3, following_id: 4 },
       { follower_id: 3, following_id: 2 }, { follower_id: 4, following_id: 1 }
     ])
     await Db.model('student_teacher').bulkCreate([
-      { student_id: 5, teacher_id: 1 }, { student_id: 5, teacher_id: 2 },
-      { student_id: 5, teacher_id: 3 }, { student_id: 5, teacher_id: 4 }
+      { student_id: 5, teacher_id: 1 }, { student_id: 5, teacher_id: 2 }, { student_id: 5, teacher_id: 3 },
+      { student_id: 5, teacher_id: 4 }
     ])
     await Db.model('user_major').bulkCreate([
-      { user_id: 1, major_id: 1 }, { user_id: 1, major_id: 2 },
-      { user_id: 2, major_id: 3 }, { user_id: 2, major_id: 4 },
-      { user_id: 3, major_id: 5 }, { user_id: 4, major_id: 6 }
+      { user_id: 1, major_id: 1 }, { user_id: 1, major_id: 2 }, { user_id: 2, major_id: 3 },
+      { user_id: 2, major_id: 4 }, { user_id: 3, major_id: 5 }, { user_id: 4, major_id: 6 }
     ])
     await Db.model('course_major').bulkCreate([
-      { course_id: 1, major_id: 1 }, { course_id: 1, major_id: 2 },
-      { course_id: 1, major_id: 3 }, { course_id: 1, major_id: 4 },
-      { course_id: 2, major_id: 3 }, { course_id: 2, major_id: 6 },
-      { course_id: 3, major_id: 3 }, { course_id: 3, major_id: 5 },
-      { course_id: 4, major_id: 4 }, { course_id: 5, major_id: 5 },
-      { course_id: 6, major_id: 6 }, { course_id: 6, major_id: 1 },
+      { course_id: 1, major_id: 1 }, { course_id: 1, major_id: 2 }, { course_id: 1, major_id: 3 },
+      { course_id: 1, major_id: 4 }, { course_id: 2, major_id: 3 }, { course_id: 2, major_id: 6 },
+      { course_id: 3, major_id: 3 }, { course_id: 3, major_id: 5 }, { course_id: 4, major_id: 4 },
+      { course_id: 5, major_id: 5 }, { course_id: 6, major_id: 6 }, { course_id: 6, major_id: 1 },
     ])
     await Db.model('class_course').bulkCreate([
-      { class_id: 1, course_id: 1 }, { class_id: 1, course_id: 2 },
-      { class_id: 1, course_id: 3 }, { class_id: 2, course_id: 2 },
-      { class_id: 2, course_id: 3 }, { class_id: 2, course_id: 4 },
-      { class_id: 3, course_id: 3 }, { class_id: 3, course_id: 4 },
-      { class_id: 4, course_id: 4 }, { class_id: 4, course_id: 5 },
-      { class_id: 4, course_id: 6 }, { class_id: 4, course_id: 7 },
-      { class_id: 5, course_id: 1 }, { class_id: 5, course_id: 3 },
-      { class_id: 6, course_id: 2 }, { class_id: 6, course_id: 4 },
-      { class_id: 6, course_id: 6 }, { class_id: 7, course_id: 2 },
-      { class_id: 7, course_id: 5 }, { class_id: 7, course_id: 6 },
-      { class_id: 8, course_id: 1 }, { class_id: 8, course_id: 7 },
-      { class_id: 9, course_id: 3 }, { class_id: 9, course_id: 4 },
-      { class_id: 9, course_id: 7 }, { class_id: 10, course_id: 1 },
-      { class_id: 10, course_id: 5 }, { class_id: 10, course_id: 6 },
+      { class_id: 1, course_id: 1 }, { class_id: 1, course_id: 2 }, { class_id: 1, course_id: 3 },
+      { class_id: 2, course_id: 2 }, { class_id: 2, course_id: 3 }, { class_id: 2, course_id: 4 },
+      { class_id: 3, course_id: 3 }, { class_id: 3, course_id: 4 }, { class_id: 4, course_id: 4 },
+      { class_id: 4, course_id: 5 }, { class_id: 4, course_id: 6 }, { class_id: 4, course_id: 7 },
+      { class_id: 5, course_id: 1 }, { class_id: 5, course_id: 3 }, { class_id: 6, course_id: 2 },
+      { class_id: 6, course_id: 4 }, { class_id: 6, course_id: 6 }, { class_id: 7, course_id: 2 },
+      { class_id: 7, course_id: 5 }, { class_id: 7, course_id: 6 }, { class_id: 8, course_id: 1 },
+      { class_id: 8, course_id: 7 }, { class_id: 9, course_id: 3 }, { class_id: 9, course_id: 4 },
+      { class_id: 9, course_id: 7 }, { class_id: 10, course_id: 1 }, { class_id: 10, course_id: 5 },
+      { class_id: 10, course_id: 6 },
     ])
     Db.close()
 

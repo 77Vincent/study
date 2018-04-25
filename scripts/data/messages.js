@@ -1,4 +1,4 @@
-export default [{
+export const dummyMessages = [{
   content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
   read: false,
   user_id: 2,

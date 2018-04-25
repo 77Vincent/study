@@ -1,4 +1,4 @@
-export default [
+export const dummyPictures = [
   { post_id: 1, url: 'http://url' },
   { post_id: 1, url: 'http://url' },
   { post_id: 1, url: 'http://url' },
