@@ -15,7 +15,8 @@ export default Db.define('class', {
     type: Sequelize.DATE,
   },
   length: {
-    type: Sequelize.DOUBLE
+    type: Sequelize.DOUBLE,
+    defaultValue: 1
   },
   finished: {
     type: Sequelize.BOOLEAN,

@@ -40,7 +40,7 @@
             "optional": true,
             "field": "finished",
             "defaultValue": "0,1",
-            "description": "<p>Filtered by if the schedule is finished</p>"
+            "description": "<p>Filtered by if the class is finished</p>"
           },
           {
             "group": "Query String",
@@ -73,7 +73,7 @@
             "type": "object[]",
             "optional": false,
             "field": "void",
-            "description": "<p>Array contains all schedules</p>"
+            "description": "<p>Array contains all classes</p>"
           }
         ]
       }
@@ -94,21 +94,21 @@
           {
             "group": "Parameter",
             "type": "date",
-            "optional": false,
+            "optional": true,
             "field": "start",
             "description": "<p>Class start time</p>"
           },
           {
             "group": "Parameter",
             "type": "date",
-            "optional": false,
+            "optional": true,
             "field": "end",
             "description": "<p>Class end time</p>"
           },
           {
             "group": "Parameter",
             "type": "double",
-            "optional": false,
+            "optional": true,
             "field": "length",
             "description": "<p>Duration of the class in hours</p>"
           },
@@ -119,7 +119,7 @@
               "0",
               "1"
             ],
-            "optional": false,
+            "optional": true,
             "field": "finished",
             "description": "<p>Is the class finished or not</p>"
           }
@@ -163,7 +163,7 @@
           {
             "group": "Parameter",
             "type": "date",
-            "optional": false,
+            "optional": true,
             "field": "start",
             "description": "<p>Class start time</p>"
           },
@@ -177,8 +177,9 @@
           {
             "group": "Parameter",
             "type": "double",
-            "optional": false,
+            "optional": true,
             "field": "length",
+            "defaultValue": "1",
             "description": "<p>Duration of the class in hours</p>"
           },
           {
@@ -191,7 +192,7 @@
             "optional": true,
             "field": "finished",
             "defaultValue": "0",
-            "description": "<p>Duration of the class in hours</p>"
+            "description": "<p>If the class is finished or not</p>"
           },
           {
             "group": "Parameter",
@@ -279,6 +280,33 @@
     "url": "/api/comments/",
     "title": "Create a comment",
     "group": "Comment",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "integer",
+            "optional": false,
+            "field": "user_id",
+            "description": "<p>The creator's user ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "integer",
+            "optional": false,
+            "field": "post_id",
+            "description": "<p>The post ID it belongs to</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "content",
+            "description": "<p>The content of the comment</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "201": [

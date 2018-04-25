@@ -9,10 +9,10 @@ export const classes = Router()
 /** 
  * @api {get} /api/classes Get all classes
  * @apiGroup Classes 
- * @apiParam (Query String) {boolean=0,1} [finished=0,1] Filtered by if the schedule is finished 
+ * @apiParam (Query String) {boolean=0,1} [finished=0,1] Filtered by if the class is finished 
  * @apiParam (Query String) {string=ASC,DESC} [start=ASC] Ordered by start time of the class 
  * @apiParam (Query String) {integer} [page=1] Pagination
- * @apiSuccess (200) {object[]} void Array contains all schedules
+ * @apiSuccess (200) {object[]} void Array contains all classes 
  */
 classes.get('/', async (ctx) => {
   try {
@@ -48,10 +48,10 @@ classes.get('/', async (ctx) => {
  * @api {put} /api/classes Create a class
  * @apiGroup Classes 
  * @apiDescription The property "finished" is set to false by default
- * @apiParam {date} start Class start time 
+ * @apiParam {date} [start] Class start time 
  * @apiParam {date} [end] Class end time 
- * @apiParam {double} length Duration of the class in hours 
- * @apiParam {boolean=0,1} [finished=0] Duration of the class in hours 
+ * @apiParam {double} [length=1] Duration of the class in hours 
+ * @apiParam {boolean=0,1} [finished=0] If the class is finished or not 
  * @apiParam {integer} schedule_id Which schedule does this class belong to
  * @apiParamExample {json} Request-example:
  *  {
@@ -78,10 +78,10 @@ classes.put('/', async (ctx) => {
 /** 
  * @api {post} /api/classes/:id Update a class
  * @apiGroup Classes 
- * @apiParam {date} start Class start time 
- * @apiParam {date} end Class end time 
- * @apiParam {double} length Duration of the class in hours 
- * @apiParam {boolean=0,1} finished Is the class finished or not
+ * @apiParam {date} [start] Class start time 
+ * @apiParam {date} [end] Class end time 
+ * @apiParam {double} [length] Duration of the class in hours 
+ * @apiParam {boolean=0,1} [finished] Is the class finished or not
  * @apiParamExample {json} Request-example:
  *  {
  *    "start": new Date(),

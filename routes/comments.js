@@ -23,6 +23,9 @@ comments.get('/', async (ctx) => {
 /** 
  * @api {put} /api/comments/ Create a comment
  * @apiGroup Comment 
+ * @apiParam {integer} user_id The creator's user ID
+ * @apiParam {integer} post_id The post ID it belongs to
+ * @apiParam {string} content The content of the comment
  * @apiSuccess (201) {object} void The created comment
  */
 comments.put('/', async (ctx) => {
