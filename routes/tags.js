@@ -7,7 +7,7 @@ export const tags = Router()
 
 /** 
  * @api {get} /api/tags/ Get all tags
- * @apiGroup Tag 
+ * @apiGroup Tags
  * @apiSuccess (200) {object[]} void Array contains all tags
  */
 tags.get('/', async (ctx) => {
@@ -22,7 +22,7 @@ tags.get('/', async (ctx) => {
 
 /** 
  * @api {put} /api/tags/ Create a tag
- * @apiGroup Tag 
+ * @apiGroup Tags
  * @apiSuccess (201) {object} void The created tag
  */
 tags.put('/', async (ctx) => {
@@ -39,7 +39,7 @@ tags.put('/', async (ctx) => {
 
 /** 
  * @api {post} /api/tags/ Update a tag
- * @apiGroup Tag 
+ * @apiGroup Tags
  * @apiSuccess (201) {object} void The Updated tag
  */
 tags.post('/:id', async (ctx) => {
@@ -57,7 +57,7 @@ tags.post('/:id', async (ctx) => {
 
 /** 
  * @api {delete} /api/tags/:id Delete a tag
- * @apiGroup Tag 
+ * @apiGroup Tags
  * @apiSuccess (200) {void} void void
  */
 tags.delete('/:id', async (ctx) => {

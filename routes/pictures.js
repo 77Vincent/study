@@ -7,7 +7,7 @@ export const pictures = Router()
 
 /** 
  * @api {get} /api/pictures/ Get all pictures
- * @apiGroup Picture 
+ * @apiGroup Pictures
  * @apiSuccess (200) {object[]} void Array contains all pictures
  */
 pictures.get('/', async (ctx) => {
@@ -22,7 +22,7 @@ pictures.get('/', async (ctx) => {
 
 /** 
  * @api {put} /api/pictures/ Create a picture
- * @apiGroup Picture 
+ * @apiGroup Pictures
  * @apiSuccess (201) {object} void The created picture
  */
 pictures.put('/', async (ctx) => {
@@ -39,7 +39,7 @@ pictures.put('/', async (ctx) => {
 
 /** 
  * @api {delete} /api/pictures/:id Delete a picture
- * @apiGroup Picture 
+ * @apiGroup Pictures
  * @apiSuccess (200) {void} void void
  */
 pictures.delete('/:id', async (ctx) => {

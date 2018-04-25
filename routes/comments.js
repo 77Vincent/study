@@ -2,17 +2,23 @@ import Router from 'koa-router'
 
 import { Comment } from '../models'
 import { General } from '../utils'
+import c from '../config'
 
 export const comments = Router()
 
 /** 
  * @api {get} /api/comments/ Get all comments
- * @apiGroup Comment 
+ * @apiGroup Comments
+ * @apiParam (Query String) {integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all comments
  */
 comments.get('/', async (ctx) => {
   try {
-    const data = await Comment.findAll()
+    const qs = General.parseQuerystring(ctx.request.querystring)
+    const data = await Comment.findAll({
+      limit: c.queryLimit,
+      offset: General.getOffset(qs.page, c.queryLimit),
+    })
 
     General.simpleSend(ctx, data)
   } catch (err) {
@@ -22,7 +28,7 @@ comments.get('/', async (ctx) => {
 
 /** 
  * @api {put} /api/comments/ Create a comment
- * @apiGroup Comment 
+ * @apiGroup Comments
  * @apiParam {integer} user_id The creator's user ID
  * @apiParam {integer} post_id The post ID it belongs to
  * @apiParam {string} content The content of the comment
@@ -42,7 +48,7 @@ comments.put('/', async (ctx) => {
 
 /** 
  * @api {delete} /api/comments/:id Delete a comment
- * @apiGroup Comment 
+ * @apiGroup Comments
  * @apiSuccess (200) {void} void void
  */
 comments.delete('/:id', async (ctx) => {

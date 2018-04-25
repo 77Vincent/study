@@ -233,7 +233,7 @@
     "type": "delete",
     "url": "/api/comments/:id",
     "title": "Delete a comment",
-    "group": "Comment",
+    "group": "Comments",
     "success": {
       "fields": {
         "200": [
@@ -249,14 +249,28 @@
     },
     "version": "0.0.0",
     "filename": "routes/comments.js",
-    "groupTitle": "Comment",
+    "groupTitle": "Comments",
     "name": "DeleteApiCommentsId"
   },
   {
     "type": "get",
     "url": "/api/comments/",
     "title": "Get all comments",
-    "group": "Comment",
+    "group": "Comments",
+    "parameter": {
+      "fields": {
+        "Query String": [
+          {
+            "group": "Query String",
+            "type": "integer",
+            "optional": true,
+            "field": "page",
+            "defaultValue": "1",
+            "description": "<p>Pagination</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "200": [
@@ -272,14 +286,14 @@
     },
     "version": "0.0.0",
     "filename": "routes/comments.js",
-    "groupTitle": "Comment",
+    "groupTitle": "Comments",
     "name": "GetApiComments"
   },
   {
     "type": "put",
     "url": "/api/comments/",
     "title": "Create a comment",
-    "group": "Comment",
+    "group": "Comments",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -322,7 +336,7 @@
     },
     "version": "0.0.0",
     "filename": "routes/comments.js",
-    "groupTitle": "Comment",
+    "groupTitle": "Comments",
     "name": "PutApiComments"
   },
   {
@@ -744,7 +758,7 @@
     "type": "delete",
     "url": "/api/pictures/:id",
     "title": "Delete a picture",
-    "group": "Picture",
+    "group": "Pictures",
     "success": {
       "fields": {
         "200": [
@@ -760,14 +774,14 @@
     },
     "version": "0.0.0",
     "filename": "routes/pictures.js",
-    "groupTitle": "Picture",
+    "groupTitle": "Pictures",
     "name": "DeleteApiPicturesId"
   },
   {
     "type": "get",
     "url": "/api/pictures/",
     "title": "Get all pictures",
-    "group": "Picture",
+    "group": "Pictures",
     "success": {
       "fields": {
         "200": [
@@ -783,14 +797,14 @@
     },
     "version": "0.0.0",
     "filename": "routes/pictures.js",
-    "groupTitle": "Picture",
+    "groupTitle": "Pictures",
     "name": "GetApiPictures"
   },
   {
     "type": "put",
     "url": "/api/pictures/",
     "title": "Create a picture",
-    "group": "Picture",
+    "group": "Pictures",
     "success": {
       "fields": {
         "201": [
@@ -806,7 +820,7 @@
     },
     "version": "0.0.0",
     "filename": "routes/pictures.js",
-    "groupTitle": "Picture",
+    "groupTitle": "Pictures",
     "name": "PutApiPictures"
   },
   {
@@ -1355,7 +1369,7 @@
     "type": "delete",
     "url": "/api/tags/:id",
     "title": "Delete a tag",
-    "group": "Tag",
+    "group": "Tags",
     "success": {
       "fields": {
         "200": [
@@ -1371,14 +1385,14 @@
     },
     "version": "0.0.0",
     "filename": "routes/tags.js",
-    "groupTitle": "Tag",
+    "groupTitle": "Tags",
     "name": "DeleteApiTagsId"
   },
   {
     "type": "get",
     "url": "/api/tags/",
     "title": "Get all tags",
-    "group": "Tag",
+    "group": "Tags",
     "success": {
       "fields": {
         "200": [
@@ -1394,14 +1408,14 @@
     },
     "version": "0.0.0",
     "filename": "routes/tags.js",
-    "groupTitle": "Tag",
+    "groupTitle": "Tags",
     "name": "GetApiTags"
   },
   {
     "type": "post",
     "url": "/api/tags/",
     "title": "Update a tag",
-    "group": "Tag",
+    "group": "Tags",
     "success": {
       "fields": {
         "201": [
@@ -1417,14 +1431,14 @@
     },
     "version": "0.0.0",
     "filename": "routes/tags.js",
-    "groupTitle": "Tag",
+    "groupTitle": "Tags",
     "name": "PostApiTags"
   },
   {
     "type": "put",
     "url": "/api/tags/",
     "title": "Create a tag",
-    "group": "Tag",
+    "group": "Tags",
     "success": {
       "fields": {
         "201": [
@@ -1440,7 +1454,7 @@
     },
     "version": "0.0.0",
     "filename": "routes/tags.js",
-    "groupTitle": "Tag",
+    "groupTitle": "Tags",
     "name": "PutApiTags"
   },
   {
