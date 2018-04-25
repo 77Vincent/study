@@ -8,6 +8,7 @@ import './posts'
 import './schedules'
 import './messages'
 import './classes'
+import './tags'
 
 const router = Router()
 
