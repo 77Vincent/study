@@ -7,6 +7,7 @@ export const roles = Router()
 
 /** 
  * @api {get} /api/roles/ Get all roles
+ * @apiDescription 0=admin, 1=teacher, 2=student
  * @apiGroup Roles 
  * @apiSuccess (200) {object[]} void Array contains all roles
  */
@@ -22,6 +23,7 @@ roles.get('/', async (ctx) => {
 
 /** 
  * @api {put} /api/roles/ Create a role 
+ * @apiDescription 0=admin, 1=teacher, 2=student
  * @apiGroup Roles 
  * @apiSuccess (200) {object} void The created role 
  */

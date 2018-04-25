@@ -16,9 +16,9 @@ import { dummyTags } from './data/tags'
 import { Role } from '../models'
 
 const url = `${c.protocol}://${c.host}:${c.port}/api`
-const modules = module.children;
+const modules = module.children
 
-(async () => {
+const run = async () => {
   try {
     await Db.dropAllSchemas()
     await Db.sync({ force: true })
@@ -73,4 +73,5 @@ const modules = module.children;
   } catch (err) {
     console.error('init Error', err)
   }
-})()
+}
+run()

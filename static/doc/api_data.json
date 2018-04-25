@@ -212,9 +212,9 @@
     },
     "success": {
       "fields": {
-        "200": [
+        "201": [
           {
-            "group": "200",
+            "group": "201",
             "type": "object",
             "optional": false,
             "field": "void",
@@ -227,6 +227,75 @@
     "filename": "routes/classes.js",
     "groupTitle": "Classes",
     "name": "PutApiClasses"
+  },
+  {
+    "type": "delete",
+    "url": "/api/comments/:id",
+    "title": "Delete a comment",
+    "group": "Comment",
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "void",
+            "optional": false,
+            "field": "void",
+            "description": "<p>void</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/comments.js",
+    "groupTitle": "Comment",
+    "name": "DeleteApiCommentsId"
+  },
+  {
+    "type": "get",
+    "url": "/api/comments/",
+    "title": "Get all comments",
+    "group": "Comment",
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "object[]",
+            "optional": false,
+            "field": "void",
+            "description": "<p>Array contains all comments</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/comments.js",
+    "groupTitle": "Comment",
+    "name": "GetApiComments"
+  },
+  {
+    "type": "put",
+    "url": "/api/comments/",
+    "title": "Create a comment",
+    "group": "Comment",
+    "success": {
+      "fields": {
+        "201": [
+          {
+            "group": "201",
+            "type": "object",
+            "optional": false,
+            "field": "void",
+            "description": "<p>The created comment</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/comments.js",
+    "groupTitle": "Comment",
+    "name": "PutApiComments"
   },
   {
     "type": "delete",
@@ -393,9 +462,9 @@
     },
     "success": {
       "fields": {
-        "200": [
+        "201": [
           {
-            "group": "200",
+            "group": "201",
             "type": "object",
             "optional": false,
             "field": "void",
@@ -500,6 +569,29 @@
     "filename": "routes/majors.js",
     "groupTitle": "Majors",
     "name": "GetApiMajors"
+  },
+  {
+    "type": "put",
+    "url": "/api/majors/",
+    "title": "Create a major",
+    "group": "Majors",
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "object",
+            "optional": false,
+            "field": "void",
+            "description": "<p>The created major</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/majors.js",
+    "groupTitle": "Majors",
+    "name": "PutApiMajors"
   },
   {
     "type": "get",
@@ -619,6 +711,75 @@
     "filename": "routes/messages.js",
     "groupTitle": "Messages",
     "name": "PutApiMessages"
+  },
+  {
+    "type": "delete",
+    "url": "/api/pictures/:id",
+    "title": "Delete a picture",
+    "group": "Picture",
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "void",
+            "optional": false,
+            "field": "void",
+            "description": "<p>void</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/pictures.js",
+    "groupTitle": "Picture",
+    "name": "DeleteApiPicturesId"
+  },
+  {
+    "type": "get",
+    "url": "/api/pictures/",
+    "title": "Get all pictures",
+    "group": "Picture",
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "object[]",
+            "optional": false,
+            "field": "void",
+            "description": "<p>Array contains all pictures</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/pictures.js",
+    "groupTitle": "Picture",
+    "name": "GetApiPictures"
+  },
+  {
+    "type": "put",
+    "url": "/api/pictures/",
+    "title": "Create a picture",
+    "group": "Picture",
+    "success": {
+      "fields": {
+        "201": [
+          {
+            "group": "201",
+            "type": "object",
+            "optional": false,
+            "field": "void",
+            "description": "<p>The created picture</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/pictures.js",
+    "groupTitle": "Picture",
+    "name": "PutApiPictures"
   },
   {
     "type": "delete",
@@ -811,9 +972,9 @@
     },
     "success": {
       "fields": {
-        "200": [
+        "201": [
           {
-            "group": "200",
+            "group": "201",
             "type": "object",
             "optional": false,
             "field": "void",
@@ -826,6 +987,54 @@
     "filename": "routes/posts.js",
     "groupTitle": "Posts",
     "name": "PutApiPosts"
+  },
+  {
+    "type": "get",
+    "url": "/api/roles/",
+    "title": "Get all roles",
+    "description": "<p>0=admin, 1=teacher, 2=student</p>",
+    "group": "Roles",
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "object[]",
+            "optional": false,
+            "field": "void",
+            "description": "<p>Array contains all roles</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/roles.js",
+    "groupTitle": "Roles",
+    "name": "GetApiRoles"
+  },
+  {
+    "type": "put",
+    "url": "/api/roles/",
+    "title": "Create a role",
+    "description": "<p>0=admin, 1=teacher, 2=student</p>",
+    "group": "Roles",
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "object",
+            "optional": false,
+            "field": "void",
+            "description": "<p>The created role</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/roles.js",
+    "groupTitle": "Roles",
+    "name": "PutApiRoles"
   },
   {
     "type": "delete",
@@ -956,9 +1165,9 @@
     },
     "success": {
       "fields": {
-        "200": [
+        "201": [
           {
-            "group": "200",
+            "group": "201",
             "type": "object",
             "optional": false,
             "field": "void",
@@ -1116,6 +1325,75 @@
   },
   {
     "type": "delete",
+    "url": "/api/tags/:id",
+    "title": "Delete a tag",
+    "group": "Tag",
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "void",
+            "optional": false,
+            "field": "void",
+            "description": "<p>void</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/tags.js",
+    "groupTitle": "Tag",
+    "name": "DeleteApiTagsId"
+  },
+  {
+    "type": "get",
+    "url": "/api/tags/",
+    "title": "Get all tags",
+    "group": "Tag",
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "object[]",
+            "optional": false,
+            "field": "void",
+            "description": "<p>Array contains all tags</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/tags.js",
+    "groupTitle": "Tag",
+    "name": "GetApiTags"
+  },
+  {
+    "type": "put",
+    "url": "/api/tags/",
+    "title": "Create a tag",
+    "group": "Tag",
+    "success": {
+      "fields": {
+        "201": [
+          {
+            "group": "201",
+            "type": "object",
+            "optional": false,
+            "field": "void",
+            "description": "<p>The created tag</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/tags.js",
+    "groupTitle": "Tag",
+    "name": "PutApiTags"
+  },
+  {
+    "type": "delete",
     "url": "/api/users/:id",
     "title": "Delete a user",
     "group": "Users",
@@ -1161,16 +1439,16 @@
           },
           {
             "group": "Query String",
-            "type": "string",
+            "type": "integer",
             "allowedValues": [
-              "'teacher'",
-              "'student'",
-              "'admin'"
+              "0",
+              "1",
+              "2"
             ],
             "optional": true,
             "field": "role_id",
-            "defaultValue": "teacher,student",
-            "description": "<p>Filtered by user's role</p>"
+            "defaultValue": "1,2",
+            "description": "<p>Filtered by user's role, 0=admin, 1=teacher, 2=student</p>"
           },
           {
             "group": "Query String",
@@ -1266,7 +1544,7 @@
       "examples": [
         {
           "title": "Request-example:",
-          "content": "/api/users?id=1&gender=1,0&place=online&role_id=teacher&city=4503,1101",
+          "content": "/api/users?id=1&gender=1,0&place=online&role_id=1&city=4503,1101",
           "type": "json"
         }
       ]

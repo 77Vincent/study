@@ -29,7 +29,7 @@ const sortings = ['cost']
  * @apiGroup Users 
  * @apiParam (Query String) {string} [id] Filtered by user ID
  * @apiParam (Query String) {string} [mobilephone] Filtered by user mobilephone
- * @apiParam (Query String) {integer=0,1,2} [role_id=1,2] Filtered by user's role
+ * @apiParam (Query String) {integer=0,1,2} [role_id=1,2] Filtered by user's role, 0=admin, 1=teacher, 2=student
  * @apiParam (Query String) {boolean=0,1} [gender=0,1] Filtered by user gender
  * @apiParam (Query String) {string='online','offline','both'} [place='both'] Filtered by the place to have the class
  * @apiParam (Query String) {string} [city] Filtered by the city a user is living in, check "Cities list"
@@ -227,8 +227,7 @@ users.get('/:id/followings', async (ctx) => {
  */
 users.put('/', async (ctx) => {
   try {
-    const { name, mobilephone, password, role_id } = ctx.request.body
-    const user = await User.create({ name, mobilephone, password, role_id })
+    const user = await User.create(ctx.request.body)
     const data = await UserUtils.getOneUser(user.id, {
       attributes: { exclude: ['password'] }
     })
