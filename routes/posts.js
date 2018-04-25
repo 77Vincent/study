@@ -1,7 +1,7 @@
 import Router from 'koa-router'
 
 import c from '../config'
-import { Post, Picture, Comment } from '../models'
+import { Post, Comment } from '../models'
 import { General } from '../utils'
 
 export const posts = Router()
@@ -33,11 +33,15 @@ posts.get('/', async (ctx) => {
       offset: General.getOffset(qs.page, c.queryLimit),
       where: { $and: filter },
     })
-    data.map(each => {
-      const { id } = each.dataValues
-      each.dataValues.pictures_url = General.getDomain(`/api/posts/${id}/pictures`) 
-      each.dataValues.comments_url = General.getDomain(`/api/posts/${id}/comments`) 
-    })
+
+    for (let i = 0; i < data.length; i++) {
+      const current = data[i].dataValues
+      const { id } = current 
+      const comments = await Comment.findAll({ where: { post_id: id } })
+      current.comments = comments.length
+      current.pictures_url = General.getDomain(`/api/pictures?post_id=${id}`) 
+      current.comments_url = General.getDomain(`/api/comments?post_id=${id}`) 
+    }
 
     General.simpleSend(ctx, data)
   } catch (err) {
@@ -56,47 +60,11 @@ posts.get('/:id', async (ctx) => {
     const data = await Post.findOne({ where: { id } })
     const comments = await Comment.findAll({ where: { post_id: id } })
 
-    data.dataValues.comments = comments.length
-    data.dataValues.pictures_url = General.getDomain(`/api/posts/${id}/pictures`) 
-    data.dataValues.comments_url = General.getDomain(`/api/posts/${id}/comments`) 
-
-    General.simpleSend(ctx, data)
-  } catch (err) {
-    General.logError(ctx, err)
-  }
-})
-
-/** 
- * @api {get} /api/posts/:id/pictures Get a post's pictures
- * @apiGroup Posts 
- * @apiSuccess (200) {object[]} void Array contains all pictures from a post
- */
-posts.get('/:id/pictures', async (ctx) => {
-  try {
-    const id = ctx.params.id
-    const data = await Picture.findAll({ where: { post_id: id } })
-
-    General.simpleSend(ctx, data)
-  } catch (err) {
-    General.logError(ctx, err)
-  }
-})
-
-/** 
- * @api {get} /api/posts/:id/comments Get a post's comments
- * @apiGroup Posts 
- * @apiParam (Query String) {integer} [page=1] Pagination
- * @apiSuccess (200) {object[]} void Array contains all comments under a post
- */
-posts.get('/:id/comments', async (ctx) => {
-  try {
-    const qs = General.parseQuerystring(ctx.request.querystring)
-    const id = ctx.params.id
-    const data = await Comment.findAll({
-      limit: c.queryLimit,
-      offset: General.getOffset(qs.page, c.queryLimit),
-      where: { post_id: id } 
-    })
+    if (data) {
+      data.dataValues.comments = comments.length
+      data.dataValues.pictures_url = General.getDomain(`/api/pictures?post_id=${id}`) 
+      data.dataValues.comments_url = General.getDomain(`/api/comments?post_id=${id}`) 
+    }
 
     General.simpleSend(ctx, data)
   } catch (err) {

@@ -6,18 +6,25 @@ import c from '../config'
 
 export const comments = Router()
 
+const filters = ['user_id', 'post_id']
+
 /** 
  * @api {get} /api/comments/ Get all comments
  * @apiGroup Comments
+ * @apiParam (Query String) {integer} [user_id] Filtered by creator's user ID
+ * @apiParam (Query String) {integer} [post_id] Filtered by post's ID it belongs to 
  * @apiParam (Query String) {integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all comments
  */
 comments.get('/', async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
+    const filter = General.objToObjGroupsInArr(qs, filters)
+
     const data = await Comment.findAll({
       limit: c.queryLimit,
       offset: General.getOffset(qs.page, c.queryLimit),
+      where: { $and: filter },
     })
 
     General.simpleSend(ctx, data)

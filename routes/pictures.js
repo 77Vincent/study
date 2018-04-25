@@ -2,17 +2,29 @@ import Router from 'koa-router'
 
 import { Picture } from '../models'
 import { General } from '../utils'
+import c from '../config'
 
 export const pictures = Router()
+
+const filters = ['post_id']
 
 /** 
  * @api {get} /api/pictures/ Get all pictures
  * @apiGroup Pictures
+ * @apiParam (Query String) {integer} [post_id] Filtered by post's ID it belongs to 
+ * @apiParam (Query String) {integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all pictures
  */
 pictures.get('/', async (ctx) => {
   try {
-    const data = await Picture.findAll()
+    const qs = General.parseQuerystring(ctx.request.querystring)
+    const filter = General.objToObjGroupsInArr(qs, filters)
+
+    const data = await Picture.findAll({
+      limit: c.queryLimit,
+      offset: General.getOffset(qs.page, c.queryLimit),
+      where: { $and: filter },
+    })
 
     General.simpleSend(ctx, data)
   } catch (err) {
@@ -23,6 +35,8 @@ pictures.get('/', async (ctx) => {
 /** 
  * @api {put} /api/pictures/ Create a picture
  * @apiGroup Pictures
+ * @apiParam {integer} post_id The post ID it belongs to
+ * @apiParam {string} url The URL of the picture 
  * @apiSuccess (201) {object} void The created picture
  */
 pictures.put('/', async (ctx) => {

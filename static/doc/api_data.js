@@ -264,6 +264,20 @@ define({ "api": [
             "group": "Query String",
             "type": "integer",
             "optional": true,
+            "field": "user_id",
+            "description": "<p>Filtered by creator's user ID</p>"
+          },
+          {
+            "group": "Query String",
+            "type": "integer",
+            "optional": true,
+            "field": "post_id",
+            "description": "<p>Filtered by post's ID it belongs to</p>"
+          },
+          {
+            "group": "Query String",
+            "type": "integer",
+            "optional": true,
             "field": "page",
             "defaultValue": "1",
             "description": "<p>Pagination</p>"
@@ -782,6 +796,27 @@ define({ "api": [
     "url": "/api/pictures/",
     "title": "Get all pictures",
     "group": "Pictures",
+    "parameter": {
+      "fields": {
+        "Query String": [
+          {
+            "group": "Query String",
+            "type": "integer",
+            "optional": true,
+            "field": "post_id",
+            "description": "<p>Filtered by post's ID it belongs to</p>"
+          },
+          {
+            "group": "Query String",
+            "type": "integer",
+            "optional": true,
+            "field": "page",
+            "defaultValue": "1",
+            "description": "<p>Pagination</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "200": [
@@ -805,6 +840,26 @@ define({ "api": [
     "url": "/api/pictures/",
     "title": "Create a picture",
     "group": "Pictures",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "integer",
+            "optional": false,
+            "field": "post_id",
+            "description": "<p>The post ID it belongs to</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "url",
+            "description": "<p>The URL of the picture</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "201": [
@@ -919,66 +974,6 @@ define({ "api": [
     "filename": "routes/posts.js",
     "groupTitle": "Posts",
     "name": "GetApiPostsId"
-  },
-  {
-    "type": "get",
-    "url": "/api/posts/:id/comments",
-    "title": "Get a post's comments",
-    "group": "Posts",
-    "parameter": {
-      "fields": {
-        "Query String": [
-          {
-            "group": "Query String",
-            "type": "integer",
-            "optional": true,
-            "field": "page",
-            "defaultValue": "1",
-            "description": "<p>Pagination</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "200": [
-          {
-            "group": "200",
-            "type": "object[]",
-            "optional": false,
-            "field": "void",
-            "description": "<p>Array contains all comments under a post</p>"
-          }
-        ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "routes/posts.js",
-    "groupTitle": "Posts",
-    "name": "GetApiPostsIdComments"
-  },
-  {
-    "type": "get",
-    "url": "/api/posts/:id/pictures",
-    "title": "Get a post's pictures",
-    "group": "Posts",
-    "success": {
-      "fields": {
-        "200": [
-          {
-            "group": "200",
-            "type": "object[]",
-            "optional": false,
-            "field": "void",
-            "description": "<p>Array contains all pictures from a post</p>"
-          }
-        ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "routes/posts.js",
-    "groupTitle": "Posts",
-    "name": "GetApiPostsIdPictures"
   },
   {
     "type": "put",
