@@ -38,6 +38,24 @@ tags.put('/', async (ctx) => {
 })
 
 /** 
+ * @api {post} /api/tags/ Update a tag
+ * @apiGroup Tag 
+ * @apiSuccess (201) {object} void The Updated tag
+ */
+tags.post('/:id', async (ctx) => {
+  try {
+    const { content } = ctx.request.body
+    let data = await Tag.findOne({ where: { id: ctx.params.id } })
+    data = await data.update({ content })
+
+    ctx.body = General.prettyJSON(data)
+    ctx.status = 200
+  } catch (err) {
+    General.logError(ctx, err)
+  }
+})
+
+/** 
  * @api {delete} /api/tags/:id Delete a tag
  * @apiGroup Tag 
  * @apiSuccess (200) {void} void void

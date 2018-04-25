@@ -1370,6 +1370,29 @@ define({ "api": [
     "name": "GetApiTags"
   },
   {
+    "type": "post",
+    "url": "/api/tags/",
+    "title": "Update a tag",
+    "group": "Tag",
+    "success": {
+      "fields": {
+        "201": [
+          {
+            "group": "201",
+            "type": "object",
+            "optional": false,
+            "field": "void",
+            "description": "<p>The Updated tag</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/tags.js",
+    "groupTitle": "Tag",
+    "name": "PostApiTags"
+  },
+  {
     "type": "put",
     "url": "/api/tags/",
     "title": "Create a tag",

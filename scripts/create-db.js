@@ -25,6 +25,7 @@ const run = async () => {
 
     await Role.bulkCreate([{ label: 'admin' }, { label: 'teacher' }, { label: 'student' }])
 
+    // Create base tables
     for (let r = 0; r < modules.length; r++) {
       let current = modules[r].exports
       let name = Object.keys(current)[0]
@@ -37,6 +38,7 @@ const run = async () => {
       }
     }
 
+    // Create relationship tables
     await Db.model('follower_following').bulkCreate([
       { follower_id: 1, following_id: 2 }, { follower_id: 1, following_id: 3 }, { follower_id: 1, following_id: 4 },
       { follower_id: 2, following_id: 3 }, { follower_id: 2, following_id: 1 }, { follower_id: 3, following_id: 4 },
@@ -68,8 +70,8 @@ const run = async () => {
       { class_id: 9, course_id: 7 }, { class_id: 10, course_id: 1 }, { class_id: 10, course_id: 5 },
       { class_id: 10, course_id: 6 },
     ])
-    Db.close()
 
+    Db.close()
   } catch (err) {
     console.error('init Error', err)
   }

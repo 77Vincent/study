@@ -15,7 +15,9 @@
     "lint": "eslint ./",
     "doc": "apidoc -i routes/ -o static/doc/",
     "server": "pm2 start npm --name xfolio -- start",
-    "database": "babel-node ./scripts/database"
+    "create-db": "babel-node ./scripts/create-db",
+    "delete-db": "babel-node ./scripts/delete-db",
+    "update-db": "babel-node ./scripts/update-db"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
