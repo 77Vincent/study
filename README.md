@@ -1,5 +1,8 @@
 # Server Documentation
 
+## Runtime
+* node@8.11.1
+
 ## Development 
 ```bash
 npm i

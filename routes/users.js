@@ -74,9 +74,13 @@ users.get('/', async (ctx) => {
       attributes: { exclude: ['password'] }
     })
 
-    // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      await UserUtils.addFields(data[i].dataValues, data[i].dataValues.id)
+      const current = data[i].dataValues
+
+      // Add other fields to response data
+      await UserUtils.addFields(current, current.id)
+
+      // Reorder
     }
 
     General.simpleSend(ctx, data)

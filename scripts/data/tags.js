@@ -1,0 +1,15 @@
+export default [
+  { content: '风趣', user_id: 1 },
+  { content: '冷幽默', user_id: 1 },
+  { content: '专业', user_id: 1 },
+  { content: '口才好', user_id: 2 },
+  { content: '和蔼可亲', user_id: 2 },
+  { content: '闷骚', user_id: 2 },
+  { content: '性感', user_id: 2 },
+  { content: '有耐心', user_id: 3 },
+  { content: '专业', user_id: 3 },
+  { content: '不拘一格', user_id: 4 },
+  { content: '懂你', user_id: 4 },
+  { content: '真才实学', user_id: 4 },
+  { content: '经历丰富', user_id: 4 },
+]
