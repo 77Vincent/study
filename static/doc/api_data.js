@@ -906,6 +906,7 @@ define({ "api": [
     "url": "/api/posts",
     "title": "Get all posts",
     "group": "Posts",
+    "description": "<p>Posts are ordered by updated time in DESC order by default</p>",
     "parameter": {
       "fields": {
         "Query String": [

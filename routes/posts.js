@@ -11,6 +11,7 @@ const filters = ['user_id']
 /** 
  * @api {get} /api/posts Get all posts
  * @apiGroup Posts 
+ * @apiDescription Posts are ordered by updated time in DESC order by default
  * @apiParam (Query String) {integer} [user_id] Filtered by user ID
  * @apiParam (Query String) {string} [content] Search by posts' content
  * @apiParam (Query String) {integer} [page=1] Pagination
@@ -32,6 +33,7 @@ posts.get('/', async (ctx) => {
       limit: c.queryLimit,
       offset: General.getOffset(qs.page, c.queryLimit),
       where: { $and: filter },
+      order: [['updated_at', 'DESC']]
     })
 
     for (let i = 0; i < data.length; i++) {
