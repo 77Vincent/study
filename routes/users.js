@@ -76,12 +76,19 @@ users.get('/', async (ctx) => {
 
     for (let i = 0; i < data.length; i++) {
       const current = data[i].dataValues
+      // delete current.weight
 
       // Add other fields to response data
       await UserUtils.addFields(current, current.id)
-
-      // Reorder
     }
+
+    // Reorder
+    if (qs.role_id === '1') {
+      data.map(each => {
+        each.dataValues.weight = UserUtils.generalOrder(each.dataValues)
+      })
+    }
+    data.sort((a, b) => b.dataValues.weight - a.dataValues.weight)
 
     General.simpleSend(ctx, data)
   } catch (err) {
