@@ -1,6 +1,9 @@
 import c from '../config'
 
 export default {
+  msToDay(millisecond) {
+    return Math.floor(millisecond / 1000 / 60 / 60) / 24
+  },
   prettyJSON(json) {
     return JSON.stringify(json, null, 2)
   },

@@ -52,20 +52,21 @@ export default {
    * @returns {number} the weight to return
    */
   generalOrder(values) {
+    const origin = '2018/4/1'
     const aspects = {
-      bio: values.title ? 5 : 0,
-      place: values.place === 'both' ? 5 : 0,
-      available: values.available ? 5 : 0,
-      tags: values.tags.length ? 5 : 0,
+      bio: values.title ? 6 : 0,
+      place: values.place === 'both' ? 6 : 0,
+      available: values.available ? 6 : 0,
+      tags: values.tags.length ? 6 : 0,
       followings: values.followings * 2,
-      followers: values.followers * 5,
+      followers: values.followers * 6,
       students: values.students * 5,
-      students_onboard: values.students_onboard * 2,
+      students_onboard: values.students_onboard * 3,
       posts: values.posts * 3,
-      courses: values.courses * 2
+      courses: values.courses * 2,
+      lastSignIn: General.msToDay(Date.parse(values.last_signin) - Date.parse(origin)),
+      lastUpdate: General.msToDay(Date.parse(values.updated_at) - Date.parse(origin)) * 2,
     }
-
-    // const u = Number(Math.log(Date.now(values.updated_at)).toFixed(5))
 
     let weight = 0
     for (let key in aspects) {

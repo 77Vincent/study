@@ -75,8 +75,9 @@ export default Db.define('user', {
     type: Sequelize.INTEGER,
     defaultValue: 0,
   },
-  last_logout: {
-    type: Sequelize.DATE
+  last_signin: {
+    type: Sequelize.DATE,
+    defaultValue: new Date()
   },
 }, {
   paranoid: true,
