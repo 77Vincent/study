@@ -36,8 +36,7 @@ npm run delete-db
 npm run doc
 ```
 
-## Structure
-* All global basic configurations
+## File Structure
 ```
 xfolio-server
 |   config.js       // Global basic configurations
