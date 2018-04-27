@@ -7,12 +7,9 @@ import c from '../config.js'
 export const orders = Router()
 
 const params = [
-  'payment_method',
-  'total_price',
-  'unit_price',
-  'length',
-  'buyer_id',
-  'seller_id'
+  'payment_method', 'total_price',
+  'unit_price', 'length',
+  'buyer_id', 'seller_id'
 ]
 
 /** 

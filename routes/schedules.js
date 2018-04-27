@@ -6,6 +6,8 @@ import c from '../config'
 
 export const schedules = Router()
 
+const params = ['label', 'teacher_id', 'student_id', 'finished', 'quota']
+
 /** 
  * @api {get} /api/schedules Get all schedules
  * @apiGroup Schedules 
@@ -19,12 +21,11 @@ schedules.get('/', async (ctx) => {
   try {
     const filters = ['teacher_id', 'student_id', 'finished']
     const qs = General.parseQuerystring(ctx.request.querystring)
-    const filter = General.objToObjGroupsInArr(qs, filters)
 
     const data = await Schedule.findAll({
       limit: c.queryLimit,
       offset: General.getOffset(qs.page, c.queryLimit),
-      where: { $and: filter }
+      where: { $and: General.objToObjGroupsInArr(qs, filters) }
     })
 
     for (let i = 0; i < data.length; i++) {
@@ -67,12 +68,12 @@ schedules.get('/:id', async (ctx) => {
  * @apiParam {string} [label] The schedule name
  * @apiParam {integer} teacher_id The teacher user ID
  * @apiParam {integer} student_id The student user ID
+ * @apiParam {boolean=0,1} [finished=0] If the schedule is finished or not
  * @apiSuccess (200) {object} void The created schedule 
  */
 schedules.put('/', async (ctx) => {
   try {
-    const { label, teacher_id, student_id, finished, quota } = ctx.request.body
-    const data = await Schedule.create({ label, teacher_id, student_id, finished, quota })
+    const data = await Schedule.create(General.batchExtractObj(ctx.request.body, params))
 
     ctx.body = General.prettyJSON(data)
     ctx.status = 201
@@ -84,14 +85,16 @@ schedules.put('/', async (ctx) => {
 /** 
  * @api {post} /api/schedules/:id Update a schedule
  * @apiGroup Schedules 
- * @apiParam {string} label The schedule name
- * @apiSuccess (201) {object} void The updated schedule 
+ * @apiParam {string} [label] The schedule name
+ * @apiParam {integer} teacher_id The teacher user ID
+ * @apiParam {integer} student_id The student user ID
+ * @apiParam {boolean=0,1} [finished=0] If the schedule is finished or not
+ * @apiSuccess (200) {object} void The updated schedule 
  */
 schedules.post('/:id', async (ctx) => {
   try {
-    const { label } = ctx.request.body
     let data = await Schedule.findOne({ where: { id: ctx.params.id } })
-    data = await data.update({ label })
+    data = await data.update(General.batchExtractObj(ctx.request.body, params))
 
     General.simpleSend(ctx, data)
   } catch (err) {

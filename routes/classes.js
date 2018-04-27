@@ -6,6 +6,8 @@ import c from '../config'
 
 export const classes = Router()
 
+const params = ['start', 'end', 'length', 'finished', 'schedule_id']
+
 /** 
  * @api {get} /api/classes Get all classes
  * @apiGroup Classes 
@@ -19,7 +21,6 @@ classes.get('/', async (ctx) => {
     const filters = ['finished', 'schedule_id']
 
     const qs = General.parseQuerystring(ctx.request.querystring)
-    const filter = General.objToObjGroupsInArr(qs, filters)
 
     let sorting = [['start', 'ASC']]
     for (let key in qs) {
@@ -33,10 +34,11 @@ classes.get('/', async (ctx) => {
     const data = await Class.findAll({
       limit: c.queryLimit,
       offset: General.getOffset(qs.page, c.queryLimit),
-      where: { $and: filter },
+      where: { $and: General.objToObjGroupsInArr(qs, filters) },
       order: sorting,
       include: [{ model: Course, attributes: ['label', 'description'] }]
     })
+
     General.simpleSend(ctx, data)
   } catch (err) {
     General.logError(ctx, err)
@@ -64,8 +66,7 @@ classes.get('/', async (ctx) => {
  */
 classes.put('/', async (ctx) => {
   try {
-    const { start, end, length, schedule_id } = ctx.request.body
-    const data = await Class.create({ start, end, length, schedule_id })
+    const data = await Class.create(General.batchExtractObj(ctx.request.body, params))
 
     ctx.body = General.prettyJSON(data)
     ctx.status = 201
@@ -92,11 +93,8 @@ classes.put('/', async (ctx) => {
  */
 classes.post('/:id', async (ctx) => {
   try {
-    const { start, end, length, finished } = ctx.request.body
-    let data = await Class.findOne({
-      where: { id: ctx.params.id }
-    })
-    data = await data.update({ start, end, length, finished })
+    let data = await Class.findOne({ where: { id: ctx.params.id } })
+    data = await data.update(General.batchExtractObj(ctx.request.body, params))
 
     General.simpleSend(ctx, data)
   } catch (err) {

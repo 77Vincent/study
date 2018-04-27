@@ -6,8 +6,6 @@ import c from '../config'
 
 export const pictures = Router()
 
-const filters = ['post_id']
-
 /** 
  * @api {get} /api/pictures/ Get all pictures
  * @apiGroup Pictures
@@ -18,12 +16,11 @@ const filters = ['post_id']
 pictures.get('/', async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
-    const filter = General.objToObjGroupsInArr(qs, filters)
 
     const data = await Picture.findAll({
       limit: c.queryLimit,
       offset: General.getOffset(qs.page, c.queryLimit),
-      where: { $and: filter },
+      where: { $and: General.objToObjGroupsInArr(qs, ['post_id']) },
     })
 
     General.simpleSend(ctx, data)

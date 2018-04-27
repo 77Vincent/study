@@ -5,6 +5,8 @@ import { General } from '../utils'
 
 export const tags = Router()
 
+const params = ['content', 'user_id']
+
 /** 
  * @api {get} /api/tags/ Get all tags
  * @apiGroup Tags
@@ -23,12 +25,13 @@ tags.get('/', async (ctx) => {
 /** 
  * @api {put} /api/tags/ Create a tag
  * @apiGroup Tags
+ * @apiParam {string} content Content of the tag
+ * @apiParam {integer} user_id The creator's user ID
  * @apiSuccess (201) {object} void The created tag
  */
 tags.put('/', async (ctx) => {
   try {
-    const { content, user_id } = ctx.request.body
-    const data = await Tag.create({ content, user_id })
+    const data = await Tag.create(General.batchExtractObj(ctx.request.body, params))
 
     ctx.body = General.prettyJSON(data)
     ctx.status = 201
@@ -40,13 +43,13 @@ tags.put('/', async (ctx) => {
 /** 
  * @api {post} /api/tags/ Update a tag
  * @apiGroup Tags
- * @apiSuccess (201) {object} void The Updated tag
+ * @apiParam {string} content Content of the tag
+ * @apiSuccess (200) {object} void The Updated tag
  */
 tags.post('/:id', async (ctx) => {
   try {
-    const { content } = ctx.request.body
     let data = await Tag.findOne({ where: { id: ctx.params.id } })
-    data = await data.update({ content })
+    data = await data.update(General.batchExtractObj(ctx.request.body, params))
 
     General.simpleSend(ctx, data)
   } catch (err) {

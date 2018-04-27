@@ -6,8 +6,6 @@ import { General } from '../utils'
 
 export const posts = Router()
 
-const filters = ['user_id']
-
 /** 
  * @api {get} /api/posts Get all posts
  * @apiGroup Posts 
@@ -20,7 +18,7 @@ const filters = ['user_id']
 posts.get('/', async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
-    let filter = General.objToObjGroupsInArr(qs, filters)
+    let filter = General.objToObjGroupsInArr(qs, ['user_id'])
 
     // Search
     if (qs.content) {

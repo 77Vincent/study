@@ -452,16 +452,23 @@ define({ "api": [
           {
             "group": "Parameter",
             "type": "string",
-            "optional": false,
+            "optional": true,
             "field": "description",
             "description": "<p>The course description</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "integer",
+            "optional": true,
+            "field": "user_id",
+            "description": "<p>The creator's user ID</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Request-example:",
-          "content": "{\n  \"label\": \"course name\",\n  \"description\": \"course description\" \n}",
+          "content": "{\n  \"label\": \"course name\",\n  \"description\": \"course description\",\n  \"user_id\": 1\n}",
           "type": "json"
         }
       ]
@@ -505,13 +512,20 @@ define({ "api": [
             "optional": true,
             "field": "description",
             "description": "<p>The course description</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "integer",
+            "optional": false,
+            "field": "user_id",
+            "description": "<p>The creator's user ID</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Request-example:",
-          "content": "{\n  \"label\": \"course name\",\n  \"description\": \"course description\" \n}",
+          "content": "{\n  \"label\": \"course name\",\n  \"description\": \"course description\",\n  \"user_id\": 1\n}",
           "type": "json"
         }
       ]
@@ -859,11 +873,59 @@ define({ "api": [
     "url": "/api/orders/",
     "title": "Update a order",
     "group": "Orders",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "integer",
+            "optional": false,
+            "field": "payment_method",
+            "description": "<p>ID of the payment method</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "total_price",
+            "description": "<p>Total price of all the classes from this order</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "unit_price",
+            "description": "<p>Unit price of the each class from this order</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "length",
+            "description": "<p>Length of the schedule a user has bought from this order in hours</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "integer",
+            "optional": false,
+            "field": "buyer_id",
+            "description": "<p>The buyer's user ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "integer",
+            "optional": false,
+            "field": "seller_id",
+            "description": "<p>The seller's user ID</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
-        "201": [
+        "200": [
           {
-            "group": "201",
+            "group": "200",
             "type": "object",
             "optional": false,
             "field": "void",
@@ -882,6 +944,54 @@ define({ "api": [
     "url": "/api/orders/",
     "title": "Create a order",
     "group": "Orders",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "integer",
+            "optional": false,
+            "field": "payment_method",
+            "description": "<p>ID of the payment method</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "total_price",
+            "description": "<p>Total price of all the classes from this order</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "unit_price",
+            "description": "<p>Unit price of the each class from this order</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "length",
+            "description": "<p>Length of the schedule a user has bought from this order in hours</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "integer",
+            "optional": false,
+            "field": "buyer_id",
+            "description": "<p>The buyer's user ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "integer",
+            "optional": false,
+            "field": "seller_id",
+            "description": "<p>The seller's user ID</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "201": [
@@ -1326,18 +1436,44 @@ define({ "api": [
           {
             "group": "Parameter",
             "type": "string",
-            "optional": false,
+            "optional": true,
             "field": "label",
             "description": "<p>The schedule name</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "integer",
+            "optional": false,
+            "field": "teacher_id",
+            "description": "<p>The teacher user ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "integer",
+            "optional": false,
+            "field": "student_id",
+            "description": "<p>The student user ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "boolean",
+            "allowedValues": [
+              "0",
+              "1"
+            ],
+            "optional": true,
+            "field": "finished",
+            "defaultValue": "0",
+            "description": "<p>If the schedule is finished or not</p>"
           }
         ]
       }
     },
     "success": {
       "fields": {
-        "201": [
+        "200": [
           {
-            "group": "201",
+            "group": "200",
             "type": "object",
             "optional": false,
             "field": "void",
@@ -1379,6 +1515,18 @@ define({ "api": [
             "optional": false,
             "field": "student_id",
             "description": "<p>The student user ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "boolean",
+            "allowedValues": [
+              "0",
+              "1"
+            ],
+            "optional": true,
+            "field": "finished",
+            "defaultValue": "0",
+            "description": "<p>If the schedule is finished or not</p>"
           }
         ]
       }
@@ -1544,11 +1692,24 @@ define({ "api": [
     "url": "/api/tags/",
     "title": "Update a tag",
     "group": "Tags",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "content",
+            "description": "<p>Content of the tag</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
-        "201": [
+        "200": [
           {
-            "group": "201",
+            "group": "200",
             "type": "object",
             "optional": false,
             "field": "void",
@@ -1567,6 +1728,26 @@ define({ "api": [
     "url": "/api/tags/",
     "title": "Create a tag",
     "group": "Tags",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "content",
+            "description": "<p>Content of the tag</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "integer",
+            "optional": false,
+            "field": "user_id",
+            "description": "<p>The creator's user ID</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "201": [

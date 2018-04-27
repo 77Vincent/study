@@ -6,7 +6,7 @@ import c from '../config'
 
 export const courses = Router()
 
-const filters = ['id', 'user_id']
+const params = ['label', 'description', 'user_id']
 
 /** 
  * @api {get} /api/courses Get all courses
@@ -20,7 +20,7 @@ const filters = ['id', 'user_id']
 courses.get('/', async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
-    const filter = General.objToObjGroupsInArr(qs, filters)
+    const filter = General.objToObjGroupsInArr(qs, ['id', 'user_id'])
 
     // this part is for majors filtering
     if (qs.majors) {
@@ -42,6 +42,7 @@ courses.get('/', async (ctx) => {
       offset: General.getOffset(qs.page, c.queryLimit),
       where: { $and: filter }
     })
+
     General.simpleSend(ctx, data)
   } catch (err) {
     General.logError(ctx, err)
@@ -53,17 +54,18 @@ courses.get('/', async (ctx) => {
  * @apiGroup Courses 
  * @apiParam {string} label The course name
  * @apiParam {string} [description] The course description
+ * @apiParam {integer} user_id The creator's user ID
  * @apiParamExample {json} Request-example:
  *  {
  *    "label": "course name",
- *    "description": "course description" 
+ *    "description": "course description",
+ *    "user_id": 1
  *  }
  * @apiSuccess (201) {object} void The created course
  */
 courses.put('/', async (ctx) => {
   try {
-    const { label, description, user_id } = ctx.request.body
-    const data = await Course.create({ label, description, user_id })
+    const data = await Course.create(General.batchExtractObj(ctx.request.body, params))
 
     ctx.body = General.prettyJSON(data)
     ctx.status = 201
@@ -76,20 +78,21 @@ courses.put('/', async (ctx) => {
  * @api {post} /api/courses/:id Update a course
  * @apiGroup Courses 
  * @apiParam {string} label The course name
- * @apiParam {string} description The course description
+ * @apiParam {string} [description] The course description
+ * @apiParam {integer} [user_id] The creator's user ID
  * @apiParamExample {json} Request-example:
  *  {
  *    "label": "course name",
- *    "description": "course description" 
+ *    "description": "course description",
+ *    "user_id": 1
  *  }
  * @apiSuccess (200) {object} void The updated course
  */
 courses.post('/:id', async (ctx) => {
   try {
     const { id } = ctx.params
-    const { label, description } = ctx.request.body
     let data = await Course.findOne({ where: { id } })
-    data = await data.update({ label, description })
+    data = await data.update(General.batchExtractObj(ctx.request.body, params))
 
     ctx.status = 200
     ctx.body = General.prettyJSON(data) 
