@@ -4,7 +4,7 @@ import { Db } from '../utils'
 export default Db.define('role', {
   id: {
     primaryKey: true,
-    type: Sequelize.INTEGER,
+    type: Sequelize.TINYINT,
     autoIncrement: true,
   },
   label: {

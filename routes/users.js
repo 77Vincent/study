@@ -29,7 +29,7 @@ const sortings = ['cost']
  * @apiGroup Users 
  * @apiParam (Query String) {string} [id] Filtered by user ID
  * @apiParam (Query String) {string} [mobilephone] Filtered by user mobilephone
- * @apiParam (Query String) {integer=0,1,2} [role_id=1,2] Filtered by user's role, 0=admin, 1=teacher, 2=student
+ * @apiParam (Query String) {integer=1,2,3} [role_id=2,3] Filtered by user's role, 1=admin, 2=teacher, 3=student
  * @apiParam (Query String) {boolean=0,1} [gender=0,1] Filtered by user gender
  * @apiParam (Query String) {string='online','offline','both'} [place='both'] Filtered by the place to have the class
  * @apiParam (Query String) {string} [city] Filtered by the city a user is living in, check "Cities list"
@@ -83,7 +83,7 @@ users.get('/', async (ctx) => {
     }
 
     // Reorder
-    if (qs.role_id === '1') {
+    if (qs.role_id === '2') {
       data.map(each => {
         each.dataValues.weight = UserUtils.generalOrder(each.dataValues)
       })

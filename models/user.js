@@ -24,7 +24,7 @@ export default Db.define('user', {
     allowNull: false,
   },
   role_id: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.TINYINT,
     defaultValue: 2,
   },
   active: {
@@ -72,7 +72,7 @@ export default Db.define('user', {
     type: Sequelize.TEXT
   },
   cost: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.SMALLINT,
     defaultValue: 0,
   },
   last_signin: {

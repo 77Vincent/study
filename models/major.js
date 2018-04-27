@@ -3,7 +3,7 @@ import { Db } from '../utils'
 
 export default Db.define('major', {
   id: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.TINYINT,
     autoIncrement: true,
     unique: true,
     primaryKey: true

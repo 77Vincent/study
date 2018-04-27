@@ -17,6 +17,10 @@ export default Db.define('schedule', {
   student_id: {
     type: Sequelize.INTEGER,
   },
+  quota: {
+    type: Sequelize.TINYINT,
+    defaultValue: 1
+  },
   finished: {
     type: Sequelize.BOOLEAN,
     defaultValue: false

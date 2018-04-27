@@ -1502,14 +1502,14 @@
             "group": "Query String",
             "type": "integer",
             "allowedValues": [
-              "0",
               "1",
-              "2"
+              "2",
+              "3"
             ],
             "optional": true,
             "field": "role_id",
-            "defaultValue": "1,2",
-            "description": "<p>Filtered by user's role, 0=admin, 1=teacher, 2=student</p>"
+            "defaultValue": "2,3",
+            "description": "<p>Filtered by user's role, 1=admin, 2=teacher, 3=student</p>"
           },
           {
             "group": "Query String",

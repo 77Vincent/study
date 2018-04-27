@@ -71,8 +71,8 @@ schedules.get('/:id', async (ctx) => {
  */
 schedules.put('/', async (ctx) => {
   try {
-    const { label, teacher_id, student_id, finished } = ctx.request.body
-    const data = await Schedule.create({ label, teacher_id, student_id, finished })
+    const { label, teacher_id, student_id, finished, quota } = ctx.request.body
+    const data = await Schedule.create({ label, teacher_id, student_id, finished, quota })
 
     ctx.body = General.prettyJSON(data)
     ctx.status = 201
