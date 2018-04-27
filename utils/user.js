@@ -15,30 +15,61 @@ export default {
     return data
   },
   addFields: async (data, id) => {
-    const urls = ['followers', 'followings', 'students', 'teachers']
+    const urls = ['followers', 'followings']
     const urlsByQuerystring = ['posts', 'courses']
 
+    // Add students info to teachers
+    if (data.role_id === 2) {
+      const students = await Schedule.findAll({ 
+        where: { teacher_id: id }
+      })
+      const students_onboard = await Schedule.findAll({ 
+        where: { $and: [
+          { teacher_id: id },
+          { finished: 0 }
+        ]}
+      })
+      data.students = students.length
+      data.students_onboard = students_onboard.length
+      data.students_url = General.getDomain(`/api/users/${id}/students`)
+      data.students_onboard_url = General.getDomain(`/api/users/${id}/students?finished=0`)
+    } 
+
+    // Add teachers info to students
+    if (data.role_id === 3) {
+      const teachers = await Schedule.findAll({ 
+        where: { student_id: id }
+      })
+      const teachers_onboard = await Schedule.findAll({ 
+        where: { $and: [
+          { student_id: id },
+          { finished: 0 }
+        ]}
+      })
+
+      data.teachers = teachers.length
+      data.teachers_onboard = teachers_onboard.length
+      data.teachers_url = General.getDomain(`/api/users/${id}/teachers`)
+      data.teachers_onboard_url = General.getDomain(`/api/users/${id}/teachers?finished=0`)
+    }
+
+    // Add majors and tags
     const majors = await Db.model('user_major').findAll({ where: { user_id: id } })
     const tags = await Tag.findAll({ where: { user_id: id } })
-
     data.majors = majors.map(major => major.major_id)
     data.tags = tags.map(tag => tag.content)
 
+
+    // Add these properties
     const followers = await Db.model('follower_following').findAll({ where: { following_id: id } })
     const followings = await Db.model('follower_following').findAll({ where: { follower_id: id } })
-    const students = await Db.model('student_teacher').findAll({ where: { teacher_id: id } })
     const courses = await Course.findAll({ where: { user_id: id } })
     const posts = await Post.findAll({ where: { user_id: id} })
-    const students_onboard = await Schedule.findAll({ where: { teacher_id: id } })
-
     data.followers = followers.length
     data.followings = followings.length
-    data.students = students.length
     data.posts = posts.length
     data.courses = courses.length
-    data.students_onboard = students_onboard.length
 
-    data.students_onboard_url = General.getDomain(`/api/schedules?teacher_id=${id}`)
     urlsByQuerystring.map(each => {
       data[`${each}_url`] = General.getDomain(`/api/${each}?user_id=${id}`)
     })

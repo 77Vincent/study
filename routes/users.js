@@ -1,13 +1,12 @@
 import Router from 'koa-router'
 
-import { User } from '../models'
+import { User, Schedule } from '../models'
 import { General, Db, Oauth, UserUtils } from '../utils'
 import c from '../config.js'
 
 export const users = Router()
 
 const FF = Db.model('follower_following')
-const ST = Db.model('student_teacher')
 const UM = Db.model('user_major')
 
 const filters = [
@@ -74,12 +73,9 @@ users.get('/', async (ctx) => {
       attributes: { exclude: ['password'] }
     })
 
+    // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      const current = data[i].dataValues
-      // delete current.weight
-
-      // Add other fields to response data
-      await UserUtils.addFields(current, current.id)
+      await UserUtils.addFields(data[i].dataValues, data[i].dataValues.id)
     }
 
     // Reorder
@@ -121,13 +117,19 @@ users.get('/:id', async (ctx) => {
 /** 
  * @api {get} /api/users/:id/students Get a user's students
  * @apiGroup Users 
+ * @apiParam (Query String) {boolean=0,1} [finished=0,1] Filtered by if the schedule has been finished
  * @apiParam (Query String) {integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains a user's students
  */
 users.get('/:id/students', async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
-    let data = await ST.findAll({ where: { teacher_id: ctx.params.id } })
+    let filter = General.objToObjGroupsInArr(qs, ['finished'])
+    filter.push({ teacher_id: ctx.params.id })
+
+    let data = await Schedule.findAll({
+      where: { $and: filter }
+    })
 
     data = await User.findAll({
       limit: c.queryLimit,
@@ -135,6 +137,11 @@ users.get('/:id/students', async (ctx) => {
       where: { id: data.map(item => item.dataValues.student_id) },
       attributes: { exclude: ['password'] }
     })
+
+    // Add other fields to response data
+    for (let i = 0; i < data.length; i++) {
+      await UserUtils.addFields(data[i].dataValues, data[i].dataValues.id)
+    }
 
     General.simpleSend(ctx, data)
   } catch (err) {
@@ -145,13 +152,19 @@ users.get('/:id/students', async (ctx) => {
 /** 
  * @api {get} /api/users/:id/teachers Get a user's teachers
  * @apiGroup Users 
+ * @apiParam (Query String) {boolean=0,1} [finished=0,1] Filtered by if the schedule has been finished
  * @apiParam (Query String) {integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains a user's teachers
  */
 users.get('/:id/teachers', async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
-    let data = await ST.findAll({ where: { student_id: ctx.params.id } })
+    let filter = General.objToObjGroupsInArr(qs, ['finished'])
+    filter.push({ student_id: ctx.params.id })
+
+    let data = await Schedule.findAll({
+      where: { $and: filter }
+    })
 
     data = await User.findAll({
       limit: c.queryLimit,
@@ -159,6 +172,11 @@ users.get('/:id/teachers', async (ctx) => {
       where: { id: data.map(item => item.dataValues.teacher_id) },
       attributes: { exclude: ['password'] }
     })
+
+    // Add other fields to response data
+    for (let i = 0; i < data.length; i++) {
+      await UserUtils.addFields(data[i].dataValues, data[i].dataValues.id)
+    }
 
     General.simpleSend(ctx, data)
   } catch (err) {
@@ -186,6 +204,11 @@ users.get('/:id/followers', async (ctx) => {
       attributes: { exclude: ['password'] }
     })
 
+    // Add other fields to response data
+    for (let i = 0; i < data.length; i++) {
+      await UserUtils.addFields(data[i].dataValues, data[i].dataValues.id)
+    }
+
     General.simpleSend(ctx, data)
   } catch (err) {
     General.logError(ctx, err)
@@ -211,6 +234,11 @@ users.get('/:id/followings', async (ctx) => {
       where: { id: data.map(item => item.dataValues.following_id) },
       attributes: { exclude: ['password'] }
     })
+
+    // Add other fields to response data
+    for (let i = 0; i < data.length; i++) {
+      await UserUtils.addFields(data[i].dataValues, data[i].dataValues.id)
+    }
 
     General.simpleSend(ctx, data)
   } catch (err) {

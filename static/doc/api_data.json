@@ -1735,6 +1735,18 @@
         "Query String": [
           {
             "group": "Query String",
+            "type": "boolean",
+            "allowedValues": [
+              "0",
+              "1"
+            ],
+            "optional": true,
+            "field": "finished",
+            "defaultValue": "0,1",
+            "description": "<p>Filtered by if the schedule has been finished</p>"
+          },
+          {
+            "group": "Query String",
             "type": "integer",
             "optional": true,
             "field": "page",
@@ -1770,6 +1782,18 @@
     "parameter": {
       "fields": {
         "Query String": [
+          {
+            "group": "Query String",
+            "type": "boolean",
+            "allowedValues": [
+              "0",
+              "1"
+            ],
+            "optional": true,
+            "field": "finished",
+            "defaultValue": "0,1",
+            "description": "<p>Filtered by if the schedule has been finished</p>"
+          },
           {
             "group": "Query String",
             "type": "integer",
