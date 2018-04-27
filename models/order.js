@@ -3,7 +3,8 @@ import { Db } from '../utils'
 
 export default Db.define('order', {
   id: {
-    type: Sequelize.UUIDV1,
+    type: Sequelize.UUID,
+    defaultValue: Sequelize.UUIDV1,
     primaryKey: true
   },
   paid_at: {

@@ -661,7 +661,7 @@
             "group": "Query String",
             "type": "integer",
             "optional": true,
-            "field": "user_id",
+            "field": "sender_id",
             "description": "<p>Filtered by the sender's user ID</p>"
           },
           {
@@ -730,7 +730,7 @@
             "group": "Parameter",
             "type": "integer",
             "optional": false,
-            "field": "user_id",
+            "field": "sender_id",
             "description": "<p>The sender's user ID</p>"
           },
           {
@@ -745,7 +745,7 @@
       "examples": [
         {
           "title": "Request-example:",
-          "content": "{\n  \"content\": \"Hellow world\",\n  \"user_id\": 1,\n  \"recipient_id\": 2 \n}",
+          "content": "{\n  \"content\": \"Hellow world\",\n  \"sender_id\": 1,\n  \"recipient_id\": 2 \n}",
           "type": "json"
         }
       ]
@@ -767,6 +767,138 @@
     "filename": "routes/messages.js",
     "groupTitle": "Messages",
     "name": "PutApiMessages"
+  },
+  {
+    "type": "delete",
+    "url": "/api/orders/:id",
+    "title": "Delete a order",
+    "group": "Orders",
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "void",
+            "optional": false,
+            "field": "void",
+            "description": "<p>void</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/orders.js",
+    "groupTitle": "Orders",
+    "name": "DeleteApiOrdersId"
+  },
+  {
+    "type": "get",
+    "url": "/api/orders/",
+    "title": "Get all orders",
+    "group": "Orders",
+    "parameter": {
+      "fields": {
+        "Query String": [
+          {
+            "group": "Query String",
+            "type": "integer",
+            "optional": true,
+            "field": "buyer_id",
+            "description": "<p>Filtered by the buyer's user ID</p>"
+          },
+          {
+            "group": "Query String",
+            "type": "integer",
+            "optional": true,
+            "field": "seller_id",
+            "description": "<p>Filtered by the seller's user ID</p>"
+          },
+          {
+            "group": "Query String",
+            "type": "string",
+            "allowedValues": [
+              "DESC",
+              "ASC"
+            ],
+            "optional": true,
+            "field": "updated_at",
+            "defaultValue": "DESC",
+            "description": "<p>Sorting by updated time</p>"
+          },
+          {
+            "group": "Query String",
+            "type": "integer",
+            "optional": true,
+            "field": "page",
+            "defaultValue": "1",
+            "description": "<p>Pagination</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "object[]",
+            "optional": false,
+            "field": "void",
+            "description": "<p>Array contains all orders</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/orders.js",
+    "groupTitle": "Orders",
+    "name": "GetApiOrders"
+  },
+  {
+    "type": "post",
+    "url": "/api/orders/",
+    "title": "Update a order",
+    "group": "Orders",
+    "success": {
+      "fields": {
+        "201": [
+          {
+            "group": "201",
+            "type": "object",
+            "optional": false,
+            "field": "void",
+            "description": "<p>The Updated order</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/orders.js",
+    "groupTitle": "Orders",
+    "name": "PostApiOrders"
+  },
+  {
+    "type": "put",
+    "url": "/api/orders/",
+    "title": "Create a order",
+    "group": "Orders",
+    "success": {
+      "fields": {
+        "201": [
+          {
+            "group": "201",
+            "type": "object",
+            "optional": false,
+            "field": "void",
+            "description": "<p>The created order</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/orders.js",
+    "groupTitle": "Orders",
+    "name": "PutApiOrders"
   },
   {
     "type": "delete",
@@ -1527,9 +1659,9 @@
             "group": "Query String",
             "type": "string",
             "allowedValues": [
-              "'online'",
-              "'offline'",
-              "'both'"
+              "online",
+              "offline",
+              "both"
             ],
             "optional": true,
             "field": "place",
@@ -1585,8 +1717,8 @@
             "group": "Query String",
             "type": "string",
             "allowedValues": [
-              "'DESC'",
-              "'ASC'"
+              "DESC",
+              "ASC"
             ],
             "optional": true,
             "field": "cost",

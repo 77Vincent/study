@@ -16,7 +16,6 @@ export const classes = Router()
  */
 classes.get('/', async (ctx) => {
   try {
-    const sortings = ['start']
     const filters = ['finished', 'schedule_id']
 
     const qs = General.parseQuerystring(ctx.request.querystring)
@@ -25,7 +24,7 @@ classes.get('/', async (ctx) => {
     let sorting = [['start', 'ASC']]
     for (let key in qs) {
       // ASC as default order
-      if (sortings.indexOf(key) !== -1) {
+      if (['start'].indexOf(key) !== -1) {
         qs[key] = qs[key] === 'DESC' ? 'DESC' : 'ASC'
         sorting.splice(0, 0, [key, qs[key]])
       }

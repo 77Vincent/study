@@ -25,6 +25,14 @@ export default {
     return obj
   },
 
+  batchExtractObj(sourceObj, keys) {
+    let body = {}
+    keys.map(each => {
+      body[each] = sourceObj[each]
+    })
+    return body
+  },
+
   /**
    * Count offset for database query pagination
    * @param {number} page - page number, start from 1

@@ -12,6 +12,7 @@ import { dummySchedules } from './data/schedules'
 import { dummyClasses } from './data/classes'
 import { dummyMessages } from './data/messages'
 import { dummyTags } from './data/tags'
+import { dummyOrders } from './data/orders'
 
 import { Role } from '../models'
 

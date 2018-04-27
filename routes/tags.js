@@ -48,8 +48,7 @@ tags.post('/:id', async (ctx) => {
     let data = await Tag.findOne({ where: { id: ctx.params.id } })
     data = await data.update({ content })
 
-    ctx.body = General.prettyJSON(data)
-    ctx.status = 200
+    General.simpleSend(ctx, data)
   } catch (err) {
     General.logError(ctx, err)
   }

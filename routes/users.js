@@ -9,20 +9,6 @@ export const users = Router()
 const FF = Db.model('follower_following')
 const UM = Db.model('user_major')
 
-const filters = [
-  'id',
-  'mobilephone',
-  'role_id',
-  'gender',
-  'place',
-  'province',
-  'city',
-  'country',
-  'active',
-  'available'
-]
-const sortings = ['cost']
-
 /** 
  * @api {get} /api/users Get all users
  * @apiGroup Users 
@@ -30,13 +16,13 @@ const sortings = ['cost']
  * @apiParam (Query String) {string} [mobilephone] Filtered by user mobilephone
  * @apiParam (Query String) {integer=1,2,3} [role_id=2,3] Filtered by user's role, 1=admin, 2=teacher, 3=student
  * @apiParam (Query String) {boolean=0,1} [gender=0,1] Filtered by user gender
- * @apiParam (Query String) {string='online','offline','both'} [place='both'] Filtered by the place to have the class
+ * @apiParam (Query String) {string=online, offline, both} [place=both] Filtered by the place to have the class
  * @apiParam (Query String) {string} [city] Filtered by the city a user is living in, check "Cities list"
  * @apiParam (Query String) {string} [province] Filtered by the province a user is living in, check "Provinces list"
  * @apiParam (Query String) {string} [countries] Filtered by the country a user is living in, check "Countries list"
  * @apiParam (Query String) {boolean=0,1} [active=0,1] Filtered by if a user wished to be found
  * @apiParam (Query String) {boolean=0,1} [available=0,1] Filtered by if a user is opened for booking
- * @apiParam (Query String) {string='DESC', 'ASC'} [cost] Sorting by cost
+ * @apiParam (Query String) {string=DESC, ASC} [cost] Sorting by cost
  * @apiParam (Query String) {integer} [page=1] Pagination
  * @apiParamExample {json} Request-example:
  * /api/users?id=1&gender=1,0&place=online&role_id=1&city=4503,1101
@@ -44,13 +30,18 @@ const sortings = ['cost']
  */
 users.get('/', async (ctx) => {
   try {
+    const filters = [
+      'id', 'mobilephone', 'role_id', 'gender',
+      'place', 'province', 'city', 'country',
+      'active', 'available'
+    ]
     const qs = General.parseQuerystring(ctx.request.querystring)
     let filter = General.objToObjGroupsInArr(qs, filters)
     let sorting = []
 
     for (let key in qs) {
       // ASC as default order
-      if (sortings.indexOf(key) !== -1) {
+      if (['cost'].indexOf(key) !== -1) {
         qs[key] = qs[key] === 'DESC' ? 'DESC' : 'ASC'
         sorting.splice(0, 0, [key, qs[key]])
       }
