@@ -29,6 +29,9 @@ export default {
     let body = {}
     keys.map(each => {
       let input = sourceObj[each]
+      // Do not take properties that source object does not have
+      // In case of passing null or undefined value to model
+      // where some can not accept null value
       if (input !== undefined) {
         body[each] = input 
       }

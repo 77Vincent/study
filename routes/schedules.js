@@ -7,6 +7,9 @@ import c from '../config'
 export const schedules = Router()
 
 const params = ['label', 'teacher_id', 'student_id', 'finished', 'quota']
+const range = {
+  quota: 99
+}
 
 /** 
  * @api {get} /api/schedules Get all schedules
@@ -54,7 +57,14 @@ schedules.get('/', async (ctx) => {
  */
 schedules.put('/', async (ctx) => {
   try {
-    const data = await Schedule.create(General.batchExtractObj(ctx.request.body, params))
+    const input = General.batchExtractObj(ctx.request.body, params)
+    const data = await Schedule.create(input)
+
+    if (input.quota > range.quota) {
+      ctx.status = 416 
+      ctx.body = `Field "quota" should not be bigger than ${range.quota}`
+      return
+    }
 
     ctx.body = General.prettyJSON(data)
     ctx.status = 201
@@ -75,9 +85,18 @@ schedules.put('/', async (ctx) => {
  */
 schedules.post('/:id', async (ctx) => {
   try {
+    const input = General.batchExtractObj(ctx.request.body, params)
     let data = await Schedule.findOne({ where: { id: ctx.params.id } })
-    data = await data.update(General.batchExtractObj(ctx.request.body, params))
 
+    if (input.quota > range.quota) {
+      ctx.status = 416 
+      ctx.body = `Field "quota" should not be bigger than ${range.quota}`
+      return
+    }
+
+    data = await data.update(input)
+    ctx.status = 200
+    ctx.body = General.prettyJSON(data)
     General.simpleSend(ctx, data)
   } catch (err) {
     General.logError(ctx, err)
