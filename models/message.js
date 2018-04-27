@@ -14,10 +14,6 @@ export default Db.define('message', {
   read: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
-  },
-  recipient_id: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
   }
 }, {
   paranoid: true

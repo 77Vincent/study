@@ -9,6 +9,7 @@ import Schedule from './schedule'
 import Tag from './tag'
 import Message from './message'
 import Class from './class'
+// import Order from './order'
 
 // Table Relationship
 User.belongsTo(Role)
@@ -16,8 +17,15 @@ Course.belongsTo(User)
 Post.belongsTo(User)
 Picture.belongsTo(Post)
 Tag.belongsTo(User)
-Message.belongsTo(User)
 Class.belongsTo(Schedule)
+
+Message.belongsTo(User, { as: 'Sender', foreignKey: 'sender_id' })
+Message.belongsTo(User, { as: 'Recipient', foreignKey: 'recipient_id' })
+
+Schedule.belongsTo(User, { as: 'Teacher', foreignKey: 'teacher_id' })
+Schedule.belongsTo(User, { as: 'Student', foreignKey: 'student_id' })
+
+// Order.belongsTo(User)
 
 // Each comment has a user id and a post id
 Comment.belongsTo(User)
@@ -31,6 +39,9 @@ Major.belongsToMany(User, {through: 'user_major'})
 
 User.belongsToMany(User, {as: 'Follower', through: 'follower_following', foreignKey: 'follower_id'})
 User.belongsToMany(User, {as: 'Following', through: 'follower_following', foreignKey: 'following_id'})
+
+// User.belongsToMany(Order, {as: 'Buyer', through: 'buyer_seller', foreignKey: 'buyer_id'})
+// User.belongsToMany(Order, {as: 'Seller', through: 'buyer_seller', foreignKey: 'seller_id'})
 
 Course.belongsToMany(Major, {through: 'course_major'})
 Major.belongsToMany(Course, {through: 'course_major'})
@@ -46,5 +57,6 @@ export {
   Schedule,
   Tag,
   Message,
-  Class
+  Class,
+  // Order
 }

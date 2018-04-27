@@ -11,12 +11,6 @@ export default Db.define('schedule', {
   label: {
     type: Sequelize.STRING,
   },
-  teacher_id: {
-    type: Sequelize.INTEGER,
-  },
-  student_id: {
-    type: Sequelize.INTEGER,
-  },
   quota: {
     type: Sequelize.TINYINT,
     defaultValue: 1
