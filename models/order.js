@@ -7,6 +7,10 @@ export default Db.define('order', {
     defaultValue: Sequelize.UUIDV1,
     primaryKey: true
   },
+  paid: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: 0 
+  },
   paid_at: {
     type: Sequelize.DATE,
   },

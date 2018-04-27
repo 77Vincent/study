@@ -28,7 +28,10 @@ export default {
   batchExtractObj(sourceObj, keys) {
     let body = {}
     keys.map(each => {
-      body[each] = sourceObj[each]
+      let input = sourceObj[each]
+      if (input !== undefined) {
+        body[each] = input 
+      }
     })
     return body
   },

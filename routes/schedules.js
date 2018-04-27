@@ -33,28 +33,8 @@ schedules.get('/', async (ctx) => {
       const { id } = current
       const classes = await Class.findAll({ where: { schedule_id: id } })
       current.classes = classes.length
-      current.classes_url = General.getDomain(`/api/classes?teacher_id=${id}`) 
+      current.classes_url = General.getDomain(`/api/classes?schedule_id=${id}`) 
     }
-
-    General.simpleSend(ctx, data)
-  } catch (err) {
-    General.logError(ctx, err)
-  }
-})
-
-/** 
- * @api {get} /api/schedules/:id Get a schedule
- * @apiGroup Schedules 
- * @apiSuccess (200) {object} void A schedule
- */
-schedules.get('/:id', async (ctx) => {
-  try {
-    const { id } = ctx.params
-    const data = await Schedule.findOne({ where: { id } })
-    const classes = await Class.findAll({ where: { schedule_id: id } })
-
-    data.dataValues.classes = classes.length
-    data.dataValues.classes_url = General.getDomain(`/api/classes?teacher_id=${id}`) 
 
     General.simpleSend(ctx, data)
   } catch (err) {
@@ -69,7 +49,8 @@ schedules.get('/:id', async (ctx) => {
  * @apiParam {integer} teacher_id The teacher user ID
  * @apiParam {integer} student_id The student user ID
  * @apiParam {boolean=0,1} [finished=0] If the schedule is finished or not
- * @apiSuccess (200) {object} void The created schedule 
+ * @apiParam {integer} quota=1 The length of the schedule
+ * @apiSuccess (201) {object} void The created schedule 
  */
 schedules.put('/', async (ctx) => {
   try {
@@ -89,6 +70,7 @@ schedules.put('/', async (ctx) => {
  * @apiParam {integer} teacher_id The teacher user ID
  * @apiParam {integer} student_id The student user ID
  * @apiParam {boolean=0,1} [finished=0] If the schedule is finished or not
+ * @apiParam {integer} quota=1 The length of the schedule
  * @apiSuccess (200) {object} void The updated schedule 
  */
 schedules.post('/:id', async (ctx) => {

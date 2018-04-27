@@ -16,10 +16,12 @@ export default Db.define('class', {
   },
   length: {
     type: Sequelize.DOUBLE,
+    allowNull: false,
     defaultValue: 1 
   },
   finished: {
     type: Sequelize.BOOLEAN,
+    allowNull: false,
     defaultValue: false    
   }
 })

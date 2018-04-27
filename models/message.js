@@ -13,6 +13,7 @@ export default Db.define('message', {
   },
   read: {
     type: Sequelize.BOOLEAN,
+    allowNull: false,
     defaultValue: false
   }
 }, {

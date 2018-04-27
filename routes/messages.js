@@ -6,7 +6,7 @@ import c from '../config'
 
 export const messages = Router()
 
-const filters = ['sender_id', 'recipient_id', 'read']
+const params = ['content', 'recipient_id', 'sender_id', 'read']
 
 /** 
  * @api {get} /api/messages Get all messages
@@ -19,6 +19,7 @@ const filters = ['sender_id', 'recipient_id', 'read']
  */
 messages.get('/', async (ctx) => {
   try {
+    const filters = ['sender_id', 'recipient_id', 'read']
     const qs = General.parseQuerystring(ctx.request.querystring)
     const filter = General.objToObjGroupsInArr(qs, filters)
 
@@ -46,18 +47,19 @@ messages.get('/', async (ctx) => {
  * @apiParam {string} content Message content
  * @apiParam {integer} sender_id The sender's user ID 
  * @apiParam {integer} recipient_id The recipient's user ID
+ * @apiParam {boolean} [read=0] If the message has been read or not
  * @apiParamExample {json} Request-example:
  *  {
  *    "content": "Hellow world",
  *    "sender_id": 1,
- *    "recipient_id": 2 
+ *    "recipient_id": 2,
+ *    "read": 0
  *  }
  * @apiSuccess (201) {object} void The newly created message
  */
 messages.put('/', async (ctx) => {
   try {
-    const { content, recipient_id, sender_id, read } = ctx.request.body
-    const data = await Message.create({ content, recipient_id, sender_id, read })
+    const data = await Message.create(General.batchExtractObj(ctx.request.body, params))
 
     ctx.status = 201
     ctx.body = General.prettyJSON(data) 

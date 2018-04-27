@@ -90,8 +90,7 @@ courses.put('/', async (ctx) => {
  */
 courses.post('/:id', async (ctx) => {
   try {
-    const { id } = ctx.params
-    let data = await Course.findOne({ where: { id } })
+    let data = await Course.findOne({ where: { id: ctx.params.id } })
     data = await data.update(General.batchExtractObj(ctx.request.body, params))
 
     ctx.status = 200

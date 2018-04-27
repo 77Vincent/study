@@ -51,8 +51,8 @@ classes.get('/', async (ctx) => {
  * @apiDescription The property "finished" is set to false by default
  * @apiParam {date} [start] Class start time 
  * @apiParam {date} [end] Class end time 
- * @apiParam {double} [length=1] Duration of the class in hours 
- * @apiParam {boolean=0,1} [finished=0] If the class is finished or not 
+ * @apiParam {double} length=1 Duration of the class in hours 
+ * @apiParam {boolean=0,1} finished=0 If the class is finished or not 
  * @apiParam {integer} schedule_id Which schedule does this class belong to
  * @apiParamExample {json} Request-example:
  *  {
@@ -80,14 +80,16 @@ classes.put('/', async (ctx) => {
  * @apiGroup Classes 
  * @apiParam {date} [start] Class start time 
  * @apiParam {date} [end] Class end time 
- * @apiParam {double} [length] Duration of the class in hours 
- * @apiParam {boolean=0,1} [finished] Is the class finished or not
+ * @apiParam {double} length=1 Duration of the class in hours 
+ * @apiParam {boolean=0,1} finished=0 If the class is finished or not 
+ * @apiParam {integer} schedule_id Which schedule does this class belong to
  * @apiParamExample {json} Request-example:
  *  {
  *    "start": new Date(),
  *    "end": new Date('2018/05/01'),
  *    "length": 2.5,
- *    "finished": 0
+ *    "finished": 0,
+ *    "schedule_id": 3 
  *  }
  * @apiSuccess (200) {object} void The updated class
  */

@@ -13,7 +13,6 @@
     "semi": ["error", "never"],
     "no-var": "error",
     "curly": "error",
-    "no-undefined": "error",
     "no-undef-init": "error",
     "no-undef": "error",
     "no-empty-function": "error",

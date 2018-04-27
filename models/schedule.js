@@ -13,10 +13,12 @@ export default Db.define('schedule', {
   },
   quota: {
     type: Sequelize.TINYINT,
+    allowNull: false,
     defaultValue: 1
   },
   finished: {
     type: Sequelize.BOOLEAN,
+    allowNull: false,
     defaultValue: false
   }
 }, {

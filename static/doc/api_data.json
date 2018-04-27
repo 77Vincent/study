@@ -108,8 +108,9 @@
           {
             "group": "Parameter",
             "type": "double",
-            "optional": true,
+            "optional": false,
             "field": "length",
+            "defaultValue": "1",
             "description": "<p>Duration of the class in hours</p>"
           },
           {
@@ -119,16 +120,24 @@
               "0",
               "1"
             ],
-            "optional": true,
+            "optional": false,
             "field": "finished",
-            "description": "<p>Is the class finished or not</p>"
+            "defaultValue": "0",
+            "description": "<p>If the class is finished or not</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "integer",
+            "optional": false,
+            "field": "schedule_id",
+            "description": "<p>Which schedule does this class belong to</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Request-example:",
-          "content": "{\n  \"start\": new Date(),\n  \"end\": new Date('2018/05/01'),\n  \"length\": 2.5,\n  \"finished\": 0\n}",
+          "content": "{\n  \"start\": new Date(),\n  \"end\": new Date('2018/05/01'),\n  \"length\": 2.5,\n  \"finished\": 0,\n  \"schedule_id\": 3 \n}",
           "type": "json"
         }
       ]
@@ -177,7 +186,7 @@
           {
             "group": "Parameter",
             "type": "double",
-            "optional": true,
+            "optional": false,
             "field": "length",
             "defaultValue": "1",
             "description": "<p>Duration of the class in hours</p>"
@@ -189,7 +198,7 @@
               "0",
               "1"
             ],
-            "optional": true,
+            "optional": false,
             "field": "finished",
             "defaultValue": "0",
             "description": "<p>If the class is finished or not</p>"
@@ -753,13 +762,21 @@
             "optional": false,
             "field": "recipient_id",
             "description": "<p>The recipient's user ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "boolean",
+            "optional": true,
+            "field": "read",
+            "defaultValue": "0",
+            "description": "<p>If the message has been read or not</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Request-example:",
-          "content": "{\n  \"content\": \"Hellow world\",\n  \"sender_id\": 1,\n  \"recipient_id\": 2 \n}",
+          "content": "{\n  \"content\": \"Hellow world\",\n  \"sender_id\": 1,\n  \"recipient_id\": 2,\n  \"read\": 0\n}",
           "type": "json"
         }
       ]
@@ -1403,29 +1420,6 @@
     "name": "GetApiSchedules"
   },
   {
-    "type": "get",
-    "url": "/api/schedules/:id",
-    "title": "Get a schedule",
-    "group": "Schedules",
-    "success": {
-      "fields": {
-        "200": [
-          {
-            "group": "200",
-            "type": "object",
-            "optional": false,
-            "field": "void",
-            "description": "<p>A schedule</p>"
-          }
-        ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "routes/schedules.js",
-    "groupTitle": "Schedules",
-    "name": "GetApiSchedulesId"
-  },
-  {
     "type": "post",
     "url": "/api/schedules/:id",
     "title": "Update a schedule",
@@ -1465,6 +1459,14 @@
             "field": "finished",
             "defaultValue": "0",
             "description": "<p>If the schedule is finished or not</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "integer",
+            "optional": false,
+            "field": "quota",
+            "defaultValue": "1",
+            "description": "<p>The length of the schedule</p>"
           }
         ]
       }
@@ -1527,15 +1529,23 @@
             "field": "finished",
             "defaultValue": "0",
             "description": "<p>If the schedule is finished or not</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "integer",
+            "optional": false,
+            "field": "quota",
+            "defaultValue": "1",
+            "description": "<p>The length of the schedule</p>"
           }
         ]
       }
     },
     "success": {
       "fields": {
-        "200": [
+        "201": [
           {
-            "group": "200",
+            "group": "201",
             "type": "object",
             "optional": false,
             "field": "void",
