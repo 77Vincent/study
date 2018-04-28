@@ -6,7 +6,9 @@ const url = `${c.protocol}://${c.host}:${c.port}/api`
 const getRandom = () => {
   return String(Math.round(Math.random() * 100000))
 }
-const run = async () => {
+
+// tags
+(async () => {
   try {
     await rq({
       method: 'POST',
@@ -15,6 +17,12 @@ const run = async () => {
         content: getRandom()
       },
       json: true })
+  } catch (err) { console.error(err) }
+})();
+
+// courses
+(async () => {
+  try {
     await rq({
       method: 'POST',
       url: `${url}/courses/2`,
@@ -23,16 +31,28 @@ const run = async () => {
         description: getRandom()
       },
       json: true })
+  } catch (err) { console.error(err) }
+})();
+
+// classes
+(async () => {
+  try {
     await rq({
       method: 'POST',
       url: `${url}/classes/2`,
       body: {
         start: new Date('2018/11/11'),
         end: new Date('2018/12/12'),
-        length: getRandom(),
+        length: 33,
         finished: true
       },
       json: true })
+  } catch (err) { console.error(err) }
+})();
+
+// schedules
+(async () => {
+  try {
     await rq({
       method: 'POST',
       url: `${url}/schedules/2`,
@@ -42,6 +62,14 @@ const run = async () => {
         finished: false
       },
       json: true })
+  } catch (err) {
+    console.error(err)
+  }
+})();
+
+// orders
+(async () => {
+  try {
     await rq({
       method: 'POST',
       url: `${url}/orders/74aea3d0-49e9-11e8-952a-f5aee99155db`,
@@ -49,12 +77,5 @@ const run = async () => {
         total_price: 9999
       },
       json: true })
-
-  } catch (err) {
-    console.error('init Error', err)
-  }
-}
-run()
-
-
-    
+  } catch (err) { console.error(err) }
+})();

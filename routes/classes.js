@@ -7,6 +7,9 @@ import c from '../config'
 export const classes = Router()
 
 const params = ['start', 'end', 'length', 'finished', 'schedule_id']
+const range = {
+  length: 99
+}
 
 /** 
  * @api {get} /api/classes Get all classes
@@ -66,10 +69,18 @@ classes.get('/', async (ctx) => {
  */
 classes.put('/', async (ctx) => {
   try {
-    const data = await Class.create(General.batchExtractObj(ctx.request.body, params))
+    const input = General.batchExtractObj(ctx.request.body, params)
+    const isOutRange = General.checkRange(range, input)
 
-    ctx.body = General.prettyJSON(data)
-    ctx.status = 201
+    if (isOutRange) {
+      ctx.status = 416
+      ctx.body = isOutRange
+
+    } else {
+      const data = await Class.create(input)
+      ctx.body = General.prettyJSON(data)
+      ctx.status = 201
+    }
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -95,10 +106,20 @@ classes.put('/', async (ctx) => {
  */
 classes.post('/:id', async (ctx) => {
   try {
-    let data = await Class.findOne({ where: { id: ctx.params.id } })
-    data = await data.update(General.batchExtractObj(ctx.request.body, params))
+    const input = General.batchExtractObj(ctx.request.body, params) 
+    const isOutRange = General.checkRange(range, input)
+    
+    if (isOutRange) {
+      ctx.status = 416
+      ctx.body = isOutRange
 
-    General.simpleSend(ctx, data)
+    } else {
+      let data = await Class.findOne({ where: { id: ctx.params.id } })
+      data = await data.update(input)
+      ctx.status = 200
+      ctx.body = General.prettyJSON(data) 
+    }
+
   } catch (err) {
     General.logError(ctx, err)
   }

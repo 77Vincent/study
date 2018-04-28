@@ -1,6 +1,13 @@
 import c from '../config'
 
 export default {
+  loopObjOwn(obj = {}, callback) {
+    for (let key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        callback(key)
+      }
+    }
+  },
   msToDay(millisecond) {
     return Math.floor(millisecond / 1000 / 60 / 60) / 24
   },
@@ -13,7 +20,7 @@ export default {
    * @param {string} querystring - format: &key=value&key=value1,value2 
    * @returns {object} each key-value pair is according to the querystring
    */
-  parseQuerystring(querystring) {
+  parseQuerystring(querystring = '') {
     if (!querystring) { return {} }
     const arr = querystring.split('&')
     let obj = {}
@@ -25,7 +32,22 @@ export default {
     return obj
   },
 
-  batchExtractObj(sourceObj, keys) {
+  checkRange(range = {}, input = {}) {
+    let result = {}
+    this.loopObjOwn(range, key => {
+      if (input[key] > range[key]) {
+        result[key] = `Field "${key}" should not be bigger than ${range[key]}`
+      }
+    })
+
+    if (Object.keys(result).length) {
+      return result
+    } else {
+      return false
+    }
+  },
+
+  batchExtractObj(sourceObj = {}, keys = []) {
     let body = {}
     keys.map(each => {
       let input = sourceObj[each]
@@ -45,7 +67,7 @@ export default {
    * @param {number} limit - items to display per page 
    * @returns 
    */
-  getOffset(page, limit) {
+  getOffset(page = 1, limit = 50) {
     page = this.getPositiveInt(page)
     return page ? ( page - 1 ) * limit : 0
   },
@@ -67,15 +89,15 @@ export default {
    */
   objToObjGroupsInArr(object = {}, keys = []) {
     let arr = []
-    for (let key in object) {
-      if (object.hasOwnProperty(key) && keys.indexOf(key) !== -1) {
+    this.loopObjOwn(object, key => {
+      if (keys.indexOf(key) !== -1) {
         let value = decodeURI(object[key])
         // Do not filter with empty string
         if (value !== '') {
           arr.push({ [key]: value.split(',') })
         }
       }
-    }
+    })
     return arr
   },
 
