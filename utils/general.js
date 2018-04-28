@@ -2,13 +2,6 @@ import c from '../config'
 import R from 'ramda'
 
 export default {
-  loopObjOwn(obj = {}, callback) {
-    for (let key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        callback(key)
-      }
-    }
-  },
   msToDay(millisecond) {
     return Math.floor(millisecond / 1000 / 60 / 60) / 24
   },
@@ -35,11 +28,11 @@ export default {
 
   checkRange(range = {}, input = {}) {
     let result = {}
-    this.loopObjOwn(range, key => {
-      if (input[key] > range[key]) {
-        result[key] = `Field "${key}" should not be bigger than ${range[key]}`
+    R.forEachObjIndexed((value, key) => {
+      if (input[key] > value) {
+        result[key] = `Field "${key}" should not be bigger than ${value}`
       }
-    })
+    }, range)
 
     if (Object.keys(result).length) {
       return result
@@ -76,15 +69,15 @@ export default {
    */
   objToObjGroupsInArr(object = {}, keys = []) {
     let arr = []
-    this.loopObjOwn(object, key => {
+    R.forEachObjIndexed((value, key) => {
       if (keys.indexOf(key) !== -1) {
-        let value = decodeURI(object[key])
+        let query = decodeURI(value)
         // Do not filter with empty string
-        if (value !== '') {
-          arr.push({ [key]: value.split(',') })
+        if (query !== '') {
+          arr.push({ [key]: query.split(',') })
         }
       }
-    })
+    }, object)
     return arr
   },
 
