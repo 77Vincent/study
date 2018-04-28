@@ -316,17 +316,17 @@ users.put('/', async (ctx) => {
 users.post('/:id', async (ctx) => {
   try {
     const user_id = ctx.params.id
-    let values = ctx.request.body
-    const isOutRange = General.checkRange(range, values)
+    let input = ctx.request.body
+    const isOutRange = General.checkRange(range, input)
 
     if (isOutRange) {
       ctx.status = 416
       ctx.body = isOutRange
 
     } else {
-      if (values.majors) {
+      if (input.majors) {
         await UM.destroy({ where: { user_id } })
-        values.majors.map(async major_id => {
+        input.majors.map(async major_id => {
           await UM.create({ user_id, major_id })
         })
         await Db.sync()
@@ -334,8 +334,8 @@ users.post('/:id', async (ctx) => {
 
       let data = await UserUtils.getOneUser(user_id)
       // Delete majors because it's not updated here
-      delete values.majors
-      data = await data.update(values)
+      delete input.majors
+      data = await data.update(input)
 
       // do not send password to client
       delete data.dataValues.password

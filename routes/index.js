@@ -32,19 +32,19 @@ export default router
  */
 
 /** 
- * @api {get} /cities/CN/cities.json Cities list
+ * @api {get} /locale/CN/cities.json Cities list
  * @apiGroup Locations 
  * @apiSuccess (200) {object[]} void Cities list
  */
 
 /** 
- * @api {get} /cities/CN/provinces.json Provinces list
+ * @api {get} /locale/CN/provinces.json Provinces list
  * @apiGroup Locations 
  * @apiSuccess (200) {object[]} void Provinces list
  */
 
 /** 
- * @api {get} /countries.json Countries list
+ * @api {get} /locale/countries.json Countries list
  * @apiGroup Locations 
  * @apiSuccess (200) {object[]} void Countries list
  */
