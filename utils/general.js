@@ -93,13 +93,19 @@ export default {
     return `${c.protocol}://${c.host}:${c.port}${custom}`
   },
 
-  store(stuff, base64 = '', mimeType = 'text/plain', id) {
-    const where = path.resolve(`${c.fileLocation}/${stuff}s/${stuff}_${id}.${mime.getExtension(mimeType)}`)
-    fs.writeFileSync(where, new Buffer(base64, 'base64'))
-    return where
+  store(stuff, base64, mimeType, id) {
+    if (base64 && mimeType) {
+      const where = path.resolve(`${c.fileLocation}/${stuff}s/${stuff}_${id}.${mime.getExtension(mimeType)}`)
+      fs.writeFileSync(where, new Buffer(base64, 'base64'))
+      return where
+    }
   },
-  // restore(stuff, id) {
-  //   const where = path.resolve(`${c.fileLocation}/${stuff}s/${stuff}_${id}.png`)
-  //   const jj = fs.readFileSync(where)
-  // }
+  restore(stuff, id, ext) {
+    const where = path.resolve(`${c.fileLocation}/${stuff}s/${stuff}_${id}.${ext}`)
+    try {
+      return fs.readFileSync(where)
+    } catch (err) {
+      return null
+    }
+  }
 }

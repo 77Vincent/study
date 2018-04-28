@@ -36,7 +36,7 @@ users.get('/', async (ctx) => {
   try {
     const filters = ['id', 'mobilephone', 'role_id', 'gender', 'place', 'province', 'city', 'country', 'active']
     const qs = General.parseQuerystring(ctx.request.querystring)
-    let filter = General.objToObjGroupsInArr(qs, filters)
+    const filter = General.objToObjGroupsInArr(qs, filters)
 
     // this part is for majors filtering
     // if majors is given in the querystring then do the follow
@@ -93,14 +93,41 @@ users.get('/', async (ctx) => {
  */
 users.get('/:id', async (ctx) => {
   try {
-    let id = ctx.params.id
-    let data = await UserUtils.getOneUser(id, { attributes: { exclude: ['password'] } })
+    const { id } = ctx.params
+    const data = await UserUtils.getOneUser(id, { attributes: { exclude: ['password'] } })
 
     if (data) {
       await UserUtils.addFields(data.dataValues, id)
       ctx.status = 200
       ctx.body = General.prettyJSON(data)
 
+    } else {
+      ctx.status = 404
+    }
+  } catch (err) {
+    General.logError(ctx, err)
+  }
+})
+
+/** 
+ * @api {get} /api/users/:id/avatar Get a user's avatar
+ * @apiGroup Users 
+ * @apiSuccess (200) {object} void User object
+ */
+users.get('/:id/avatar=:type/:ext', async (ctx) => {
+  try {
+    const { id, type, ext } = ctx.params
+    const data = await UserUtils.getOneUser(id, { attributes: { exclude: ['password'] } })
+
+    if (data) {
+      const file = General.restore('avatar', id, ext)
+      if (file) {
+        ctx.status = 200
+        ctx.type = `${type}/${ext}` 
+        ctx.body = General.restore('avatar', id, ext)
+      } else {
+        ctx.status = 404
+      }
     } else {
       ctx.status = 404
     }
@@ -119,7 +146,7 @@ users.get('/:id', async (ctx) => {
 users.get('/:id/students', async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
-    let filter = General.objToObjGroupsInArr(qs, ['finished'])
+    const filter = General.objToObjGroupsInArr(qs, ['finished'])
     filter.push({ teacher_id: ctx.params.id })
 
     let data = await Schedule.findAll({
@@ -155,7 +182,7 @@ users.get('/:id/students', async (ctx) => {
 users.get('/:id/teachers', async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
-    let filter = General.objToObjGroupsInArr(qs, ['finished'])
+    const filter = General.objToObjGroupsInArr(qs, ['finished'])
     filter.push({ student_id: ctx.params.id })
 
     let data = await Schedule.findAll({
@@ -273,13 +300,11 @@ users.put('/', async (ctx) => {
     const user = await User.create(input)
     General.store('avatar', input.avatar_base64, input.avatar_mime, user.id)
 
-    let data = await UserUtils.getOneUser(user.id, {
-      attributes: { exclude: ['password'] }
-    })
+    let data = await UserUtils.getOneUser(user.id, { attributes: { exclude: ['password'] } })
 
     // Update avatar url
     data = await data.update({
-      avatar_url: General.getDomain(`/api/files/avatar/${user.id}`) 
+      avatar_url: General.getDomain(`/api/users/${user.id}/avatar=${input.avatar_mime}`) 
     })
 
     // Add majors list
