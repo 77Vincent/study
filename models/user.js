@@ -25,7 +25,7 @@ export default Db.define('user', {
   },
   role_id: {
     type: Sequelize.TINYINT,
-    defaultValue: 2,
+    defaultValue: 3,
   },
   active: {
     type: Sequelize.BOOLEAN,

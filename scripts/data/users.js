@@ -62,7 +62,6 @@ export const dummyUsers = [{
 }, {
   password: '000000',
   name: '学生1',
-  role_id: 3,
   school: '清华大学',
   title: '景观设计师',
   bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
@@ -74,7 +73,6 @@ export const dummyUsers = [{
 }, {
   password: '000000',
   name: '学生2',
-  role_id: 3,
   school: '华侨大学',
   title: '游戏设计',
   bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',

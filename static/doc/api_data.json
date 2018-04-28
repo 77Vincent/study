@@ -27,6 +27,7 @@
     "url": "/api/classes",
     "title": "Get all classes",
     "group": "Classes",
+    "description": "<p>Class is ordered by start time in ASC order by default</p>",
     "parameter": {
       "fields": {
         "Query String": [
@@ -41,18 +42,6 @@
             "field": "finished",
             "defaultValue": "0,1",
             "description": "<p>Filtered by if the class is finished</p>"
-          },
-          {
-            "group": "Query String",
-            "type": "string",
-            "allowedValues": [
-              "ASC",
-              "DESC"
-            ],
-            "optional": true,
-            "field": "start",
-            "defaultValue": "ASC",
-            "description": "<p>Ordered by start time of the class</p>"
           },
           {
             "group": "Query String",
@@ -843,18 +832,6 @@
             "optional": true,
             "field": "seller_id",
             "description": "<p>Filtered by the seller's user ID</p>"
-          },
-          {
-            "group": "Query String",
-            "type": "string",
-            "allowedValues": [
-              "DESC",
-              "ASC"
-            ],
-            "optional": true,
-            "field": "updated_at",
-            "defaultValue": "DESC",
-            "description": "<p>Sorting by updated time</p>"
           },
           {
             "group": "Query String",
@@ -1894,18 +1871,6 @@
           },
           {
             "group": "Query String",
-            "type": "boolean",
-            "allowedValues": [
-              "0",
-              "1"
-            ],
-            "optional": true,
-            "field": "available",
-            "defaultValue": "0,1",
-            "description": "<p>Filtered by if a user is opened for booking</p>"
-          },
-          {
-            "group": "Query String",
             "type": "string",
             "allowedValues": [
               "DESC",
@@ -2151,6 +2116,147 @@
     "url": "/api/users/:id",
     "title": "Update a user",
     "group": "Users",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "username",
+            "defaultValue": "UUIDV1",
+            "description": "<p>The unique username</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "allowedValues": [
+              "1",
+              "2",
+              "3"
+            ],
+            "optional": true,
+            "field": "role_id",
+            "defaultValue": "3",
+            "description": "<p>User's role, 1=admin, 2=teacher, 3=student</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "mobilephone",
+            "description": "<p>User unique mobilephone number</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "email",
+            "description": "<p>User unique email address</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "password",
+            "description": "<p>User passowrd</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "name",
+            "description": "<p>User name for display purpose only</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "school",
+            "description": "<p>The school name</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "title",
+            "description": "<p>The title</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "bio",
+            "description": "<p>The biography of the user</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "allowedValues": [
+              "online",
+              "offline",
+              "both"
+            ],
+            "optional": true,
+            "field": "place",
+            "defaultValue": "both",
+            "description": "<p>Where the user wish to have the class</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "country",
+            "description": "<p>The code of country where the user lives in, check countries list</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "province",
+            "description": "<p>The code of province where the user lives in, check provinces list</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "city",
+            "description": "<p>The code of city where the user lives in, check cities list</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "boolean",
+            "optional": true,
+            "field": "active",
+            "defaultValue": "true",
+            "description": "<p>If user can be seached or not</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "boolean",
+            "optional": true,
+            "field": "gender",
+            "description": "<p>User gender</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": true,
+            "field": "cost",
+            "defaultValue": "0",
+            "description": "<p>The cost per hour of the user</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": true,
+            "field": "available",
+            "defaultValue": "0",
+            "description": "<p>How much hours a user is opened for booking</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "200": [
@@ -2180,16 +2286,37 @@
           {
             "group": "Parameter",
             "type": "string",
-            "optional": false,
-            "field": "name",
-            "description": "<p>User name</p>"
+            "optional": true,
+            "field": "username",
+            "defaultValue": "UUIDV1",
+            "description": "<p>The unique username</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "allowedValues": [
+              "1",
+              "2",
+              "3"
+            ],
+            "optional": true,
+            "field": "role_id",
+            "defaultValue": "3",
+            "description": "<p>User's role, 1=admin, 2=teacher, 3=student</p>"
           },
           {
             "group": "Parameter",
             "type": "string",
             "optional": false,
             "field": "mobilephone",
-            "description": "<p>User mobilephone number</p>"
+            "description": "<p>User unique mobilephone number</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "email",
+            "description": "<p>User unique email address</p>"
           },
           {
             "group": "Parameter",
@@ -2197,16 +2324,102 @@
             "optional": false,
             "field": "password",
             "description": "<p>User passowrd</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "name",
+            "description": "<p>User name for display purpose only</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "school",
+            "description": "<p>The school name</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "title",
+            "description": "<p>The title</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "bio",
+            "description": "<p>The biography of the user</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "allowedValues": [
+              "online",
+              "offline",
+              "both"
+            ],
+            "optional": true,
+            "field": "place",
+            "defaultValue": "both",
+            "description": "<p>Where the user wish to have the class</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "country",
+            "description": "<p>The code of country where the user lives in, check countries list</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "province",
+            "description": "<p>The code of province where the user lives in, check provinces list</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "city",
+            "description": "<p>The code of city where the user lives in, check cities list</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "boolean",
+            "optional": true,
+            "field": "active",
+            "defaultValue": "true",
+            "description": "<p>If user can be seached or not</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "boolean",
+            "optional": true,
+            "field": "gender",
+            "description": "<p>User gender</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": true,
+            "field": "cost",
+            "defaultValue": "0",
+            "description": "<p>The cost per hour of the user</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": true,
+            "field": "available",
+            "defaultValue": "0",
+            "description": "<p>How much hours a user is opened for booking</p>"
           }
         ]
-      },
-      "examples": [
-        {
-          "title": "Request-example:",
-          "content": "{\n  \"name\": \"Tony\",\n  \"mobilephone\": \"12345678901\",\n  \"password\": \"000000\" \n}",
-          "type": "json"
-        }
-      ]
+      }
     },
     "success": {
       "fields": {

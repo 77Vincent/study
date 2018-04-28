@@ -248,12 +248,23 @@ users.get('/:id/followings', async (ctx) => {
 /** 
  * @api {put} /api/users Create a new user
  * @apiGroup Users 
- * @apiParam {string} name User name
- * @apiParam {string} mobilephone User mobilephone number
+ * @apiParam {string} [username=UUIDV1] The unique username
+ * @apiParam {string=1,2,3} [role_id=3] User's role, 1=admin, 2=teacher, 3=student
+ * @apiParam {string} mobilephone User unique mobilephone number
+ * @apiParam {string} email User unique email address
  * @apiParam {string} password User passowrd
- * @apiParam {string=1,2,3} role_id User's role
- * @apiParam {boolean} active If user can be seached or not
- * @apiParamExample {json} Request-example:
+ * @apiParam {string} name User name for display purpose only 
+ * @apiParam {string} [school] The school name
+ * @apiParam {string} [title] The title 
+ * @apiParam {string} [bio] The biography of the user
+ * @apiParam {string=online, offline, both} [place=both] Where the user wish to have the class
+ * @apiParam {string} [country] The code of country where the user lives in, check countries list
+ * @apiParam {string} [province] The code of province where the user lives in, check provinces list
+ * @apiParam {string} [city] The code of city where the user lives in, check cities list
+ * @apiParam {boolean} [active=true] If user can be seached or not
+ * @apiParam {boolean} [gender] User gender
+ * @apiParam {number} [cost=0] The cost per hour of the user
+ * @apiParam {number} [available=0] How much hours a user is opened for booking
  * @apiSuccess (201) {object} void The newly created user object
  */
 users.put('/', async (ctx) => {
@@ -283,6 +294,23 @@ users.put('/', async (ctx) => {
 /** 
  * @api {post} /api/users/:id Update a user
  * @apiGroup Users 
+ * @apiParam {string} [username=UUIDV1] The unique username
+ * @apiParam {string=1,2,3} [role_id=3] User's role, 1=admin, 2=teacher, 3=student
+ * @apiParam {string} mobilephone User unique mobilephone number
+ * @apiParam {string} email User unique email address
+ * @apiParam {string} password User passowrd
+ * @apiParam {string} name User name for display purpose only 
+ * @apiParam {string} [school] The school name
+ * @apiParam {string} [title] The title 
+ * @apiParam {string} [bio] The biography of the user
+ * @apiParam {string=online, offline, both} [place=both] Where the user wish to have the class
+ * @apiParam {string} [country] The code of country where the user lives in, check countries list
+ * @apiParam {string} [province] The code of province where the user lives in, check provinces list
+ * @apiParam {string} [city] The code of city where the user lives in, check cities list
+ * @apiParam {boolean} [active=true] If user can be seached or not
+ * @apiParam {boolean} [gender] User gender
+ * @apiParam {number} [cost=0] The cost per hour of the user
+ * @apiParam {number} [available=0] How much hours a user is opened for booking
  * @apiSuccess (200) {object} void The updated user object
  */
 users.post('/:id', async (ctx) => {
