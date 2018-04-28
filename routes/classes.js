@@ -6,38 +6,25 @@ import c from '../config'
 
 export const classes = Router()
 
-const range = {
-  length: 99
-}
+const range = { length: 99 }
 
 /** 
  * @api {get} /api/classes Get all classes
  * @apiGroup Classes 
+ * @apiDescription Class is ordered by start time in ASC order by default
  * @apiParam (Query String) {boolean=0,1} [finished=0,1] Filtered by if the class is finished 
- * @apiParam (Query String) {string=ASC,DESC} [start=ASC] Ordered by start time of the class 
  * @apiParam (Query String) {integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all classes 
  */
 classes.get('/', async (ctx) => {
   try {
-    const filters = ['finished', 'schedule_id']
-
     const qs = General.parseQuerystring(ctx.request.querystring)
-
-    let sorting = [['start', 'ASC']]
-    for (let key in qs) {
-      // ASC as default order
-      if (['start'].indexOf(key) !== -1) {
-        qs[key] = qs[key] === 'DESC' ? 'DESC' : 'ASC'
-        sorting.splice(0, 0, [key, qs[key]])
-      }
-    }
 
     const data = await Class.findAll({
       limit: c.queryLimit,
       offset: General.getOffset(qs.page, c.queryLimit),
-      where: { $and: General.objToObjGroupsInArr(qs, filters) },
-      order: sorting,
+      where: { $and: General.objToObjGroupsInArr(qs, ['finished', 'schedule_id']) },
+      order: [['start', 'ASC']],
       include: [{ model: Course, attributes: ['label', 'description'] }]
     })
 

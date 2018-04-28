@@ -11,33 +11,22 @@ export const orders = Router()
  * @apiGroup Orders
  * @apiParam (Query String) {integer} [buyer_id] Filtered by the buyer's user ID 
  * @apiParam (Query String) {integer} [seller_id] Filtered by the seller's user ID 
- * @apiParam (Query String) {string=DESC, ASC} [updated_at=DESC] Sorting by updated time
  * @apiParam (Query String) {integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all orders
  */
 orders.get('/', async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
-    let filter = General.objToObjGroupsInArr(qs, ['buyer_id', 'seller_id'])
-
-    let sorting = [['updated_at', 'DESC']]
-    for (let key in qs) {
-      // ASC as default order
-      if (['updated_at'].indexOf(key) !== -1) {
-        qs[key] = qs[key] === 'DESC' ? 'DESC' : 'ASC'
-        sorting.splice(0, 0, [key, qs[key]])
-      }
-    }
 
     const data = await Order.findAll({
       limit: c.queryLimit,
       offset: General.getOffset(qs.page, c.queryLimit),
-      order: sorting,
-      where: { $and: filter },
+      order: [['updated_at', 'DESC']],
+      where: { $and: General.objToObjGroupsInArr(qs, ['buyer_id', 'seller_id']) },
     })
 
     ctx.status = 200
-    ctx.prettyJSON(data)
+    ctx.body = General.prettyJSON(data)
   } catch (err) {
     General.logError(ctx, err)
   }
