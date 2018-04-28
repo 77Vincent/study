@@ -270,13 +270,17 @@ users.get('/:id/followings', async (ctx) => {
 users.put('/', async (ctx) => {
   try {
     const input = ctx.request.body
-    const path = General.store('avatar')(input.avatar_base64, input.avatar_mime, input.mobilephone)
-    input.avatar_url = path
     const user = await User.create(input)
+    General.store('avatar', input.avatar_base64, input.avatar_mime, user.id)
 
-    const data = await UserUtils.getOneUser(user.id, {
+    let data = await UserUtils.getOneUser(user.id, {
       attributes: { exclude: ['password'] }
     })
+
+    // Update avatar url
+    // data = await data.update({
+    //   name: General.getDomain(`/api/files/avatar/${user.id}`) 
+    // })
 
     // Add majors list
     const majors = await Db.model('user_major').findAll({ where: { user_id: user.id } })
