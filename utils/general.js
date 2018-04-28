@@ -70,7 +70,7 @@ export default {
   objToObjGroupsInArr(object = {}, keys = []) {
     let arr = []
     R.forEachObjIndexed((value, key) => {
-      if (keys.indexOf(key) !== -1) {
+      if (R.contains(key, keys)) {
         let query = decodeURI(value)
         // Do not filter with empty string
         if (query !== '') {

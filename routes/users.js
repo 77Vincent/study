@@ -1,4 +1,5 @@
 import Router from 'koa-router'
+import R from 'ramda'
 
 import { User, Schedule } from '../models'
 import { General, Db, Oauth, UserUtils } from '../utils'
@@ -61,9 +62,21 @@ users.get('/', async (ctx) => {
     // Order for teacher 
     if (qs.role_id === '2') {
       data.map(each => {
-        each.dataValues.weight = UserUtils.generalOrder(each.dataValues)
+        each.dataValues.weight = UserUtils.defaultOrder(each.dataValues)
       })
-      data.sort((a, b) => b.dataValues.weight - a.dataValues.weight)
+
+      if (R.has('cost')(qs)) {
+        // Sort by cost
+        if (qs.cost === 'ASC') {
+          data.sort((a, b) => a.dataValues.cost - b.dataValues.cost)
+        } else {
+          data.sort((a, b) => b.dataValues.cost - a.dataValues.cost)
+        }
+
+      } else {
+        // Sort by weight by default
+        data.sort((a, b) => b.dataValues.weight - a.dataValues.weight)
+      }
     }
 
     ctx.status = 200

@@ -82,13 +82,13 @@ export default {
    * @param {object} values each user model
    * @returns {number} the weight to return
    */
-  generalOrder(values) {
+  defaultOrder(values) {
     const origin = '2018/4/1'
     const aspects = {
       bio: values.title ? 6 : 0,
       place: values.place === 'both' ? 6 : 0,
-      available: values.available ? 6 : 0,
       tags: values.tags.length ? 6 : 0,
+      available: values.available,
       followings: values.followings * 2,
       followers: values.followers * 6,
       students: values.students * 5,
