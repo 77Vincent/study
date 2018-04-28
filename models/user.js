@@ -83,7 +83,9 @@ export default Db.define('user', {
   paranoid: true,
   hooks: {
     afterValidate(input) {
-      input.password = bcrypt.hashSync(input.password, 8)
+      if (input.password) {
+        input.password = bcrypt.hashSync(input.password, 8)
+      }
     }
   }
 })

@@ -1,4 +1,5 @@
 // All server configs are stored here
+import path from 'path'
 
 export default {
   // database query
@@ -19,5 +20,5 @@ export default {
   cookiesTimeout: 60 * 60 * 1000,
   tokenSecret: 'Jessie',
   // Store
-  fileLocation: '/usr/share/nginx/xfolio-files'
+  fileLocation: path.resolve('../xfolio-files') 
 }

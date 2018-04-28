@@ -252,7 +252,7 @@ users.get('/:id/followings', async (ctx) => {
  * @apiParam {string=1,2,3} [role_id=3] User's role, 1=admin, 2=teacher, 3=student
  * @apiParam {string} mobilephone User unique mobilephone number
  * @apiParam {string} email User unique email address
- * @apiParam {string} password User passowrd
+ * @apiParam {string} password User password 
  * @apiParam {string} name User name for display purpose only 
  * @apiParam {string} [school] The school name
  * @apiParam {string} [title] The title 
@@ -278,9 +278,9 @@ users.put('/', async (ctx) => {
     })
 
     // Update avatar url
-    // data = await data.update({
-    //   name: General.getDomain(`/api/files/avatar/${user.id}`) 
-    // })
+    data = await data.update({
+      avatar_url: General.getDomain(`/api/files/avatar/${user.id}`) 
+    })
 
     // Add majors list
     const majors = await Db.model('user_major').findAll({ where: { user_id: user.id } })
@@ -306,7 +306,7 @@ users.put('/', async (ctx) => {
  * @apiParam {string=1,2,3} [role_id=3] User's role, 1=admin, 2=teacher, 3=student
  * @apiParam {string} mobilephone User unique mobilephone number
  * @apiParam {string} email User unique email address
- * @apiParam {string} password User passowrd
+ * @apiParam {string} password User password 
  * @apiParam {string} name User name for display purpose only 
  * @apiParam {string} [school] The school name
  * @apiParam {string} [title] The title 
