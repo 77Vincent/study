@@ -33,9 +33,8 @@ export default Db.define('user', {
     defaultValue: true
   },
   available: {
-    type: Sequelize.BOOLEAN,
-    allowNull: false,
-    defaultValue: true
+    type: Sequelize.SMALLINT,
+    defaultValue: 0
   },
   gender: {
     type: Sequelize.BOOLEAN
@@ -60,6 +59,7 @@ export default Db.define('user', {
   },
   place: {
     type: Sequelize.STRING,
+    allowNull: false,
     defaultValue: 'both',
   },
   country: {

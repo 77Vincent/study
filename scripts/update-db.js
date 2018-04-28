@@ -67,15 +67,35 @@ const getRandom = () => {
   }
 })();
 
-// orders
+// users 
 (async () => {
   try {
     await rq({
       method: 'POST',
-      url: `${url}/orders/74aea3d0-49e9-11e8-952a-f5aee99155db`,
+      url: `${url}/users/2`,
       body: {
-        total_price: 9999
+        username: 'aaaaaaaaa',
+        cost: 9999,
+        gender: true,
+        jjj: 999,
+        name: 'hhhhhhhhhhh' ,
+        bio: '111111111111'
       },
       json: true })
-  } catch (err) { console.error(err) }
+  } catch (err) {
+    console.error(err)
+  }
 })();
+
+// orders
+// (async () => {
+//   try {
+//     await rq({
+//       method: 'POST',
+//       url: `${url}/orders/74aea3d0-49e9-11e8-952a-f5aee99155db`,
+//       body: {
+//         total_price: 9999
+//       },
+//       json: true })
+//   } catch (err) { console.error(err) }
+// })();

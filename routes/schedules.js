@@ -58,16 +58,17 @@ schedules.get('/', async (ctx) => {
 schedules.put('/', async (ctx) => {
   try {
     const input = General.batchExtractObj(ctx.request.body, params)
-    const data = await Schedule.create(input)
+    const isOutRange = General.checkRange(range, input)
 
-    if (input.quota > range.quota) {
-      ctx.status = 416 
-      ctx.body = `Field "quota" should not be bigger than ${range.quota}`
-      return
+    if (isOutRange) {
+      ctx.status = 416
+      ctx.body = isOutRange
+
+    } else {
+      const data = await Schedule.create(input)
+      ctx.body = General.prettyJSON(data)
+      ctx.status = 201
     }
-
-    ctx.body = General.prettyJSON(data)
-    ctx.status = 201
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -86,18 +87,18 @@ schedules.put('/', async (ctx) => {
 schedules.post('/:id', async (ctx) => {
   try {
     const input = General.batchExtractObj(ctx.request.body, params)
-    let data = await Schedule.findOne({ where: { id: ctx.params.id } })
+    const isOutRange = General.checkRange(range, input)
 
-    if (input.quota > range.quota) {
-      ctx.status = 416 
-      ctx.body = `Field "quota" should not be bigger than ${range.quota}`
-      return
+    if (isOutRange) {
+      ctx.status = 416
+      ctx.body = isOutRange
+
+    } else {
+      let data = await Schedule.findOne({ where: { id: ctx.params.id } })
+      data = await data.update(input)
+      ctx.status = 200
+      ctx.body = General.prettyJSON(data)
     }
-
-    data = await data.update(input)
-    ctx.status = 200
-    ctx.body = General.prettyJSON(data)
-    General.simpleSend(ctx, data)
   } catch (err) {
     General.logError(ctx, err)
   }
