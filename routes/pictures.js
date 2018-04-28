@@ -23,7 +23,8 @@ pictures.get('/', async (ctx) => {
       where: { $and: General.objToObjGroupsInArr(qs, ['post_id']) },
     })
 
-    General.simpleSend(ctx, data)
+    ctx.status = 200
+    ctx.body = General.prettyJSON(data)
   } catch (err) {
     General.logError(ctx, err)
   }

@@ -6,8 +6,6 @@ import c from '../config'
 
 export const courses = Router()
 
-const params = ['label', 'description', 'user_id']
-
 /** 
  * @api {get} /api/courses Get all courses
  * @apiGroup Courses 
@@ -43,7 +41,8 @@ courses.get('/', async (ctx) => {
       where: { $and: filter }
     })
 
-    General.simpleSend(ctx, data)
+    ctx.status = 200
+    ctx.body = General.prettyJSON(data) 
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -65,7 +64,7 @@ courses.get('/', async (ctx) => {
  */
 courses.put('/', async (ctx) => {
   try {
-    const data = await Course.create(General.batchExtractObj(ctx.request.body, params))
+    const data = await Course.create(ctx.request.body)
 
     ctx.body = General.prettyJSON(data)
     ctx.status = 201
@@ -91,7 +90,7 @@ courses.put('/', async (ctx) => {
 courses.post('/:id', async (ctx) => {
   try {
     let data = await Course.findOne({ where: { id: ctx.params.id } })
-    data = await data.update(General.batchExtractObj(ctx.request.body, params))
+    data = await data.update(ctx.request.body)
 
     ctx.status = 200
     ctx.body = General.prettyJSON(data) 

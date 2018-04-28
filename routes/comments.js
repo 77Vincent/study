@@ -27,7 +27,8 @@ comments.get('/', async (ctx) => {
       where: { $and: filter },
     })
 
-    General.simpleSend(ctx, data)
+    ctx.status = 200
+    ctx.body = General.prettyJSON(data) 
   } catch (err) {
     General.logError(ctx, err)
   }

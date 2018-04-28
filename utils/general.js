@@ -1,4 +1,5 @@
 import c from '../config'
+import R from 'ramda'
 
 export default {
   loopObjOwn(obj = {}, callback) {
@@ -47,20 +48,6 @@ export default {
     }
   },
 
-  batchExtractObj(sourceObj = {}, keys = []) {
-    let body = {}
-    keys.map(each => {
-      let input = sourceObj[each]
-      // Do not take properties that source object does not have
-      // In case of passing null or undefined value to model
-      // where some can not accept null value
-      if (input !== undefined) {
-        body[each] = input 
-      }
-    })
-    return body
-  },
-
   /**
    * Count offset for database query pagination
    * @param {number} page - page number, start from 1
@@ -78,7 +65,7 @@ export default {
    * @returns {number} positive integer
    */
   getPositiveInt(input = 1) {
-    return !isNaN(input) ? Math.round(Math.abs(input)) : 1
+    return R.is(Number, input) ? Math.round(Math.abs(input)) : 1
   },
 
   /**
@@ -99,15 +86,6 @@ export default {
       }
     })
     return arr
-  },
-
-  simpleSend(ctx, data) {
-    if (data) {
-      ctx.status = 200
-      ctx.body = this.prettyJSON(data)
-    } else {
-      ctx.status = 404
-    }
   },
 
   logError(ctx, err) {

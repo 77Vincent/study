@@ -43,7 +43,8 @@ posts.get('/', async (ctx) => {
       current.comments_url = General.getDomain(`/api/comments?post_id=${id}`) 
     }
 
-    General.simpleSend(ctx, data)
+    ctx.status = 200
+    ctx.body = General.prettyJSON(data)
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -66,7 +67,8 @@ posts.get('/:id', async (ctx) => {
       data.dataValues.comments_url = General.getDomain(`/api/comments?post_id=${id}`) 
     }
 
-    General.simpleSend(ctx, data)
+    ctx.status = 200
+    ctx.body = General.prettyJSON(data)
   } catch (err) {
     General.logError(ctx, err)
   }

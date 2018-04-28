@@ -6,8 +6,6 @@ import c from '../config'
 
 export const messages = Router()
 
-const params = ['content', 'recipient_id', 'sender_id', 'read']
-
 /** 
  * @api {get} /api/messages Get all messages
  * @apiGroup Messages 
@@ -35,7 +33,9 @@ messages.get('/', async (ctx) => {
       offset: General.getOffset(qs.page, c.queryLimit),
       where: { $and: filter }
     })
-    General.simpleSend(ctx, data)
+
+    ctx.status = 200
+    ctx.body = General.prettyJSON(data)
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -59,7 +59,7 @@ messages.get('/', async (ctx) => {
  */
 messages.put('/', async (ctx) => {
   try {
-    const data = await Message.create(General.batchExtractObj(ctx.request.body, params))
+    const data = await Message.create(ctx.request.body)
 
     ctx.status = 201
     ctx.body = General.prettyJSON(data) 

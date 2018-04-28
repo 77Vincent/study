@@ -5,8 +5,6 @@ import { General } from '../utils'
 
 export const tags = Router()
 
-const params = ['content', 'user_id']
-
 /** 
  * @api {get} /api/tags/ Get all tags
  * @apiGroup Tags
@@ -16,7 +14,8 @@ tags.get('/', async (ctx) => {
   try {
     const data = await Tag.findAll()
 
-    General.simpleSend(ctx, data)
+    ctx.status = 200
+    ctx.body = General.prettyJSON(data)
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -31,7 +30,7 @@ tags.get('/', async (ctx) => {
  */
 tags.put('/', async (ctx) => {
   try {
-    const data = await Tag.create(General.batchExtractObj(ctx.request.body, params))
+    const data = await Tag.create(ctx.request.body)
 
     ctx.body = General.prettyJSON(data)
     ctx.status = 201
@@ -49,9 +48,10 @@ tags.put('/', async (ctx) => {
 tags.post('/:id', async (ctx) => {
   try {
     let data = await Tag.findOne({ where: { id: ctx.params.id } })
-    data = await data.update(General.batchExtractObj(ctx.request.body, params))
+    data = await data.update(ctx.request.body)
 
-    General.simpleSend(ctx, data)
+    ctx.status = 200
+    ctx.body = General.prettyJSON(data)
   } catch (err) {
     General.logError(ctx, err)
   }

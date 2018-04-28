@@ -14,7 +14,8 @@ const getRandom = () => {
       method: 'POST',
       url: `${url}/tags/2`,
       body: { 
-        content: getRandom()
+        content: getRandom(),
+        dummy: 111
       },
       json: true })
   } catch (err) { console.error(err) }
@@ -44,7 +45,8 @@ const getRandom = () => {
         start: new Date('2018/11/11'),
         end: new Date('2018/12/12'),
         length: 33,
-        finished: true
+        finished: true,
+        dummy: 111
       },
       json: true })
   } catch (err) { console.error(err) }
@@ -59,7 +61,8 @@ const getRandom = () => {
       body: {
         label: getRandom(),
         quota: 99,
-        finished: false
+        finished: false,
+        dummy: 111
       },
       json: true })
   } catch (err) {
@@ -79,7 +82,8 @@ const getRandom = () => {
         gender: true,
         jjj: 999,
         name: 'hhhhhhhhhhh' ,
-        bio: '111111111111'
+        bio: '111111111112',
+        dummy: 111
       },
       json: true })
   } catch (err) {

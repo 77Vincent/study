@@ -6,12 +6,6 @@ import c from '../config.js'
 
 export const orders = Router()
 
-const params = [
-  'payment_method', 'total_price',
-  'unit_price', 'length',
-  'buyer_id', 'seller_id'
-]
-
 /** 
  * @api {get} /api/orders/ Get all orders
  * @apiGroup Orders
@@ -42,7 +36,8 @@ orders.get('/', async (ctx) => {
       where: { $and: filter },
     })
 
-    General.simpleSend(ctx, data)
+    ctx.status = 200
+    ctx.prettyJSON(data)
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -61,7 +56,7 @@ orders.get('/', async (ctx) => {
  */
 orders.put('/', async (ctx) => {
   try {
-    const data = await Order.create(General.batchExtractObj(ctx.request.body, params))
+    const data = await Order.create(ctx.request.body)
 
     ctx.body = General.prettyJSON(data)
     ctx.status = 201
@@ -84,9 +79,10 @@ orders.put('/', async (ctx) => {
 orders.post('/:id', async (ctx) => {
   try {
     let data = await Order.findOne({ where: { id: ctx.params.id } })
-    data = await data.update(General.batchExtractObj(ctx.request.body, params))
+    data = await data.update(ctx.request.body)
 
-    General.simpleSend(ctx, data)
+    ctx.status = 200
+    ctx.body = General.prettyJSON(data)
   } catch (err) {
     General.logError(ctx, err)
   }

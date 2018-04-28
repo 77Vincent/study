@@ -6,7 +6,6 @@ import c from '../config'
 
 export const classes = Router()
 
-const params = ['start', 'end', 'length', 'finished', 'schedule_id']
 const range = {
   length: 99
 }
@@ -42,7 +41,8 @@ classes.get('/', async (ctx) => {
       include: [{ model: Course, attributes: ['label', 'description'] }]
     })
 
-    General.simpleSend(ctx, data)
+    ctx.status = 200
+    ctx.body = General.prettyJSON(data) 
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -69,15 +69,14 @@ classes.get('/', async (ctx) => {
  */
 classes.put('/', async (ctx) => {
   try {
-    const input = General.batchExtractObj(ctx.request.body, params)
-    const isOutRange = General.checkRange(range, input)
+    const isOutRange = General.checkRange(range, ctx.request.body)
 
     if (isOutRange) {
       ctx.status = 416
       ctx.body = isOutRange
 
     } else {
-      const data = await Class.create(input)
+      const data = await Class.create(ctx.request.body)
       ctx.body = General.prettyJSON(data)
       ctx.status = 201
     }
@@ -106,8 +105,7 @@ classes.put('/', async (ctx) => {
  */
 classes.post('/:id', async (ctx) => {
   try {
-    const input = General.batchExtractObj(ctx.request.body, params) 
-    const isOutRange = General.checkRange(range, input)
+    const isOutRange = General.checkRange(range, ctx.request.body)
     
     if (isOutRange) {
       ctx.status = 416
@@ -115,7 +113,7 @@ classes.post('/:id', async (ctx) => {
 
     } else {
       let data = await Class.findOne({ where: { id: ctx.params.id } })
-      data = await data.update(input)
+      data = await data.update(ctx.request.body)
       ctx.status = 200
       ctx.body = General.prettyJSON(data) 
     }

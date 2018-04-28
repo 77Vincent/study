@@ -6,7 +6,6 @@ import c from '../config'
 
 export const schedules = Router()
 
-const params = ['label', 'teacher_id', 'student_id', 'finished', 'quota']
 const range = {
   quota: 99
 }
@@ -39,7 +38,8 @@ schedules.get('/', async (ctx) => {
       current.classes_url = General.getDomain(`/api/classes?schedule_id=${id}`) 
     }
 
-    General.simpleSend(ctx, data)
+    ctx.status = 200
+    ctx.body = General.prettyJSON(data)
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -57,15 +57,14 @@ schedules.get('/', async (ctx) => {
  */
 schedules.put('/', async (ctx) => {
   try {
-    const input = General.batchExtractObj(ctx.request.body, params)
-    const isOutRange = General.checkRange(range, input)
+    const isOutRange = General.checkRange(range, ctx.request.body)
 
     if (isOutRange) {
       ctx.status = 416
       ctx.body = isOutRange
 
     } else {
-      const data = await Schedule.create(input)
+      const data = await Schedule.create(ctx.request.body)
       ctx.body = General.prettyJSON(data)
       ctx.status = 201
     }
@@ -86,8 +85,7 @@ schedules.put('/', async (ctx) => {
  */
 schedules.post('/:id', async (ctx) => {
   try {
-    const input = General.batchExtractObj(ctx.request.body, params)
-    const isOutRange = General.checkRange(range, input)
+    const isOutRange = General.checkRange(range, ctx.request.body)
 
     if (isOutRange) {
       ctx.status = 416
@@ -95,7 +93,7 @@ schedules.post('/:id', async (ctx) => {
 
     } else {
       let data = await Schedule.findOne({ where: { id: ctx.params.id } })
-      data = await data.update(input)
+      data = await data.update(ctx.request.body)
       ctx.status = 200
       ctx.body = General.prettyJSON(data)
     }

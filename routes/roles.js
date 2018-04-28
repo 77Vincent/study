@@ -15,7 +15,8 @@ roles.get('/', async (ctx) => {
   try {
     const data = await Role.findAll()
 
-    General.simpleSend(ctx, data)
+    ctx.status = 200
+    ctx.body = General.prettyJSON(data)
   } catch (err) {
     General.logError(ctx, err)
   }
