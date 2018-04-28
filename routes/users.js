@@ -269,7 +269,11 @@ users.get('/:id/followings', async (ctx) => {
  */
 users.put('/', async (ctx) => {
   try {
-    const user = await User.create(ctx.request.body)
+    const input = ctx.request.body
+    const path = General.store('avatar')(input.avatar_base64, input.avatar_mime, input.mobilephone)
+    input.avatar_url = path
+    const user = await User.create(input)
+
     const data = await UserUtils.getOneUser(user.id, {
       attributes: { exclude: ['password'] }
     })

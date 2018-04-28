@@ -17,5 +17,7 @@ export default {
   databasePort: 3306,
   // Oauth and token
   cookiesTimeout: 60 * 60 * 1000,
-  tokenSecret: 'Jessie'
+  tokenSecret: 'Jessie',
+  // Store
+  fileLocation: '/usr/share/nginx/xfolio-files'
 }
