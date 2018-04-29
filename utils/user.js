@@ -18,6 +18,8 @@ export default {
     const urls = ['followers', 'followings']
     const urlsByQuerystring = ['posts', 'courses']
 
+    data.avatar_url = General.getDomain(`/api/avatars/user_id/${id}`)
+
     // Add students info to teachers
     if (data.role_id === 2) {
       const students = await Schedule.findAll({ 

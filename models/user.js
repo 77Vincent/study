@@ -42,9 +42,6 @@ export default Db.define('user', {
   name: {
     type: Sequelize.STRING
   },
-  avatar_url: {
-    type: Sequelize.STRING
-  },
   school: {
     type: Sequelize.STRING
   },

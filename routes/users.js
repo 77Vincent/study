@@ -110,33 +110,6 @@ users.get('/:id', async (ctx) => {
 })
 
 /** 
- * @api {get} /api/users/:id/avatar Get a user's avatar
- * @apiGroup Users 
- * @apiSuccess (200) {object} void User object
- */
-users.get('/:id/avatar=:type/:ext', async (ctx) => {
-  try {
-    const { id, type, ext } = ctx.params
-    const data = await UserUtils.getOneUser(id, { attributes: { exclude: ['password'] } })
-
-    if (data) {
-      const file = General.restore('avatar', id, ext)
-      if (file) {
-        ctx.status = 200
-        ctx.type = `${type}/${ext}` 
-        ctx.body = General.restore('avatar', id, ext)
-      } else {
-        ctx.status = 404
-      }
-    } else {
-      ctx.status = 404
-    }
-  } catch (err) {
-    General.logError(ctx, err)
-  }
-})
-
-/** 
  * @api {get} /api/users/:id/students Get a user's students
  * @apiGroup Users 
  * @apiParam (Query String) {boolean=0,1} [finished=0,1] Filtered by if the schedule has been finished
@@ -298,14 +271,8 @@ users.put('/', async (ctx) => {
   try {
     const input = ctx.request.body
     const user = await User.create(input)
-    General.store('avatar', input.avatar_base64, input.avatar_mime, user.id)
 
     let data = await UserUtils.getOneUser(user.id, { attributes: { exclude: ['password'] } })
-
-    // Update avatar url
-    data = await data.update({
-      avatar_url: General.getDomain(`/api/users/${user.id}/avatar=${input.avatar_mime}`) 
-    })
 
     // Add majors list
     const majors = await Db.model('user_major').findAll({ where: { user_id: user.id } })
@@ -349,7 +316,7 @@ users.put('/', async (ctx) => {
 users.post('/:id', async (ctx) => {
   try {
     const user_id = ctx.params.id
-    let input = ctx.request.body
+    const input = ctx.request.body
     const isOutRange = General.checkRange(range, input)
 
     if (isOutRange) {
@@ -366,19 +333,23 @@ users.post('/:id', async (ctx) => {
       }
 
       let data = await UserUtils.getOneUser(user_id)
-      // Delete majors because it's not updated here
-      delete input.majors
-      data = await data.update(input)
+      if (data) {
+        // Delete majors because it's not updated here
+        delete input.majors
+        data = await data.update(input)
 
-      // do not send password to client
-      delete data.dataValues.password
+        // do not send password to client
+        delete data.dataValues.password
 
-      // Add majors list
-      const majors = await Db.model('user_major').findAll({ where: { user_id } })
-      data.dataValues.majors = majors.map(each => each.major_id)
+        // Add majors list
+        const majors = await Db.model('user_major').findAll({ where: { user_id } })
+        data.dataValues.majors = majors.map(each => each.major_id)
 
-      ctx.status = 200
-      ctx.body = General.prettyJSON(data)
+        ctx.status = 200
+        ctx.body = General.prettyJSON(data)
+      } else {
+        ctx.status = 404
+      }
     }
 
   } catch (err) {

@@ -10,6 +10,7 @@ import Tag from './tag'
 import Message from './message'
 import Class from './class'
 import Order from './order'
+import Avatar from './avatar'
 
 // Table Relationship
 User.belongsTo(Role)
@@ -18,6 +19,7 @@ Post.belongsTo(User)
 Picture.belongsTo(Post)
 Tag.belongsTo(User)
 Class.belongsTo(Schedule)
+Avatar.belongsTo(User)
 
 Comment.belongsTo(User)
 Comment.belongsTo(Post)
@@ -55,5 +57,6 @@ export {
   Tag,
   Message,
   Class,
-  Order
+  Order,
+  Avatar
 }

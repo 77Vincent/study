@@ -1,10 +1,4 @@
-const fs = require('fs')
-const path = require('path')
-const mime = require('mime')
-
-const file1 = path.resolve('static/images/logo.png')
-
-module.exports.dummyUsers = [{
+export const dummyUsers = [{
   password: '000000',
   name: '老师1',
   role_id: 2,
@@ -13,8 +7,6 @@ module.exports.dummyUsers = [{
   bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
   gender: 1,
   cost: 300,
-  avatar_base64: fs.readFileSync(file1, { encoding: 'base64' }),
-  avatar_mime: mime.getType(file1),
   country: 'US',
   place: 'online',
   mobilephone: 18811111111,

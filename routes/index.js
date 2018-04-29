@@ -13,6 +13,7 @@ import './sessions'
 import './tags'
 import './users'
 import './orders'
+import './avatars'
 
 const router = Router()
 

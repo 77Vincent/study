@@ -95,16 +95,16 @@ export default {
 
   store(stuff, base64, mimeType, id) {
     if (base64 && mimeType) {
-      const where = path.resolve(`${c.fileLocation}/${stuff}s/${stuff}_${id}.${mime.getExtension(mimeType)}`)
+      const where = path.resolve(`${c.fileLocation}/${stuff}s/${stuff}_user_id_${id}.${mime.getExtension(mimeType)}`)
       fs.writeFileSync(where, new Buffer(base64, 'base64'))
       return where
     }
   },
-  restore(stuff, id, ext) {
-    const where = path.resolve(`${c.fileLocation}/${stuff}s/${stuff}_${id}.${ext}`)
+  restore(where) {
     try {
       return fs.readFileSync(where)
     } catch (err) {
+      console.error(err)
       return null
     }
   }
