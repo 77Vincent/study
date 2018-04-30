@@ -107,5 +107,12 @@ export default {
       console.error(err)
       return null
     }
+  },
+  remove(where) {
+    try {
+      fs.unlinkSync(where)
+    } catch (err) {
+      console.error(err)
+    }
   }
 }
