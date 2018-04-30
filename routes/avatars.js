@@ -3,7 +3,7 @@ import c from '../config.js'
 import mime from 'mime'
 
 import { Avatar } from '../models'
-import { General } from '../utils'
+import { General, Storage } from '../utils'
 
 export const avatars = Router()
 
@@ -41,7 +41,7 @@ avatars.get('/user_id/:user_id', async (ctx) => {
 
     if (data) {
       const { path } = data.dataValues
-      const file = General.restore(path) 
+      const file = Storage.restore(path) 
       ctx.status = 200
       ctx.type = mime.getType(path.split('.')[1])
       ctx.body = file
@@ -64,7 +64,7 @@ avatars.get('/user_id/:user_id', async (ctx) => {
 avatars.put('/', async (ctx) => {
   try {
     const { content, mime, user_id } = ctx.request.body
-    const path = General.store('avatar', content, mime, user_id)
+    const path = Storage.store('avatar', content, mime, user_id)
     const data = await Avatar.create({ user_id, path })
 
     ctx.status = 201
@@ -87,8 +87,8 @@ avatars.post('/', async (ctx) => {
     const { content, mime, user_id } = ctx.request.body
     let data = await Avatar.findOne({ where: { user_id } })
 
-    General.remove(data.dataValues.path)
-    const path = General.store('avatar', content, mime, user_id)
+    Storage.remove(data.dataValues.path)
+    const path = Storage.store('avatar', content, mime, user_id)
     data = await data.update({ path })
 
     ctx.status = 200
@@ -108,7 +108,7 @@ avatars.delete('/', async (ctx) => {
   try {
     const { user_id } = ctx.request.body
     const data = await Avatar.findOne({ where: { user_id } })
-    General.remove(data.dataValues.path)
+    Storage.remove(data.dataValues.path)
     await Avatar.destroy({ where: { user_id } })
 
     ctx.status = 200

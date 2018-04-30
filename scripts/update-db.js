@@ -100,7 +100,7 @@ const getRandom = () => {
 // avatar
 const file =  {
   path: path.resolve('static/images'),
-  name: 'logo.png'
+  name: 'test.jpg'
 };
 (async () => {
   try {
