@@ -99,7 +99,7 @@ avatars.post('/', async (ctx) => {
 })
 
 /** 
- * @api {post} /api/avatars Delete a avatar 
+ * @api {delete} /api/avatars Delete a avatar 
  * @apiGroup Avatars
  * @apiParam {integer} user_id The creator's user ID
  * @apiSuccess (200) {void} void void
