@@ -18,7 +18,7 @@ export const sessions = Router()
  *  }
  * @apiSuccess (200) {object} void User Object 
  * @apiSuccess (204) {void} void No returned object when no params are passed
- * @apiSuccess (403) {void} void Access denied
+ * @apiSuccess (403) {void} void Access denied, wrong user credentials
  */
 sessions.post('/', async (ctx) => {
   const user_info = ctx.decoded.user_info

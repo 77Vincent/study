@@ -8,7 +8,7 @@ export default Db.define('picture', {
     unique: true,
     primaryKey: true
   },
-  url: {
+  path: {
     type: Sequelize.STRING
   }
 }, {

@@ -7,7 +7,7 @@ const files = [
   { path: path.resolve('static/images'), name: 'logo.png', user_id: 2 },
 ]
 
-const avatars = files.map(each => {
+const dummyAvatars = files.map(each => {
   return {
     mime: mime.getType(each.name.split('.')[1]),
     content: fs.readFileSync(`${each.path}/${each.name}`, 'base64'),
@@ -15,4 +15,4 @@ const avatars = files.map(each => {
   }
 })
 
-export { avatars }
+export { dummyAvatars }

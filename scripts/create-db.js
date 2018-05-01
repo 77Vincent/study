@@ -13,7 +13,7 @@ import { dummyClasses } from './data/classes'
 import { dummyMessages } from './data/messages'
 import { dummyTags } from './data/tags'
 import { dummyOrders } from './data/orders'
-import { avatars } from './data/avatars'
+import { dummyAvatars } from './data/avatars'
 
 import { Role } from '../models'
 
@@ -39,17 +39,6 @@ const run = async () => {
         }
       }
     }
-
-    // Upload files 
-    avatars.map(async (each) => {
-      const { user_id, content, mime } = each
-      await rq({
-        method: 'PUT',
-        url: `${url}/avatars`,
-        body: { user_id, content, mime },
-        json: true
-      })
-    })
 
     // Create relationship tables
     await Db.model('follower_following').bulkCreate([

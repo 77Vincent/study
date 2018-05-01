@@ -1,7 +1,8 @@
 import Router from 'koa-router'
+import mime from 'mime'
 
 import { Picture } from '../models'
-import { General } from '../utils'
+import { General, Storage } from '../utils'
 import c from '../config'
 
 export const pictures = Router()
@@ -31,19 +32,47 @@ pictures.get('/', async (ctx) => {
 })
 
 /** 
+ * @api {get} /api/pictures/:id Get a picture
+ * @apiGroup Pictures
+ * @apiSuccess (200) {binary} void The picture
+ */
+pictures.get('/:id', async (ctx) => {
+  try {
+    const { id } = ctx.params
+    const data = await Picture.findOne({ where: { id } })
+
+    if (data) {
+      ctx.body = data
+      const { path } = data.dataValues
+      const file = Storage.restore(path) 
+      ctx.status = 200
+      ctx.type = mime.getType(path.split('.')[1])
+      ctx.body = file
+    } else {
+      ctx.status = 404
+    }
+
+  } catch (err) {
+    General.logError(ctx, err)
+  }
+})
+
+/** 
  * @api {put} /api/pictures/ Create a picture
  * @apiGroup Pictures
- * @apiParam {integer} post_id The post ID it belongs to
- * @apiParam {string} url The URL of the picture 
+ * @apiParam {string} content Content of the image file in base64
+ * @apiParam {string} mime The MIME of the file 
+ * @apiParam {integer} post_id It's post ID
  * @apiSuccess (201) {object} void The created picture
  */
 pictures.put('/', async (ctx) => {
   try {
-    const { post_id, url } = ctx.request.body
-    const data = await Picture.create({ post_id, url })
+    const { content, mime, post_id } = ctx.request.body
+    const path = Storage.store('picture', content, mime, post_id)
+    const data = await Picture.create({ post_id, path })
 
-    ctx.body = General.prettyJSON(data)
     ctx.status = 201
+    ctx.body = General.prettyJSON(data)
   } catch (err) {
     General.logError(ctx, err)
   }

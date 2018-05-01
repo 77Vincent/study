@@ -1,7 +1,7 @@
 import Router from 'koa-router'
-import c from '../config.js'
 import mime from 'mime'
 
+import c from '../config.js'
 import { Avatar } from '../models'
 import { General, Storage } from '../utils'
 
@@ -56,7 +56,7 @@ avatars.get('/user_id/:user_id', async (ctx) => {
 /** 
  * @api {put} /api/avatars Create a avatar 
  * @apiGroup Avatars
- * @apiParam {string} content Content of the avatar file in base64
+ * @apiParam {string} content Content of the image file in base64
  * @apiParam {string} mime The MIME of the file 
  * @apiParam {integer} user_id The creator's user ID
  * @apiSuccess (201) {object} void The created avatar
