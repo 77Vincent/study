@@ -85,9 +85,11 @@ pictures.put('/', async (ctx) => {
  */
 pictures.delete('/:id', async (ctx) => {
   try {
-    await Picture.destroy({ 
-      where: { id: ctx.params.id }
-    })
+    const { id } = ctx.params
+    const data = await Picture.findOne({ where: { id } })
+    Storage.remove(data.dataValues.path)
+    await Picture.destroy({ where: { id } })
+
     ctx.status = 200
   } catch (err) {
     General.logError(ctx, err)
