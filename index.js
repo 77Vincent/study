@@ -3,7 +3,7 @@ import logger from 'koa-logger'
 import cors from 'koa-cors'
 import serve from 'koa-static'
 import bodyParser from 'koa-bodyparser'
-import jwt from 'koa-jwt'
+// import jwt from 'koa-jwt'
 
 import routes from './routes'
 import { Oauth } from './utils'

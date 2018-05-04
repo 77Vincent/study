@@ -47,7 +47,7 @@ const run = async () => {
       { follower_id: 3, following_id: 2 }, { follower_id: 4, following_id: 1 }
     ])
     await Db.model('user_major').bulkCreate([
-      { user_id: 1, major_id: 1 }, { user_id: 1, major_id: 2 }, { user_id: 2, major_id: 3 },
+      { user_id: 2, major_id: 1 }, { user_id: 2, major_id: 2 }, { user_id: 2, major_id: 3 },
       { user_id: 2, major_id: 4 }, { user_id: 3, major_id: 5 }, { user_id: 4, major_id: 6 },
       { user_id: 5, major_id: 2 }, { user_id: 5, major_id: 3 }, { user_id: 6, major_id: 6 },
     ])

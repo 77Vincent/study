@@ -3,8 +3,8 @@ const path = require('path')
 const mime = require('mime')
 
 const files = [
-  { path: path.resolve('static/images'), name: 'logo.png', user_id: 1 },
   { path: path.resolve('static/images'), name: 'logo.png', user_id: 2 },
+  { path: path.resolve('static/images'), name: 'logo.png', user_id: 3 },
 ]
 
 const dummyAvatars = files.map(each => {

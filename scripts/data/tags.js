@@ -1,7 +1,7 @@
 export const dummyTags = [
-  { content: '风趣', user_id: 1 },
-  { content: '冷幽默', user_id: 1 },
-  { content: '专业', user_id: 1 },
+  { content: '风趣', user_id: 2 },
+  { content: '冷幽默', user_id: 2 },
+  { content: '专业', user_id: 2 },
   { content: '口才好', user_id: 2 },
   { content: '和蔼可亲', user_id: 2 },
   { content: '闷骚', user_id: 2 },

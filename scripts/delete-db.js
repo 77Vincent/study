@@ -14,7 +14,7 @@ const run = async () => {
     await rq({ method: 'DELETE', url: `${url}/schedules/1`})
     await rq({ method: 'DELETE', url: `${url}/pictures/1`})
     await rq({ method: 'DELETE', url: `${url}/sessions`})
-    await rq({ method: 'DELETE', url: `${url}/avatars`, body: { user_id: 1 }, json: true})
+    await rq({ method: 'DELETE', url: `${url}/avatars`, body: { user_id: 2 }, json: true})
 
   } catch (err) {
     console.error('init Error', err)

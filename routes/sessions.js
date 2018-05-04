@@ -55,7 +55,7 @@ sessions.post('/', async (ctx) => {
       })
 
       ctx.status = 200
-      ctx.body = General.prettyJSON(data) 
+      ctx.body = { data: General.prettyJSON(data), token }
     } else {
       ctx.status = 403
     }

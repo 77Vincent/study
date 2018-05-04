@@ -1,7 +1,7 @@
 // All server configs are stored here
-import path from 'path'
+const path = require('path')
 
-export default {
+module.exports = {
   // database query
   queryLimit: 50,
   // http
@@ -16,9 +16,11 @@ export default {
   databaseTimezone: '+8:00',
   databasePassword: '$Xf0li0Xf0li0',
   databasePort: 3306,
-  // Oauth and token
+  // Token
   cookiesTimeout: 60 * 60 * 1000,
   tokenSecret: 'Jessie',
+  adminID: 'admin',
+  adminPassword: '$Xf0li0Xf0li0',
   // Store
   fileLocation: path.resolve('../xfolio-files') 
 }
