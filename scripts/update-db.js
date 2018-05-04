@@ -81,7 +81,7 @@ const getRandom = () => {
   try {
     await rq({
       method: 'POST',
-      url: `${url}/users/2`,
+      url: `${url}/users/3`,
       body: {
         username: 'aaaaaaaaa',
         cost: 9999,

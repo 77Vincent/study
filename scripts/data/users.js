@@ -1,4 +1,9 @@
 export const dummyUsers = [{
+  role_id: 1,
+  username: 'admin',
+  mobilephone: 123456789,
+  password: '$Xf0li0Xf0li0',
+}, {
   password: '000000',
   name: '老师1',
   role_id: 2,

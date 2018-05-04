@@ -5,7 +5,7 @@ import c from '../config'
 const url = `${c.protocol}://${c.host}:${c.port}/api`
 const run = async () => {
   try {
-    await rq({ method: 'DELETE', url: `${url}/users/1`})
+    await rq({ method: 'DELETE', url: `${url}/users/2`})
     await rq({ method: 'DELETE', url: `${url}/tags/1`})
     await rq({ method: 'DELETE', url: `${url}/courses/1`})
     await rq({ method: 'DELETE', url: `${url}/classes/1`})

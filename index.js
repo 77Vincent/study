@@ -3,16 +3,16 @@ import logger from 'koa-logger'
 import cors from 'koa-cors'
 import serve from 'koa-static'
 import bodyParser from 'koa-bodyparser'
+import jwt from 'koa-jwt'
 
 import routes from './routes'
 import { Oauth } from './utils'
 import c from './config'
 
 const app = new Koa()
-
 app.proxy = true
-app.use(cors())
 app.use(logger())
+app.use(cors())
 app.use(bodyParser())
 app.use(serve('./static'))
 
