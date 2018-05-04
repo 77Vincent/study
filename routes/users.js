@@ -2,7 +2,7 @@ import Router from 'koa-router'
 import R from 'ramda'
 
 import { User, Schedule } from '../models'
-import { General, Db, Oauth, UserUtils } from '../utils'
+import { General, Db, Oauth, UserService } from '../utils'
 import c from '../config.js'
 
 export const users = Router()
@@ -36,7 +36,7 @@ users.get('/', async (ctx) => {
   try {
     const filters = ['id', 'mobilephone', 'role_id', 'gender', 'place', 'province', 'city', 'country', 'active']
     const qs = General.parseQuerystring(ctx.request.querystring)
-    const filter = General.objToObjGroupsInArr(qs, filters)
+    const filter = General.getFilter(qs, filters)
 
     // this part is for majors filtering
     // if majors is given in the querystring then do the follow
@@ -56,13 +56,13 @@ users.get('/', async (ctx) => {
 
     // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      await UserUtils.addFields(data[i].dataValues, data[i].dataValues.id)
+      await UserService.addFields(data[i].dataValues, data[i].dataValues.id)
     }
 
     // Order for teacher 
     if (qs.role_id === '2') {
       data.map(each => {
-        each.dataValues.weight = UserUtils.defaultOrder(each.dataValues)
+        each.dataValues.weight = UserService.defaultOrder(each.dataValues)
       })
 
       if (R.has('cost')(qs)) {
@@ -94,10 +94,10 @@ users.get('/', async (ctx) => {
 users.get('/:id', async (ctx) => {
   try {
     const { id } = ctx.params
-    const data = await UserUtils.getOneUser(id, { attributes: { exclude: ['password'] } })
+    const data = await UserService.getOneUser(id, { attributes: { exclude: ['password'] } })
 
     if (data) {
-      await UserUtils.addFields(data.dataValues, id)
+      await UserService.addFields(data.dataValues, id)
       ctx.status = 200
       ctx.body = General.prettyJSON(data)
 
@@ -119,7 +119,7 @@ users.get('/:id', async (ctx) => {
 users.get('/:id/students', async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
-    const filter = General.objToObjGroupsInArr(qs, ['finished'])
+    const filter = General.getFilter(qs, ['finished'])
     filter.push({ teacher_id: ctx.params.id })
 
     let data = await Schedule.findAll({
@@ -135,7 +135,7 @@ users.get('/:id/students', async (ctx) => {
 
     // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      await UserUtils.addFields(data[i].dataValues, data[i].dataValues.id)
+      await UserService.addFields(data[i].dataValues, data[i].dataValues.id)
     }
 
     ctx.status = 200
@@ -155,7 +155,7 @@ users.get('/:id/students', async (ctx) => {
 users.get('/:id/teachers', async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
-    const filter = General.objToObjGroupsInArr(qs, ['finished'])
+    const filter = General.getFilter(qs, ['finished'])
     filter.push({ student_id: ctx.params.id })
 
     let data = await Schedule.findAll({
@@ -171,7 +171,7 @@ users.get('/:id/teachers', async (ctx) => {
 
     // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      await UserUtils.addFields(data[i].dataValues, data[i].dataValues.id)
+      await UserService.addFields(data[i].dataValues, data[i].dataValues.id)
     }
 
     ctx.status = 200
@@ -203,7 +203,7 @@ users.get('/:id/followers', async (ctx) => {
 
     // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      await UserUtils.addFields(data[i].dataValues, data[i].dataValues.id)
+      await UserService.addFields(data[i].dataValues, data[i].dataValues.id)
     }
 
     ctx.status = 200
@@ -235,7 +235,7 @@ users.get('/:id/followings', async (ctx) => {
 
     // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      await UserUtils.addFields(data[i].dataValues, data[i].dataValues.id)
+      await UserService.addFields(data[i].dataValues, data[i].dataValues.id)
     }
 
     ctx.status = 200
@@ -272,7 +272,7 @@ users.put('/', async (ctx) => {
     const input = ctx.request.body
     const user = await User.create(input)
 
-    let data = await UserUtils.getOneUser(user.id, { attributes: { exclude: ['password'] } })
+    let data = await UserService.getOneUser(user.id, { attributes: { exclude: ['password'] } })
 
     // Add majors list
     const majors = await Db.model('user_major').findAll({ where: { user_id: user.id } })
@@ -332,7 +332,7 @@ users.post('/:id', async (ctx) => {
         await Db.sync()
       }
 
-      let data = await UserUtils.getOneUser(user_id)
+      let data = await UserService.getOneUser(user_id)
       if (data) {
         // Delete majors because it's not updated here
         delete input.majors

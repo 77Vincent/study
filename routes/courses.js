@@ -18,7 +18,7 @@ export const courses = Router()
 courses.get('/', async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
-    const filter = General.objToObjGroupsInArr(qs, ['id', 'user_id'])
+    const filter = General.getFilter(qs, ['id', 'user_id'])
 
     // this part is for majors filtering
     if (qs.majors) {

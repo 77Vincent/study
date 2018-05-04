@@ -43,8 +43,8 @@ export default {
 
   /**
    * Count offset for database query pagination
-   * @param {number} page - page number, start from 1
-   * @param {number} limit - items to display per page 
+   * @param {number} [page=1] - page number, start from 1
+   * @param {number} [limit=50] - items to display per page 
    * @returns 
    */
   getOffset(page = 1, limit = 50) {
@@ -62,12 +62,12 @@ export default {
   },
 
   /**
-   * 
-   * @param {object} object - source normal object that needs to be converted
-   * @param {array} keys - array of values that the object's keys to be included
+   * Create a sequelize specific object for its filter
+   * @param {object} [object={}] - source normal object that needs to be converted
+   * @param {array} [keys=[]] - array of values that the object's keys to be included
    * @returns {array} array contains objects in this format: [{key: value}, {key: value}]
    */
-  objToObjGroupsInArr(object = {}, keys = []) {
+  getFilter(object = {}, keys = []) {
     let arr = []
     R.forEachObjIndexed((value, key) => {
       if (R.contains(key, keys)) {

@@ -19,7 +19,7 @@ messages.get('/', async (ctx) => {
   try {
     const filters = ['sender_id', 'recipient_id', 'read']
     const qs = General.parseQuerystring(ctx.request.querystring)
-    const filter = General.objToObjGroupsInArr(qs, filters)
+    const filter = General.getFilter(qs, filters)
 
     // Search
     if (qs.content) {

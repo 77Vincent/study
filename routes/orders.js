@@ -22,7 +22,7 @@ orders.get('/', async (ctx) => {
       limit: c.queryLimit,
       offset: General.getOffset(qs.page, c.queryLimit),
       order: [['updated_at', 'DESC']],
-      where: { $and: General.objToObjGroupsInArr(qs, ['buyer_id', 'seller_id']) },
+      where: { $and: General.getFilter(qs, ['buyer_id', 'seller_id']) },
     })
 
     ctx.status = 200

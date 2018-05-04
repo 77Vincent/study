@@ -21,7 +21,7 @@ pictures.get('/', async (ctx) => {
     const data = await Picture.findAll({
       limit: c.queryLimit,
       offset: General.getOffset(qs.page, c.queryLimit),
-      where: { $and: General.objToObjGroupsInArr(qs, ['post_id']) },
+      where: { $and: General.getFilter(qs, ['post_id']) },
     })
 
     ctx.status = 200

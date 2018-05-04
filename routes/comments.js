@@ -19,7 +19,7 @@ const filters = ['user_id', 'post_id']
 comments.get('/', async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
-    const filter = General.objToObjGroupsInArr(qs, filters)
+    const filter = General.getFilter(qs, filters)
 
     const data = await Comment.findAll({
       limit: c.queryLimit,

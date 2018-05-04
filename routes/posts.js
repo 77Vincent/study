@@ -18,7 +18,7 @@ export const posts = Router()
 posts.get('/', async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
-    let filter = General.objToObjGroupsInArr(qs, ['user_id'])
+    let filter = General.getFilter(qs, ['user_id'])
 
     // Search
     if (qs.content) {

@@ -27,7 +27,7 @@ schedules.get('/', async (ctx) => {
     const data = await Schedule.findAll({
       limit: c.queryLimit,
       offset: General.getOffset(qs.page, c.queryLimit),
-      where: { $and: General.objToObjGroupsInArr(qs, filters) }
+      where: { $and: General.getFilter(qs, filters) }
     })
 
     for (let i = 0; i < data.length; i++) {

@@ -23,7 +23,7 @@ classes.get('/', async (ctx) => {
     const data = await Class.findAll({
       limit: c.queryLimit,
       offset: General.getOffset(qs.page, c.queryLimit),
-      where: { $and: General.objToObjGroupsInArr(qs, ['finished', 'schedule_id']) },
+      where: { $and: General.getFilter(qs, ['finished', 'schedule_id']) },
       order: [['start', 'ASC']],
       include: [{ model: Course, attributes: ['label', 'description'] }]
     })
