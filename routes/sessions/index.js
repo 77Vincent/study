@@ -1,9 +1,10 @@
 const Router = require('koa-router')
 const bcrypt = require('bcryptjs')
 
-const { Oauth, General } = require('../utils')
-const service = require('./users/service')
-const Database = require('../database')
+const { General } = require('../../utils')
+const service = require('../users/service')
+const oauth = require('./service')
+const Database = require('../../database')
 
 const sessions = Router()
 
@@ -50,7 +51,7 @@ sessions.post('/', async (ctx) => {
       let majors = await Database.model('user_major').findAll({ where: { user_id: user_info } })
       data.dataValues.majors = majors.map(each => each.major_id)
 
-      const { token, expiresIn } = Oauth.signToken(data)
+      const { token, expiresIn } = oauth.signToken(data)
       ctx.cookies.set('user_info', token, {
         overwrite: true,
         maxAge: expiresIn

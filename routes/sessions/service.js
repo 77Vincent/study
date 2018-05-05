@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const c = require('../config')
+const c = require('../../config')
 
 const secret = c.tokenSecret
 const timeout = c.cookiesTimeout 

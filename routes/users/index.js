@@ -2,7 +2,8 @@ const Router = require('koa-router')
 const R = require('ramda')
 
 const { User, Schedule } = require('../../models')
-const { General, Oauth } = require('../../utils')
+const { General } = require('../../utils')
+const oauth = require('../sessions/service')
 const service = require('./service')
 const Database = require('../../database')
 const c = require('../../config.js')
@@ -280,7 +281,7 @@ users.put('/', async (ctx) => {
     const majors = await Database.model('user_major').findAll({ where: { user_id: user.id } })
     data.dataValues.majors = majors.map(each => each.major_id)
 
-    const { token, expiresIn } = Oauth.signToken(data)
+    const { token, expiresIn } = oauth.signToken(data)
     ctx.cookies.set('user_info', token, {
       overwrite: true,
       maxAge: expiresIn

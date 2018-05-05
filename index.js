@@ -7,7 +7,7 @@ const bodyParser = require('koa-bodyparser')
 // const jwt = require('koa-jwt')
 
 const c = require('./config')
-const { Oauth } = require('./utils')
+const oauth = require('./routes/sessions/service')
 const routes = require('./routes')
 
 const app = new Koa()
@@ -23,7 +23,7 @@ app.use(async (ctx, next) => {
 })
 app.use(async (ctx, next) => {
   ctx.decoded = {}
-  let id = await Oauth.verifyToken(ctx)
+  let id = await oauth.verifyToken(ctx)
   if (id) {
     ctx.decoded = id
   }
