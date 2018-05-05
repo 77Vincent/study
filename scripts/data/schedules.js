@@ -1,4 +1,4 @@
-export const dummySchedules = [{
+module.exports.dummySchedules = [{
   label: '建筑效果图突击课程',
   teacher_id: '1',
   student_id: '5',

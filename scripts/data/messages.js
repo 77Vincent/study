@@ -1,4 +1,4 @@
-export const dummyMessages = [{
+module.exports.dummyMessages = [{
   content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
   read: false,
   sender_id: 2,

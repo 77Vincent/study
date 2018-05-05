@@ -1,4 +1,4 @@
-export const dummyPosts = [{
+module.exports.dummyPosts = [{
   user_id: 2,
   content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
 }, {

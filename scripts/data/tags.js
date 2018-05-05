@@ -1,4 +1,4 @@
-export const dummyTags = [
+module.exports.dummyTags = [
   { content: '风趣', user_id: 2 },
   { content: '冷幽默', user_id: 2 },
   { content: '专业', user_id: 2 },

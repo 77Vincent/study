@@ -1,4 +1,4 @@
-export const dummyUsers = [{
+module.exports.dummyUsers = [{
   role_id: 1,
   username: 'admin',
   mobilephone: 123456789,

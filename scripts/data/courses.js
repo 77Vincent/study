@@ -1,4 +1,4 @@
-export const dummyCourses = [{
+module.exports.dummyCourses = [{
   label: 'test course 1',
   description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
   user_id: 2

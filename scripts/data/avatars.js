@@ -15,4 +15,4 @@ const dummyAvatars = files.map(each => {
   }
 })
 
-export { dummyAvatars }
+module.exports = { dummyAvatars }

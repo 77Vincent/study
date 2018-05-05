@@ -1,4 +1,4 @@
-export const dummyMajors = [{
+module.exports.dummyMajors = [{
   label: '建筑',
   description: '建筑设计'
 }, {

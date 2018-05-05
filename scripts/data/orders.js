@@ -1,4 +1,4 @@
-export const dummyOrders = [{
+module.exports.dummyOrders = [{
   payment_method: 1,
   total_price: 900,
   unit_price: 300,

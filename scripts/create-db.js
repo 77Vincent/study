@@ -1,21 +1,21 @@
-import Database from '..//database.js'
-import rq from 'request-promise-native'
-import c from '../config'
+const Database = require('..//database.js')
+const rq = require('request-promise-native')
+const c = require('../config')
 
-import { dummyUsers } from './data/users'
-import { dummyMajors } from './data/majors'
-import { dummyCourses } from './data/courses'
-import { dummyPosts } from './data/posts'
-import { dummyPictures } from './data/pictures'
-import { dummyComments } from './data/comments'
-import { dummySchedules } from './data/schedules'
-import { dummyClasses } from './data/classes'
-import { dummyMessages } from './data/messages'
-import { dummyTags } from './data/tags'
-import { dummyOrders } from './data/orders'
-import { dummyAvatars } from './data/avatars'
+const { dummyUsers } = require('./data/users')
+const { dummyMajors } = require('./data/majors')
+const { dummyCourses } = require('./data/courses')
+const { dummyPosts } = require('./data/posts')
+const { dummyPictures } = require('./data/pictures')
+const { dummyComments } = require('./data/comments')
+const { dummySchedules } = require('./data/schedules')
+const { dummyClasses } = require('./data/classes')
+const { dummyMessages } = require('./data/messages')
+const { dummyTags } = require('./data/tags')
+const { dummyOrders } = require('./data/orders')
+const { dummyAvatars } = require('./data/avatars')
 
-import { Role } from '../models'
+const { Role } = require('../models')
 
 const url = `${c.protocol}://${c.host}:${c.port}/api`
 const modules = module.children

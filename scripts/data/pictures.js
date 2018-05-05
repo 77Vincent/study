@@ -30,4 +30,4 @@ const dummyPictures = files.map(each => {
   }
 })
 
-export { dummyPictures }
+module.exports = { dummyPictures }
