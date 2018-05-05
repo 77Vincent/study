@@ -1,7 +1,7 @@
 const Router = require('koa-router')
 
 const { Schedule, Class } = require('../models')
-const { General } = require('../utils')
+const { General } = require('../services')
 const c = require('../config')
 
 const schedules = Router()

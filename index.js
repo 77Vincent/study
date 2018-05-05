@@ -4,7 +4,7 @@ const logger = require('koa-logger')
 const cors = require('koa-cors')
 const serve = require('koa-static')
 const bodyParser = require('koa-bodyparser')
-// const jwt = require('koa-jwt')
+const jwt = require('koa-jwt')
 
 const c = require('./config')
 const oauth = require('./routes/sessions/service')
@@ -16,6 +16,20 @@ app.use(convert(logger()))
 app.use(convert(cors()))
 app.use(convert(bodyParser()))
 app.use(serve('./static'))
+
+// Handle unauthenticated request
+app.use((ctx, next) => {
+  return next().catch((err) => {
+    if (err.status === 401) {
+      ctx.status = 401
+      ctx.body = 'Protected resource, use Authorization header to get access\n'
+    } else {
+      throw err
+    }
+  })
+})
+
+app.use(jwt({ secret: c.secret }).unless({ path: [/^\/api\/sessions/] }))
 
 app.use(async (ctx, next) => {
   await next()

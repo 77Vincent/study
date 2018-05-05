@@ -43,7 +43,7 @@ xfolio-server
 |   database.js     // Database instance
 |   index.js        // Entry file
 |
-|---utils/
+|---services/
 |       index.js    // Global functions
 |
 |---routes/

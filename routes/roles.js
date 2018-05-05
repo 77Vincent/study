@@ -1,7 +1,7 @@
 const Router = require('koa-router')
 
 const { Role } = require('../models')
-const { General } = require('../utils')
+const { General } = require('../services')
 
 const roles = Router()
 

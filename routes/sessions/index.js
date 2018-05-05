@@ -1,7 +1,7 @@
 const Router = require('koa-router')
 const bcrypt = require('bcryptjs')
 
-const { General } = require('../../utils')
+const { General } = require('../../services')
 const service = require('../users/service')
 const oauth = require('./service')
 const Database = require('../../database')

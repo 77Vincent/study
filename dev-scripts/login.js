@@ -1,9 +1,9 @@
 const rq = require('request-promise-native')
 const c = require('../config')
 
-const url = `${c.protocol}://${c.host}:${c.port}/api`;
+const url = `${c.protocol}://${c.host}:${c.port}/api`
 
-(async () => {
+module.exports = async () => {
   const data = await rq({
     method: 'POST',
     url: `${url}/sessions`,
@@ -13,5 +13,5 @@ const url = `${c.protocol}://${c.host}:${c.port}/api`;
     },
     json: true
   })
-  console.log(data)
-})()
+  return data.token
+}

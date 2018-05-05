@@ -1,4 +1,4 @@
-const General = require('../../utils/general')
+const General = require('../../services/general')
 const Database = require('../../database')
 const { User, Schedule, Tag, Post, Course } = require('../../models')
 

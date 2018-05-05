@@ -1,7 +1,7 @@
 const Router = require('koa-router')
 
 const { Message } = require('../models')
-const { General } = require('../utils')
+const { General } = require('../services')
 const c = require('../config')
 
 const messages = Router()

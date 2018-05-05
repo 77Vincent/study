@@ -2,7 +2,7 @@ const Router = require('koa-router')
 const mime = require('mime')
 
 const { Picture } = require('../models')
-const { General, Storage } = require('../utils')
+const { General, Storage } = require('../services')
 const c = require('../config')
 
 const pictures = Router()

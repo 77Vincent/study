@@ -2,7 +2,7 @@ const Router = require('koa-router')
 const R = require('ramda')
 
 const { User, Schedule } = require('../../models')
-const { General } = require('../../utils')
+const { General } = require('../../services')
 const oauth = require('../sessions/service')
 const service = require('./service')
 const Database = require('../../database')

@@ -3,7 +3,7 @@ const mime = require('mime')
 
 const c = require('../config.js')
 const { Avatar } = require('../models')
-const { General, Storage } = require('../utils')
+const { General, Storage } = require('../services')
 
 const avatars = Router()
 
