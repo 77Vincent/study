@@ -1,9 +1,9 @@
-import Database from '..//database.js'
-import fs from 'fs'
-import path from 'path'
-import mime from 'mime'
-import rq from 'request-promise-native'
-import c from '../config'
+const Database = require('..//database.js')
+const fs = require('fs')
+const path = require('path')
+const mime = require('mime')
+const rq = require('request-promise-native')
+const c = require('../config')
 
 const file1 = path.resolve('static/images/logo.png')
 const file1Base64 = fs.readFileSync(file1, { encoding: 'base64' })

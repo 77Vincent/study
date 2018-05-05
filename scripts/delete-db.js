@@ -1,6 +1,6 @@
-import Database from '..//database.js'
-import rq from 'request-promise-native'
-import c from '../config'
+const Database = require('..//database.js')
+const rq = require('request-promise-native')
+const c = require('../config')
 
 const url = `${c.protocol}://${c.host}:${c.port}/api`
 const run = async () => {
