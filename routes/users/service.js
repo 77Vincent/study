@@ -1,6 +1,6 @@
-const General = require('./general')
-const Database = require('../database')
-const { User, Schedule, Tag, Post, Course } = require('../models')
+const General = require('../../utils/general')
+const Database = require('../../database')
+const { User, Schedule, Tag, Post, Course } = require('../../models')
 
 module.exports = {
   getOneUser: async (id, config = {}) => {

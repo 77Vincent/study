@@ -1,7 +1,8 @@
 const Router = require('koa-router')
 const bcrypt = require('bcryptjs')
 
-const { Oauth, General, UserService } = require('../utils')
+const { Oauth, General } = require('../utils')
+const service = require('./users/service')
 const Database = require('../database')
 
 const sessions = Router()
@@ -29,13 +30,13 @@ sessions.post('/', async (ctx) => {
   try {
     // Sign in with user input credentials
     if (id && password) {
-      const user = await UserService.getOneUser(id)
+      const user = await service.getOneUser(id)
       if (user && bcrypt.compareSync(password, user.password)) {
         data = user
       }
     // Sign in with credentials in cookies if exist 
     } else if (user_info) {
-      data = await UserService.getOneUser(user_info)
+      data = await service.getOneUser(user_info)
     // Newly visit
     } else {
       ctx.status = 204

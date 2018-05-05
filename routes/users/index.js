@@ -1,10 +1,11 @@
 const Router = require('koa-router')
 const R = require('ramda')
 
-const { User, Schedule } = require('../models')
-const { General, Oauth, UserService } = require('../utils')
-const Database = require('../database')
-const c = require('../config.js')
+const { User, Schedule } = require('../../models')
+const { General, Oauth } = require('../../utils')
+const service = require('./service')
+const Database = require('../../database')
+const c = require('../../config.js')
 
 const users = Router()
 
@@ -57,13 +58,13 @@ users.get('/', async (ctx) => {
 
     // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      await UserService.addFields(data[i].dataValues, data[i].dataValues.id)
+      await service.addFields(data[i].dataValues, data[i].dataValues.id)
     }
 
     // Order for teacher 
     if (qs.role_id === '2') {
       data.map(each => {
-        each.dataValues.weight = UserService.defaultOrder(each.dataValues)
+        each.dataValues.weight = service.defaultOrder(each.dataValues)
       })
 
       if (R.has('cost')(qs)) {
@@ -95,10 +96,10 @@ users.get('/', async (ctx) => {
 users.get('/:id', async (ctx) => {
   try {
     const { id } = ctx.params
-    const data = await UserService.getOneUser(id, { attributes: { exclude: ['password'] } })
+    const data = await service.getOneUser(id, { attributes: { exclude: ['password'] } })
 
     if (data) {
-      await UserService.addFields(data.dataValues, id)
+      await service.addFields(data.dataValues, id)
       ctx.status = 200
       ctx.body = General.prettyJSON(data)
 
@@ -136,7 +137,7 @@ users.get('/:id/students', async (ctx) => {
 
     // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      await UserService.addFields(data[i].dataValues, data[i].dataValues.id)
+      await service.addFields(data[i].dataValues, data[i].dataValues.id)
     }
 
     ctx.status = 200
@@ -172,7 +173,7 @@ users.get('/:id/teachers', async (ctx) => {
 
     // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      await UserService.addFields(data[i].dataValues, data[i].dataValues.id)
+      await service.addFields(data[i].dataValues, data[i].dataValues.id)
     }
 
     ctx.status = 200
@@ -204,7 +205,7 @@ users.get('/:id/followers', async (ctx) => {
 
     // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      await UserService.addFields(data[i].dataValues, data[i].dataValues.id)
+      await service.addFields(data[i].dataValues, data[i].dataValues.id)
     }
 
     ctx.status = 200
@@ -236,7 +237,7 @@ users.get('/:id/followings', async (ctx) => {
 
     // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      await UserService.addFields(data[i].dataValues, data[i].dataValues.id)
+      await service.addFields(data[i].dataValues, data[i].dataValues.id)
     }
 
     ctx.status = 200
@@ -273,7 +274,7 @@ users.put('/', async (ctx) => {
     const input = ctx.request.body
     const user = await User.create(input)
 
-    let data = await UserService.getOneUser(user.id, { attributes: { exclude: ['password'] } })
+    let data = await service.getOneUser(user.id, { attributes: { exclude: ['password'] } })
 
     // Add majors list
     const majors = await Database.model('user_major').findAll({ where: { user_id: user.id } })
@@ -333,7 +334,7 @@ users.post('/:id', async (ctx) => {
         await Database.sync()
       }
 
-      let data = await UserService.getOneUser(user_id)
+      let data = await service.getOneUser(user_id)
       if (data) {
         // Delete majors because it's not updated here
         delete input.majors
