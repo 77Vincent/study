@@ -40,10 +40,11 @@ npm run doc
 ```
 xfolio-server
 |   config.js       // Global basic configurations
+|   database.js     // Database instance
 |   index.js        // Entry file
 |
 |---utils/
-|       index.js    // Functions
+|       index.js    // Global functions
 |
 |---routes/
 |       index.js    // Routes
@@ -53,7 +54,7 @@ xfolio-server
 |
 |---static/         // Static files also served through 3001
 |
-|---scripts/        // Scripts for development       
+|---dev-scripts/        // Scripts for development       
 ```
 
 ## API

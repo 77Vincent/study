@@ -1,4 +1,4 @@
-const Database = require('..//database.js')
+const Database = require('../database.js')
 const rq = require('request-promise-native')
 const c = require('../config')
 
