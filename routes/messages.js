@@ -1,10 +1,10 @@
-import Router from 'koa-router'
+const Router = require('koa-router')
 
-import { Message } from '../models'
-import { General } from '../utils'
-import c from '../config'
+const { Message } = require('../models')
+const { General } = require('../utils')
+const c = require('../config')
 
-export const messages = Router()
+const messages = Router()
 
 /** 
  * @api {get} /api/messages Get all messages
@@ -68,3 +68,4 @@ messages.put('/', async (ctx) => {
   }
 })
 
+module.exports = { messages }

@@ -1,10 +1,11 @@
-import Router from 'koa-router'
+const Router = require('koa-router')
 
-import { Course } from '../models'
-import { Db, General } from '../utils'
-import c from '../config'
+const { Course } = require('../models')
+const { General } = require('../utils')
+const Database = require('../database')
+const c = require('../config')
 
-export const courses = Router()
+const courses = Router()
 
 /** 
  * @api {get} /api/courses Get all courses
@@ -22,7 +23,7 @@ courses.get('/', async (ctx) => {
 
     // this part is for majors filtering
     if (qs.majors) {
-      const courses_id = await Db.model('course_major').findAll({
+      const courses_id = await Database.model('course_major').findAll({
         where: { major_id: qs.majors.split(',') }
       })
       filter.push({ id: courses_id.map(item => item.dataValues.course_id) })
@@ -112,3 +113,5 @@ courses.delete('/:id', async (ctx) => {
     General.logError(ctx, err)
   }
 })
+
+module.exports = { courses }

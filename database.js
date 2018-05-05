@@ -1,7 +1,7 @@
-import Sequelize from 'sequelize'
-import c from '../config'
+const Sequelize = require('sequelize')
+const c = require('./config')
 
-export default new Sequelize(c.databaseName, c.databaseUser, c.databasePassword, {
+module.exports = new Sequelize(c.databaseName, c.databaseUser, c.databasePassword, {
   host: c.host,
   dialect: c.database,
   port: c.databasePort,

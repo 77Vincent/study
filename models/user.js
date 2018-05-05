@@ -1,8 +1,8 @@
-import Sequelize from 'sequelize'
-import bcrypt from 'bcryptjs'
-import { Db } from '../utils'
+const Sequelize = require('sequelize')
+const bcrypt = require('bcryptjs')
+const Database = require('..//database')
 
-export default Db.define('user', {
+module.exports = Database.define('user', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,

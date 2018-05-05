@@ -1,9 +1,9 @@
-import Router from 'koa-router'
+const Router = require('koa-router')
 
-import { Tag } from '../models'
-import { General } from '../utils'
+const { Tag } = require('../models')
+const { General } = require('../utils')
 
-export const tags = Router()
+const tags = Router()
 
 /** 
  * @api {get} /api/tags/ Get all tags
@@ -72,3 +72,5 @@ tags.delete('/:id', async (ctx) => {
     General.logError(ctx, err)
   }
 })
+
+module.exports = { tags }

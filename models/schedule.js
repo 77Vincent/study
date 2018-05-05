@@ -1,7 +1,7 @@
-import Sequelize from 'sequelize'
-import { Db } from '../utils'
+const Sequelize = require('sequelize')
+const Database = require('..//database')
 
-export default Db.define('schedule', {
+module.exports = Database.define('schedule', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,

@@ -1,7 +1,8 @@
-import { Db, General } from '../utils'
-import { User, Schedule, Tag, Post, Course } from '../models'
+const General = require('./general')
+const Database = require('../database')
+const { User, Schedule, Tag, Post, Course } = require('../models')
 
-export default {
+module.exports = {
   getOneUser: async (id, config = {}) => {
     const param = {
       where: { $or: [ 
@@ -56,15 +57,15 @@ export default {
     }
 
     // Add majors and tags
-    const majors = await Db.model('user_major').findAll({ where: { user_id: id } })
+    const majors = await Database.model('user_major').findAll({ where: { user_id: id } })
     const tags = await Tag.findAll({ where: { user_id: id } })
     data.majors = majors.map(major => major.major_id)
     data.tags = tags.map(tag => tag.content)
 
 
     // Add these properties
-    const followers = await Db.model('follower_following').findAll({ where: { following_id: id } })
-    const followings = await Db.model('follower_following').findAll({ where: { follower_id: id } })
+    const followers = await Database.model('follower_following').findAll({ where: { following_id: id } })
+    const followings = await Database.model('follower_following').findAll({ where: { follower_id: id } })
     const courses = await Course.findAll({ where: { user_id: id } })
     const posts = await Post.findAll({ where: { user_id: id} })
     data.followers = followers.length

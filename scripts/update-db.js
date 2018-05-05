@@ -1,4 +1,4 @@
-import Db from '../utils/database.js'
+import Database from '..//database.js'
 import fs from 'fs'
 import path from 'path'
 import mime from 'mime'

@@ -1,19 +1,20 @@
-import Koa from 'koa'
-import logger from 'koa-logger'
-import cors from 'koa-cors'
-import serve from 'koa-static'
-import bodyParser from 'koa-bodyparser'
-// import jwt from 'koa-jwt'
+const Koa = require('koa')
+const convert = require('koa-convert')
+const logger = require('koa-logger')
+const cors = require('koa-cors')
+const serve = require('koa-static')
+const bodyParser = require('koa-bodyparser')
+// const jwt = require('koa-jwt')
 
-import routes from './routes'
-import { Oauth } from './utils'
-import c from './config'
+const c = require('./config')
+const { Oauth } = require('./utils')
+const routes = require('./routes')
 
 const app = new Koa()
 app.proxy = true
-app.use(logger())
-app.use(cors())
-app.use(bodyParser())
+app.use(convert(logger()))
+app.use(convert(cors()))
+app.use(convert(bodyParser()))
 app.use(serve('./static'))
 
 app.use(async (ctx, next) => {

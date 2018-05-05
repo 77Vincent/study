@@ -1,11 +1,11 @@
-import Router from 'koa-router'
-import mime from 'mime'
+const Router = require('koa-router')
+const mime = require('mime')
 
-import c from '../config.js'
-import { Avatar } from '../models'
-import { General, Storage } from '../utils'
+const c = require('../config.js')
+const { Avatar } = require('../models')
+const { General, Storage } = require('../utils')
 
-export const avatars = Router()
+const avatars = Router()
 
 /** 
  * @api {get} /api/avatars Get all avatars
@@ -116,3 +116,5 @@ avatars.delete('/', async (ctx) => {
     General.logError(ctx, err)
   }
 })
+
+module.exports = { avatars }

@@ -1,11 +1,9 @@
-import Db from './database'
-import Oauth from './oauth'
-import General from './general'
-import UserService from './user'
-import Storage from './storage'
+const General = require('./general')
+const UserService = require('./user')
+const Oauth = require('./oauth')
+const Storage = require('./storage')
 
-export {
-  Db,
+module.exports = {
   Oauth,
   General,
   UserService,

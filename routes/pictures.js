@@ -1,11 +1,11 @@
-import Router from 'koa-router'
-import mime from 'mime'
+const Router = require('koa-router')
+const mime = require('mime')
 
-import { Picture } from '../models'
-import { General, Storage } from '../utils'
-import c from '../config'
+const { Picture } = require('../models')
+const { General, Storage } = require('../utils')
+const c = require('../config')
 
-export const pictures = Router()
+const pictures = Router()
 
 /** 
  * @api {get} /api/pictures/ Get all pictures
@@ -95,3 +95,5 @@ pictures.delete('/:id', async (ctx) => {
     General.logError(ctx, err)
   }
 })
+
+module.exports = { pictures }

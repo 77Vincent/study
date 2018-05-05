@@ -1,18 +1,19 @@
-import Router from 'koa-router'
-import R from 'ramda'
+const Router = require('koa-router')
+const R = require('ramda')
 
-import { User, Schedule } from '../models'
-import { General, Db, Oauth, UserService } from '../utils'
-import c from '../config.js'
+const { User, Schedule } = require('../models')
+const { General, Oauth, UserService } = require('../utils')
+const Database = require('../database')
+const c = require('../config.js')
 
-export const users = Router()
+const users = Router()
 
 const range = {
   cost: 9999,
   role_id: 10
 }
-const FF = Db.model('follower_following')
-const UM = Db.model('user_major')
+const FF = Database.model('follower_following')
+const UM = Database.model('user_major')
 
 /** 
  * @api {get} /api/users Get all users
@@ -275,7 +276,7 @@ users.put('/', async (ctx) => {
     let data = await UserService.getOneUser(user.id, { attributes: { exclude: ['password'] } })
 
     // Add majors list
-    const majors = await Db.model('user_major').findAll({ where: { user_id: user.id } })
+    const majors = await Database.model('user_major').findAll({ where: { user_id: user.id } })
     data.dataValues.majors = majors.map(each => each.major_id)
 
     const { token, expiresIn } = Oauth.signToken(data)
@@ -329,7 +330,7 @@ users.post('/:id', async (ctx) => {
         input.majors.map(async major_id => {
           await UM.create({ user_id, major_id })
         })
-        await Db.sync()
+        await Database.sync()
       }
 
       let data = await UserService.getOneUser(user_id)
@@ -342,7 +343,7 @@ users.post('/:id', async (ctx) => {
         delete data.dataValues.password
 
         // Add majors list
-        const majors = await Db.model('user_major').findAll({ where: { user_id } })
+        const majors = await Database.model('user_major').findAll({ where: { user_id } })
         data.dataValues.majors = majors.map(each => each.major_id)
 
         ctx.status = 200
@@ -373,3 +374,5 @@ users.delete('/:id', async (ctx) => {
     General.logError(ctx, err)
   }
 })
+
+module.exports = { users }

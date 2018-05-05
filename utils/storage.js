@@ -1,9 +1,9 @@
-import c from '../config'
-import mime from 'mime'
-import path from 'path'
-import fs from 'fs'
+const c = require('../config')
+const mime = require('mime')
+const path = require('path')
+const fs = require('fs')
 
-export default {
+module.exports = {
   store(stuff, base64, mimeType, id) {
     if (base64 && mimeType) {
       const where = path.resolve(`${c.fileLocation}/${stuff}s/${stuff}_user_id_${id}.${mime.getExtension(mimeType)}`)

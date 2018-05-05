@@ -1,7 +1,7 @@
-import c from '../config'
-import R from 'ramda'
+const c = require('../config')
+const R = require('ramda')
 
-export default {
+module.exports = {
   msToDay(millisecond) {
     return Math.floor(millisecond / 1000 / 60 / 60) / 24
   },
@@ -43,7 +43,7 @@ export default {
 
   /**
    * Count offset for database query pagination
-   * @param {number} [page=1] - page number, start from 1
+   * @param {number} [page=1] - page number, start = require(1
    * @param {number} [limit=50] - items to display per page 
    * @returns 
    */

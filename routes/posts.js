@@ -1,10 +1,10 @@
-import Router from 'koa-router'
+const Router = require('koa-router')
 
-import c from '../config'
-import { Post, Comment } from '../models'
-import { General } from '../utils'
+const c = require('../config')
+const { Post, Comment } = require('../models')
+const { General } = require('../utils')
 
-export const posts = Router()
+const posts = Router()
 
 /** 
  * @api {get} /api/posts Get all posts
@@ -113,3 +113,5 @@ posts.delete('/:id', async (ctx) => {
     General.logError(ctx, err)
   }
 })
+
+module.exports = { posts }

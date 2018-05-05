@@ -1,10 +1,10 @@
-import Router from 'koa-router'
+const Router = require('koa-router')
 
-import { Order } from '../models'
-import { General } from '../utils'
-import c from '../config.js'
+const { Order } = require('../models')
+const { General } = require('../utils')
+const c = require('../config.js')
 
-export const orders = Router()
+const orders = Router()
 
 /** 
  * @api {get} /api/orders/ Get all orders
@@ -36,9 +36,9 @@ orders.get('/', async (ctx) => {
  * @api {put} /api/orders/ Create a order
  * @apiGroup Orders
  * @apiParam {integer} payment_method ID of the payment method
- * @apiParam {number} total_price Total price of all the classes from this order
- * @apiParam {number} unit_price Unit price of the each class from this order
- * @apiParam {number} length Length of the schedule a user has bought from this order in hours
+ * @apiParam {number} total_price Total price of all the classes = require(this order
+ * @apiParam {number} unit_price Unit price of the each class = require(this order
+ * @apiParam {number} length Length of the schedule a user has bought = require(this order in hours
  * @apiParam {integer} buyer_id The buyer's user ID
  * @apiParam {integer} seller_id The seller's user ID
  * @apiSuccess (201) {object} void The created order
@@ -58,9 +58,9 @@ orders.put('/', async (ctx) => {
  * @api {post} /api/orders/ Update a order
  * @apiGroup Orders
  * @apiParam {integer} payment_method ID of the payment method
- * @apiParam {number} total_price Total price of all the classes from this order
- * @apiParam {number} unit_price Unit price of the each class from this order
- * @apiParam {number} length Length of the schedule a user has bought from this order in hours
+ * @apiParam {number} total_price Total price of all the classes = require(this order
+ * @apiParam {number} unit_price Unit price of the each class = require(this order
+ * @apiParam {number} length Length of the schedule a user has bought = require(this order in hours
  * @apiParam {integer} buyer_id The buyer's user ID
  * @apiParam {integer} seller_id The seller's user ID
  * @apiSuccess (200) {object} void The Updated order
@@ -92,3 +92,5 @@ orders.delete('/:id', async (ctx) => {
     General.logError(ctx, err)
   }
 })
+
+module.exports = { orders }

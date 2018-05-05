@@ -1,7 +1,7 @@
-import Sequelize from 'sequelize'
-import { Db } from '../utils'
+const Sequelize = require('sequelize')
+const Database = require('..//database')
 
-export default Db.define('post', {
+module.exports = Database.define('post', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,

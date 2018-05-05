@@ -1,9 +1,9 @@
-import Router from 'koa-router'
+const Router = require('koa-router')
 
-import { Major } from '../models'
-import { General } from '../utils'
+const { Major } = require('../models')
+const { General } = require('../utils')
 
-export const majors = Router()
+const majors = Router()
 
 /** 
  * @api {get} /api/majors/ Get all majors
@@ -37,3 +37,5 @@ majors.put('/', async (ctx) => {
     General.logError(ctx, err)
   }
 })
+
+module.exports = { majors }

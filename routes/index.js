@@ -1,23 +1,22 @@
-import Router from 'koa-router'
+const Router = require('koa-router')
 
-import './classes'
-import './comments'
-import './courses'
-import './majors'
-import './messages'
-import './pictures'
-import './posts'
-import './roles'
-import './schedules'
-import './sessions'
-import './tags'
-import './users'
-import './orders'
-import './avatars'
+require( './classes')
+require( './comments')
+require( './courses')
+require( './majors')
+require( './messages')
+require( './pictures')
+require( './posts')
+require( './roles')
+require( './schedules')
+require( './sessions')
+require( './tags')
+require( './users')
+require( './orders')
+require( './avatars')
 
 const router = Router()
 
-// Automatically use each imported router
 module.children.map(item => {
   const name = Object.keys(item.exports)[0] 
   if (name !== 'url') {
@@ -25,7 +24,7 @@ module.children.map(item => {
   }
 })
 
-export default router
+module.exports = router
 
 
 /*

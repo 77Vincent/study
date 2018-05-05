@@ -1,10 +1,10 @@
-import Router from 'koa-router'
+const Router = require('koa-router')
 
-import { Comment } from '../models'
-import { General } from '../utils'
-import c from '../config'
+const { Comment } = require('../models')
+const { General } = require('../utils')
+const c = require('../config')
 
-export const comments = Router()
+const comments = Router()
 
 const filters = ['user_id', 'post_id']
 
@@ -69,3 +69,5 @@ comments.delete('/:id', async (ctx) => {
     General.logError(ctx, err)
   }
 })
+
+module.exports = { comments }

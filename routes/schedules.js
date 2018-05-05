@@ -1,10 +1,10 @@
-import Router from 'koa-router'
+const Router = require('koa-router')
 
-import { Schedule, Class } from '../models'
-import { General } from '../utils'
-import c from '../config'
+const { Schedule, Class } = require('../models')
+const { General } = require('../utils')
+const c = require('../config')
 
-export const schedules = Router()
+const schedules = Router()
 
 const range = {
   quota: 99
@@ -115,3 +115,5 @@ schedules.delete('/:id', async (ctx) => {
     General.logError(ctx, err)
   }
 })
+
+module.exports = { schedules }

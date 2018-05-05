@@ -1,10 +1,10 @@
-import jwt from 'jsonwebtoken'
-import c from '../config'
+const jwt = require('jsonwebtoken')
+const c = require('../config')
 
 const secret = c.tokenSecret
 const timeout = c.cookiesTimeout 
 
-export default {
+module.exports = {
   /**
    * Create token
    * @param {Object} user 

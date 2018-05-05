@@ -1,11 +1,10 @@
-import Router from 'koa-router'
+const Router = require('koa-router')
 
-import { Class, Course } from '../models'
-import { General } from '../utils'
-import c from '../config'
+const { Class, Course } = require('../models')
+const { General } = require('../utils')
+const c = require('../config')
 
-export const classes = Router()
-
+const classes = Router()
 const range = { length: 99 }
 
 /** 
@@ -123,3 +122,5 @@ classes.delete('/:id', async (ctx) => {
     General.logError(ctx, err)
   }
 })
+
+module.exports = { classes }

@@ -1,4 +1,4 @@
-import Db from '../utils/database.js'
+import Database from '..//database.js'
 import rq from 'request-promise-native'
 import c from '../config'
 

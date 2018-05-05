@@ -1,16 +1,16 @@
-import User from './user'
-import Major from './major'
-import Course from './course'
-import Role from './role'
-import Post from './post'
-import Picture from './picture'
-import Comment from './comment'
-import Schedule from './schedule'
-import Tag from './tag'
-import Message from './message'
-import Class from './class'
-import Order from './order'
-import Avatar from './avatar'
+const User = require('./user')
+const Major = require('./major')
+const Course = require('./course')
+const Role = require('./role')
+const Post = require('./post')
+const Picture = require('./picture')
+const Comment = require('./comment')
+const Schedule = require('./schedule')
+const Tag = require('./tag')
+const Message = require('./message')
+const Class = require('./class')
+const Order = require('./order')
+const Avatar = require('./avatar')
 
 // Table Relationship
 User.belongsTo(Role)
@@ -45,7 +45,7 @@ User.belongsToMany(User, {as: 'Following', through: 'follower_following', foreig
 Course.belongsToMany(Major, {through: 'course_major'})
 Major.belongsToMany(Course, {through: 'course_major'})
 
-export {
+module.exports = {
   User,
   Major,
   Role,

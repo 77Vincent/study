@@ -1,9 +1,9 @@
-import Router from 'koa-router'
+const Router = require('koa-router')
 
-import { Role } from '../models'
-import { General } from '../utils'
+const { Role } = require('../models')
+const { General } = require('../utils')
 
-export const roles = Router()
+const roles = Router()
 
 /** 
  * @api {get} /api/roles/ Get all roles
@@ -39,3 +39,5 @@ roles.put('/', async (ctx) => {
     General.logError(ctx, err)
   }
 })
+
+module.exports = { roles }

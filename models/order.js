@@ -1,7 +1,7 @@
-import Sequelize from 'sequelize'
-import { Db } from '../utils'
+const Sequelize = require('sequelize')
+const Database = require('..//database')
 
-export default Db.define('order', {
+module.exports = Database.define('order', {
   id: {
     type: Sequelize.UUID,
     defaultValue: Sequelize.UUIDV1,

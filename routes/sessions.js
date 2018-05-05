@@ -1,9 +1,10 @@
-import Router from 'koa-router'
-import bcrypt from 'bcryptjs'
+const Router = require('koa-router')
+const bcrypt = require('bcryptjs')
 
-import { Db, Oauth, General, UserService } from '../utils'
+const { Oauth, General, UserService } = require('../utils')
+const Database = require('../database')
 
-export const sessions = Router()
+const sessions = Router()
 
 /** 
  * @api {post} /api/sessions Sign in
@@ -45,7 +46,7 @@ sessions.post('/', async (ctx) => {
       delete data.dataValues.password
 
       // add majors list to the model
-      let majors = await Db.model('user_major').findAll({ where: { user_id: user_info } })
+      let majors = await Database.model('user_major').findAll({ where: { user_id: user_info } })
       data.dataValues.majors = majors.map(each => each.major_id)
 
       const { token, expiresIn } = Oauth.signToken(data)
@@ -77,3 +78,5 @@ sessions.delete('/', (ctx) => {
     General.logError(ctx, err)
   }
 })
+
+module.exports = { sessions }
