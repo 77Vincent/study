@@ -120,16 +120,3 @@ const file =  {
     console.error(err)
   }
 })();
-
-// orders
-// (async () => {
-//   try {
-//     await rq({
-//       method: 'POST',
-//       url: `${url}/orders/74aea3d0-49e9-11e8-952a-f5aee99155db`,
-//       body: {
-//         total_price: 9999
-//       },
-//       json: true })
-//   } catch (err) { console.error(err) }
-// })();

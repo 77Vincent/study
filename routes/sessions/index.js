@@ -1,6 +1,6 @@
 const Router = require('koa-router')
 
-const { General } = require('../../services')
+const { General, Middleware } = require('../../services')
 const service = require('./service')
 const usersService = require('../users/service')
 
@@ -14,24 +14,21 @@ const sessions = Router()
  * @apiSuccess (200) {object} void Object containing user object and token
  * @apiSuccess (401) {void} void Authentication failed
  */
-sessions.post('/', async (ctx) => {
+sessions.post('/', Middleware.authenticate, async (ctx) => {
   try {
-    const { id, password } = ctx.request.body
-    const token = service.getToken(ctx.request.headers.authorization)
-    let data = await service.auth(id, password, token)    
+    const { user } = ctx.state
+    if (user) {
+      delete user.dataValues.password
+      await usersService.addFields(user.dataValues)
 
-    if (data) {
-      delete data.dataValues.password
-      await usersService.addFields(data.dataValues)
-
-      const { token, expiresIn } = service.signToken(data.dataValues.username)
+      const { token, expiresIn } = service.signToken(user.dataValues.username)
       ctx.cookies.set('user_info', token, {
         overwrite: true,
         maxAge: expiresIn
       })
 
       ctx.status = 200
-      ctx.body = { data: General.prettyJSON(data), token }
+      ctx.body = { data: General.prettyJSON(user), token }
     } else {
       ctx.status = 401
     }

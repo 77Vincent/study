@@ -1,7 +1,7 @@
 const sessionsService = require('../routes/sessions/service')
 
 module.exports = {
-  protect: async (ctx, next) => {
+  authenticate: async (ctx, next) => {
     try {
       const { id, password } = ctx.request.body
       const token = sessionsService.getToken(ctx.request.headers.authorization)
@@ -15,6 +15,7 @@ module.exports = {
         && (String(ctx.params.id) === String(user.dataValues.id) || user.dataValues.role_id === 1)
 
       if (isValid) {
+        ctx.state.user = user
         await next()
       } else {
         ctx.status = 401

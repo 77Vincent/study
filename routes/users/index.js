@@ -9,7 +9,7 @@ const Database = require('../../database')
 const c = require('../../config.js')
 
 const users = Router()
-const { protect } = Middleware
+const { authenticate } = Middleware
 const range = {
   cost: 9999,
   role_id: 10
@@ -270,7 +270,7 @@ users.get('/:id/followings', async (ctx) => {
  * @apiParam {number} [available=0] How much hours a user is opened for booking
  * @apiSuccess (201) {object} void The newly created user object
  */
-users.put('/', protect, async (ctx) => {
+users.put('/', authenticate, async (ctx) => {
   try {
     const input = ctx.request.body
     const user = await User.create(input)
@@ -316,7 +316,7 @@ users.put('/', protect, async (ctx) => {
  * @apiParam {number} [available=0] How much hours a user is opened for booking
  * @apiSuccess (200) {object} void The updated user object
  */
-users.post('/:id', protect, async (ctx) => {
+users.post('/:id', authenticate, async (ctx) => {
   try {
     const user_id = ctx.params.id
     const input = ctx.request.body
@@ -365,7 +365,7 @@ users.post('/:id', protect, async (ctx) => {
  * @apiGroup Users 
  * @apiSuccess (200) {void} void void
  */
-users.delete('/:id', protect, async (ctx) => {
+users.delete('/:id', authenticate, async (ctx) => {
   try {
     await User.destroy({ 
       where: { id: ctx.params.id }
