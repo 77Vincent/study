@@ -56,7 +56,6 @@ users.get('/', async (ctx) => {
       where: { $and: filter },
     })
 
-    // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
       await service.processUserDate(data[i].dataValues)
     }
@@ -134,7 +133,6 @@ users.get('/:id/students', async (ctx) => {
       where: { id: data.map(item => item.dataValues.student_id) },
     })
 
-    // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
       await service.processUserDate(data[i].dataValues)
     }
@@ -169,7 +167,6 @@ users.get('/:id/teachers', async (ctx) => {
       where: { id: data.map(item => item.dataValues.teacher_id) },
     })
 
-    // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
       await service.processUserDate(data[i].dataValues)
     }
@@ -200,7 +197,6 @@ users.get('/:id/followers', async (ctx) => {
       where: { id: data.map(item => item.dataValues.follower_id) },
     })
 
-    // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
       await service.processUserDate(data[i].dataValues)
     }
@@ -231,7 +227,6 @@ users.get('/:id/followings', async (ctx) => {
       where: { id: data.map(item => item.dataValues.following_id) },
     })
 
-    // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
       await service.processUserDate(data[i].dataValues)
     }
@@ -268,15 +263,11 @@ users.get('/:id/followings', async (ctx) => {
 users.put('/', authenticate, async (ctx) => {
   try {
     const input = ctx.request.body
-    const user = await User.create(input)
+    let data = await User.create(input)
+    data = await service.getOneUser(data.id)
+    await service.processUserDate(data.dataValues)
 
-    let data = await service.getOneUser(user.id)
-
-    // Add majors list
-    const majors = await Database.model('user_major').findAll({ where: { user_id: user.id } })
-    data.dataValues.majors = majors.map(each => each.major_id)
-
-    const { token, expiresIn } = sessionsService.signToken(data)
+    const { token, expiresIn } = sessionsService.signToken(data.dataValues.username)
     ctx.cookies.set('user_info', token, {
       overwrite: true,
       maxAge: expiresIn
@@ -320,36 +311,33 @@ users.post('/:id', authenticate, async (ctx) => {
     if (isOutRange) {
       ctx.status = 416
       ctx.body = isOutRange
-
-    } else {
-      if (input.majors) {
-        await UM.destroy({ where: { user_id } })
-        input.majors.map(async major_id => {
-          await UM.create({ user_id, major_id })
-        })
-        await Database.sync()
-      }
-
-      let data = await service.getOneUser(user_id)
-      if (data) {
-        // Delete majors because it's not updated here
-        delete input.majors
-        data = await data.update(input)
-
-        // do not send password to client
-        delete data.dataValues.password
-
-        // Add majors list
-        const majors = await Database.model('user_major').findAll({ where: { user_id } })
-        data.dataValues.majors = majors.map(each => each.major_id)
-
-        ctx.status = 200
-        ctx.body = General.prettyJSON(data)
-      } else {
-        ctx.status = 404
-      }
+      return
     }
 
+    if (input.majors) {
+      await UM.destroy({ where: { user_id } })
+      input.majors.map(async major_id => {
+        await UM.create({ user_id, major_id })
+      })
+      await Database.sync()
+    }
+
+    let data = await service.getOneUser(user_id)
+    if (data) {
+      // Delete majors because it's not updated here
+      delete input.majors
+      data = await data.update(input)
+
+      // do not send password to client
+      delete data.dataValues.password
+
+      // Add majors list
+      const majors = await Database.model('user_major').findAll({ where: { user_id } })
+      data.dataValues.majors = majors.map(each => each.major_id)
+
+      ctx.status = 200
+      ctx.body = General.prettyJSON(data)
+    }
   } catch (err) {
     General.logError(ctx, err)
   }

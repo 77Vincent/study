@@ -5,6 +5,7 @@ const service = require('./service')
 const usersService = require('../users/service')
 
 const sessions = Router()
+const { authenticate } = Middleware
 
 /** 
  * @api {post} /api/sessions Sign in
@@ -14,13 +15,11 @@ const sessions = Router()
  * @apiSuccess (200) {object} void Object containing user object and token
  * @apiSuccess (401) {void} void Authentication failed
  */
-sessions.post('/', Middleware.authenticate, async (ctx) => {
+sessions.post('/', authenticate, async (ctx) => {
   try {
     const { user } = ctx.state
     if (user) {
-      delete user.dataValues.password
       await usersService.processUserDate(user.dataValues)
-
       const { token, expiresIn } = service.signToken(user.dataValues.username)
       ctx.cookies.set('user_info', token, {
         overwrite: true,
@@ -42,7 +41,7 @@ sessions.post('/', Middleware.authenticate, async (ctx) => {
  * @apiGroup Sessions
  * @apiSuccess (200) {void} void void
  */
-sessions.delete('/', (ctx) => {
+sessions.delete('/', authenticate, (ctx) => {
   try {
     ctx.cookies.set('user_info', null)
     ctx.status = 200
