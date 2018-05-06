@@ -19,7 +19,7 @@ sessions.post('/', Middleware.authenticate, async (ctx) => {
     const { user } = ctx.state
     if (user) {
       delete user.dataValues.password
-      await usersService.addFields(user.dataValues)
+      await usersService.processUserDate(user.dataValues)
 
       const { token, expiresIn } = service.signToken(user.dataValues.username)
       ctx.cookies.set('user_info', token, {

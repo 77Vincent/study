@@ -54,12 +54,11 @@ users.get('/', async (ctx) => {
       limit: c.queryLimit,
       offset: General.getOffset(qs.page, c.queryLimit),
       where: { $and: filter },
-      attributes: { exclude: ['password'] }
     })
 
     // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      await service.addFields(data[i].dataValues)
+      await service.processUserDate(data[i].dataValues)
     }
 
     // Order for teacher 
@@ -97,10 +96,10 @@ users.get('/', async (ctx) => {
 users.get('/:id', async (ctx) => {
   try {
     const { id } = ctx.params
-    const data = await service.getOneUser(id, { attributes: { exclude: ['password'] } })
+    const data = await service.getOneUser(id)
 
     if (data) {
-      await service.addFields(data.dataValues)
+      await service.processUserDate(data.dataValues)
       ctx.status = 200
       ctx.body = General.prettyJSON(data)
 
@@ -133,12 +132,11 @@ users.get('/:id/students', async (ctx) => {
       limit: c.queryLimit,
       offset: General.getOffset(qs.page, c.queryLimit),
       where: { id: data.map(item => item.dataValues.student_id) },
-      attributes: { exclude: ['password'] }
     })
 
     // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      await service.addFields(data[i].dataValues)
+      await service.processUserDate(data[i].dataValues)
     }
 
     ctx.status = 200
@@ -169,12 +167,11 @@ users.get('/:id/teachers', async (ctx) => {
       limit: c.queryLimit,
       offset: General.getOffset(qs.page, c.queryLimit),
       where: { id: data.map(item => item.dataValues.teacher_id) },
-      attributes: { exclude: ['password'] }
     })
 
     // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      await service.addFields(data[i].dataValues)
+      await service.processUserDate(data[i].dataValues)
     }
 
     ctx.status = 200
@@ -201,12 +198,11 @@ users.get('/:id/followers', async (ctx) => {
       limit: c.queryLimit,
       offset: General.getOffset(qs.page, c.queryLimit),
       where: { id: data.map(item => item.dataValues.follower_id) },
-      attributes: { exclude: ['password'] }
     })
 
     // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      await service.addFields(data[i].dataValues)
+      await service.processUserDate(data[i].dataValues)
     }
 
     ctx.status = 200
@@ -233,12 +229,11 @@ users.get('/:id/followings', async (ctx) => {
       limit: c.queryLimit,
       offset: General.getOffset(qs.page, c.queryLimit),
       where: { id: data.map(item => item.dataValues.following_id) },
-      attributes: { exclude: ['password'] }
     })
 
     // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      await service.addFields(data[i].dataValues)
+      await service.processUserDate(data[i].dataValues)
     }
 
     ctx.status = 200
@@ -275,7 +270,7 @@ users.put('/', authenticate, async (ctx) => {
     const input = ctx.request.body
     const user = await User.create(input)
 
-    let data = await service.getOneUser(user.id, { attributes: { exclude: ['password'] } })
+    let data = await service.getOneUser(user.id)
 
     // Add majors list
     const majors = await Database.model('user_major').findAll({ where: { user_id: user.id } })

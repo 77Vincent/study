@@ -15,7 +15,10 @@ module.exports = {
     const data = await User.findOne(Object.assign(param, config))
     return data
   },
-  addFields: async (data) => {
+  processUserDate: async (data) => {
+    // First remove password, do not pass password to client
+    delete data.password
+
     const { id } = data
     const urls = ['followers', 'followings']
     const urlsByQuerystring = ['posts', 'courses']
