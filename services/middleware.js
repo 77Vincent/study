@@ -12,7 +12,7 @@ module.exports = {
       // Users can only modify their own data
       // Or sign in as admin
       const isValid = user 
-        && (ctx.params.id === user.dataValues.id || user.dataValues.role_id === 1)
+        && (String(ctx.params.id) === String(user.dataValues.id) || user.dataValues.role_id === 1)
 
       if (isValid) {
         await next()

@@ -2,7 +2,7 @@ const rq = require('request-promise-native')
 
 const Database = require('../database.js')
 const config = require('../config')
-const { login } = require('./login')
+const login = require('./login')
 const { Role, User } = require('../models')
 
 require('./data/users')
@@ -40,7 +40,7 @@ const run = async () => {
     // Create base tables
     for (let r = 0; r < module.children.length; r++) {
       let current = module.children[r].exports
-      let name = Object.keys(current)[0]
+      let name = Object.keys(current)[0] || ''
 
       if (name.indexOf('dummy') !== -1) {
         let resource = name.slice(5).toLowerCase()

@@ -1,4 +1,3 @@
-const Database = require('../database.js')
 const login = require('./login')
 const fs = require('fs')
 const path = require('path')
@@ -17,7 +16,7 @@ const getRandom = () => {
 // users 
 (async () => {
   try {
-    const session = await login()
+    const session = await login(c.adminID, c.adminPassword)
     await rq({
       method: 'POST',
       url: `${url}/users/3`,
