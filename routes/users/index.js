@@ -2,7 +2,7 @@ const Router = require('koa-router')
 const R = require('ramda')
 
 const { User, Schedule } = require('../../models')
-const { General } = require('../../services')
+const { General, Middleware } = require('../../services')
 const oauth = require('../sessions/service')
 const service = require('./service')
 const Database = require('../../database')
@@ -35,7 +35,7 @@ const UM = Database.model('user_major')
  * /api/users?id=1&gender=1,0&place=online&role_id=1&city=4503,1101
  * @apiSuccess (200) {object[]} void Array contains all users
  */
-users.get('/', async (ctx) => {
+users.get('/', Middleware.auth, async (ctx) => {
   try {
     const filters = ['id', 'mobilephone', 'role_id', 'gender', 'place', 'province', 'city', 'country', 'active']
     const qs = General.parseQuerystring(ctx.request.querystring)

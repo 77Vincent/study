@@ -13,5 +13,5 @@ module.exports = async () => {
     },
     json: true
   })
-  return data.token
+  return data
 }

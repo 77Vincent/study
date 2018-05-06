@@ -2,6 +2,10 @@ const c = require('../config')
 const R = require('ramda')
 
 module.exports = {
+  isObject: R.is(Object),
+  isArray: R.is(Array),
+  isNumber: R.is(Number),
+  isString: R.is(String),
   msToDay(millisecond) {
     return Math.floor(millisecond / 1000 / 60 / 60) / 24
   },

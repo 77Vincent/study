@@ -15,17 +15,18 @@ require( './users')
 require( './orders')
 require( './avatars')
 
-const router = Router()
+const router = Router({
+  prefix: '/api/'
+})
 
 module.children.map(item => {
   const name = Object.keys(item.exports)[0] 
   if (name !== 'url') {
-    router.use(`/api/${name}`, item.exports[name].routes())
+    router.use(`${name}`, item.exports[name].routes())
   }
 })
 
 module.exports = router
-
 
 /*
  * Never delete these comments, these are for API documentation generation !!!
