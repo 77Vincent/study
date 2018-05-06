@@ -14,6 +14,30 @@ const getRandom = () => {
   return String(Math.round(Math.random() * 100000))
 }
 
+// users 
+(async () => {
+  try {
+    const session = await login()
+    await rq({
+      method: 'POST',
+      url: `${url}/users/3`,
+      auth: {
+        bearer: session.token
+      },
+      body: {
+        username: 'aaaaaaaaa',
+        cost: 9999,
+        gender: true,
+        jjj: 999,
+        name: 'hhhhhhhhhhh' ,
+        bio: '111111111112',
+        dummy: 111
+      },
+      json: true })
+  } catch (err) {
+    console.error(err)
+  }
+})();
 // tags
 (async () => {
   try {
@@ -69,31 +93,6 @@ const getRandom = () => {
         label: getRandom(),
         quota: 99,
         finished: false,
-        dummy: 111
-      },
-      json: true })
-  } catch (err) {
-    console.error(err)
-  }
-})();
-
-// users 
-(async () => {
-  try {
-    const session = await login()
-    await rq({
-      method: 'POST',
-      url: `${url}/users/3`,
-      auth: {
-        bearer: session.token
-      },
-      body: {
-        username: 'aaaaaaaaa',
-        cost: 9999,
-        gender: true,
-        jjj: 999,
-        name: 'hhhhhhhhhhh' ,
-        bio: '111111111112',
         dummy: 111
       },
       json: true })

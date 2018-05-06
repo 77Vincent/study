@@ -1,6 +1,9 @@
-const Database = require('../database.js')
 const rq = require('request-promise-native')
-const c = require('../config')
+
+const Database = require('../database.js')
+const config = require('../config')
+const { login } = require('./login')
+const { Role, User } = require('../models')
 
 require('./data/users')
 require('./data/majors')
@@ -15,27 +18,42 @@ require('./data/tags')
 require('./data/orders')
 require('./data/avatars')
 
-const { Role } = require('../models')
-
-const url = `${c.protocol}://${c.host}:${c.port}/api`
-const modules = module.children
-
+const url = `${config.protocol}://${config.host}:${config.port}/api`
 const run = async () => {
   try {
     await Database.dropAllSchemas()
     await Database.sync({ force: true })
 
+    // Create roles
     await Role.bulkCreate([{ label: 'admin' }, { label: 'teacher' }, { label: 'student' }])
+    // Create admin user
+    await User.create({
+      role_id: 1,
+      username: 'admin',
+      mobilephone: 123456789,
+      password: '$Xf0li0Xf0li0',
+    })
+
+    // Sign in with admin user
+    const session = await login(config.adminID, config.adminPassword)
 
     // Create base tables
-    for (let r = 0; r < modules.length; r++) {
-      let current = modules[r].exports
+    for (let r = 0; r < module.children.length; r++) {
+      let current = module.children[r].exports
       let name = Object.keys(current)[0]
 
       if (name.indexOf('dummy') !== -1) {
         let resource = name.slice(5).toLowerCase()
         for (let i = 0; i < current[name].length; i++) {
-          await rq({ method: 'PUT', url: `${url}/${resource}`, body: current[name][i], json: true })
+          await rq({
+            method: 'PUT',
+            auth: {
+              bearer: session.token
+            },
+            url: `${url}/${resource}`,
+            body: current[name][i],
+            json: true
+          })
         }
       }
     }

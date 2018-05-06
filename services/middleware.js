@@ -7,9 +7,14 @@ module.exports = {
       const token = sessionsService.getToken(ctx.request.headers.authorization)
 
       // Authenticate credentials
-      let data = await sessionsService.auth(id, password, token)    
+      const user = await sessionsService.auth(id, password, token)    
 
-      if (data) {
+      // Users can only modify their own data
+      // Or sign in as admin
+      const isValid = user 
+        && (ctx.params.id === user.dataValues.id || user.dataValues.role_id === 1)
+
+      if (isValid) {
         await next()
       } else {
         ctx.status = 401

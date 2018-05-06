@@ -12,6 +12,7 @@ module.exports = {
     if (authorization.split(' ')[0].toLowerCase() === 'bearer') {
       return authorization.split(' ')[1]
     }
+    return null
   },
   auth: async (id = '', password = '', token = '') => {
     try {
