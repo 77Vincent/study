@@ -3,13 +3,13 @@ const R = require('ramda')
 
 const { User, Schedule } = require('../../models')
 const { General, Middleware } = require('../../services')
-const oauth = require('../sessions/service')
+const sessionsService = require('../sessions/service')
 const service = require('./service')
 const Database = require('../../database')
 const c = require('../../config.js')
 
 const users = Router()
-
+const { protect } = Middleware
 const range = {
   cost: 9999,
   role_id: 10
@@ -35,7 +35,7 @@ const UM = Database.model('user_major')
  * /api/users?id=1&gender=1,0&place=online&role_id=1&city=4503,1101
  * @apiSuccess (200) {object[]} void Array contains all users
  */
-users.get('/', Middleware.auth, async (ctx) => {
+users.get('/', async (ctx) => {
   try {
     const filters = ['id', 'mobilephone', 'role_id', 'gender', 'place', 'province', 'city', 'country', 'active']
     const qs = General.parseQuerystring(ctx.request.querystring)
@@ -59,7 +59,7 @@ users.get('/', Middleware.auth, async (ctx) => {
 
     // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      await service.addFields(data[i].dataValues, data[i].dataValues.id)
+      await service.addFields(data[i].dataValues)
     }
 
     // Order for teacher 
@@ -100,7 +100,7 @@ users.get('/:id', async (ctx) => {
     const data = await service.getOneUser(id, { attributes: { exclude: ['password'] } })
 
     if (data) {
-      await service.addFields(data.dataValues, id)
+      await service.addFields(data.dataValues)
       ctx.status = 200
       ctx.body = General.prettyJSON(data)
 
@@ -138,7 +138,7 @@ users.get('/:id/students', async (ctx) => {
 
     // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      await service.addFields(data[i].dataValues, data[i].dataValues.id)
+      await service.addFields(data[i].dataValues)
     }
 
     ctx.status = 200
@@ -174,7 +174,7 @@ users.get('/:id/teachers', async (ctx) => {
 
     // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      await service.addFields(data[i].dataValues, data[i].dataValues.id)
+      await service.addFields(data[i].dataValues)
     }
 
     ctx.status = 200
@@ -206,7 +206,7 @@ users.get('/:id/followers', async (ctx) => {
 
     // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      await service.addFields(data[i].dataValues, data[i].dataValues.id)
+      await service.addFields(data[i].dataValues)
     }
 
     ctx.status = 200
@@ -238,7 +238,7 @@ users.get('/:id/followings', async (ctx) => {
 
     // Add other fields to response data
     for (let i = 0; i < data.length; i++) {
-      await service.addFields(data[i].dataValues, data[i].dataValues.id)
+      await service.addFields(data[i].dataValues)
     }
 
     ctx.status = 200
@@ -270,7 +270,7 @@ users.get('/:id/followings', async (ctx) => {
  * @apiParam {number} [available=0] How much hours a user is opened for booking
  * @apiSuccess (201) {object} void The newly created user object
  */
-users.put('/', async (ctx) => {
+users.put('/', protect, async (ctx) => {
   try {
     const input = ctx.request.body
     const user = await User.create(input)
@@ -281,7 +281,7 @@ users.put('/', async (ctx) => {
     const majors = await Database.model('user_major').findAll({ where: { user_id: user.id } })
     data.dataValues.majors = majors.map(each => each.major_id)
 
-    const { token, expiresIn } = oauth.signToken(data)
+    const { token, expiresIn } = sessionsService.signToken(data)
     ctx.cookies.set('user_info', token, {
       overwrite: true,
       maxAge: expiresIn
@@ -316,7 +316,7 @@ users.put('/', async (ctx) => {
  * @apiParam {number} [available=0] How much hours a user is opened for booking
  * @apiSuccess (200) {object} void The updated user object
  */
-users.post('/:id', async (ctx) => {
+users.post('/:id', protect, async (ctx) => {
   try {
     const user_id = ctx.params.id
     const input = ctx.request.body
@@ -365,7 +365,7 @@ users.post('/:id', async (ctx) => {
  * @apiGroup Users 
  * @apiSuccess (200) {void} void void
  */
-users.delete('/:id', async (ctx) => {
+users.delete('/:id', protect, async (ctx) => {
   try {
     await User.destroy({ 
       where: { id: ctx.params.id }

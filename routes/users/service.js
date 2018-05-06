@@ -15,7 +15,8 @@ module.exports = {
     const data = await User.findOne(Object.assign(param, config))
     return data
   },
-  addFields: async (data, id) => {
+  addFields: async (data) => {
+    const { id } = data
     const urls = ['followers', 'followings']
     const urlsByQuerystring = ['posts', 'courses']
 

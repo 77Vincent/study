@@ -13,5 +13,6 @@ module.exports = async () => {
     },
     json: true
   })
+  console.log(data)
   return data
 }

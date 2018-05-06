@@ -2,8 +2,7 @@ const Router = require('koa-router')
 
 const { General } = require('../../services')
 const service = require('./service')
-const sessionsService = require('../sessions/service')
-const Database = require('../../database')
+const usersService = require('../users/service')
 
 const sessions = Router()
 
@@ -18,15 +17,12 @@ const sessions = Router()
 sessions.post('/', async (ctx) => {
   try {
     const { id, password } = ctx.request.body
-    const token = sessionsService.getToken(ctx.request.headers.authorization)
+    const token = service.getToken(ctx.request.headers.authorization)
     let data = await service.auth(id, password, token)    
 
     if (data) {
       delete data.dataValues.password
-
-      // add majors list to the model
-      let majors = await Database.model('user_major').findAll({ where: { user_id: data.dataValues.id } })
-      data.dataValues.majors = majors.map(each => each.major_id)
+      await usersService.addFields(data.dataValues)
 
       const { token, expiresIn } = service.signToken(data.dataValues.username)
       ctx.cookies.set('user_info', token, {

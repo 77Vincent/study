@@ -1,7 +1,7 @@
 const sessionsService = require('../routes/sessions/service')
 
 module.exports = {
-  auth: async (ctx, next) => {
+  protect: async (ctx, next) => {
     try {
       const { id, password } = ctx.request.body
       const token = sessionsService.getToken(ctx.request.headers.authorization)

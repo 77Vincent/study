@@ -1,4 +1,5 @@
 const Database = require('../database.js')
+const login = require('./login')
 const fs = require('fs')
 const path = require('path')
 const mime = require('mime')
@@ -79,9 +80,13 @@ const getRandom = () => {
 // users 
 (async () => {
   try {
+    const session = await login()
     await rq({
       method: 'POST',
       url: `${url}/users/3`,
+      auth: {
+        bearer: session.token
+      },
       body: {
         username: 'aaaaaaaaa',
         cost: 9999,
