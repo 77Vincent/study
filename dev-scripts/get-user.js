@@ -7,13 +7,13 @@ const url = `${c.protocol}://${c.host}:${c.port}/api`;
 (async () => {
   try {
     const session = await login()
-    console.log(session)
-    // let data = await rq({
-    //   url: `${url}/users`,
-    //   auth: {
-    //     bearer: token
-    //   }
-    // })
+    let data = await rq({
+      url: `${url}/users`,
+      auth: {
+        bearer: session.token
+      },
+      json: true
+    })
   } catch (err) {
     throw err
   }

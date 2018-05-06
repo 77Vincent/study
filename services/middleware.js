@@ -3,9 +3,11 @@ const sessionsService = require('../routes/sessions/service')
 module.exports = {
   auth: async (ctx, next) => {
     try {
-      const user_info = ctx.decoded.user_info
       const { id, password } = ctx.request.body
-      let data = await sessionsService.auth(id, password, user_info)    
+      const token = sessionsService.getToken(ctx.request.headers.authorization)
+
+      // Authenticate credentials
+      let data = await sessionsService.auth(id, password, token)    
 
       if (data) {
         await next()
@@ -14,7 +16,13 @@ module.exports = {
         ctx.body = 'Protected resource, use Authorization header to get access\n'
       }
     } catch (err) {
-      throw err
+      // When token is given but invalid
+      if (err.message === 'invalid signature') {
+        ctx.status = 403
+        ctx.body = err.message
+      } else {
+        throw err
+      }
     }
   }
 }

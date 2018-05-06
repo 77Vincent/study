@@ -8,26 +8,38 @@ const secret = c.tokenSecret
 const expiresIn = c.cookiesTimeout 
 
 module.exports = {
-  auth: async (id = '', password = '', user_info = '') => {
-    let user = {}
-    if (id && password) {
-      user = await usersService.getOneUser(id)
-      if (user && bcrypt.compareSync(password, user.password)) {
-        return user
+  getToken(authorization = '') {
+    if (authorization.split(' ')[0].toLowerCase() === 'bearer') {
+      return authorization.split(' ')[1]
+    }
+  },
+  auth: async (id = '', password = '', token = '') => {
+    try {
+      let user = {}
+
+      if (id && password) {
+        // Sign in with user id and password 
+        user = await usersService.getOneUser(id)
+        if (user && bcrypt.compareSync(password, user.password)) {
+          return user
+        } else {
+          return false
+        }
+      } else if (token) {
+        // Sign in with token
+        id = jwt.verify(token, c.tokenSecret).user_info
+        user = await usersService.getOneUser(id)
+        if (user) {
+          return user
+        } else {
+          return false
+        }
       } else {
+        // Sign in without any credentials
         return false
       }
-    } else if (user_info) {
-      // Sign in with credentials in cookies if exist 
-      user = await usersService.getOneUser(user_info)
-      if (user) {
-        return user
-      } else {
-        return false
-      }
-    } else {
-      // Sign in without any credentials
-      return false
+    } catch (err) {
+      throw err
     }
   },
   /**
@@ -35,19 +47,8 @@ module.exports = {
    * @param {Object} user 
    * @return {Object} token and expire time in millisecond 
    */
-  signToken (user) {
-    const token = jwt.sign({ user_info: user.username }, secret, { expiresIn }) 
+  signToken (user_info) {
+    const token = jwt.sign({ user_info }, secret, { expiresIn }) 
     return { token, expiresIn }
-  },
-  /**
-   * Check and get token if exist
-   * @param {Object} ctx 
-   * @return {Object} user id
-   */
-  verifyToken: async (ctx) => {
-    const user_info = await ctx.cookies.get('user_info')
-    if (user_info) {
-      return jwt.verify(user_info, secret)
-    }
   }
 }
