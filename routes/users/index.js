@@ -267,12 +267,12 @@ users.put('/', authenticate, async (ctx) => {
     data = await service.getOneUser(data.id)
 
     await service.processUserDate(data.dataValues)
-    const { username, password } = data.dataValues
+    const { id, password } = data.dataValues
 
     ctx.status = 201
     ctx.body = {
       data: General.prettyJSON(data),
-      token: sessionsService.signToken({ username, password })
+      token: sessionsService.signToken({ id, password })
     }
   } catch (err) {
     General.logError(ctx, err)

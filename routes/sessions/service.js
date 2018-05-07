@@ -16,28 +16,16 @@ module.exports = {
   },
   auth: async (id = '', password = '', token = '') => {
     try {
-      let user = {}
+      if (token) {
+        const parsed = jwt.verify(token, c.tokenSecret) 
+        id = parsed.id
+        password = parsed.password
+      }
 
-      if (id && password) {
-        // Sign in with user id and password 
-        user = await usersService.getOneUser(id)
-        if (user && bcrypt.compareSync(password, user.password)) {
-          return user
-        } else {
-          return false
-        }
-      } else if (token) {
-        // Sign in with token
-        const { username } = jwt.verify(token, c.tokenSecret)
-        user = await usersService.getOneUser(username)
-        if (user) {
-          return user
-        } else {
-          return false
-        }
-      } else {
-        // Sign in without any credentials
-        return false
+      const user = id ? await usersService.getOneUser(id) : null
+
+      if (user && (bcrypt.compareSync(password, user.password) || password === user.password)) {
+        return user
       }
     } catch (err) {
       throw err
