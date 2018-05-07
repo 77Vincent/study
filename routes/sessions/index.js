@@ -19,11 +19,14 @@ sessions.post('/', authenticate, async (ctx) => {
   try {
     const { user } = ctx.state
     if (user) {
+      const { username, password } = user.dataValues
       await usersService.processUserDate(user.dataValues)
-      const token = service.signToken(user.dataValues.username)
 
       ctx.status = 200
-      ctx.body = { data: General.prettyJSON(user), token }
+      ctx.body = {
+        data: General.prettyJSON(user),
+        token: service.signToken({ username, password })
+      }
     } else {
       ctx.status = 401
     }

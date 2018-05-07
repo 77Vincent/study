@@ -265,10 +265,15 @@ users.put('/', authenticate, async (ctx) => {
     const input = ctx.request.body
     let data = await User.create(input)
     data = await service.getOneUser(data.id)
+
     await service.processUserDate(data.dataValues)
-    const token = sessionsService.signToken(data.dataValues.username)
+    const { username, password } = data.dataValues
+
     ctx.status = 201
-    ctx.body = { data: General.prettyJSON(data), token }
+    ctx.body = {
+      data: General.prettyJSON(data),
+      token: sessionsService.signToken({ username, password })
+    }
   } catch (err) {
     General.logError(ctx, err)
   }

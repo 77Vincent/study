@@ -28,8 +28,8 @@ module.exports = {
         }
       } else if (token) {
         // Sign in with token
-        id = jwt.verify(token, c.tokenSecret).user_info
-        user = await usersService.getOneUser(id)
+        const { username } = jwt.verify(token, c.tokenSecret)
+        user = await usersService.getOneUser(username)
         if (user) {
           return user
         } else {
@@ -49,7 +49,7 @@ module.exports = {
    * @return {Object} token and expire time in millisecond 
    */
   signToken (user_info) {
-    const token = jwt.sign({ user_info }, secret, { expiresIn }) 
+    const token = jwt.sign(user_info, secret, { expiresIn }) 
     return token
   }
 }
