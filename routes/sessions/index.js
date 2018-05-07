@@ -20,11 +20,7 @@ sessions.post('/', authenticate, async (ctx) => {
     const { user } = ctx.state
     if (user) {
       await usersService.processUserDate(user.dataValues)
-      const { token, expiresIn } = service.signToken(user.dataValues.username)
-      ctx.cookies.set('user_info', token, {
-        overwrite: true,
-        maxAge: expiresIn
-      })
+      const token = service.signToken(user.dataValues.username)
 
       ctx.status = 200
       ctx.body = { data: General.prettyJSON(user), token }
@@ -43,7 +39,6 @@ sessions.post('/', authenticate, async (ctx) => {
  */
 sessions.delete('/', authenticate, (ctx) => {
   try {
-    ctx.cookies.set('user_info', null)
     ctx.status = 200
   } catch (err) {
     General.logError(ctx, err)

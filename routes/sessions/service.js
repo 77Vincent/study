@@ -50,6 +50,6 @@ module.exports = {
    */
   signToken (user_info) {
     const token = jwt.sign({ user_info }, secret, { expiresIn }) 
-    return { token, expiresIn }
+    return token
   }
 }

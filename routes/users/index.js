@@ -266,15 +266,9 @@ users.put('/', authenticate, async (ctx) => {
     let data = await User.create(input)
     data = await service.getOneUser(data.id)
     await service.processUserDate(data.dataValues)
-
-    const { token, expiresIn } = sessionsService.signToken(data.dataValues.username)
-    ctx.cookies.set('user_info', token, {
-      overwrite: true,
-      maxAge: expiresIn
-    })
-
+    const token = sessionsService.signToken(data.dataValues.username)
     ctx.status = 201
-    ctx.body = General.prettyJSON(data) 
+    ctx.body = { data: General.prettyJSON(data), token }
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -350,10 +344,7 @@ users.post('/:id', authenticate, async (ctx) => {
  */
 users.delete('/:id', authenticate, async (ctx) => {
   try {
-    await User.destroy({ 
-      where: { id: ctx.params.id }
-    })
-    ctx.cookies.set('user_info', null)
+    await User.destroy({ where: { id: ctx.params.id } })
     ctx.status = 200
   } catch (err) {
     General.logError(ctx, err)
