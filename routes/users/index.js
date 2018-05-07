@@ -2,14 +2,14 @@ const Router = require('koa-router')
 const R = require('ramda')
 
 const { User, Schedule } = require('../../models')
-const { General, Middleware } = require('../../services')
+const { General, Auth } = require('../../services')
 const sessionsService = require('../sessions/service')
 const service = require('./service')
 const Database = require('../../database')
 const c = require('../../config.js')
 
 const users = Router()
-const { authenticate } = Middleware
+const { authenticate } = Auth
 const range = {
   cost: 9999,
   role_id: 10

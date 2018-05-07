@@ -1,11 +1,11 @@
 const Router = require('koa-router')
 
-const { General, Middleware } = require('../../services')
+const { General, Auth } = require('../../services')
 const service = require('./service')
 const usersService = require('../users/service')
 
 const sessions = Router()
-const { authenticate } = Middleware
+const { authenticate } = Auth
 
 /** 
  * @api {post} /api/sessions Sign in

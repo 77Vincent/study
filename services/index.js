@@ -1,9 +1,9 @@
 const General = require('./general')
 const Storage = require('./storage')
-const Middleware = require('./middleware')
+const Auth = require('./auth')
 
 module.exports = {
   General,
   Storage,
-  Middleware
+  Auth
 }
