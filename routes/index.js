@@ -14,10 +14,9 @@ require( './tags')
 require( './users')
 require( './orders')
 require( './avatars')
+require( './hooks')
 
-const router = Router({
-  prefix: '/api/'
-})
+const router = Router({ prefix: '/api/' })
 
 module.children.map(item => {
   const name = Object.keys(item.exports)[0] 
