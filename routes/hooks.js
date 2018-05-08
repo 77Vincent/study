@@ -14,7 +14,7 @@ hooks.post('/', (ctx) => {
     })
     
     ctx.status = 200
-    ctx.body = 'Sync successfully!'
+    ctx.body = `Sync successfully! ${new Date()}`
 
   } catch (err) {
     General.logError(ctx, err)
