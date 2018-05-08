@@ -5,7 +5,7 @@ const url = `${c.protocol}://${c.host}:${c.port}/api`
 
 const run = async () => {
   try {
-    const data = await rq({ method: 'POST', url: `http://39.104.108.82:3001/api/hooks`})
+    const data = await rq({ method: 'POST', url: `${url}/hooks`})
     console.log(data)
 
   } catch (err) {

@@ -5,7 +5,7 @@ const { General } = require('../services')
 
 const hooks = Router()
 
-const action = 'git status'
+const action = 'git pull'
 
 hooks.post('/', (ctx) => {
   try {
@@ -13,7 +13,7 @@ hooks.post('/', (ctx) => {
       if (err) { console.error(err) }
     })
     ctx.status = 200
-    ctx.body = `Sync successfully! ${new Date()}`
+    ctx.body = `Sync successfully at ${new Date()}`
 
   } catch (err) {
     General.logError(ctx, err)
