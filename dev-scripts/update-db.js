@@ -107,9 +107,13 @@ const file =  {
 };
 (async () => {
   try {
+    const session = await login(c.adminID, c.adminPassword)
     await rq({
       method: 'POST',
       url: `${url}/avatars`,
+      auth: {
+        bearer: session.token
+      },
       body: {
         mime: mime.getType(file.name.split('.')[1]),
         content: fs.readFileSync(`${file.path}/${file.name}`, 'base64'),

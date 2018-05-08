@@ -3,8 +3,9 @@ const mime = require('mime')
 
 const c = require('../config.js')
 const { Avatar } = require('../models')
-const { General, Storage } = require('../services')
+const { General, Storage, Auth } = require('../services')
 
+const { authenticate } = Auth
 const avatars = Router()
 
 /** 
@@ -61,7 +62,7 @@ avatars.get('/user_id/:user_id', async (ctx) => {
  * @apiParam {integer} user_id The creator's user ID
  * @apiSuccess (201) {object} void The created avatar
  */
-avatars.put('/', async (ctx) => {
+avatars.put('/', authenticate, async (ctx) => {
   try {
     const { content, mime, user_id } = ctx.request.body
     const path = Storage.store('avatar', content, mime, user_id)
@@ -82,7 +83,7 @@ avatars.put('/', async (ctx) => {
  * @apiParam {integer} user_id The creator's user ID
  * @apiSuccess (200) {object} void The updated avatar
  */
-avatars.post('/', async (ctx) => {
+avatars.post('/', authenticate, async (ctx) => {
   try {
     const { content, mime, user_id } = ctx.request.body
     let data = await Avatar.findOne({ where: { user_id } })
@@ -104,7 +105,7 @@ avatars.post('/', async (ctx) => {
  * @apiParam {integer} user_id The creator's user ID
  * @apiSuccess (200) {void} void void
  */
-avatars.delete('/', async (ctx) => {
+avatars.delete('/', authenticate, async (ctx) => {
   try {
     const { user_id } = ctx.request.body
     const data = await Avatar.findOne({ where: { user_id } })
