@@ -12,7 +12,6 @@ hooks.post('/', (ctx) => {
     exec(action, (err) => {
       if (err) { console.error(err) }
     })
-    
     ctx.status = 200
     ctx.body = `Sync successfully! ${new Date()}`
 
