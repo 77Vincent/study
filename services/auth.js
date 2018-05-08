@@ -33,7 +33,7 @@ module.exports = {
         && (String(ctx.params.id) === String(user.dataValues.id) || user.dataValues.role_id === 1)
 
       if (isValid) {
-        ctx.state.user = user
+        ctx.state = { user }
         await next()
       } else {
         ctx.status = 401
