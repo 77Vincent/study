@@ -57,10 +57,11 @@ avatars.get('/user_id/:user_id', async (ctx) => {
 /** 
  * @api {put} /api/avatars Create a avatar 
  * @apiGroup Avatars
- * @apiParam {string} content Content of the image file in base64
+ * @apiParam {string} content Content of the image file encoded in base64
  * @apiParam {string} mime The MIME of the file 
  * @apiParam {integer} user_id The creator's user ID
  * @apiSuccess (201) {object} void The created avatar
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
 avatars.put('/', authenticate, async (ctx) => {
   try {
@@ -78,10 +79,11 @@ avatars.put('/', authenticate, async (ctx) => {
 /** 
  * @api {post} /api/avatars Update a avatar 
  * @apiGroup Avatars
- * @apiParam {string} content Content of the avatar file in base64
+ * @apiParam {string} content Content of the avatar file encoded in base64
  * @apiParam {string} mime The MIME of the file 
  * @apiParam {integer} user_id The creator's user ID
  * @apiSuccess (200) {object} void The updated avatar
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
 avatars.post('/', authenticate, async (ctx) => {
   try {
@@ -104,6 +106,7 @@ avatars.post('/', authenticate, async (ctx) => {
  * @apiGroup Avatars
  * @apiParam {integer} user_id The creator's user ID
  * @apiSuccess (200) {void} void void
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
 avatars.delete('/', authenticate, async (ctx) => {
   try {

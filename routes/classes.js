@@ -1,10 +1,11 @@
 const Router = require('koa-router')
 
 const { Class, Course } = require('../models')
-const { General } = require('../services')
+const { General, Auth } = require('../services')
 const c = require('../config')
 
 const classes = Router()
+const { authenticate } = Auth
 const range = { length: 99 }
 
 /** 
@@ -43,17 +44,10 @@ classes.get('/', async (ctx) => {
  * @apiParam {double} length=1 Duration of the class in hours 
  * @apiParam {boolean=0,1} finished=0 If the class is finished or not 
  * @apiParam {integer} schedule_id Which schedule does this class belong to
- * @apiParamExample {json} Request-example:
- *  {
- *    "start": new Date(),
- *    "end": new Date('2018/05/01'),
- *    "length": 2.5,
- *    "finished": 0,
- *    "schedule_id": 3 
- *  }
  * @apiSuccess (201) {object} void The created class
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-classes.put('/', async (ctx) => {
+classes.put('/', authenticate, async (ctx) => {
   try {
     const isOutRange = General.checkRange(range, ctx.request.body)
 
@@ -79,17 +73,10 @@ classes.put('/', async (ctx) => {
  * @apiParam {double} length=1 Duration of the class in hours 
  * @apiParam {boolean=0,1} finished=0 If the class is finished or not 
  * @apiParam {integer} schedule_id Which schedule does this class belong to
- * @apiParamExample {json} Request-example:
- *  {
- *    "start": new Date(),
- *    "end": new Date('2018/05/01'),
- *    "length": 2.5,
- *    "finished": 0,
- *    "schedule_id": 3 
- *  }
  * @apiSuccess (200) {object} void The updated class
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-classes.post('/:id', async (ctx) => {
+classes.post('/:id', authenticate, async (ctx) => {
   try {
     const isOutRange = General.checkRange(range, ctx.request.body)
     
@@ -113,8 +100,9 @@ classes.post('/:id', async (ctx) => {
  * @api {delete} /api/classes/:id Delete a class
  * @apiGroup Classes 
  * @apiSuccess (200) {void} void void
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-classes.delete('/:id', async (ctx) => {
+classes.delete('/:id', authenticate, async (ctx) => {
   try {
     await Class.destroy({ where: { id: ctx.params.id } })
     ctx.status = 200
