@@ -1,9 +1,10 @@
 const Router = require('koa-router')
 
 const { Major } = require('../models')
-const { General } = require('../services')
+const { General, Auth } = require('../services')
 
 const majors = Router()
+const { authenticate } = Auth
 
 /** 
  * @api {get} /api/majors/ Get all majors
@@ -24,9 +25,12 @@ majors.get('/', async (ctx) => {
 /** 
  * @api {put} /api/majors/ Create a major
  * @apiGroup Majors 
+ * @apiParam {string} label The major name
+ * @apiParam {string} [description] The major description
  * @apiSuccess (200) {object} void The created major 
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-majors.put('/', async (ctx) => {
+majors.put('/', authenticate, async (ctx) => {
   try {
     const { label, description } = ctx.request.body
     const data = await Major.create({ label, description })
