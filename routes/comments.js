@@ -1,12 +1,12 @@
 const Router = require('koa-router')
 
 const { Comment } = require('../models')
-const { General } = require('../services')
+const { General, Auth } = require('../services')
 const c = require('../config')
 
 const comments = Router()
 
-const filters = ['user_id', 'post_id']
+const { authenticate } = Auth
 
 /** 
  * @api {get} /api/comments/ Get all comments
@@ -19,7 +19,7 @@ const filters = ['user_id', 'post_id']
 comments.get('/', async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
-    const filter = General.getFilter(qs, filters)
+    const filter = General.getFilter(qs, ['user_id', 'post_id'])
 
     const data = await Comment.findAll({
       limit: c.queryLimit,
@@ -41,11 +41,11 @@ comments.get('/', async (ctx) => {
  * @apiParam {integer} post_id The post ID it belongs to
  * @apiParam {string} content The content of the comment
  * @apiSuccess (201) {object} void The created comment
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-comments.put('/', async (ctx) => {
+comments.put('/', authenticate, async (ctx) => {
   try {
-    const { content, user_id, post_id } = ctx.request.body
-    const data = await Comment.create({ content, user_id, post_id })
+    const data = await Comment.create(ctx.request.body)
 
     ctx.body = General.prettyJSON(data)
     ctx.status = 201
@@ -58,8 +58,9 @@ comments.put('/', async (ctx) => {
  * @api {delete} /api/comments/:id Delete a comment
  * @apiGroup Comments
  * @apiSuccess (200) {void} void void
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-comments.delete('/:id', async (ctx) => {
+comments.delete('/:id', authenticate, async (ctx) => {
   try {
     await Comment.destroy({ 
       where: { id: ctx.params.id }
