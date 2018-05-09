@@ -1,11 +1,11 @@
 const Router = require('koa-router')
 
 const { Schedule, Class } = require('../models')
-const { General } = require('../services')
+const { General, Auth } = require('../services')
 const c = require('../config')
 
 const schedules = Router()
-
+const { authenticate } = Auth
 const range = {
   quota: 99
 }
@@ -18,8 +18,9 @@ const range = {
  * @apiParam (Query String) {boolean=0,1} [finished=0,1] Filtered by if the schedule is finished 
  * @apiParam (Query String) {integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all schedules
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-schedules.get('/', async (ctx) => {
+schedules.get('/', authenticate, async (ctx) => {
   try {
     const filters = ['teacher_id', 'student_id', 'finished']
     const qs = General.parseQuerystring(ctx.request.querystring)
@@ -54,8 +55,9 @@ schedules.get('/', async (ctx) => {
  * @apiParam {boolean=0,1} [finished=0] If the schedule is finished or not
  * @apiParam {integer} quota=1 The length of the schedule
  * @apiSuccess (201) {object} void The created schedule 
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-schedules.put('/', async (ctx) => {
+schedules.put('/', authenticate, async (ctx) => {
   try {
     const isOutRange = General.checkRange(range, ctx.request.body)
 
@@ -82,8 +84,9 @@ schedules.put('/', async (ctx) => {
  * @apiParam {boolean=0,1} [finished=0] If the schedule is finished or not
  * @apiParam {integer} quota=1 The length of the schedule
  * @apiSuccess (200) {object} void The updated schedule 
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-schedules.post('/:id', async (ctx) => {
+schedules.post('/:id', authenticate, async (ctx) => {
   try {
     const isOutRange = General.checkRange(range, ctx.request.body)
 
@@ -106,8 +109,9 @@ schedules.post('/:id', async (ctx) => {
  * @api {delete} /api/schedules/:id Delete a schedule
  * @apiGroup Schedules
  * @apiSuccess (200) {void} void void
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-schedules.delete('/:id', async (ctx) => {
+schedules.delete('/:id', authenticate, async (ctx) => {
   try {
     await Schedule.destroy({ where: { id: ctx.params.id } })
     ctx.status = 200

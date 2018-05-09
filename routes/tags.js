@@ -1,9 +1,10 @@
 const Router = require('koa-router')
 
 const { Tag } = require('../models')
-const { General } = require('../services')
+const { General, Auth } = require('../services')
 
 const tags = Router()
+const { authenticate } = Auth
 
 /** 
  * @api {get} /api/tags/ Get all tags
@@ -27,8 +28,9 @@ tags.get('/', async (ctx) => {
  * @apiParam {string} content Content of the tag
  * @apiParam {integer} user_id The creator's user ID
  * @apiSuccess (201) {object} void The created tag
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-tags.put('/', async (ctx) => {
+tags.put('/', authenticate, async (ctx) => {
   try {
     const data = await Tag.create(ctx.request.body)
 
@@ -44,8 +46,9 @@ tags.put('/', async (ctx) => {
  * @apiGroup Tags
  * @apiParam {string} content Content of the tag
  * @apiSuccess (200) {object} void The Updated tag
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-tags.post('/:id', async (ctx) => {
+tags.post('/:id', authenticate, async (ctx) => {
   try {
     let data = await Tag.findOne({ where: { id: ctx.params.id } })
     data = await data.update(ctx.request.body)
@@ -61,8 +64,9 @@ tags.post('/:id', async (ctx) => {
  * @api {delete} /api/tags/:id Delete a tag
  * @apiGroup Tags
  * @apiSuccess (200) {void} void void
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-tags.delete('/:id', async (ctx) => {
+tags.delete('/:id', authenticate, async (ctx) => {
   try {
     await Tag.destroy({ 
       where: { id: ctx.params.id }
