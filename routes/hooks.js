@@ -5,6 +5,7 @@ const { General } = require('../services')
 
 const hooks = Router()
 const serverOptions = { encoding: 'utf8' }
+
 // const webappOptions = Object.assign(serverOptions, {cwd: '../xfolio-webapp'}) 
 
 // This route is for the listening the git webhooks for deployment
