@@ -20,7 +20,7 @@ sessions.post('/', authenticate, async (ctx) => {
     const { user } = ctx.state
     if (user) {
       const { id, password } = user.dataValues
-      await usersService.processUserDate(user.dataValues)
+      await usersService.processUserDate({ id, password })
 
       ctx.status = 200
       ctx.body = {
@@ -30,19 +30,6 @@ sessions.post('/', authenticate, async (ctx) => {
     } else {
       ctx.status = 401
     }
-  } catch (err) {
-    General.logError(ctx, err)
-  }
-})
-
-/** 
- * @api {delete} /api/sessions Sign out
- * @apiGroup Sessions
- * @apiSuccess (200) {void} void void
- */
-sessions.delete('/', authenticate, (ctx) => {
-  try {
-    ctx.status = 200
   } catch (err) {
     General.logError(ctx, err)
   }
