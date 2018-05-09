@@ -1,11 +1,12 @@
 const Router = require('koa-router')
 
 const { Course } = require('../models')
-const { General } = require('../services')
+const { General, Auth } = require('../services')
 const Database = require('../database')
 const c = require('../config')
 
 const courses = Router()
+const { authenticate } = Auth
 
 /** 
  * @api {get} /api/courses Get all courses
@@ -55,15 +56,10 @@ courses.get('/', async (ctx) => {
  * @apiParam {string} label The course name
  * @apiParam {string} [description] The course description
  * @apiParam {integer} user_id The creator's user ID
- * @apiParamExample {json} Request-example:
- *  {
- *    "label": "course name",
- *    "description": "course description",
- *    "user_id": 1
- *  }
  * @apiSuccess (201) {object} void The created course
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-courses.put('/', async (ctx) => {
+courses.put('/', authenticate, async (ctx) => {
   try {
     const data = await Course.create(ctx.request.body)
 
@@ -80,15 +76,10 @@ courses.put('/', async (ctx) => {
  * @apiParam {string} label The course name
  * @apiParam {string} [description] The course description
  * @apiParam {integer} [user_id] The creator's user ID
- * @apiParamExample {json} Request-example:
- *  {
- *    "label": "course name",
- *    "description": "course description",
- *    "user_id": 1
- *  }
  * @apiSuccess (200) {object} void The updated course
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-courses.post('/:id', async (ctx) => {
+courses.post('/:id', authenticate, async (ctx) => {
   try {
     let data = await Course.findOne({ where: { id: ctx.params.id } })
     data = await data.update(ctx.request.body)
@@ -104,8 +95,9 @@ courses.post('/:id', async (ctx) => {
  * @api {delete} /api/courses/:id Delete a course
  * @apiGroup Courses 
  * @apiSuccess (200) {void} void void
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-courses.delete('/:id', async (ctx) => {
+courses.delete('/:id', authenticate, async (ctx) => {
   try {
     await Course.destroy({ where: { id: ctx.params.id } })
     ctx.status = 200

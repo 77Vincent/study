@@ -5,7 +5,6 @@ const { General, Auth } = require('../services')
 const c = require('../config')
 
 const comments = Router()
-
 const { authenticate } = Auth
 
 /** 
