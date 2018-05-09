@@ -1,20 +1,22 @@
 const Router = require('koa-router')
-const { exec } = require('child_process')
+const { execSync } = require('child_process')
 
 const { General } = require('../services')
 
 const hooks = Router()
 
-const action = 'git pull'
-
+// This route is for the listening the git webhooks for deployment
 hooks.post('/', (ctx) => {
   try {
-    exec(action, (err) => {
-      if (err) { console.error(err) }
-    })
-    ctx.status = 200
-    ctx.body = `Sync successfully at ${new Date()}`
 
+    // For this server
+    execSync('git pull', { encoding: 'utf8' })
+
+    // For the webapp
+    execSync('git pull; npm run build', { encoding: 'utf8', cwd: '../xfolio-webapp' })
+
+    ctx.status = 200
+    ctx.body = `Successfully deployed at ${new Date()}`
   } catch (err) {
     General.logError(ctx, err)
   }
