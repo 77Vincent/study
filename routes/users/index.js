@@ -80,7 +80,7 @@ users.get('/', async (ctx) => {
       }
     }
 
-    ctx.status = 200
+    ctx.status = 201
     ctx.body = General.prettyJSON(data)
   } catch (err) {
     General.logError(ctx, err)
