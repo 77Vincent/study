@@ -80,7 +80,7 @@ users.get('/', async (ctx) => {
       }
     }
 
-    ctx.status = 200
+    ctx.status = 201
     ctx.body = General.prettyJSON(data)
   } catch (err) {
     General.logError(ctx, err)
@@ -334,7 +334,7 @@ users.post('/:id', authenticate, async (ctx) => {
       const majors = await Database.model('user_major').findAll({ where: { user_id } })
       data.dataValues.majors = majors.map(each => each.major_id)
 
-      ctx.status = 201
+      ctx.status = 200
       ctx.body = General.prettyJSON(data)
     }
   } catch (err) {
