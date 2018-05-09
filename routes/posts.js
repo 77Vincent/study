@@ -1,8 +1,8 @@
 const Router = require('koa-router')
 
 const c = require('../config')
-const { Post, Comment, Auth } = require('../models')
-const { General } = require('../services')
+const { Post, Comment } = require('../models')
+const { General, Auth } = require('../services')
 
 const posts = Router()
 const { authenticate } = Auth
