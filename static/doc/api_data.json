@@ -4,7 +4,6 @@
     "url": "/api/avatars",
     "title": "Delete a avatar",
     "group": "Avatars",
-    "description": "<p>Protected, need token</p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -27,6 +26,19 @@
             "optional": false,
             "field": "void",
             "description": "<p>void</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
           }
         ]
       }
@@ -101,7 +113,6 @@
     "url": "/api/avatars",
     "title": "Update a avatar",
     "group": "Avatars",
-    "description": "<p>Protected, need token</p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -142,6 +153,19 @@
         ]
       }
     },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
+          }
+        ]
+      }
+    },
     "version": "0.0.0",
     "filename": "routes/avatars.js",
     "groupTitle": "Avatars",
@@ -152,7 +176,6 @@
     "url": "/api/avatars",
     "title": "Create a avatar",
     "group": "Avatars",
-    "description": "<p>Protected, need token</p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -193,6 +216,19 @@
         ]
       }
     },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
+          }
+        ]
+      }
+    },
     "version": "0.0.0",
     "filename": "routes/avatars.js",
     "groupTitle": "Avatars",
@@ -203,7 +239,6 @@
     "url": "/api/classes/:id",
     "title": "Delete a class",
     "group": "Classes",
-    "description": "<p>Protected, need token</p>",
     "success": {
       "fields": {
         "200": [
@@ -213,6 +248,19 @@
             "optional": false,
             "field": "void",
             "description": "<p>void</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
           }
         ]
       }
@@ -277,7 +325,6 @@
     "url": "/api/classes/:id",
     "title": "Update a class",
     "group": "Classes",
-    "description": "<p>Protected, need token</p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -323,14 +370,7 @@
             "description": "<p>Which schedule does this class belong to</p>"
           }
         ]
-      },
-      "examples": [
-        {
-          "title": "Request-example:",
-          "content": "{\n  \"start\": new Date(),\n  \"end\": new Date('2018/05/01'),\n  \"length\": 2.5,\n  \"finished\": 0,\n  \"schedule_id\": 3 \n}",
-          "type": "json"
-        }
-      ]
+      }
     },
     "success": {
       "fields": {
@@ -341,6 +381,19 @@
             "optional": false,
             "field": "void",
             "description": "<p>The updated class</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
           }
         ]
       }
@@ -401,14 +454,7 @@
             "description": "<p>Which schedule does this class belong to</p>"
           }
         ]
-      },
-      "examples": [
-        {
-          "title": "Request-example:",
-          "content": "{\n  \"start\": new Date(),\n  \"end\": new Date('2018/05/01'),\n  \"length\": 2.5,\n  \"finished\": 0,\n  \"schedule_id\": 3 \n}",
-          "type": "json"
-        }
-      ]
+      }
     },
     "success": {
       "fields": {
@@ -455,6 +501,19 @@
             "optional": false,
             "field": "void",
             "description": "<p>void</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
           }
         ]
       }
@@ -560,6 +619,19 @@
         ]
       }
     },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
+          }
+        ]
+      }
+    },
     "version": "0.0.0",
     "filename": "routes/comments.js",
     "groupTitle": "Comments",
@@ -579,6 +651,19 @@
             "optional": false,
             "field": "void",
             "description": "<p>void</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
           }
         ]
       }
@@ -676,14 +761,7 @@
             "description": "<p>The creator's user ID</p>"
           }
         ]
-      },
-      "examples": [
-        {
-          "title": "Request-example:",
-          "content": "{\n  \"label\": \"course name\",\n  \"description\": \"course description\",\n  \"user_id\": 1\n}",
-          "type": "json"
-        }
-      ]
+      }
     },
     "success": {
       "fields": {
@@ -694,6 +772,19 @@
             "optional": false,
             "field": "void",
             "description": "<p>The updated course</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
           }
         ]
       }
@@ -733,14 +824,7 @@
             "description": "<p>The creator's user ID</p>"
           }
         ]
-      },
-      "examples": [
-        {
-          "title": "Request-example:",
-          "content": "{\n  \"label\": \"course name\",\n  \"description\": \"course description\",\n  \"user_id\": 1\n}",
-          "type": "json"
-        }
-      ]
+      }
     },
     "success": {
       "fields": {
@@ -751,6 +835,19 @@
             "optional": false,
             "field": "void",
             "description": "<p>The created course</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
           }
         ]
       }
@@ -857,6 +954,26 @@
     "url": "/api/majors/",
     "title": "Create a major",
     "group": "Majors",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "label",
+            "description": "<p>The major name</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "description",
+            "description": "<p>The major description</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "200": [
@@ -866,6 +983,19 @@
             "optional": false,
             "field": "void",
             "description": "<p>The created major</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
           }
         ]
       }
@@ -932,6 +1062,19 @@
         ]
       }
     },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
+          }
+        ]
+      }
+    },
     "version": "0.0.0",
     "filename": "routes/messages.js",
     "groupTitle": "Messages",
@@ -975,14 +1118,7 @@
             "description": "<p>If the message has been read or not</p>"
           }
         ]
-      },
-      "examples": [
-        {
-          "title": "Request-example:",
-          "content": "{\n  \"content\": \"Hellow world\",\n  \"sender_id\": 1,\n  \"recipient_id\": 2,\n  \"read\": 0\n}",
-          "type": "json"
-        }
-      ]
+      }
     },
     "success": {
       "fields": {
@@ -993,6 +1129,19 @@
             "optional": false,
             "field": "void",
             "description": "<p>The newly created message</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
           }
         ]
       }
@@ -1016,6 +1165,19 @@
             "optional": false,
             "field": "void",
             "description": "<p>void</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
           }
         ]
       }
@@ -1067,6 +1229,19 @@
             "optional": false,
             "field": "void",
             "description": "<p>Array contains all orders</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
           }
         ]
       }
@@ -1142,6 +1317,19 @@
         ]
       }
     },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
+          }
+        ]
+      }
+    },
     "version": "0.0.0",
     "filename": "routes/orders.js",
     "groupTitle": "Orders",
@@ -1213,6 +1401,19 @@
         ]
       }
     },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
+          }
+        ]
+      }
+    },
     "version": "0.0.0",
     "filename": "routes/orders.js",
     "groupTitle": "Orders",
@@ -1232,6 +1433,19 @@
             "optional": false,
             "field": "void",
             "description": "<p>void</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
           }
         ]
       }
@@ -1353,6 +1567,19 @@
         ]
       }
     },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
+          }
+        ]
+      }
+    },
     "version": "0.0.0",
     "filename": "routes/pictures.js",
     "groupTitle": "Pictures",
@@ -1372,6 +1599,19 @@
             "optional": false,
             "field": "void",
             "description": "<p>void</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
           }
         ]
       }
@@ -1479,14 +1719,7 @@
             "description": "<p>The post content</p>"
           }
         ]
-      },
-      "examples": [
-        {
-          "title": "Request-example:",
-          "content": "{\n  \"user_id\": 1,\n  \"content\": \"post content\" \n}",
-          "type": "json"
-        }
-      ]
+      }
     },
     "success": {
       "fields": {
@@ -1497,6 +1730,19 @@
             "optional": false,
             "field": "void",
             "description": "<p>The created post</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
           }
         ]
       }
@@ -1549,6 +1795,19 @@
         ]
       }
     },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
+          }
+        ]
+      }
+    },
     "version": "0.0.0",
     "filename": "routes/roles.js",
     "groupTitle": "Roles",
@@ -1568,6 +1827,19 @@
             "optional": false,
             "field": "void",
             "description": "<p>void</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
           }
         ]
       }
@@ -1631,6 +1903,19 @@
             "optional": false,
             "field": "void",
             "description": "<p>Array contains all schedules</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
           }
         ]
       }
@@ -1705,6 +1990,19 @@
         ]
       }
     },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
+          }
+        ]
+      }
+    },
     "version": "0.0.0",
     "filename": "routes/schedules.js",
     "groupTitle": "Schedules",
@@ -1771,6 +2069,19 @@
             "optional": false,
             "field": "void",
             "description": "<p>The created schedule</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
           }
         ]
       }
@@ -1850,6 +2161,19 @@
         ]
       }
     },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
+          }
+        ]
+      }
+    },
     "version": "0.0.0",
     "filename": "routes/tags.js",
     "groupTitle": "Tags",
@@ -1909,6 +2233,19 @@
         ]
       }
     },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
+          }
+        ]
+      }
+    },
     "version": "0.0.0",
     "filename": "routes/tags.js",
     "groupTitle": "Tags",
@@ -1948,6 +2285,19 @@
             "optional": false,
             "field": "void",
             "description": "<p>The created tag</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Protected resource, use Authorization header to get access</p>"
           }
         ]
       }
