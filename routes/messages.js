@@ -1,10 +1,11 @@
 const Router = require('koa-router')
 
 const { Message } = require('../models')
-const { General } = require('../services')
+const { General, Auth } = require('../services')
 const c = require('../config')
 
 const messages = Router()
+const { authenticate } = Auth
 
 /** 
  * @api {get} /api/messages Get all messages
@@ -14,12 +15,12 @@ const messages = Router()
  * @apiParam (Query String) {boolean=0,1} [read=0,1] Filtered by if the message is read 
  * @apiParam (Query String) {string} [content] Search by message content
  * @apiSuccess (200) {object[]} void Array contains all messages 
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-messages.get('/', async (ctx) => {
+messages.get('/', authenticate, async (ctx) => {
   try {
-    const filters = ['sender_id', 'recipient_id', 'read']
     const qs = General.parseQuerystring(ctx.request.querystring)
-    const filter = General.getFilter(qs, filters)
+    const filter = General.getFilter(qs, ['sender_id', 'recipient_id', 'read'])
 
     // Search
     if (qs.content) {
@@ -48,16 +49,10 @@ messages.get('/', async (ctx) => {
  * @apiParam {integer} sender_id The sender's user ID 
  * @apiParam {integer} recipient_id The recipient's user ID
  * @apiParam {boolean} [read=0] If the message has been read or not
- * @apiParamExample {json} Request-example:
- *  {
- *    "content": "Hellow world",
- *    "sender_id": 1,
- *    "recipient_id": 2,
- *    "read": 0
- *  }
  * @apiSuccess (201) {object} void The newly created message
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-messages.put('/', async (ctx) => {
+messages.put('/', authenticate, async (ctx) => {
   try {
     const data = await Message.create(ctx.request.body)
 

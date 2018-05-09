@@ -1,10 +1,11 @@
 const Router = require('koa-router')
 
 const { Order } = require('../models')
-const { General } = require('../services')
+const { General, Auth } = require('../services')
 const c = require('../config.js')
 
 const orders = Router()
+const { authenticate } = Auth
 
 /** 
  * @api {get} /api/orders/ Get all orders
@@ -13,8 +14,9 @@ const orders = Router()
  * @apiParam (Query String) {integer} [seller_id] Filtered by the seller's user ID 
  * @apiParam (Query String) {integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all orders
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-orders.get('/', async (ctx) => {
+orders.get('/', authenticate, async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
 
@@ -42,8 +44,9 @@ orders.get('/', async (ctx) => {
  * @apiParam {integer} buyer_id The buyer's user ID
  * @apiParam {integer} seller_id The seller's user ID
  * @apiSuccess (201) {object} void The created order
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-orders.put('/', async (ctx) => {
+orders.put('/', authenticate, async (ctx) => {
   try {
     const data = await Order.create(ctx.request.body)
 
@@ -64,8 +67,9 @@ orders.put('/', async (ctx) => {
  * @apiParam {integer} buyer_id The buyer's user ID
  * @apiParam {integer} seller_id The seller's user ID
  * @apiSuccess (200) {object} void The Updated order
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-orders.post('/:id', async (ctx) => {
+orders.post('/:id', authenticate, async (ctx) => {
   try {
     let data = await Order.findOne({ where: { id: ctx.params.id } })
     data = await data.update(ctx.request.body)
@@ -81,8 +85,9 @@ orders.post('/:id', async (ctx) => {
  * @api {delete} /api/orders/:id Delete a order
  * @apiGroup Orders
  * @apiSuccess (200) {void} void void
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-orders.delete('/:id', async (ctx) => {
+orders.delete('/:id', authenticate, async (ctx) => {
   try {
     await Order.destroy({ 
       where: { id: ctx.params.id }
