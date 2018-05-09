@@ -1,10 +1,11 @@
 const Router = require('koa-router')
 
 const c = require('../config')
-const { Post, Comment } = require('../models')
+const { Post, Comment, Auth } = require('../models')
 const { General } = require('../services')
 
 const posts = Router()
+const { authenticate } = Auth
 
 /** 
  * @api {get} /api/posts Get all posts
@@ -79,14 +80,10 @@ posts.get('/:id', async (ctx) => {
  * @apiGroup Posts 
  * @apiParam {string} user_id The creator's user ID
  * @apiParam {string} content The post content
- * @apiParamExample {json} Request-example:
- *  {
- *    "user_id": 1,
- *    "content": "post content" 
- *  }
  * @apiSuccess (201) {object} void The created post
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-posts.put('/', async (ctx) => {
+posts.put('/', authenticate, async (ctx) => {
   try {
     const { content, user_id } = ctx.request.body
     const data = await Post.create({ content, user_id })
@@ -102,8 +99,9 @@ posts.put('/', async (ctx) => {
  * @api {delete} /api/posts/:id Delete a post
  * @apiGroup Posts 
  * @apiSuccess (200) {void} void void
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-posts.delete('/:id', async (ctx) => {
+posts.delete('/:id', authenticate, async (ctx) => {
   try {
     await Post.destroy({ 
       where: { id: ctx.params.id }

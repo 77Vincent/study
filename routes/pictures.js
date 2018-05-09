@@ -2,10 +2,11 @@ const Router = require('koa-router')
 const mime = require('mime')
 
 const { Picture } = require('../models')
-const { General, Storage } = require('../services')
+const { General, Storage, Auth } = require('../services')
 const c = require('../config')
 
 const pictures = Router()
+const { authenticate } = Auth
 
 /** 
  * @api {get} /api/pictures/ Get all pictures
@@ -64,8 +65,9 @@ pictures.get('/:id', async (ctx) => {
  * @apiParam {string} mime The MIME of the file 
  * @apiParam {integer} post_id It's post ID
  * @apiSuccess (201) {object} void The created picture
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-pictures.put('/', async (ctx) => {
+pictures.put('/', authenticate, async (ctx) => {
   try {
     const { content, mime, post_id } = ctx.request.body
     const path = Storage.store('picture', content, mime, post_id)
@@ -82,8 +84,9 @@ pictures.put('/', async (ctx) => {
  * @api {delete} /api/pictures/:id Delete a picture
  * @apiGroup Pictures
  * @apiSuccess (200) {void} void void
+ * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-pictures.delete('/:id', async (ctx) => {
+pictures.delete('/:id', authenticate, async (ctx) => {
   try {
     const { id } = ctx.params
     const data = await Picture.findOne({ where: { id } })
