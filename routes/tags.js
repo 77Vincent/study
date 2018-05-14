@@ -4,7 +4,7 @@ const { Tag } = require('../models')
 const { General, Auth } = require('../services')
 
 const tags = Router()
-const { authenticate } = Auth
+const { protect } = Auth
 
 /** 
  * @api {get} /api/tags/ Get all tags
@@ -30,7 +30,7 @@ tags.get('/', async (ctx) => {
  * @apiSuccess (201) {object} void The created tag
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-tags.put('/', authenticate, async (ctx) => {
+tags.put('/', protect, async (ctx) => {
   try {
     const data = await Tag.create(ctx.request.body)
 
@@ -48,7 +48,7 @@ tags.put('/', authenticate, async (ctx) => {
  * @apiSuccess (200) {object} void The Updated tag
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-tags.post('/:id', authenticate, async (ctx) => {
+tags.post('/:id', protect, async (ctx) => {
   try {
     let data = await Tag.findOne({ where: { id: ctx.params.id } })
     data = await data.update(ctx.request.body)
@@ -66,7 +66,7 @@ tags.post('/:id', authenticate, async (ctx) => {
  * @apiSuccess (200) {void} void void
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-tags.delete('/:id', authenticate, async (ctx) => {
+tags.delete('/:id', protect, async (ctx) => {
   try {
     await Tag.destroy({ 
       where: { id: ctx.params.id }

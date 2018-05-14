@@ -5,7 +5,7 @@ const c = require('../config.js')
 const { Avatar } = require('../models')
 const { General, Storage, Auth } = require('../services')
 
-const { authenticate } = Auth
+const { protect } = Auth
 const avatars = Router()
 
 /** 
@@ -63,7 +63,7 @@ avatars.get('/user_id/:user_id', async (ctx) => {
  * @apiSuccess (201) {object} void The created avatar
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-avatars.put('/', authenticate, async (ctx) => {
+avatars.put('/', protect, async (ctx) => {
   try {
     const { content, mime, user_id } = ctx.request.body
     const path = Storage.store('avatar', content, mime, user_id)
@@ -85,7 +85,7 @@ avatars.put('/', authenticate, async (ctx) => {
  * @apiSuccess (200) {object} void The updated avatar
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-avatars.post('/', authenticate, async (ctx) => {
+avatars.post('/', protect, async (ctx) => {
   try {
     const { content, mime, user_id } = ctx.request.body
     let data = await Avatar.findOne({ where: { user_id } })
@@ -108,7 +108,7 @@ avatars.post('/', authenticate, async (ctx) => {
  * @apiSuccess (200) {void} void void
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-avatars.delete('/', authenticate, async (ctx) => {
+avatars.delete('/', protect, async (ctx) => {
   try {
     const { user_id } = ctx.request.body
     const data = await Avatar.findOne({ where: { user_id } })

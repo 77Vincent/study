@@ -6,7 +6,7 @@ const { General, Storage, Auth } = require('../services')
 const c = require('../config')
 
 const pictures = Router()
-const { authenticate } = Auth
+const { protect } = Auth
 
 /** 
  * @api {get} /api/pictures/ Get all pictures
@@ -67,7 +67,7 @@ pictures.get('/:id', async (ctx) => {
  * @apiSuccess (201) {object} void The created picture
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-pictures.put('/', authenticate, async (ctx) => {
+pictures.put('/', protect, async (ctx) => {
   try {
     const { content, mime, post_id } = ctx.request.body
     const path = Storage.store('picture', content, mime, post_id)
@@ -86,7 +86,7 @@ pictures.put('/', authenticate, async (ctx) => {
  * @apiSuccess (200) {void} void void
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-pictures.delete('/:id', authenticate, async (ctx) => {
+pictures.delete('/:id', protect, async (ctx) => {
   try {
     const { id } = ctx.params
     const data = await Picture.findOne({ where: { id } })

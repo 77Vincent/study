@@ -5,7 +5,7 @@ const { General, Auth } = require('../services')
 const c = require('../config')
 
 const schedules = Router()
-const { authenticate } = Auth
+const { protect } = Auth
 const range = {
   quota: 99
 }
@@ -20,7 +20,7 @@ const range = {
  * @apiSuccess (200) {object[]} void Array contains all schedules
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-schedules.get('/', authenticate, async (ctx) => {
+schedules.get('/', protect, async (ctx) => {
   try {
     const filters = ['teacher_id', 'student_id', 'finished']
     const qs = General.parseQuerystring(ctx.request.querystring)
@@ -57,7 +57,7 @@ schedules.get('/', authenticate, async (ctx) => {
  * @apiSuccess (201) {object} void The created schedule 
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-schedules.put('/', authenticate, async (ctx) => {
+schedules.put('/', protect, async (ctx) => {
   try {
     const isOutRange = General.checkRange(range, ctx.request.body)
 
@@ -86,7 +86,7 @@ schedules.put('/', authenticate, async (ctx) => {
  * @apiSuccess (200) {object} void The updated schedule 
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-schedules.post('/:id', authenticate, async (ctx) => {
+schedules.post('/:id', protect, async (ctx) => {
   try {
     const isOutRange = General.checkRange(range, ctx.request.body)
 
@@ -111,7 +111,7 @@ schedules.post('/:id', authenticate, async (ctx) => {
  * @apiSuccess (200) {void} void void
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-schedules.delete('/:id', authenticate, async (ctx) => {
+schedules.delete('/:id', protect, async (ctx) => {
   try {
     await Schedule.destroy({ where: { id: ctx.params.id } })
     ctx.status = 200

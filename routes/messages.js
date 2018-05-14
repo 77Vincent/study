@@ -5,7 +5,7 @@ const { General, Auth } = require('../services')
 const c = require('../config')
 
 const messages = Router()
-const { authenticate } = Auth
+const { protect } = Auth
 
 /** 
  * @api {get} /api/messages Get all messages
@@ -17,7 +17,7 @@ const { authenticate } = Auth
  * @apiSuccess (200) {object[]} void Array contains all messages 
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-messages.get('/', authenticate, async (ctx) => {
+messages.get('/', protect, async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
     const filter = General.getFilter(qs, ['sender_id', 'recipient_id', 'read'])
@@ -52,7 +52,7 @@ messages.get('/', authenticate, async (ctx) => {
  * @apiSuccess (201) {object} void The newly created message
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-messages.put('/', authenticate, async (ctx) => {
+messages.put('/', protect, async (ctx) => {
   try {
     const data = await Message.create(ctx.request.body)
 

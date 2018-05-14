@@ -6,7 +6,7 @@ const Database = require('../database')
 const c = require('../config')
 
 const courses = Router()
-const { authenticate } = Auth
+const { protect } = Auth
 
 /** 
  * @api {get} /api/courses Get all courses
@@ -59,7 +59,7 @@ courses.get('/', async (ctx) => {
  * @apiSuccess (201) {object} void The created course
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-courses.put('/', authenticate, async (ctx) => {
+courses.put('/', protect, async (ctx) => {
   try {
     const data = await Course.create(ctx.request.body)
 
@@ -79,7 +79,7 @@ courses.put('/', authenticate, async (ctx) => {
  * @apiSuccess (200) {object} void The updated course
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-courses.post('/:id', authenticate, async (ctx) => {
+courses.post('/:id', protect, async (ctx) => {
   try {
     let data = await Course.findOne({ where: { id: ctx.params.id } })
     data = await data.update(ctx.request.body)
@@ -97,7 +97,7 @@ courses.post('/:id', authenticate, async (ctx) => {
  * @apiSuccess (200) {void} void void
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-courses.delete('/:id', authenticate, async (ctx) => {
+courses.delete('/:id', protect, async (ctx) => {
   try {
     await Course.destroy({ where: { id: ctx.params.id } })
     ctx.status = 200

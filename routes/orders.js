@@ -5,7 +5,7 @@ const { General, Auth } = require('../services')
 const c = require('../config.js')
 
 const orders = Router()
-const { authenticate } = Auth
+const { protect } = Auth
 
 /** 
  * @api {get} /api/orders/ Get all orders
@@ -16,7 +16,7 @@ const { authenticate } = Auth
  * @apiSuccess (200) {object[]} void Array contains all orders
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-orders.get('/', authenticate, async (ctx) => {
+orders.get('/', protect, async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
 
@@ -46,7 +46,7 @@ orders.get('/', authenticate, async (ctx) => {
  * @apiSuccess (201) {object} void The created order
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-orders.put('/', authenticate, async (ctx) => {
+orders.put('/', protect, async (ctx) => {
   try {
     const data = await Order.create(ctx.request.body)
 
@@ -69,7 +69,7 @@ orders.put('/', authenticate, async (ctx) => {
  * @apiSuccess (200) {object} void The Updated order
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-orders.post('/:id', authenticate, async (ctx) => {
+orders.post('/:id', protect, async (ctx) => {
   try {
     let data = await Order.findOne({ where: { id: ctx.params.id } })
     data = await data.update(ctx.request.body)
@@ -87,7 +87,7 @@ orders.post('/:id', authenticate, async (ctx) => {
  * @apiSuccess (200) {void} void void
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-orders.delete('/:id', authenticate, async (ctx) => {
+orders.delete('/:id', protect, async (ctx) => {
   try {
     await Order.destroy({ 
       where: { id: ctx.params.id }

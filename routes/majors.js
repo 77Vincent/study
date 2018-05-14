@@ -4,7 +4,7 @@ const { Major } = require('../models')
 const { General, Auth } = require('../services')
 
 const majors = Router()
-const { authenticate } = Auth
+const { protect } = Auth
 
 /** 
  * @api {get} /api/majors/ Get all majors
@@ -30,7 +30,7 @@ majors.get('/', async (ctx) => {
  * @apiSuccess (200) {object} void The created major 
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-majors.put('/', authenticate, async (ctx) => {
+majors.put('/', protect, async (ctx) => {
   try {
     const { label, description } = ctx.request.body
     const data = await Major.create({ label, description })

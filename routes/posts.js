@@ -5,7 +5,7 @@ const { Post, Comment } = require('../models')
 const { General, Auth } = require('../services')
 
 const posts = Router()
-const { authenticate } = Auth
+const { protect } = Auth
 
 /** 
  * @api {get} /api/posts Get all posts
@@ -83,7 +83,7 @@ posts.get('/:id', async (ctx) => {
  * @apiSuccess (201) {object} void The created post
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-posts.put('/', authenticate, async (ctx) => {
+posts.put('/', protect, async (ctx) => {
   try {
     const { content, user_id } = ctx.request.body
     const data = await Post.create({ content, user_id })
@@ -101,7 +101,7 @@ posts.put('/', authenticate, async (ctx) => {
  * @apiSuccess (200) {void} void void
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-posts.delete('/:id', authenticate, async (ctx) => {
+posts.delete('/:id', protect, async (ctx) => {
   try {
     await Post.destroy({ 
       where: { id: ctx.params.id }

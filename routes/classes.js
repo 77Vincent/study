@@ -5,7 +5,7 @@ const { General, Auth } = require('../services')
 const c = require('../config')
 
 const classes = Router()
-const { authenticate } = Auth
+const { protect } = Auth
 const range = { length: 99 }
 
 /** 
@@ -47,7 +47,7 @@ classes.get('/', async (ctx) => {
  * @apiSuccess (201) {object} void The created class
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-classes.put('/', authenticate, async (ctx) => {
+classes.put('/', protect, async (ctx) => {
   try {
     const isOutRange = General.checkRange(range, ctx.request.body)
 
@@ -76,7 +76,7 @@ classes.put('/', authenticate, async (ctx) => {
  * @apiSuccess (200) {object} void The updated class
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-classes.post('/:id', authenticate, async (ctx) => {
+classes.post('/:id', protect, async (ctx) => {
   try {
     const isOutRange = General.checkRange(range, ctx.request.body)
     
@@ -102,7 +102,7 @@ classes.post('/:id', authenticate, async (ctx) => {
  * @apiSuccess (200) {void} void void
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-classes.delete('/:id', authenticate, async (ctx) => {
+classes.delete('/:id', protect, async (ctx) => {
   try {
     await Class.destroy({ where: { id: ctx.params.id } })
     ctx.status = 200

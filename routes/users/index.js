@@ -9,7 +9,7 @@ const Database = require('../../database')
 const c = require('../../config.js')
 
 const users = Router()
-const { authenticate } = Auth
+const { protect } = Auth
 const range = {
   cost: 9999,
   role_id: 10
@@ -260,7 +260,7 @@ users.get('/:id/followings', async (ctx) => {
  * @apiParam {number} [available=0] How much hours a user is opened for booking
  * @apiSuccess (201) {object} void The newly created user object
  */
-users.put('/', authenticate, async (ctx) => {
+users.put('/', protect, async (ctx) => {
   try {
     const input = ctx.request.body
     let data = await User.create(input)
@@ -301,7 +301,7 @@ users.put('/', authenticate, async (ctx) => {
  * @apiParam {number} [available=0] How much hours a user is opened for booking
  * @apiSuccess (200) {object} void The updated user object
  */
-users.post('/:id', authenticate, async (ctx) => {
+users.post('/:id', protect, async (ctx) => {
   try {
     const user_id = ctx.params.id
     const input = ctx.request.body
@@ -347,7 +347,7 @@ users.post('/:id', authenticate, async (ctx) => {
  * @apiGroup Users 
  * @apiSuccess (200) {void} void void
  */
-users.delete('/:id', authenticate, async (ctx) => {
+users.delete('/:id', protect, async (ctx) => {
   try {
     await User.destroy({ where: { id: ctx.params.id } })
     ctx.status = 200

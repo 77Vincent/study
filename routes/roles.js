@@ -4,7 +4,7 @@ const { Role } = require('../models')
 const { General, Auth } = require('../services')
 
 const roles = Router()
-const { authenticate } = Auth
+const { protect } = Auth
 
 /** 
  * @api {get} /api/roles/ Get all roles
@@ -30,7 +30,7 @@ roles.get('/', async (ctx) => {
  * @apiSuccess (200) {object} void The created role 
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-roles.put('/', authenticate, async (ctx) => {
+roles.put('/', protect, async (ctx) => {
   try {
     const { label } = ctx.request.body
     const data = await Role.create({ label })

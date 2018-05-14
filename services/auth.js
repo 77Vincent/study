@@ -13,19 +13,18 @@ const getToken = (authorization = '') => {
 
 module.exports = {
   /**
-   * Koa middleware: authenticate the user credentials
+   * Koa middleware: Authenticate the user credentials
    * @param {string} id user ID
    * @param {string} password user password
    * @param {string} token token from the authorization section of the request headers
    */
-  authenticate: async (ctx, next) => {
+  protect: async (ctx, next) => {
     try {
       const token = getToken(ctx.request.headers.authorization)
       let id = ''
       let password = ''
 
-      // Authenticate credentials
-      // Token first, use credentials from decoded token on proior
+      // If token exists, get user credentials from the decoded token
       if (token) {
         const parsed = jwt.verify(token, c.tokenSecret)
         id = parsed.id

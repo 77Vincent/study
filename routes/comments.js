@@ -5,7 +5,7 @@ const { General, Auth } = require('../services')
 const c = require('../config')
 
 const comments = Router()
-const { authenticate } = Auth
+const { protect } = Auth
 
 /** 
  * @api {get} /api/comments/ Get all comments
@@ -42,7 +42,7 @@ comments.get('/', async (ctx) => {
  * @apiSuccess (201) {object} void The created comment
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-comments.put('/', authenticate, async (ctx) => {
+comments.put('/', protect, async (ctx) => {
   try {
     const data = await Comment.create(ctx.request.body)
 
@@ -59,7 +59,7 @@ comments.put('/', authenticate, async (ctx) => {
  * @apiSuccess (200) {void} void void
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-comments.delete('/:id', authenticate, async (ctx) => {
+comments.delete('/:id', protect, async (ctx) => {
   try {
     await Comment.destroy({ 
       where: { id: ctx.params.id }
