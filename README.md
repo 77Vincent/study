@@ -54,7 +54,7 @@ xfolio-server
 |
 |---static/         // Static files also served through 3001
 |
-|---dev-scripts/        // Scripts for development       
+|---test/        // Scripts for test 
 ```
 
 ## API
