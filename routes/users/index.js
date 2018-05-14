@@ -57,7 +57,7 @@ users.get('/', async (ctx) => {
     })
 
     for (let i = 0; i < data.length; i++) {
-      await service.processUserDate(data[i].dataValues)
+      await service.processUserData(data[i].dataValues)
     }
 
     // Order for teacher 
@@ -98,7 +98,7 @@ users.get('/:id', async (ctx) => {
     const data = await service.getOneUser(id)
 
     if (data) {
-      await service.processUserDate(data.dataValues)
+      await service.processUserData(data.dataValues)
       ctx.status = 200
       ctx.body = General.prettyJSON(data)
 
@@ -134,7 +134,7 @@ users.get('/:id/students', async (ctx) => {
     })
 
     for (let i = 0; i < data.length; i++) {
-      await service.processUserDate(data[i].dataValues)
+      await service.processUserData(data[i].dataValues)
     }
 
     ctx.status = 200
@@ -168,7 +168,7 @@ users.get('/:id/teachers', async (ctx) => {
     })
 
     for (let i = 0; i < data.length; i++) {
-      await service.processUserDate(data[i].dataValues)
+      await service.processUserData(data[i].dataValues)
     }
 
     ctx.status = 200
@@ -198,7 +198,7 @@ users.get('/:id/followers', async (ctx) => {
     })
 
     for (let i = 0; i < data.length; i++) {
-      await service.processUserDate(data[i].dataValues)
+      await service.processUserData(data[i].dataValues)
     }
 
     ctx.status = 200
@@ -228,7 +228,7 @@ users.get('/:id/followings', async (ctx) => {
     })
 
     for (let i = 0; i < data.length; i++) {
-      await service.processUserDate(data[i].dataValues)
+      await service.processUserData(data[i].dataValues)
     }
 
     ctx.status = 200
@@ -266,7 +266,7 @@ users.put('/', authenticate, async (ctx) => {
     let data = await User.create(input)
     data = await service.getOneUser(data.id)
 
-    await service.processUserDate(data.dataValues)
+    await service.processUserData(data.dataValues)
     const { id, password } = data.dataValues
 
     ctx.status = 201

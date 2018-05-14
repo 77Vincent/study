@@ -15,7 +15,7 @@ module.exports = {
     const data = await User.findOne(Object.assign(param, config))
     return data
   },
-  processUserDate: async (data) => {
+  processUserData: async (data) => {
     // First remove password, do not pass password to client
     delete data.password
 

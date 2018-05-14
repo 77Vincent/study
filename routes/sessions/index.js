@@ -21,7 +21,7 @@ sessions.post('/', async (ctx) => {
     const user = await usersService.getOneUser(id)
 
     if (user && bcrypt.compareSync(password, user.password)) {
-      await usersService.processUserDate(user)
+      await usersService.processUserData(user)
       ctx.status = 200
       ctx.body = {
         data: General.prettyJSON(user),
