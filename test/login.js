@@ -1,10 +1,10 @@
-const rq = require('request-promise-native')
-const c = require('../config')
+const request = require('request-promise-native')
+const config = require('../config')
 
-const url = `${c.protocol}://${c.host}:${c.port}/api`
+const url = `${config.protocol}://${config.host}:${config.port}/api`
 
-module.exports = async (id = '', password = '') => {
-  const data = await rq({
+const login = async (id = '', password = '') => {
+  const data = await request({
     method: 'POST',
     url: `${url}/sessions`,
     body: {
@@ -13,6 +13,7 @@ module.exports = async (id = '', password = '') => {
     },
     json: true
   })
-  console.log(data)
   return data
 }
+
+module.exports = login

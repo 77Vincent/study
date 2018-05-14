@@ -21,19 +21,6 @@ let session = {};
   session = await login('18811111111', '000000')
   await rq({
     method: 'POST',
-    url: `${url}/users/3`,
-    auth: { bearer: session.token },
-    body: { username: modified, cost: 9999, gender: true, name: modified , bio: modified },
-    json: true })
-
-  await rq({
-    method: 'POST',
-    url: `${url}/tags/2`,
-    body: { content: modified, },
-    json: true })
-
-  await rq({
-    method: 'POST',
     url: `${url}/courses/2`,
     body: { label: modified, description: modified },
     json: true })

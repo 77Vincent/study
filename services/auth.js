@@ -36,11 +36,7 @@ module.exports = {
       const user = await usersService.getOneUser(id)
 
       // If the id matches a real user
-      const isValid = user 
-        // Check password 
-        && (bcrypt.compareSync(password, user.password) || password === user.password)
-        // Users can only modify their own data or sign in as admin
-        && (String(ctx.params.id) === String(user.dataValues.id) || user.dataValues.role_id === 1)
+      const isValid = user && (bcrypt.compareSync(password, user.password) || password === user.password)
 
       if (isValid) {
         // Authentication passed
