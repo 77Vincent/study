@@ -20,19 +20,20 @@ module.exports = {
    */
   authenticate: async (ctx, next) => {
     try {
-      let { id, password } = ctx.request.body
       const token = getToken(ctx.request.headers.authorization)
+      let id = ''
+      let password = ''
 
       // Authenticate credentials
       // Token first, use credentials from decoded token on proior
       if (token) {
-        const parsed = jwt.verify(token, c.tokenSecret) 
+        const parsed = jwt.verify(token, c.tokenSecret)
         id = parsed.id
         password = parsed.password
       }
 
       // Always try to get the user by id
-      const user = id ? await usersService.getOneUser(id) : null
+      const user = await usersService.getOneUser(id)
 
       // If the id matches a real user
       const isValid = user 

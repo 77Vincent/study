@@ -1,11 +1,11 @@
 const Router = require('koa-router')
+const bcrypt = require('bcryptjs')
 
-const { General, Auth } = require('../../services')
+const { General } = require('../../services')
 const service = require('./service')
 const usersService = require('../users/service')
 
 const sessions = Router()
-const { authenticate } = Auth
 
 /** 
  * @api {post} /api/sessions Sign in
@@ -15,13 +15,13 @@ const { authenticate } = Auth
  * @apiSuccess (200) {object} void Object containing user object and token
  * @apiSuccess (401) {void} void Authentication failed
  */
-sessions.post('/', authenticate, async (ctx) => {
+sessions.post('/', async (ctx) => {
   try {
-    const { user } = ctx.state
-    if (user) {
-      const { id, password } = user.dataValues
-      await usersService.processUserDate({ id, password })
+    const { id, password } = ctx.request.body
+    const user = await usersService.getOneUser(id)
 
+    if (user && bcrypt.compareSync(password, user.password)) {
+      await usersService.processUserDate(user)
       ctx.status = 200
       ctx.body = {
         data: General.prettyJSON(user),
@@ -30,6 +30,7 @@ sessions.post('/', authenticate, async (ctx) => {
     } else {
       ctx.status = 401
     }
+
   } catch (err) {
     General.logError(ctx, err)
   }
