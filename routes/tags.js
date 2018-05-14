@@ -52,7 +52,7 @@ tags.post('/:id', protect, async (ctx) => {
   try {
     let data = await Tag.findOne({ where: { id: ctx.params.id } })
     if (data) {
-      if (data.dataValues.user_id === ctx.state.current_user_id) {
+      if (data.dataValues.user_id === ctx.state.currentUserID) {
         data = await data.update(ctx.request.body)
         ctx.status = 200
         ctx.body = General.prettyJSON(data)

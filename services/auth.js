@@ -39,7 +39,8 @@ module.exports = {
 
       if (isValid) {
         // Authentication passed
-        ctx.state.current_user_id = user.dataValues.id
+        ctx.state.currentUserID = user.dataValues.id
+        ctx.state.isAdmin = user.dataValues.role_id === 1 ? true : false
         await next()
       } else {
         ctx.status = 401

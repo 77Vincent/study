@@ -260,7 +260,7 @@ users.get('/:id/followings', async (ctx) => {
  * @apiParam {number} [available=0] How much hours a user is opened for booking
  * @apiSuccess (201) {object} void The newly created user object
  */
-users.put('/', protect, async (ctx) => {
+users.put('/', async (ctx) => {
   try {
     const input = ctx.request.body
     let data = await User.create(input)
@@ -323,7 +323,7 @@ users.post('/:id', protect, async (ctx) => {
 
     let data = await service.getOneUser(user_id)
     if (data) {
-      if (Number(user_id) === ctx.state.current_user_id) {
+      if (Number(user_id) === ctx.state.currentUserID || ctx.state.isAdmin) {
         // Delete majors because it's not updated here
         delete input.majors
         data = await data.update(input)
@@ -353,8 +353,12 @@ users.post('/:id', protect, async (ctx) => {
  */
 users.delete('/:id', protect, async (ctx) => {
   try {
-    await User.destroy({ where: { id: ctx.params.id } })
-    ctx.status = 200
+    if (Number(ctx.params.id) === ctx.state.currentUserID || ctx.state.isAdmin) {
+      await User.destroy({ where: { id: ctx.params.id } })
+      ctx.status = 200
+    } else {
+      ctx.status = 403
+    }
   } catch (err) {
     General.logError(ctx, err)
   }
