@@ -303,27 +303,26 @@ users.put('/', async (ctx) => {
  */
 users.post('/:id', protect, async (ctx) => {
   try {
-    const user_id = ctx.params.id
-    const input = ctx.request.body
-    const isOutRange = General.checkRange(range, input)
+    let data = await service.getOneUser(ctx.params.id)
 
-    if (isOutRange) {
-      ctx.status = 416
-      ctx.body = isOutRange
-      return
-    }
-
-    if (input.majors) {
-      await UM.destroy({ where: { user_id } })
-      input.majors.map(async major_id => {
-        await UM.create({ user_id, major_id })
-      })
-      await Database.sync()
-    }
-
-    let data = await service.getOneUser(user_id)
     if (data) {
-      if (Number(user_id) === ctx.state.currentUserID || ctx.state.isAdmin) {
+      const input = ctx.request.body
+      const isOutRange = General.checkRange(range, input)
+      const user_id = data.dataValues.id
+
+      if (isOutRange) {
+        ctx.status = 416
+        ctx.body = isOutRange
+        return
+      }
+
+      if (input.majors) {
+        await UM.destroy({ where: { user_id } })
+        input.majors.map(async major_id => { await UM.create({ user_id, major_id }) })
+        await Database.sync()
+      }
+
+      if (user_id === ctx.state.currentUserID || ctx.state.isAdmin) {
         // Delete majors because it's not updated here
         delete input.majors
         data = await data.update(input)
@@ -340,6 +339,8 @@ users.post('/:id', protect, async (ctx) => {
       } else {
         ctx.status = 403
       }
+    } else {
+      ctx.status = 404
     }
   } catch (err) {
     General.logError(ctx, err)
@@ -353,11 +354,16 @@ users.post('/:id', protect, async (ctx) => {
  */
 users.delete('/:id', protect, async (ctx) => {
   try {
-    if (Number(ctx.params.id) === ctx.state.currentUserID || ctx.state.isAdmin) {
-      await User.destroy({ where: { id: ctx.params.id } })
-      ctx.status = 200
-    } else {
-      ctx.status = 403
+    const data = await service.getOneUser(ctx.params.id)
+
+    if (data) {
+      const { id } = data.dataValues
+      if (id === ctx.state.currentUserID || ctx.state.isAdmin) {
+        await User.destroy({ where: { id } })
+        ctx.status = 200
+      } else {
+        ctx.status = 403
+      }
     }
   } catch (err) {
     General.logError(ctx, err)

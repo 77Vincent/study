@@ -1,4 +1,4 @@
-module.exports.dummyUsers = [{
+module.exports = [{
   password: '000000',
   name: '老师1',
   role_id: 2,

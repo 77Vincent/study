@@ -35,9 +35,9 @@ module.exports = {
       const user = await usersService.getOneUser(id)
 
       // If the id matches a real user
-      const isValid = user && bcrypt.compareSync(password, user.password)
+      const isCorrect = user && bcrypt.compareSync(password, user.password)
 
-      if (isValid) {
+      if (isCorrect) {
         // Authentication passed
         ctx.state.currentUserID = user.dataValues.id
         ctx.state.isAdmin = user.dataValues.role_id === 1 ? true : false

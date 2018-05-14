@@ -2,10 +2,9 @@ const rq = require('request-promise-native')
 
 const Database = require('../database.js')
 const config = require('../config')
-const login = require('./login')
+const { login, url } = require('./service')
 const { Role, User } = require('../models')
 
-require('./data/users')
 require('./data/majors')
 require('./data/courses')
 require('./data/posts')
@@ -18,7 +17,6 @@ require('./data/tags')
 require('./data/orders')
 require('./data/avatars')
 
-const url = `${config.protocol}://${config.host}:${config.port}/api`
 const run = async () => {
   try {
     await Database.dropAllSchemas()
