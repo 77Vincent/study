@@ -16,7 +16,7 @@ const range = { length: 99 }
  * @apiParam (Query String) {integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all classes 
  */
-classes.get('/', async (ctx) => {
+classes.get('/', protect, async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
 

@@ -35,11 +35,11 @@ module.exports = {
       const user = await usersService.getOneUser(id)
 
       // If the id matches a real user
-      const isValid = user && (bcrypt.compareSync(password, user.password) || password === user.password)
+      const isValid = user && bcrypt.compareSync(password, user.password)
 
       if (isValid) {
         // Authentication passed
-        ctx.state = { user }
+        ctx.state.current_user_id = user.dataValues.id
         await next()
       } else {
         ctx.status = 401
@@ -48,7 +48,7 @@ module.exports = {
     } catch (err) {
       // When token is given but invalid
       if (err.message === 'invalid signature') {
-        ctx.status = 403
+        ctx.status = 401
         ctx.body = err.message
       } else {
         throw err

@@ -323,19 +323,23 @@ users.post('/:id', protect, async (ctx) => {
 
     let data = await service.getOneUser(user_id)
     if (data) {
-      // Delete majors because it's not updated here
-      delete input.majors
-      data = await data.update(input)
+      if (Number(user_id) === ctx.state.current_user_id) {
+        // Delete majors because it's not updated here
+        delete input.majors
+        data = await data.update(input)
 
-      // do not send password to client
-      delete data.dataValues.password
+        // do not send password to client
+        delete data.dataValues.password
 
-      // Add majors list
-      const majors = await Database.model('user_major').findAll({ where: { user_id } })
-      data.dataValues.majors = majors.map(each => each.major_id)
+        // Add majors list
+        const majors = await Database.model('user_major').findAll({ where: { user_id } })
+        data.dataValues.majors = majors.map(each => each.major_id)
 
-      ctx.status = 200
-      ctx.body = General.prettyJSON(data)
+        ctx.status = 200
+        ctx.body = General.prettyJSON(data)
+      } else {
+        ctx.status = 403
+      }
     }
   } catch (err) {
     General.logError(ctx, err)
