@@ -2325,6 +2325,33 @@
         ]
       }
     },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Not authenticated, sign in first to get token</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "403",
+            "description": "<p>Not authorized, no access for the operation</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "404",
+            "description": "<p>No content is found</p>"
+          }
+        ]
+      }
+    },
     "version": "0.0.0",
     "filename": "routes/users/index.js",
     "groupTitle": "Users",
@@ -2484,6 +2511,19 @@
             "optional": false,
             "field": "void",
             "description": "<p>User object</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "404",
+            "description": "<p>No content is found</p>"
           }
         ]
       }
@@ -2820,6 +2860,40 @@
             "optional": false,
             "field": "void",
             "description": "<p>The updated user object</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Not authenticated, sign in first to get token</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "403",
+            "description": "<p>Not authorized, no access for the operation</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "404",
+            "description": "<p>No content is found</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "416",
+            "description": "<p>Range not satisfiable</p>"
           }
         ]
       }

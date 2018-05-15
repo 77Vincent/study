@@ -91,6 +91,7 @@ users.get('/', async (ctx) => {
  * @api {get} /api/users/:id Get a user
  * @apiGroup Users 
  * @apiSuccess (200) {object} void User object
+ * @apiError {string} 404 No content is found
  */
 users.get('/:id', async (ctx) => {
   try {
@@ -300,6 +301,10 @@ users.put('/', async (ctx) => {
  * @apiParam {number} [cost=0] The cost per hour of the user
  * @apiParam {number} [available=0] How much hours a user is opened for booking
  * @apiSuccess (200) {object} void The updated user object
+ * @apiError {string} 401 Not authenticated, sign in first to get token 
+ * @apiError {string} 403 Not authorized, no access for the operation
+ * @apiError {string} 404 No content is found
+ * @apiError {string} 416 Range not satisfiable
  */
 users.post('/:id', protect, async (ctx) => {
   try {
@@ -351,6 +356,9 @@ users.post('/:id', protect, async (ctx) => {
  * @api {delete} /api/users/:id Delete a user
  * @apiGroup Users 
  * @apiSuccess (200) {void} void void
+ * @apiError {string} 401 Not authenticated, sign in first to get token 
+ * @apiError {string} 403 Not authorized, no access for the operation
+ * @apiError {string} 404 No content is found
  */
 users.delete('/:id', protect, async (ctx) => {
   try {
