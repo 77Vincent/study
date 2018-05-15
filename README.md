@@ -15,23 +15,14 @@ npm i
 npm run server 
 ```
 
-## Initialize database
-* Create dummy data from scratch
+## Test
 ```bash
-npm run create-db 
-```
-* Update some of the dummy data
-```bash
-npm run update-db 
-```
-* Delete some of the dummy data
-```bash
-npm run delete-db 
+npm test
 ```
 
 ## Generate REST API Documentation
 * The documentation is generated at /static/doc
-* The documentation can be accessed at http://localhost:3001/api/doc/index.html
+* The documentation can be accessed at http://localhost:3001/doc/index.html
 ```bash
 npm run doc
 ```
