@@ -1,26 +1,17 @@
 var assert = require('assert')
 
-const Database = require('../database.js')
-const config = require('../config')
-const dummy = require('./data/users')
-const { Role, User } = require('../models')
-const { login, request, modified, url } = require('./service')
-
-before(async () => {
-  // Clear database
-  await Database.dropAllSchemas()
-  await Database.sync({ force: true })
-  // Create roles and admin user
-  await Role.bulkCreate([{ label: 'admin' }, { label: 'teacher' }, { label: 'student' }])
-  await User.create({ role_id: 1, username: config.adminID, mobilephone: 123456789, password: config.adminPassword })
-})
+const data = require('./data')
+const config = require('../../config')
+const { login, request, modified, url } = require('../service')
 
 describe('User', () => {
   it('Create users should return 200', async () => {
-    for (let i = 0; i < dummy.length; i++) {
-      await request({ method: 'PUT', url: `${url}/users`, body: dummy[i] })
+    for (let i = 0; i < data.length; i++) {
+      await request({ method: 'PUT', url: `${url}/users`, body: data[i] })
     }
-    assert.ok(true)
+    const users = await request({ method: 'GET', url: `${url}/users`})
+    // Admin user is always created
+    assert.equal(users.body.length - 1, data.length)
   })
 
   it('Update a user by visitor should return 401', async () => {
@@ -62,22 +53,22 @@ describe('User', () => {
 
   it('Update a user by admin should return 200', async () => {
     const session = await login(config.adminID, config.adminPassword)
-    const data = await request({
+    const response = await request({
       url: `${url}/users/18811111111`,
       auth: { bearer: session.token },
       body: { school: modified, cost: 9999, gender: true, name: modified , bio: modified },
     })
-    assert.equal(data.statusCode, 200)
+    assert.equal(response.statusCode, 200)
   })
 
   it('Update a user by its owner should return 200', async () => {
     const session = await login('18811111111', '000000')
-    const data = await request({
+    const response = await request({
       url: `${url}/users/18811111111`,
       auth: { bearer: session.token },
       body: { school: modified, cost: 9999, gender: true, name: modified , bio: modified },
     })
-    assert.equal(data.statusCode, 200)
+    assert.equal(response.statusCode, 200)
   })
 
   it('Delete a user by visitor should rturn 401', async () => {
@@ -106,11 +97,11 @@ describe('User', () => {
 
   it('Delete a user by owner should rturn 200', async () => {
     const session = await login('18811111111', '000000')
-    const data = await request({
+    const response = await request({
       method: 'DELETE',
       auth: { bearer: session.token },
       url: `${url}/users/18811111111`,
     })
-    assert.equal(data.statusCode, 200)
+    assert.equal(response.statusCode, 200)
   })
 })

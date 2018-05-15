@@ -32,7 +32,9 @@ tags.get('/', async (ctx) => {
  */
 tags.put('/', protect, async (ctx) => {
   try {
-    const data = await Tag.create(ctx.request.body)
+    const { content } = ctx.request.body
+    const user_id = ctx.state.currentUserID
+    const data = await Tag.create({ content, user_id })
 
     ctx.body = General.prettyJSON(data)
     ctx.status = 201
