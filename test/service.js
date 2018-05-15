@@ -1,13 +1,20 @@
-const request = require('request-promise-native')
+const rq = require('request-promise-native')
 const config = require('../config')
 
 
 const modified = 'THIS FIELD HAS BEEN MODIFIED FOR TESTING PURPOSE'
-const options = { method: 'POST', json: true, resolveWithFullResponse: true }
 const url = `${config.protocol}://${config.host}:${config.port}/api`
 
+const request = async (config) => {
+  const response = await rq(Object.assign({
+    json: true,
+    resolveWithFullResponse: true
+  }, config))
+  return response
+}
+
 const login = async (id = '', password = '') => {
-  const data = await request({
+  const data = await rq({
     method: 'POST',
     url: `${url}/sessions`,
     body: {
@@ -19,9 +26,4 @@ const login = async (id = '', password = '') => {
   return data
 }
 
-module.exports = {
-  options,
-  login,
-  modified,
-  url
-}
+module.exports = { login, request, modified, url }
