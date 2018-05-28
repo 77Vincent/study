@@ -28,7 +28,7 @@ tags.get('/', async (ctx) => {
  * @apiParam {string} content Content of the tag
  * @apiParam {integer} user_id The creator's user ID
  * @apiSuccess (201) {object} void The created tag
- * @apiError {string} 401 Protected resource, use Authorization header to get access
+ * @apiError {string} 401 Not authenticated, sign in first to get token 
  */
 tags.put('/', protect, async (ctx) => {
   try {
@@ -48,7 +48,9 @@ tags.put('/', protect, async (ctx) => {
  * @apiGroup Tags
  * @apiParam {string} content Content of the tag
  * @apiSuccess (200) {object} void The Updated tag
- * @apiError {string} 401 Protected resource, use Authorization header to get access
+ * @apiError {string} 401 Not authenticated, sign in first to get token 
+ * @apiError {string} 403 Not authorized, no access for the operation
+ * @apiError {string} 404 No content is found
  */
 tags.post('/:id', protect, async (ctx) => {
   try {
@@ -71,7 +73,9 @@ tags.post('/:id', protect, async (ctx) => {
  * @api {delete} /api/tags/:id Delete a tag
  * @apiGroup Tags
  * @apiSuccess (200) {void} void void
- * @apiError {string} 401 Protected resource, use Authorization header to get access
+ * @apiError {string} 401 Not authenticated, sign in first to get token 
+ * @apiError {string} 403 Not authorized, no access for the operation
+ * @apiError {string} 404 No content is found
  */
 tags.delete('/:id', protect, async (ctx) => {
   try {
