@@ -10,9 +10,15 @@ hooks.post('/', (ctx) => {
   try {
 
     // For this server
-    exec('git pull', (err) => {
+    exec('git checkout', (err) => {
       if (err) { return }
-      exec('npm install')
+      exec('git pull', (err) => {
+        if (err) { return }
+        exec('npm install', (err) => {
+          if (err) { return }
+          exec('npm prune')
+        })
+      })
     })
 
     ctx.status = 200
