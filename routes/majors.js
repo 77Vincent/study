@@ -27,8 +27,8 @@ majors.get('/', async (ctx) => {
  * @apiGroup Majors 
  * @apiParam {string} label The major name
  * @apiParam {string} [description] The major description
- * @apiSuccess (200) {object} void The created major 
- * @apiError {string} 401 Protected resource, use Authorization header to get access
+ * @apiSuccess (201) {object} void The created major 
+ * @apiError {string} 401 Not authenticated, sign in first to get token 
  */
 majors.put('/', protect, async (ctx) => {
   try {

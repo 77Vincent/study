@@ -11,5 +11,6 @@ before(async () => {
   await User.create({ role_id: 1, username: config.adminID, mobilephone: 123456789, password: config.adminPassword })
 })
 
+require('./majors.test')
 require('./users.test')
 require('./tags.test')
