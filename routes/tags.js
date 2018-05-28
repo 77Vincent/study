@@ -53,14 +53,14 @@ tags.put('/', protect, async (ctx) => {
 tags.post('/:id', protect, async (ctx) => {
   try {
     let data = await Tag.findOne({ where: { id: ctx.params.id } })
-    if (data) {
-      if (data.dataValues.user_id === ctx.state.currentUserID) {
-        data = await data.update(ctx.request.body)
-        ctx.status = 200
-        ctx.body = General.prettyJSON(data)
-      } else {
-        ctx.status = 403
-      }
+    if (!data) { return }
+
+    if (data.dataValues.user_id === ctx.state.currentUserID) {
+      data = await data.update(ctx.request.body)
+      ctx.status = 200
+      ctx.body = General.prettyJSON(data)
+    } else {
+      ctx.status = 403
     }
   } catch (err) {
     General.logError(ctx, err)
@@ -75,10 +75,15 @@ tags.post('/:id', protect, async (ctx) => {
  */
 tags.delete('/:id', protect, async (ctx) => {
   try {
-    await Tag.destroy({ 
-      where: { id: ctx.params.id }
-    })
-    ctx.status = 200
+    let data = await Tag.findOne({ where: { id: ctx.params.id } })
+    if (!data) { return }
+
+    if (data.dataValues.user_id === ctx.state.currentUserID) {
+      await Tag.destroy({ where: { id: ctx.params.id } })
+      ctx.status = 200
+    } else {
+      ctx.status = 403
+    }
   } catch (err) {
     General.logError(ctx, err)
   }
