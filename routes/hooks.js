@@ -16,7 +16,10 @@ hooks.post('/', (ctx) => {
         if (err) { return }
         exec('npm install', (err) => {
           if (err) { return }
-          exec('npm prune')
+          exec('npm prune', (err) => {
+            if (err) { return }
+            exec('npm run doc')
+          })
         })
       })
     })
