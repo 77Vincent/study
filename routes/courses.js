@@ -2,6 +2,7 @@ const Router = require('koa-router')
 
 const { Course } = require('../models')
 const { General, Auth } = require('../services')
+const service = require('./service')
 const Database = require('../database')
 const c = require('../config')
 
@@ -84,20 +85,7 @@ courses.put('/', protect, async (ctx) => {
  * @apiError {string} 404 No content is found
  */
 courses.post('/:id', protect, async (ctx) => {
-  try {
-    let data = await Course.findOne({ where: { id: ctx.params.id } })
-    if (!data) { return }
-
-    if (data.dataValues.user_id === ctx.state.currentUserID || ctx.state.currentUserID === 0) {
-      data = await data.update(ctx.request.body)
-      ctx.status = 200
-      ctx.body = General.prettyJSON(data) 
-    } else {
-      ctx.status = 403
-    }
-  } catch (err) {
-    General.logError(ctx, err)
-  }
+  await service.postBase(Course, ctx)
 })
 
 /** 
