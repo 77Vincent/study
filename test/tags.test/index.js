@@ -2,11 +2,15 @@ var assert = require('assert')
 
 const data = require('./data')
 const { login, request, modified, url } = require('../service')
+const users = require('../users.test/data')
+const userA = users[1].mobilephone
+const userB = users[2].mobilephone
+const password = '000000'
 
 describe('Tag', function() {
   it('Create should return 200', async () => {
     for (let i = 0; i < data.length; i++) {
-      const session = await login('18822222222', '000000')
+      const session = await login(userA, password)
       await request({
         method: 'PUT',
         url: `${url}/tags`,
@@ -17,7 +21,7 @@ describe('Tag', function() {
     assert.ok(true)
   })
 
-  it('Update a tag by visitor should return 401', async function() {
+  it('Update by visitor should return 401', async function() {
     try {
       await request({
         method: 'POST',
@@ -29,8 +33,8 @@ describe('Tag', function() {
     }
   })
 
-  it('Update a tag by other user should return 403', async function() {
-    const session = await login('18833333333', '000000')
+  it('Update by other user should return 403', async function() {
+    const session = await login(userB, password)
     try {
       await request({
         method: 'POST',
@@ -43,8 +47,8 @@ describe('Tag', function() {
     }
   })
 
-  it('Update a tag by owner should return 200', async function() {
-    const session = await login('18822222222', '000000')
+  it('Update by owner should return 200', async function() {
+    const session = await login(userA, password)
     const response = await request({
       method: 'POST',
       url: `${url}/tags/2`,
@@ -55,7 +59,7 @@ describe('Tag', function() {
     assert.equal(response.statusCode, 200)
   })
 
-  it('Delete a tag by visitor should return 401', async function() {
+  it('Delete by visitor should return 401', async function() {
     try {
       const response = await request({
         method: 'DELETE',
@@ -67,9 +71,9 @@ describe('Tag', function() {
     }
   })
 
-  it('Delete a tag by other user should return 403', async function() {
+  it('Delete by other user should return 403', async function() {
     try {
-      const session = await login('18833333333', '000000')
+      const session = await login(userB, password)
       const response = await request({
         method: 'DELETE',
         url: `${url}/tags/1`,
@@ -81,9 +85,9 @@ describe('Tag', function() {
     }
   })
 
-  it('Delete a tag by owner should return 200', async function() {
+  it('Delete by owner should return 200', async function() {
     try {
-      const session = await login('18822222222', '000000')
+      const session = await login(userA, password)
       const response = await request({
         method: 'DELETE',
         url: `${url}/tags/1`,
