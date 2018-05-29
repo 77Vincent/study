@@ -61,7 +61,9 @@ courses.get('/', async (ctx) => {
  */
 courses.put('/', protect, async (ctx) => {
   try {
-    const data = await Course.create(ctx.request.body)
+    const { label, description } = ctx.request.body
+    const user_id = ctx.state.currentUserID
+    const data = await Course.create({ label, description, user_id })
 
     ctx.body = General.prettyJSON(data)
     ctx.status = 201
@@ -77,15 +79,22 @@ courses.put('/', protect, async (ctx) => {
  * @apiParam {string} [description] The course description
  * @apiParam {integer} [user_id] The creator's user ID
  * @apiSuccess (200) {object} void The updated course
- * @apiError {string} 401 Protected resource, use Authorization header to get access
+ * @apiError {string} 401 Not authenticated, sign in first to get token 
+ * @apiError {string} 403 Not authorized, no access for the operation
+ * @apiError {string} 404 No content is found
  */
 courses.post('/:id', protect, async (ctx) => {
   try {
     let data = await Course.findOne({ where: { id: ctx.params.id } })
-    data = await data.update(ctx.request.body)
+    if (!data) { return }
 
-    ctx.status = 200
-    ctx.body = General.prettyJSON(data) 
+    if (data.dataValues.user_id === ctx.state.currentUserID) {
+      data = await data.update(ctx.request.body)
+      ctx.status = 200
+      ctx.body = General.prettyJSON(data) 
+    } else {
+      ctx.status = 403
+    }
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -95,12 +104,21 @@ courses.post('/:id', protect, async (ctx) => {
  * @api {delete} /api/courses/:id Delete a course
  * @apiGroup Courses 
  * @apiSuccess (200) {void} void void
- * @apiError {string} 401 Protected resource, use Authorization header to get access
+ * @apiError {string} 401 Not authenticated, sign in first to get token 
+ * @apiError {string} 403 Not authorized, no access for the operation
+ * @apiError {string} 404 No content is found
  */
 courses.delete('/:id', protect, async (ctx) => {
   try {
-    await Course.destroy({ where: { id: ctx.params.id } })
-    ctx.status = 200
+    let data = await Course.findOne({ where: { id: ctx.params.id } })
+    if (!data) { return }
+
+    if (data.dataValues.user_id === ctx.state.currentUserID) {
+      await Course.destroy({ where: { id: ctx.params.id } })
+      ctx.status = 200
+    } else {
+      ctx.status = 403
+    }
   } catch (err) {
     General.logError(ctx, err)
   }

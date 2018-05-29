@@ -8,7 +8,7 @@ const user2 = data[1].mobilephone
 const password = '000000'
 
 describe('User', () => {
-  it('Create users should return 200', async () => {
+  it('Create should return 200', async () => {
     for (let i = 0; i < data.length; i++) {
       await request({ method: 'PUT', url: `${url}/users`, body: data[i] })
     }

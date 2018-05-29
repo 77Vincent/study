@@ -4,7 +4,7 @@ const data = require('./data')
 const { login, request, modified, url } = require('../service')
 
 describe('Tag', function() {
-  it('Create tags should return 200', async () => {
+  it('Create should return 200', async () => {
     for (let i = 0; i < data.length; i++) {
       const session = await login('18822222222', '000000')
       await request({
