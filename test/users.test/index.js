@@ -3,6 +3,9 @@ var assert = require('assert')
 const data = require('./data')
 const config = require('../../config')
 const { login, request, modified, url } = require('../service')
+const user1 = data[0].mobilephone
+const user2 = data[1].mobilephone
+const password = '000000'
 
 describe('User', () => {
   it('Create users should return 200', async () => {
@@ -17,7 +20,7 @@ describe('User', () => {
   it('Update a user by visitor should return 401', async () => {
     try {
       await request({
-        url: `${url}/users/18811111111`,
+        url: `${url}/users/${user1}`,
         body: { school: modified, cost: 9999, gender: true, name: modified , bio: modified },
       })
     } catch (err) {
@@ -26,10 +29,10 @@ describe('User', () => {
   })
 
   it('Update a user by other user should return 403', async () => {
-    const session = await login('18811111111', '000000')
+    const session = await login(user2, password)
     try {
       await request({
-        url: `${url}/users/18822222222`,
+        url: `${url}/users/${user1}`,
         auth: { bearer: session.token },
         body: { school: modified, cost: 9999, gender: true, name: modified , bio: modified },
       })
@@ -39,10 +42,10 @@ describe('User', () => {
   })
 
   it('Update with not satisfiable input should return 416', async () => {
-    const session = await login('18811111111', '000000')
+    const session = await login(user1, password)
     try {
       await request({
-        url: `${url}/users/18811111111`,
+        url: `${url}/users/${user1}`,
         auth: { bearer: session.token },
         body: { cost: 99999 },
       })
@@ -54,7 +57,7 @@ describe('User', () => {
   it('Update a user by admin should return 200', async () => {
     const session = await login(config.adminID, config.adminPassword)
     const response = await request({
-      url: `${url}/users/18811111111`,
+      url: `${url}/users/${user1}`,
       auth: { bearer: session.token },
       body: { school: modified, cost: 9999, gender: true, name: modified , bio: modified },
     })
@@ -62,9 +65,9 @@ describe('User', () => {
   })
 
   it('Update a user by its owner should return 200', async () => {
-    const session = await login('18811111111', '000000')
+    const session = await login(user1, password)
     const response = await request({
-      url: `${url}/users/18811111111`,
+      url: `${url}/users/${user1}`,
       auth: { bearer: session.token },
       body: { school: modified, cost: 9999, gender: true, name: modified , bio: modified },
     })
@@ -75,7 +78,7 @@ describe('User', () => {
     try {
       await request({
         method: 'DELETE',
-        url: `${url}/users/18811111111`,
+        url: `${url}/users/${user1}`,
       })
     } catch (err) {
       assert.equal(err.statusCode, 401)
@@ -83,12 +86,12 @@ describe('User', () => {
   })
 
   it('Delete a user by other user should rturn 403', async () => {
-    const session = await login('18822222222', '000000')
+    const session = await login(user2, password)
     try {
       await request({
         method: 'DELETE',
         auth: { bearer: session.token },
-        url: `${url}/users/18811111111`,
+        url: `${url}/users/${user1}`,
       })
     } catch (err) {
       assert.equal(err.statusCode, 403)
@@ -96,11 +99,11 @@ describe('User', () => {
   })
 
   it('Delete a user by owner should rturn 200', async () => {
-    const session = await login('18811111111', '000000')
+    const session = await login(user1, password)
     const response = await request({
       method: 'DELETE',
       auth: { bearer: session.token },
-      url: `${url}/users/18811111111`,
+      url: `${url}/users/${user1}`,
     })
     assert.equal(response.statusCode, 200)
   })
