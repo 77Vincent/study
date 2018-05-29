@@ -1,28 +1,17 @@
 const Router = require('koa-router')
 
-require( './classes')
-require( './comments')
-require( './courses')
-require( './majors')
-require( './messages')
-require( './pictures')
-require( './posts')
-require( './roles')
-require( './schedules')
-require( './sessions')
-require( './tags')
-require( './users')
-require( './orders')
-require( './avatars')
-require( './hooks')
+const routes = [
+  'classes', 'comments', 'courses', 'majors',
+  'messages', 'pictures', 'posts', 'roles',
+  'schedules', 'sessions', 'tags', 'users',
+  'orders', 'avatars', 'hooks'
+]
 
 const router = Router({ prefix: '/api/' })
 
-module.children.map(item => {
-  const name = Object.keys(item.exports)[0] 
-  if (name !== 'url') {
-    router.use(`${name}`, item.exports[name].routes())
-  }
+routes.map((each) => {
+  const eachRoute = require(`./${each}`)
+  router.use(each, eachRoute[each].routes())
 })
 
 module.exports = router
