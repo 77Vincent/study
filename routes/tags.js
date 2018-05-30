@@ -53,7 +53,7 @@ tags.put('/', protect, async (ctx) => {
  * @apiError {string} 404 No content is found
  */
 tags.post('/:id', protect, async (ctx) => {
-  await Routing.postBase(Tag, ctx)
+  await Routing.basePOST(Tag, ctx)
 })
 
 /** 
@@ -65,19 +65,7 @@ tags.post('/:id', protect, async (ctx) => {
  * @apiError {string} 404 No content is found
  */
 tags.delete('/:id', protect, async (ctx) => {
-  try {
-    let data = await Tag.findOne({ where: { id: ctx.params.id } })
-    if (!data) { return }
-
-    if (data.dataValues.user_id === ctx.state.currentUserID || ctx.state.currentUserID === 0) {
-      await Tag.destroy({ where: { id: ctx.params.id } })
-      ctx.status = 200
-    } else {
-      ctx.status = 403
-    }
-  } catch (err) {
-    General.logError(ctx, err)
-  }
+  await Routing.baseDELETE(Tag, ctx)
 })
 
 module.exports = { tags }

@@ -84,7 +84,7 @@ courses.put('/', protect, async (ctx) => {
  * @apiError {string} 404 No content is found
  */
 courses.post('/:id', protect, async (ctx) => {
-  await Routing.postBase(Course, ctx)
+  await Routing.basePOST(Course, ctx)
 })
 
 /** 
@@ -96,19 +96,7 @@ courses.post('/:id', protect, async (ctx) => {
  * @apiError {string} 404 No content is found
  */
 courses.delete('/:id', protect, async (ctx) => {
-  try {
-    let data = await Course.findOne({ where: { id: ctx.params.id } })
-    if (!data) { return }
-
-    if (data.dataValues.user_id === ctx.state.currentUserID || ctx.state.currentUserID === 0) {
-      await Course.destroy({ where: { id: ctx.params.id } })
-      ctx.status = 200
-    } else {
-      ctx.status = 403
-    }
-  } catch (err) {
-    General.logError(ctx, err)
-  }
+  await Routing.baseDELETE(Course, ctx)
 })
 
 module.exports = { courses }
