@@ -1,7 +1,7 @@
 const Router = require('koa-router')
 
 const { Class, Course } = require('../models')
-const { General, Auth } = require('../services')
+const { General, Auth, Routing } = require('../services')
 const c = require('../config')
 
 const classes = Router()
@@ -79,18 +79,7 @@ classes.put('/', protect, async (ctx) => {
 classes.post('/:id', protect, async (ctx) => {
   try {
     const isOutRange = General.checkRange(range, ctx.request.body)
-    
-    if (isOutRange) {
-      ctx.status = 416
-      ctx.body = isOutRange
-
-    } else {
-      let data = await Class.findOne({ where: { id: ctx.params.id } })
-      data = await data.update(ctx.request.body)
-      ctx.status = 200
-      ctx.body = General.prettyJSON(data) 
-    }
-
+    await Routing.basePOST(Class, ctx, isOutRange)
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -104,8 +93,7 @@ classes.post('/:id', protect, async (ctx) => {
  */
 classes.delete('/:id', protect, async (ctx) => {
   try {
-    await Class.destroy({ where: { id: ctx.params.id } })
-    ctx.status = 200
+    await Routing.baseDELETE(Class, ctx)
   } catch (err) {
     General.logError(ctx, err)
   }
