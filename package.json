@@ -11,7 +11,7 @@
   "contributors": [],
   "scripts": {
     "start": "nodemon index.js",
-    "test": "mocha ./test/index.js --timeout 10000",
+    "test": "mocha ./test/index.js --timeout 10000 --exit",
     "lint": "eslint ./",
     "doc": "apidoc -i routes/ -o static/doc/",
     "server": "pm2 start npm --name xfolio -- start"
@@ -43,7 +43,7 @@
   },
   "config": {
     "ghooks": {
-      "pre-commit": "npm run lint"
+      "pre-commit": "npm run lint && npm test"
     }
   }
 }
