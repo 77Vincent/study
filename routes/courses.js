@@ -1,8 +1,7 @@
 const Router = require('koa-router')
 
 const { Course } = require('../models')
-const { General, Auth } = require('../services')
-const service = require('./service')
+const { General, Auth, Routing } = require('../services')
 const Database = require('../database')
 const c = require('../config')
 
@@ -85,7 +84,7 @@ courses.put('/', protect, async (ctx) => {
  * @apiError {string} 404 No content is found
  */
 courses.post('/:id', protect, async (ctx) => {
-  await service.postBase(Course, ctx)
+  await Routing.postBase(Course, ctx)
 })
 
 /** 

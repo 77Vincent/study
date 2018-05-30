@@ -1,4 +1,4 @@
-const General = require('../services/general')
+const General = require('./general')
 
 module.exports = {
   postBase: async (Model, ctx) => {

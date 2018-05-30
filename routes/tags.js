@@ -1,8 +1,7 @@
 const Router = require('koa-router')
 
 const { Tag } = require('../models')
-const { General, Auth } = require('../services')
-const service = require('./service')
+const { General, Auth, Routing } = require('../services')
 
 const tags = Router()
 const { protect } = Auth
@@ -54,7 +53,7 @@ tags.put('/', protect, async (ctx) => {
  * @apiError {string} 404 No content is found
  */
 tags.post('/:id', protect, async (ctx) => {
-  await service.postBase(Tag, ctx)
+  await Routing.postBase(Tag, ctx)
 })
 
 /** 
