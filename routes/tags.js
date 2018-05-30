@@ -44,7 +44,7 @@ tags.put('/', protect, async (ctx) => {
 })
 
 /** 
- * @api {post} /api/tags/ Update a tag
+ * @api {post} /api/tags/:id Update a tag
  * @apiGroup Tags
  * @apiParam {string} content Content of the tag
  * @apiSuccess (200) {object} void The Updated tag

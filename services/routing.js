@@ -6,7 +6,7 @@ module.exports = {
       let data = await Model.findOne({ where: { id: ctx.params.id } })
       if (!data) { return }
 
-      if (data.dataValues.user_id === ctx.state.currentUserID || ctx.state.currentUserID === 0) {
+      if (data.dataValues.user_id === ctx.state.currentUserID || ctx.state.currentUserID === 1) {
         data = await data.update(ctx.request.body)
         ctx.status = 200
         ctx.body = General.prettyJSON(data)
@@ -22,7 +22,7 @@ module.exports = {
       let data = await Model.findOne({ where: { id: ctx.params.id } })
       if (!data) { return }
 
-      if (data.dataValues.user_id === ctx.state.currentUserID || ctx.state.currentUserID === 0) {
+      if (data.dataValues.user_id === ctx.state.currentUserID || ctx.state.currentUserID === 1) {
         await Model.destroy({ where: { id: ctx.params.id } })
         ctx.status = 200
       } else {

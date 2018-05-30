@@ -1,7 +1,7 @@
 const Router = require('koa-router')
 
 const { Major } = require('../models')
-const { General, Auth } = require('../services')
+const { General, Auth, Routing } = require('../services')
 
 const majors = Router()
 const { protect } = Auth
@@ -40,6 +40,31 @@ majors.put('/', protect, async (ctx) => {
   } catch (err) {
     General.logError(ctx, err)
   }
+})
+
+/** 
+ * @api {post} /api/majors/:id Update a tag
+ * @apiGroup Majors 
+ * @apiParam {string} content Content of the tag
+ * @apiSuccess (200) {object} void The Updated tag
+ * @apiError {string} 401 Not authenticated, sign in first to get token 
+ * @apiError {string} 403 Not authorized, no access for the operation
+ * @apiError {string} 404 No content is found
+ */
+majors.post('/:id', protect, async (ctx) => {
+  await Routing.basePOST(Major, ctx)
+})
+
+/** 
+ * @api {delete} /api/majors/:id Delete a major 
+ * @apiGroup Majors 
+ * @apiSuccess (200) {void} void void
+ * @apiError {string} 401 Not authenticated, sign in first to get token 
+ * @apiError {string} 403 Not authorized, no access for the operation
+ * @apiError {string} 404 No content is found
+ */
+majors.delete('/:id', protect, async (ctx) => {
+  await Routing.baseDELETE(Major, ctx)
 })
 
 module.exports = { majors }

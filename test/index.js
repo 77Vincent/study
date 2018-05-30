@@ -13,5 +13,5 @@ before(async () => {
 
 require('./majors.test')
 require('./users.test')
-require('./courses.test')
 require('./tags.test')
+require('./courses.test')
