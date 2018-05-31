@@ -14,7 +14,19 @@ const toUpdate = {
 }
 
 describe('Schedule', () => {
-  it('Create should return 201', async () => {
+  it('Create by visitor should return 401', async () => {
+    try {
+      await request({
+        method: 'PUT',
+        url: `${url}/schedules`,
+        body: data[0]
+      })
+    } catch(err) {
+      assert.equal(err.statusCode, 401)
+    }
+  })
+
+  it('Create by user should return 201', async () => {
     for (let i = 0; i < data.length; i++) {
       const session = await login(userA, password)
       await request({
@@ -70,6 +82,20 @@ describe('Schedule', () => {
       })
     } catch (err) {
       assert.equal(err.statusCode, 403)
+    }
+  })
+
+  it('Update with not satisfiable input should return 416', async () => {
+    try {
+      const session = await login(userA, password)
+      await request({
+        method: 'POST',
+        url: `${url}/schedules/2`,
+        body: { quota: 999 },
+        auth: { bearer: session.token }
+      })
+    } catch (err) {
+      assert.equal(err.statusCode, 416)
     }
   })
 

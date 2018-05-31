@@ -13,6 +13,18 @@ const toUpdate = {
 }
 
 describe('Course', () => {
+  it('Create by visitor should return 401', async () => {
+    try {
+      await request({
+        method: 'PUT',
+        url: `${url}/courses`,
+        body: data[0]
+      })
+    } catch(err) {
+      assert.equal(err.statusCode, 401)
+    }
+  })
+
   it('Create should return 201', async () => {
     for (let i = 0; i < data.length; i++) {
       const session = await login(userA, password)

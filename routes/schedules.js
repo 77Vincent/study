@@ -90,7 +90,8 @@ schedules.put('/', protect, async (ctx) => {
  * @apiError {string} 404 The requested content is found
  */
 schedules.post('/:id', protect, async (ctx) => {
-  await Routing.basePOST(Schedule, ctx)
+  const isOutRange = General.checkRange(range, ctx.request.body)
+  await Routing.basePOST(Schedule, ctx, isOutRange)
 })
 
 /** 

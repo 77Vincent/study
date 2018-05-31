@@ -8,10 +8,7 @@ module.exports = Database.define('class', {
     unique: true,
     primaryKey: true
   },
-  start: {
-    type: Sequelize.DATE,
-  },
-  end: {
+  date: {
     type: Sequelize.DATE,
   },
   length: {
