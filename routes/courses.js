@@ -81,7 +81,7 @@ courses.put('/', protect, async (ctx) => {
  * @apiSuccess (200) {object} void The updated course
  * @apiError {string} 401 Not authenticated, sign in first to get token 
  * @apiError {string} 403 Not authorized, no access for the operation
- * @apiError {string} 404 No content is found
+ * @apiError {string} 404 The requested content is found
  */
 courses.post('/:id', protect, async (ctx) => {
   await Routing.basePOST(Course, ctx)
@@ -93,7 +93,7 @@ courses.post('/:id', protect, async (ctx) => {
  * @apiSuccess (200) {void} void void
  * @apiError {string} 401 Not authenticated, sign in first to get token 
  * @apiError {string} 403 Not authorized, no access for the operation
- * @apiError {string} 404 No content is found
+ * @apiError {string} 404 The requested content is found
  */
 courses.delete('/:id', protect, async (ctx) => {
   await Routing.baseDELETE(Course, ctx)

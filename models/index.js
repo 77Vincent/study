@@ -19,6 +19,7 @@ Post.belongsTo(User)
 Picture.belongsTo(Post)
 Tag.belongsTo(User)
 Class.belongsTo(Schedule)
+Class.belongsTo(User)
 Avatar.belongsTo(User)
 
 Comment.belongsTo(User)

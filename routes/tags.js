@@ -50,7 +50,7 @@ tags.put('/', protect, async (ctx) => {
  * @apiSuccess (200) {object} void The Updated tag
  * @apiError {string} 401 Not authenticated, sign in first to get token 
  * @apiError {string} 403 Not authorized, no access for the operation
- * @apiError {string} 404 No content is found
+ * @apiError {string} 404 The requested content is found
  */
 tags.post('/:id', protect, async (ctx) => {
   await Routing.basePOST(Tag, ctx)
@@ -62,7 +62,7 @@ tags.post('/:id', protect, async (ctx) => {
  * @apiSuccess (200) {void} void void
  * @apiError {string} 401 Not authenticated, sign in first to get token 
  * @apiError {string} 403 Not authorized, no access for the operation
- * @apiError {string} 404 No content is found
+ * @apiError {string} 404 The requested content is found
  */
 tags.delete('/:id', protect, async (ctx) => {
   await Routing.baseDELETE(Tag, ctx)

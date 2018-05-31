@@ -15,7 +15,10 @@ module.exports = {
         return
       }
 
-      if (data.dataValues.user_id === ctx.state.currentUserID || ctx.state.isAdmin) {
+      if (data.dataValues.user_id === ctx.state.currentUserID
+        || data.dataValues.teacher_id === ctx.state.currentUserID
+        || ctx.state.isAdmin
+      ) {
         data = await data.update(ctx.request.body)
         ctx.status = 200
         ctx.body = General.prettyJSON(data)
@@ -31,7 +34,10 @@ module.exports = {
       let data = await Model.findOne({ where: { id: ctx.params.id } })
       if (!data) { return }
 
-      if (data.dataValues.user_id === ctx.state.currentUserID || ctx.state.isAdmin) {
+      if (data.dataValues.user_id === ctx.state.currentUserID
+        || data.dataValues.teacher_id === ctx.state.currentUserID
+        || ctx.state.isAdmin
+      ) {
         await Model.destroy({ where: { id: ctx.params.id } })
         ctx.status = 200
       } else {

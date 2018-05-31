@@ -9,16 +9,17 @@ const userB = users[2].mobilephone
 const password = '000000'
 const toUpdate = {
   label: modified,
-  description: modified
+  quota: 99,
+  finished: 1
 }
 
-describe('Course', () => {
+describe('Schedule', () => {
   it('Create should return 201', async () => {
     for (let i = 0; i < data.length; i++) {
       const session = await login(userA, password)
       await request({
         method: 'PUT',
-        url: `${url}/courses`,
+        url: `${url}/schedules`,
         auth: { bearer: session.token },
         body: data[i]
       })
@@ -26,11 +27,31 @@ describe('Course', () => {
     assert.ok(true)
   })
 
-  it('Update a course by visitor should return 401', async () => {
+  it('Get all by visitor should return 401', async () => {
+    try {
+      await request({ url: `${url}/schedules` })
+    } catch (err) {
+      assert.equal(err.statusCode, 401)
+    }
+  })
+
+  it('Get all by user should return 200', async () => {
+    try {
+      const session = await login(config.adminID, config.adminPassword)
+      await request({
+        url: `${url}/schedules`,
+        auth: { bearer: session.token }
+      })
+    } catch (err) {
+      assert.equal(err.statusCode, 200)
+    }
+  })
+
+  it('Update by visitor should return 401', async () => {
     try {
       await request({
         method: 'POST',
-        url: `${url}/courses/2`,
+        url: `${url}/schedules/2`,
         body: toUpdate
       })
     } catch (err) {
@@ -38,12 +59,12 @@ describe('Course', () => {
     }
   })
 
-  it('Update a course by other user should return 403', async () => {
+  it('Update by other user should return 403', async () => {
     try {
       const session = await login(userB, password)
       await request({
         method: 'POST',
-        url: `${url}/courses/2`,
+        url: `${url}/schedules/2`,
         body: toUpdate,
         auth: { bearer: session.token }
       })
@@ -52,12 +73,12 @@ describe('Course', () => {
     }
   })
 
-  it('Update a course by owner should return 200', async () => {
+  it('Update by owner should return 200', async () => {
     try {
       const session = await login(userA, password)
       await request({
         method: 'POST',
-        url: `${url}/courses/2`,
+        url: `${url}/schedules/2`,
         body: toUpdate,
         auth: { bearer: session.token }
       })
@@ -66,23 +87,23 @@ describe('Course', () => {
     }
   })
 
-  it('Delete a course by visitor should return 401', async () => {
+  it('Delete by visitor should return 401', async () => {
     try {
       await request({
         method: 'DELETE',
-        url: `${url}/courses/1`,
+        url: `${url}/schedules/1`,
       })
     } catch (err) {
       assert.equal(err.statusCode, 401)
     }
   })
 
-  it('Delete a course by other user should return 403', async () => {
+  it('Delete by other user should return 403', async () => {
     try {
       const session = await login(userB, password)
       await request({
         method: 'DELETE',
-        url: `${url}/courses/1`,
+        url: `${url}/schedules/1`,
         auth: { bearer: session.token }
       })
     } catch (err) {
@@ -90,12 +111,12 @@ describe('Course', () => {
     }
   })
 
-  it('Delete a course by owner should return 200', async () => {
+  it('Delete by owner should return 200', async () => {
     try {
       const session = await login(userA, password)
       await request({
         method: 'DELETE',
-        url: `${url}/courses/1`,
+        url: `${url}/schedules/1`,
         auth: { bearer: session.token }
       })
     } catch (err) {
