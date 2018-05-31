@@ -14,8 +14,8 @@ const range = {
   cost: 9999,
   role_id: 10
 }
-const FF = Database.model('follower_following')
-const UM = Database.model('user_major')
+const FollowerFollowing = Database.model('follower_following')
+const UserMajor = Database.model('user_major')
 
 /** 
  * @api {get} /api/users Get all users
@@ -44,7 +44,7 @@ users.get('/', async (ctx) => {
     // this part is for majors filtering
     // if majors is given in the querystring then do the follow
     if (qs.majors) {
-      const users_id = await UM.findAll({
+      const users_id = await UserMajor.findAll({
         where: { major_id: qs.majors.split(',') }
       })
       filter.push({ id: users_id.map(user => user.dataValues.user_id) })
@@ -188,7 +188,7 @@ users.get('/:id/teachers', async (ctx) => {
 users.get('/:id/followers', async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
-    let data = await FF.findAll({
+    let data = await FollowerFollowing.findAll({
       where: { following_id: ctx.params.id }
     })
 
@@ -218,7 +218,7 @@ users.get('/:id/followers', async (ctx) => {
 users.get('/:id/followings', async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
-    let data = await FF.findAll({
+    let data = await FollowerFollowing.findAll({
       where: { follower_id: ctx.params.id }
     })
 
@@ -322,8 +322,8 @@ users.post('/:id', protect, async (ctx) => {
       }
 
       if (input.majors) {
-        await UM.destroy({ where: { user_id } })
-        input.majors.map(async major_id => { await UM.create({ user_id, major_id }) })
+        await UserMajor.destroy({ where: { user_id } })
+        input.majors.map(async major_id => { await UserMajor.create({ user_id, major_id }) })
         await Database.sync()
       }
 
