@@ -34,7 +34,7 @@ followings.get('/', async (ctx) => {
 
 /** 
  * @api {put} /api/followings/ Create a major
- * @apiGroup Majors 
+ * @apiGroup Followings
  * @apiParam {string} following_id The user ID of the target
  * @apiSuccess (201) {object} void void
  * @apiError {string} 401 Not authenticated, sign in first to get token 
@@ -53,10 +53,9 @@ followings.put('/', protect, async (ctx) => {
 
 /** 
  * @api {delete} /api/followings/:id Unfollow
- * @apiGroup Tags
+ * @apiGroup Followings 
  * @apiSuccess (200) {void} void void
  * @apiError {string} 401 Not authenticated, sign in first to get token 
- * @apiError {string} 403 Not authorized, no access for the operation
  * @apiError {string} 404 The requested content is found
  */
 followings.delete('/:id', protect, async (ctx) => {

@@ -2,7 +2,7 @@ const Router = require('koa-router')
 
 const { Class, Course } = require('../models')
 const { General, Auth } = require('../services')
-const c = require('../config')
+const config = require('../config')
 
 const classes = Router()
 const { protect } = Auth
@@ -17,13 +17,13 @@ const range = { length: 99 }
  * @apiSuccess (200) {object[]} void Array contains all classes 
  * @apiError {string} 401 Not authenticated, sign in first to get token 
  */
-classes.get('/', protect, async (ctx) => {
+classes.get('/', async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
 
     const data = await Class.findAll({
-      limit: c.queryLimit,
-      offset: General.getOffset(qs.page, c.queryLimit),
+      limit: config.queryLimit,
+      offset: General.getOffset(qs.page, config.queryLimit),
       where: { $and: General.getFilter(qs, ['finished', 'schedule_id']) },
       order: [['date', 'ASC']],
       include: [{ model: Course, attributes: ['label', 'description'] }]
@@ -57,7 +57,7 @@ classes.put('/', protect, async (ctx) => {
       ctx.body = isOutRange
 
     } else {
-      const { date, length, finished, schedule_id} = ctx.request.body
+      const { date, length, finished, schedule_id } = ctx.request.body
       const user_id = ctx.state.currentUserID
       const data = await Class.create({ date, length, finished, schedule_id, user_id })
       ctx.body = General.prettyJSON(data)
