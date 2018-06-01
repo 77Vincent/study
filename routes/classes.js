@@ -1,7 +1,7 @@
 const Router = require('koa-router')
 
 const { Class, Course } = require('../models')
-const { General, Auth, Routing } = require('../services')
+const { General, Auth } = require('../services')
 const c = require('../config')
 
 const classes = Router()
@@ -83,7 +83,7 @@ classes.put('/', protect, async (ctx) => {
  */
 classes.post('/:id', protect, async (ctx) => {
   try {
-    await Routing.basePOST(Class, ctx, async (data) => {
+    await Auth.isAuthorized(Class, ctx, async (data) => {
       const isOutRange = General.checkRange(range, ctx.request.body)
       if (isOutRange) {
         ctx.status = 416
@@ -108,11 +108,10 @@ classes.post('/:id', protect, async (ctx) => {
  * @apiError {string} 404 The requested content is found
  */
 classes.delete('/:id', protect, async (ctx) => {
-  try {
-    await Routing.baseDELETE(Class, ctx)
-  } catch (err) {
-    General.logError(ctx, err)
-  }
+  await Auth.isAuthorized(Class, ctx, async (data) => {
+    await Class.destroy({ where: { id: data.dataValues.id } })
+    ctx.status = 200
+  })
 })
 
 module.exports = { classes }

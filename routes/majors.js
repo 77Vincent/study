@@ -1,7 +1,7 @@
 const Router = require('koa-router')
 
 const { Major } = require('../models')
-const { General, Auth, Routing } = require('../services')
+const { General, Auth } = require('../services')
 
 const majors = Router()
 const { protect } = Auth
@@ -53,7 +53,7 @@ majors.put('/', protect, async (ctx) => {
  * @apiError {string} 404 The requested content is found
  */
 majors.post('/:id', protect, async (ctx) => {
-  await Routing.basePOST(Major, ctx, async (data) => {
+  await Auth.isAuthorized(Major, ctx, async (data) => {
     data = await data.update(ctx.request.body)
     ctx.status = 200
     ctx.body = General.prettyJSON(data)
@@ -69,7 +69,10 @@ majors.post('/:id', protect, async (ctx) => {
  * @apiError {string} 404 The requested content is found
  */
 majors.delete('/:id', protect, async (ctx) => {
-  await Routing.baseDELETE(Major, ctx)
+  await Auth.isAuthorized(Major, ctx, async (data) => {
+    await Major.destroy({ where: { id: data.dataValues.id } })
+    ctx.status = 200
+  })
 })
 
 module.exports = { majors }

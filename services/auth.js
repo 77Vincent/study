@@ -2,7 +2,8 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 
 const usersService = require('../routes/users/service')
-const c = require('../config')
+const General = require('./general')
+const config = require('../config')
 
 const getToken = (authorization = '') => {
   if (authorization.split(' ')[0].toLowerCase() === 'bearer') {
@@ -26,7 +27,7 @@ module.exports = {
 
       // If token exists, get user credentials from the decoded token
       if (token) {
-        const parsed = jwt.verify(token, c.tokenSecret)
+        const parsed = jwt.verify(token, config.tokenSecret)
         id = parsed.id
         password = parsed.password
       }
@@ -54,6 +55,26 @@ module.exports = {
       } else {
         throw err
       }
+    }
+  },
+  isAuthorized: async (Model, ctx, callback) => {
+    try {
+      const data = await Model.findOne({ where: { id: ctx.params.id } })
+
+      // Nothing found to update, return 404
+      if (!data) { return }
+
+      // Only the owner or admin user can update
+      if (data.dataValues.user_id === ctx.state.currentUserID
+        || data.dataValues.teacher_id === ctx.state.currentUserID
+        || ctx.state.isAdmin
+      ) {
+        await callback(data)
+      } else {
+        ctx.status = 403
+      }
+    } catch (err) {
+      General.logError(ctx, err)
     }
   }
 }

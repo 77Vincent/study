@@ -1,7 +1,7 @@
 const Router = require('koa-router')
 
 const { Tag } = require('../models')
-const { General, Auth, Routing } = require('../services')
+const { General, Auth } = require('../services')
 
 const tags = Router()
 const { protect } = Auth
@@ -53,7 +53,7 @@ tags.put('/', protect, async (ctx) => {
  * @apiError {string} 404 The requested content is found
  */
 tags.post('/:id', protect, async (ctx) => {
-  await Routing.basePOST(Tag, ctx, async (data) => {
+  await Auth.isAuthorized(Tag, ctx, async (data) => {
     const { content } = ctx.request.body
     data = await data.update({ content })
     ctx.status = 200
@@ -70,7 +70,10 @@ tags.post('/:id', protect, async (ctx) => {
  * @apiError {string} 404 The requested content is found
  */
 tags.delete('/:id', protect, async (ctx) => {
-  await Routing.baseDELETE(Tag, ctx)
+  await Auth.isAuthorized(Tag, ctx, async (data) => {
+    await Tag.destroy({ where: { id: data.dataValues.id } })
+    ctx.status = 200
+  })
 })
 
 module.exports = { tags }

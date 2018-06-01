@@ -1,7 +1,7 @@
 const Router = require('koa-router')
 
 const { Schedule, Class } = require('../models')
-const { General, Auth, Routing } = require('../services')
+const { General, Auth } = require('../services')
 const c = require('../config')
 
 const schedules = Router()
@@ -90,7 +90,7 @@ schedules.put('/', protect, async (ctx) => {
  * @apiError {string} 404 The requested content is found
  */
 schedules.post('/:id', protect, async (ctx) => {
-  await Routing.basePOST(Schedule, ctx, async (data) => {
+  await Auth.isAuthorized(Schedule, ctx, async (data) => {
     const isOutRange = General.checkRange(range, ctx.request.body)
     if (isOutRange) {
       ctx.status = 416
@@ -112,7 +112,10 @@ schedules.post('/:id', protect, async (ctx) => {
  * @apiError {string} 404 The requested content is found
  */
 schedules.delete('/:id', protect, async (ctx) => {
-  await Routing.baseDELETE(Schedule, ctx)
+  await Auth.isAuthorized(Schedule, ctx, async (data) => {
+    await Schedule.destroy({ where: { id: data.dataValues.id } })
+    ctx.status = 200
+  })
 })
 
 module.exports = { schedules }

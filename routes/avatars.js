@@ -3,7 +3,7 @@ const mime = require('mime')
 
 const c = require('../config.js')
 const { Avatar } = require('../models')
-const { General, Storage, Auth, Routing } = require('../services')
+const { General, Storage, Auth } = require('../services')
 
 const { protect } = Auth
 const avatars = Router()
@@ -88,7 +88,7 @@ avatars.put('/', protect, async (ctx) => {
  * @apiError {string} 404 The requested content is found
  */
 avatars.post('/:id', protect, async (ctx) => {
-  await Routing.basePOST(Avatar, ctx, async (data) => {
+  await Auth.isAuthorized(Avatar, ctx, async (data) => {
     const { content, mime } = ctx.request.body
     const path = Storage.store('avatar', content, mime)
     Storage.remove(data.dataValues.path)

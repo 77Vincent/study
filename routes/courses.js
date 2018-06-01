@@ -1,7 +1,7 @@
 const Router = require('koa-router')
 
 const { Course } = require('../models')
-const { General, Auth, Routing } = require('../services')
+const { General, Auth } = require('../services')
 const Database = require('../database')
 const c = require('../config')
 
@@ -83,7 +83,7 @@ courses.put('/', protect, async (ctx) => {
  * @apiError {string} 404 The requested content is found
  */
 courses.post('/:id', protect, async (ctx) => {
-  await Routing.basePOST(Course, ctx, async (data) => {
+  await Auth.isAuthorized(Course, ctx, async (data) => {
     await data.update(ctx.request.body)
     ctx.status = 200
     ctx.body = General.prettyJSON(data)
@@ -99,7 +99,10 @@ courses.post('/:id', protect, async (ctx) => {
  * @apiError {string} 404 The requested content is found
  */
 courses.delete('/:id', protect, async (ctx) => {
-  await Routing.baseDELETE(Course, ctx)
+  await Auth.isAuthorized(Course, ctx, async (data) => {
+    await Course.destroy({ where: { id: data.dataValues.id } })
+    ctx.status = 200
+  })
 })
 
 module.exports = { courses }
