@@ -53,7 +53,7 @@ tags.put('/', protect, async (ctx) => {
  * @apiError {string} 404 The requested content is found
  */
 tags.post('/:id', protect, async (ctx) => {
-  await Auth.isAuthorized(Tag, ctx, async (data) => {
+  await Auth.isAuthorized(ctx, Tag, async (data) => {
     const { content } = ctx.request.body
     data = await data.update({ content })
     ctx.status = 200
@@ -70,7 +70,7 @@ tags.post('/:id', protect, async (ctx) => {
  * @apiError {string} 404 The requested content is found
  */
 tags.delete('/:id', protect, async (ctx) => {
-  await Auth.isAuthorized(Tag, ctx, async (data) => {
+  await Auth.isAuthorized(ctx, Tag, async (data) => {
     await Tag.destroy({ where: { id: data.dataValues.id } })
     ctx.status = 200
   })

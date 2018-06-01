@@ -57,7 +57,16 @@ module.exports = {
       }
     }
   },
-  isAuthorized: async (Model, ctx, callback) => {
+  /**
+   * Used in a protected route to check if the current operation is operated by a valid user 
+   * If the operating user is authorized, run the callback function
+   * If not, reject the request with 403 state code 
+   * @param {object} Model The model being modified
+   * @param {object} ctx The Koa context object
+   * @param {function} callback The callback function for authorized user
+   * @returns {void} void
+   * */  
+  isAuthorized: async (ctx, Model, callback) => {
     try {
       const data = await Model.findOne({ where: { id: ctx.params.id } })
 

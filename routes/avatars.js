@@ -88,7 +88,7 @@ avatars.put('/', protect, async (ctx) => {
  * @apiError {string} 404 The requested content is found
  */
 avatars.post('/:id', protect, async (ctx) => {
-  await Auth.isAuthorized(Avatar, ctx, async (data) => {
+  await Auth.isAuthorized(ctx, Avatar, async (data) => {
     const { content, mime } = ctx.request.body
     const path = Storage.store('avatar', content, mime)
     Storage.remove(data.dataValues.path)

@@ -8,6 +8,18 @@ const userB = users[2].mobilephone
 const password = '000000'
 
 describe('Tag', () => {
+  it('Create by visitor should return 401', async () => {
+    try {
+      await request({
+        method: 'PUT',
+        url: `${url}/tags`,
+        body: data[0]
+      })
+    } catch(err) {
+      assert.equal(err.statusCode, 401)
+    }
+  })
+
   it('Create should return 200', async () => {
     for (let i = 0; i < data.length; i++) {
       const session = await login(userA, password)

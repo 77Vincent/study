@@ -83,7 +83,7 @@ courses.put('/', protect, async (ctx) => {
  * @apiError {string} 404 The requested content is found
  */
 courses.post('/:id', protect, async (ctx) => {
-  await Auth.isAuthorized(Course, ctx, async (data) => {
+  await Auth.isAuthorized(ctx, Course, async (data) => {
     await data.update(ctx.request.body)
     ctx.status = 200
     ctx.body = General.prettyJSON(data)
@@ -99,7 +99,7 @@ courses.post('/:id', protect, async (ctx) => {
  * @apiError {string} 404 The requested content is found
  */
 courses.delete('/:id', protect, async (ctx) => {
-  await Auth.isAuthorized(Course, ctx, async (data) => {
+  await Auth.isAuthorized(ctx, Course, async (data) => {
     await Course.destroy({ where: { id: data.dataValues.id } })
     ctx.status = 200
   })

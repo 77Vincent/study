@@ -53,7 +53,7 @@ majors.put('/', protect, async (ctx) => {
  * @apiError {string} 404 The requested content is found
  */
 majors.post('/:id', protect, async (ctx) => {
-  await Auth.isAuthorized(Major, ctx, async (data) => {
+  await Auth.isAuthorized(ctx, Major, async (data) => {
     data = await data.update(ctx.request.body)
     ctx.status = 200
     ctx.body = General.prettyJSON(data)
@@ -69,7 +69,7 @@ majors.post('/:id', protect, async (ctx) => {
  * @apiError {string} 404 The requested content is found
  */
 majors.delete('/:id', protect, async (ctx) => {
-  await Auth.isAuthorized(Major, ctx, async (data) => {
+  await Auth.isAuthorized(ctx, Major, async (data) => {
     await Major.destroy({ where: { id: data.dataValues.id } })
     ctx.status = 200
   })

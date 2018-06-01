@@ -2,7 +2,7 @@ const Router = require('koa-router')
 
 const { Schedule, Class } = require('../models')
 const { General, Auth } = require('../services')
-const c = require('../config')
+const config = require('../config')
 
 const schedules = Router()
 const { protect } = Auth
@@ -22,13 +22,11 @@ const range = {
  */
 schedules.get('/', protect, async (ctx) => {
   try {
-    const filters = ['teacher_id', 'student_id', 'finished']
     const qs = General.parseQuerystring(ctx.request.querystring)
-
     const data = await Schedule.findAll({
-      limit: c.queryLimit,
-      offset: General.getOffset(qs.page, c.queryLimit),
-      where: { $and: General.getFilter(qs, filters) }
+      limit: config.queryLimit,
+      offset: General.getOffset(qs.page, config.queryLimit),
+      where: { $and: General.getFilter(qs, ['teacher_id', 'student_id', 'finished']) }
     })
 
     for (let i = 0; i < data.length; i++) {
@@ -90,7 +88,7 @@ schedules.put('/', protect, async (ctx) => {
  * @apiError {string} 404 The requested content is found
  */
 schedules.post('/:id', protect, async (ctx) => {
-  await Auth.isAuthorized(Schedule, ctx, async (data) => {
+  await Auth.isAuthorized(ctx, Schedule, async (data) => {
     const isOutRange = General.checkRange(range, ctx.request.body)
     if (isOutRange) {
       ctx.status = 416
@@ -112,7 +110,7 @@ schedules.post('/:id', protect, async (ctx) => {
  * @apiError {string} 404 The requested content is found
  */
 schedules.delete('/:id', protect, async (ctx) => {
-  await Auth.isAuthorized(Schedule, ctx, async (data) => {
+  await Auth.isAuthorized(ctx, Schedule, async (data) => {
     await Schedule.destroy({ where: { id: data.dataValues.id } })
     ctx.status = 200
   })

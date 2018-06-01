@@ -83,7 +83,7 @@ classes.put('/', protect, async (ctx) => {
  */
 classes.post('/:id', protect, async (ctx) => {
   try {
-    await Auth.isAuthorized(Class, ctx, async (data) => {
+    await Auth.isAuthorized(ctx, Class, async (data) => {
       const isOutRange = General.checkRange(range, ctx.request.body)
       if (isOutRange) {
         ctx.status = 416
@@ -108,7 +108,7 @@ classes.post('/:id', protect, async (ctx) => {
  * @apiError {string} 404 The requested content is found
  */
 classes.delete('/:id', protect, async (ctx) => {
-  await Auth.isAuthorized(Class, ctx, async (data) => {
+  await Auth.isAuthorized(ctx, Class, async (data) => {
     await Class.destroy({ where: { id: data.dataValues.id } })
     ctx.status = 200
   })
