@@ -1,12 +1,14 @@
-const c = require('../config')
 const mime = require('mime')
+const uuidv1 = require('uuid/v1')
+
+const c = require('../config')
 const path = require('path')
 const fs = require('fs')
 
 module.exports = {
-  store(stuff, base64, mimeType, id) {
+  store(stuff, base64, mimeType) {
     if (base64 && mimeType) {
-      const where = path.resolve(`${c.fileLocation}/${stuff}s/${stuff}_user_id_${id}.${mime.getExtension(mimeType)}`)
+      const where = path.resolve(`${c.fileLocation}/${stuff}s/${stuff}_${uuidv1()}.${mime.getExtension(mimeType)}`)
       fs.writeFileSync(where, new Buffer(base64, 'base64'))
       return where
     }

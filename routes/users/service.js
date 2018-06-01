@@ -1,6 +1,6 @@
 const General = require('../../services/general')
 const Database = require('../../database')
-const { User, Schedule, Tag, Post, Course } = require('../../models')
+const { User, Schedule, Tag, Post, Course, Avatar } = require('../../models')
 
 module.exports = {
   getOneUser: async (id, config = {}) => {
@@ -23,7 +23,8 @@ module.exports = {
     const urls = ['followers', 'followings']
     const urlsByQuerystring = ['posts', 'courses']
 
-    data.avatar_url = General.getDomain(`/api/avatars/user_id/${id}`)
+    const avatar = await Avatar.findOne({ where: { user_id: id } })
+    data.avatar_url = avatar ? General.getDomain(`/api/avatars/${avatar.dataValues.id}`) : null
 
     // Add students info to teachers
     if (data.role_id === 2) {

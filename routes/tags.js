@@ -53,7 +53,12 @@ tags.put('/', protect, async (ctx) => {
  * @apiError {string} 404 The requested content is found
  */
 tags.post('/:id', protect, async (ctx) => {
-  await Routing.basePOST(Tag, ctx)
+  await Routing.basePOST(Tag, ctx, async (data) => {
+    const { content } = ctx.request.body
+    data = await data.update({ content })
+    ctx.status = 200
+    ctx.body = General.prettyJSON(data)
+  })
 })
 
 /** 

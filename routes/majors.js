@@ -45,14 +45,19 @@ majors.put('/', protect, async (ctx) => {
 /** 
  * @api {post} /api/majors/:id Update a tag
  * @apiGroup Majors 
- * @apiParam {string} content Content of the tag
+ * @apiParam {string} label The major name
+ * @apiParam {string} [description] The major description
  * @apiSuccess (200) {object} void The Updated tag
  * @apiError {string} 401 Not authenticated, sign in first to get token 
  * @apiError {string} 403 Not authorized, no access for the operation
  * @apiError {string} 404 The requested content is found
  */
 majors.post('/:id', protect, async (ctx) => {
-  await Routing.basePOST(Major, ctx)
+  await Routing.basePOST(Major, ctx, async (data) => {
+    data = await data.update(ctx.request.body)
+    ctx.status = 200
+    ctx.body = General.prettyJSON(data)
+  })
 })
 
 /** 

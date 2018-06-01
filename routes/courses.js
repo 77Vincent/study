@@ -77,14 +77,17 @@ courses.put('/', protect, async (ctx) => {
  * @apiGroup Courses 
  * @apiParam {string} label The course name
  * @apiParam {string} [description] The course description
- * @apiParam {integer} [user_id] The creator's user ID
  * @apiSuccess (200) {object} void The updated course
  * @apiError {string} 401 Not authenticated, sign in first to get token 
  * @apiError {string} 403 Not authorized, no access for the operation
  * @apiError {string} 404 The requested content is found
  */
 courses.post('/:id', protect, async (ctx) => {
-  await Routing.basePOST(Course, ctx)
+  await Routing.basePOST(Course, ctx, async (data) => {
+    await data.update(ctx.request.body)
+    ctx.status = 200
+    ctx.body = General.prettyJSON(data)
+  })
 })
 
 /** 

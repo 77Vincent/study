@@ -1,27 +1,19 @@
 const General = require('./general')
 
 module.exports = {
-  basePOST: async (Model, ctx, isOutRange) => {
+  basePOST: async (Model, ctx, callback) => {
     try {
-      let data = await Model.findOne({ where: { id: ctx.params.id } })
+      const data = await Model.findOne({ where: { id: ctx.params.id } })
 
       // Nothing found to update, return 404
       if (!data) { return }
 
-      // Some input is out of valid range
-      if (isOutRange) {
-        ctx.status = 416
-        ctx.body = isOutRange
-        return
-      }
-
+      // Only the owner or admin user can update
       if (data.dataValues.user_id === ctx.state.currentUserID
         || data.dataValues.teacher_id === ctx.state.currentUserID
         || ctx.state.isAdmin
       ) {
-        data = await data.update(ctx.request.body)
-        ctx.status = 200
-        ctx.body = General.prettyJSON(data)
+        await callback(data)
       } else {
         ctx.status = 403
       }

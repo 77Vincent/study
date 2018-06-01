@@ -83,8 +83,17 @@ classes.put('/', protect, async (ctx) => {
  */
 classes.post('/:id', protect, async (ctx) => {
   try {
-    const isOutRange = General.checkRange(range, ctx.request.body)
-    await Routing.basePOST(Class, ctx, isOutRange)
+    await Routing.basePOST(Class, ctx, async (data) => {
+      const isOutRange = General.checkRange(range, ctx.request.body)
+      if (isOutRange) {
+        ctx.status = 416
+        ctx.body = isOutRange
+        return
+      }
+      data = await data.update(ctx.request.body)
+      ctx.status = 200
+      ctx.body = General.prettyJSON(data)
+    })
   } catch (err) {
     General.logError(ctx, err)
   }
