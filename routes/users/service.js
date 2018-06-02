@@ -20,7 +20,6 @@ module.exports = {
     delete data.password
 
     const { id } = data
-    const urls = ['followers', 'followings']
     const urlsByQuerystring = ['posts', 'courses']
 
     const avatar = await Avatar.findOne({ where: { user_id: id } })
@@ -81,9 +80,9 @@ module.exports = {
     urlsByQuerystring.map(each => {
       data[`${each}_url`] = General.getDomain(`/api/${each}?user_id=${id}`)
     })
-    urls.map(each => {
-      data[`${each}_url`] = General.getDomain(`/api/users/${id}/${each}`)
-    })
+
+    data.followings_url = General.getDomain(`/api/followings?follower_id=${id}`)
+    data.followers_url = General.getDomain(`/api/followings?following_id=${id}`)
   },
   /**
    * Give each user a weight for ordering based on several aspects

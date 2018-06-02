@@ -1,7 +1,7 @@
 const Router = require('koa-router')
 const mime = require('mime')
 
-const c = require('../config.js')
+const config = require('../config.js')
 const { Avatar } = require('../models')
 const { General, Storage, Auth } = require('../services')
 
@@ -19,8 +19,8 @@ avatars.get('/', async (ctx) => {
     const qs = General.parseQuerystring(ctx.request.querystring)
 
     const data = await Avatar.findAll({
-      limit: c.queryLimit,
-      offset: General.getOffset(qs.page, c.queryLimit),
+      limit: config.queryLimit,
+      offset: General.getOffset(qs.page, config.queryLimit),
     })
 
     ctx.status = 200
@@ -58,7 +58,6 @@ avatars.get('/:id', async (ctx) => {
  * @apiGroup Avatars
  * @apiParam {string} content Content of the image file encoded in base64
  * @apiParam {string} mime The MIME of the file 
- * @apiParam {integer} user_id The creator's user ID
  * @apiSuccess (201) {object} void The created avatar
  * @apiError {string} 401 Not authenticated, sign in first to get token 
  */
@@ -81,7 +80,6 @@ avatars.put('/', protect, async (ctx) => {
  * @apiGroup Avatars
  * @apiParam {string} content Content of the avatar file encoded in base64
  * @apiParam {string} mime The MIME of the file 
- * @apiParam {integer} user_id The creator's user ID
  * @apiSuccess (200) {object} void The updated avatar
  * @apiError {string} 401 Not authenticated, sign in first to get token 
  * @apiError {string} 403 Not authorized, no access for the operation
@@ -102,7 +100,6 @@ avatars.post('/:id', protect, async (ctx) => {
 /** 
  * @api {delete} /api/avatars Delete a avatar 
  * @apiGroup Avatars
- * @apiParam {integer} user_id The creator's user ID
  * @apiSuccess (200) {void} void void
  * @apiError {string} 401 Not authenticated, sign in first to get token 
  * @apiError {string} 403 Not authorized, no access for the operation

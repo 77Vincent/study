@@ -53,7 +53,7 @@ describe('Follower_Following', () => {
       method: 'PUT',
       url: `${url}/followings`,
       auth: { bearer: session.token },
-      body: data[4]
+      body: data[3]
     })
     session = await login(userC, password)
     await request({

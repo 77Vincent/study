@@ -14,7 +14,6 @@ const range = {
   cost: 9999,
   role_id: 10
 }
-const FollowerFollowing = Database.model('follower_following')
 const UserMajor = Database.model('user_major')
 
 /** 
@@ -166,66 +165,6 @@ users.get('/:id/teachers', async (ctx) => {
       limit: c.queryLimit,
       offset: General.getOffset(qs.page, c.queryLimit),
       where: { id: data.map(item => item.dataValues.teacher_id) },
-    })
-
-    for (let i = 0; i < data.length; i++) {
-      await service.processUserData(data[i].dataValues)
-    }
-
-    ctx.status = 200
-    ctx.body = General.prettyJSON(data)
-  } catch (err) {
-    General.logError(ctx, err)
-  }
-})
-
-/** 
- * @api {get} /api/users/:id/followers Get a user's followers
- * @apiGroup Users 
- * @apiParam (Query String) {integer} [page=1] Pagination
- * @apiSuccess (200) {object[]} void Array contains a user's followers
- */
-users.get('/:id/followers', async (ctx) => {
-  try {
-    const qs = General.parseQuerystring(ctx.request.querystring)
-    let data = await FollowerFollowing.findAll({
-      where: { following_id: ctx.params.id }
-    })
-
-    data = await User.findAll({
-      limit: c.queryLimit,
-      offset: General.getOffset(qs.page, c.queryLimit),
-      where: { id: data.map(item => item.dataValues.follower_id) },
-    })
-
-    for (let i = 0; i < data.length; i++) {
-      await service.processUserData(data[i].dataValues)
-    }
-
-    ctx.status = 200
-    ctx.body = General.prettyJSON(data)
-  } catch (err) {
-    General.logError(ctx, err)
-  }
-})
-
-/** 
- * @api {get} /api/users/:id/followings Get a user's followings
- * @apiGroup Users 
- * @apiParam (Query String) {integer} [page=1] Pagination
- * @apiSuccess (200) {object[]} void Array contains a user's followings
- */
-users.get('/:id/followings', async (ctx) => {
-  try {
-    const qs = General.parseQuerystring(ctx.request.querystring)
-    let data = await FollowerFollowing.findAll({
-      where: { follower_id: ctx.params.id }
-    })
-
-    data = await User.findAll({
-      limit: c.queryLimit,
-      offset: General.getOffset(qs.page, c.queryLimit),
-      where: { id: data.map(item => item.dataValues.following_id) },
     })
 
     for (let i = 0; i < data.length; i++) {
