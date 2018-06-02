@@ -1,4 +1,4 @@
-var assert = require('assert')
+const assert = require('assert')
 
 const data = require('./data')
 const { login, request, modified, url } = require('../service')
@@ -39,7 +39,7 @@ describe('Major', () => {
         auth: { bearer: session.token },
         body: { description: modified, },
       })
-    } catch(err) {
+    } catch (err) {
       assert.equal(err.statusCode, 200)
     }
   })
@@ -64,7 +64,7 @@ describe('Major', () => {
         url: `${url}/majors/1`,
         auth: { bearer: session.token }
       })
-    } catch(err) {
+    } catch (err) {
       assert.equal(err.statusCode, 200)
     }
   })

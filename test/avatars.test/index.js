@@ -1,7 +1,7 @@
-var assert = require('assert')
+const assert = require('assert')
 
 const data = require('./data')
-const { login, request, modified, url } = require('../service')
+const { login, request, url } = require('../service')
 const config = require('../../config')
 const users = require('../users.test/data')
 const userA = users[1].mobilephone
@@ -16,7 +16,7 @@ describe('Avatar', () => {
         url: `${url}/avatars`,
         body: data[0]
       })
-    } catch(err) {
+    } catch (err) {
       assert.equal(err.statusCode, 401)
     }
   })
@@ -67,7 +67,7 @@ describe('Avatar', () => {
         auth: { bearer: session.token },
         body: data[1]
       })
-    } catch(err) {
+    } catch (err) {
       assert.equal(err.statusCode, 200)
     }
   })
@@ -81,7 +81,7 @@ describe('Avatar', () => {
         auth: { bearer: session.token },
         body: data[2]
       })
-    } catch(err) {
+    } catch (err) {
       assert.equal(err.statusCode, 200)
     }
   })
@@ -105,7 +105,7 @@ describe('Avatar', () => {
         url: `${url}/avatars/3`,
         auth: { bearer: session.token }
       })
-    } catch(err) {
+    } catch (err) {
       assert.equal(err.statusCode, 200)
     }
   })

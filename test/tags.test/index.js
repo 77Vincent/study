@@ -1,4 +1,4 @@
-var assert = require('assert')
+const assert = require('assert')
 
 const data = require('./data')
 const { login, request, modified, url } = require('../service')
@@ -15,7 +15,7 @@ describe('Tag', () => {
         url: `${url}/tags`,
         body: data[0]
       })
-    } catch(err) {
+    } catch (err) {
       assert.equal(err.statusCode, 401)
     }
   })

@@ -52,7 +52,7 @@
     "computed-property-spacing": ["error", "never"],
     "func-call-spacing": ["error", "never"],
     "func-style": ["error", "expression"],
-    "id-length": ["error", { "max": 20, "min": 1 }],
+    "id-length": ["error", { "max": 24, "min": 1 }],
     "key-spacing": ["error", { "afterColon": true }],
     "keyword-spacing": ["error", { "after": true }],
     "max-len": ["error", {
