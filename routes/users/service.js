@@ -1,6 +1,6 @@
 const General = require('../../services/general')
 const Database = require('../../database')
-const { User, Schedule, Tag, Post, Course, Avatar } = require('../../models')
+const { User, Tag, Post, Course, Avatar } = require('../../models')
 
 module.exports = {
   getOneUser: async (id, config = {}) => {
@@ -27,35 +27,12 @@ module.exports = {
 
     // Add students info to teachers
     if (data.role_id === 2) {
-      const students = await Schedule.findAll({ 
-        where: { teacher_id: id }
-      })
-      const students_onboard = await Schedule.findAll({ 
-        where: { $and: [
-          { teacher_id: id },
-          { finished: 0 }
-        ]}
-      })
-      data.students = students.length
-      data.students_onboard = students_onboard.length
       data.students_url = General.getDomain(`/api/users/${id}/students`)
       data.students_onboard_url = General.getDomain(`/api/users/${id}/students?finished=0`)
     } 
 
     // Add teachers info to students
     if (data.role_id === 3) {
-      const teachers = await Schedule.findAll({ 
-        where: { student_id: id }
-      })
-      const teachers_onboard = await Schedule.findAll({ 
-        where: { $and: [
-          { student_id: id },
-          { finished: 0 }
-        ]}
-      })
-
-      data.teachers = teachers.length
-      data.teachers_onboard = teachers_onboard.length
       data.teachers_url = General.getDomain(`/api/users/${id}/teachers`)
       data.teachers_onboard_url = General.getDomain(`/api/users/${id}/teachers?finished=0`)
     }

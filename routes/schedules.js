@@ -20,7 +20,7 @@ const range = {
  * @apiSuccess (200) {object[]} void Array contains all schedules
  * @apiError {string} 401 Protected resource, use Authorization header to get access
  */
-schedules.get('/', protect, async (ctx) => {
+schedules.get('/', async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
     const data = await Schedule.findAll({
