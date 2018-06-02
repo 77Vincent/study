@@ -108,17 +108,13 @@ avatars.post('/:id', protect, async (ctx) => {
  * @apiError {string} 403 Not authorized, no access for the operation
  * @apiError {string} 404 The requested content is found
  */
-avatars.delete('/', protect, async (ctx) => {
-  try {
-    const { user_id } = ctx.request.body
-    const data = await Avatar.findOne({ where: { user_id } })
+avatars.delete('/:id', protect, async (ctx) => {
+  await Auth.isAuthorized(ctx, Avatar, async (data) => {
     Storage.remove(data.dataValues.path)
-    await Avatar.destroy({ where: { user_id } })
+    await Avatar.destroy({ where: { id: ctx.params.id } })
 
     ctx.status = 200
-  } catch (err) {
-    General.logError(ctx, err)
-  }
+  })
 })
 
 module.exports = { avatars }

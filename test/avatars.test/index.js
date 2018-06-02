@@ -86,28 +86,27 @@ describe('Avatar', () => {
     }
   })
 
-  // it('Delete by visitor should return 401', async () => {
-  //   try {
-  //     await request({
-  //       method: 'DELETE',
-  //       url: `${url}/majors/1`,
-  //       body: { description: modified, },
-  //     })
-  //   } catch (err) {
-  //     assert.equal(err.statusCode, 401)
-  //   }
-  // })
+  it('Delete by visitor should return 401', async () => {
+    try {
+      await request({
+        method: 'DELETE',
+        url: `${url}/avatars/3`,
+      })
+    } catch (err) {
+      assert.equal(err.statusCode, 401)
+    }
+  })
 
-  // it('Delete by admin should return 200', async () => {
-  //   try {
-  //     const session = await login(config.adminID, config.adminPassword)
-  //     await request({
-  //       method: 'DELETE',
-  //       url: `${url}/majors/1`,
-  //       auth: { bearer: session.token }
-  //     })
-  //   } catch(err) {
-  //     assert.equal(err.statusCode, 200)
-  //   }
-  // })
+  it('Delete by owner should return 200', async () => {
+    try {
+      const session = await login(userB, password)
+      await request({
+        method: 'DELETE',
+        url: `${url}/avatars/3`,
+        auth: { bearer: session.token }
+      })
+    } catch(err) {
+      assert.equal(err.statusCode, 200)
+    }
+  })
 })
