@@ -12,7 +12,7 @@ const range = { length: 99 }
  * @api {get} /api/classes Get all classes
  * @apiGroup Classes 
  * @apiDescription Class is ordered by date in ASC order by default
- * @apiParam (Query String) {boolean=0,1} [finished=0,1] Filtered by if the class is finished 
+ * @apiParam (Query String) {Boolean=0,1} [finished=0,1] Filtered by if the class is finished 
  * @apiParam (Query String) {Integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all classes 
  * @apiError {String} 401 Not authenticated, sign in first to get token 
@@ -40,9 +40,9 @@ classes.get('/', async (ctx) => {
  * @api {put} /api/classes Create a class
  * @apiGroup Classes 
  * @apiDescription The property "finished" is set to false by default
- * @apiParam {date} [date] On which date the class will begin
- * @apiParam {double} length=1 Duration of the class in hours 
- * @apiParam {boolean=0,1} finished=0 If the class is finished or not 
+ * @apiParam {Date} [date] On which date the class will begin
+ * @apiParam {Number} length=1 Duration of the class in hours 
+ * @apiParam {Boolean=0,1} finished=0 If the class is finished or not 
  * @apiParam {Integer} schedule_id Which schedule does this class belong to
  * @apiSuccess (201) {Object} void The created class
  * @apiError {String} 401 Not authenticated, sign in first to get token 
@@ -71,9 +71,9 @@ classes.put('/', protect, async (ctx) => {
 /** 
  * @api {post} /api/classes/:id Update a class
  * @apiGroup Classes 
- * @apiParam {date} [date] On which date the class will begin
- * @apiParam {double} length=1 Duration of the class in hours 
- * @apiParam {boolean=0,1} finished=0 If the class is finished or not 
+ * @apiParam {Date} [date] On which date the class will begin
+ * @apiParam {Number} length=1 Duration of the class in hours 
+ * @apiParam {Boolean=0,1} finished=0 If the class is finished or not 
  * @apiParam {Integer} schedule_id Which schedule does this class belong to
  * @apiSuccess (200) {Object} void The updated class
  * @apiError {String} 401 Not authenticated, sign in first to get token 

@@ -15,7 +15,7 @@ const range = {
  * @apiGroup Schedules 
  * @apiParam (Query String) {String} [teacher_id] Filtered by teacher ID
  * @apiParam (Query String) {String} [student_id] Filtered by student ID
- * @apiParam (Query String) {boolean=0,1} [finished=0,1] Filtered by if the schedule is finished 
+ * @apiParam (Query String) {Boolean=0,1} [finished=0,1] Filtered by if the schedule is finished 
  * @apiParam (Query String) {Integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all schedules
  * @apiError {String} 401 Protected resource, use Authorization header to get access
@@ -50,7 +50,7 @@ schedules.get('/', async (ctx) => {
  * @apiParam {String} [label] The schedule name
  * @apiParam {Integer} teacher_id The teacher user ID
  * @apiParam {Integer} student_id The student user ID
- * @apiParam {boolean=0,1} [finished=0] If the schedule is finished or not
+ * @apiParam {Boolean=0,1} [finished=0] If the schedule is finished or not
  * @apiParam {Integer} quota=1 The length of the schedule
  * @apiSuccess (201) {Object} void The created schedule 
  * @apiError {String} 401 Protected resource, use Authorization header to get access
@@ -80,7 +80,7 @@ schedules.put('/', protect, async (ctx) => {
  * @apiParam {String} [label] The schedule name
  * @apiParam {Integer} teacher_id The teacher user ID
  * @apiParam {Integer} student_id The student user ID
- * @apiParam {boolean=0,1} [finished=0] If the schedule is finished or not
+ * @apiParam {Boolean=0,1} [finished=0] If the schedule is finished or not
  * @apiParam {Integer} quota=1 The length of the schedule
  * @apiSuccess (200) {Object} void The updated schedule 
  * @apiError {String} 401 Not authenticated, sign in first to get token 

@@ -12,7 +12,7 @@ const { protect } = Auth
  * @apiGroup Messages 
  * @apiParam (Query String) {Integer} [sender_id] Filtered by the sender's user ID 
  * @apiParam (Query String) {Integer} [recipient_id] Filtered by the recipient's user ID
- * @apiParam (Query String) {boolean=0,1} [read=0,1] Filtered by if the message is read 
+ * @apiParam (Query String) {Boolean=0,1} [read=0,1] Filtered by if the message is read 
  * @apiParam (Query String) {String} [content] Search by message content
  * @apiSuccess (200) {object[]} void Array contains all messages 
  * @apiError {String} 401 Protected resource, use Authorization header to get access
