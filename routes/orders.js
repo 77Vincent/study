@@ -12,6 +12,7 @@ const { protect } = Auth
  * @apiGroup Orders
  * @apiParam (Query String) {integer} [requestor_id] Filtered by the buyer's user ID 
  * @apiParam (Query String) {integer} [recipient_id] Filtered by the seller's user ID 
+ * @apiParam (Query String) {boolean} [isExpired] Filtered by if the order has been expired
  * @apiParam (Query String) {boolean} [isPaid] Filtered by if the order has been paid
  * @apiParam (Query String) {boolean} [isReceived] Filtered by if the order has been received
  * @apiParam (Query String) {boolean} [isRefunded] Filtered by if the order has been refunded
@@ -70,7 +71,14 @@ orders.put('/', protect, async (ctx) => {
  * @apiParam {number} total_price Total price of all the classes = require(this order
  * @apiParam {number} unit_price Unit price of the each class = require(this order
  * @apiParam {number} length Length of the schedule a user has bought = require(this order in hours
- * @apiParam {boolean} paid If the order has been paid
+ * @apiParam {boolean} [isExpired] If the order has been expired
+ * @apiParam {boolean} [isPaid] If the order has been paid
+ * @apiParam {boolean} [isReceived] If the order has been received
+ * @apiParam {boolean} [isRefunded] If the order has been refunded
+ * @apiParam {Date} [expired_at] When will the order be expired
+ * @apiParam {Date} [paid_at] When is order paid
+ * @apiParam {Date} [received_at] When is the order received 
+ * @apiParam {Date} [refuned_at] When is the order refunded 
  * @apiSuccess (200) {object} void The Updated order
  * @apiError {string} 401 Not authenticated, sign in first to get token 
  * @apiError {string} 403 Not authorized, no access for the operation

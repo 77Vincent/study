@@ -1,11 +1,16 @@
 const Sequelize = require('sequelize')
 const Database = require('../database')
+const Generral = require('../services/general')
 
 module.exports = Database.define('order', {
   id: {
     type: Sequelize.UUID,
     defaultValue: Sequelize.UUIDV1,
     primaryKey: true
+  },
+  isExpired: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   },
   isPaid: {
     type: Sequelize.BOOLEAN,
@@ -14,6 +19,10 @@ module.exports = Database.define('order', {
   isReceived: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+  expired_at: {
+    type: Sequelize.DATE,
+    defaultValue: Generral.timer(1)
   },
   paid_at: {
     type: Sequelize.DATE,

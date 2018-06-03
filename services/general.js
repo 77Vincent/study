@@ -12,6 +12,9 @@ module.exports = {
   prettyJSON(json) {
     return JSON.stringify(json, null, 2)
   },
+  timer(hours = 0) {
+    return new Date(new Date().getTime() + Number(hours * 3600 * 1000))
+  },
 
   /**
    * Parse url querystring and return requesting querystring values
