@@ -7,6 +7,14 @@ module.exports = Database.define('order', {
     defaultValue: Sequelize.UUIDV1,
     primaryKey: true
   },
+  isPaid: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
+  isReceived: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
   paid_at: {
     type: Sequelize.DATE,
   },
@@ -32,7 +40,7 @@ module.exports = Database.define('order', {
     allowNull: false,
     defaultValue: 1 
   },
-  refund: {
+  isRefunded: {
     type: Sequelize.BOOLEAN,
     defaultValue: 0 
   }

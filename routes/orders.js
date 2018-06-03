@@ -12,7 +12,9 @@ const { protect } = Auth
  * @apiGroup Orders
  * @apiParam (Query String) {integer} [requestor_id] Filtered by the buyer's user ID 
  * @apiParam (Query String) {integer} [recipient_id] Filtered by the seller's user ID 
- * @apiParam (Query String) {boolean} [paid] Filtered by if the order has been paid
+ * @apiParam (Query String) {boolean} [isPaid] Filtered by if the order has been paid
+ * @apiParam (Query String) {boolean} [isReceived] Filtered by if the order has been received
+ * @apiParam (Query String) {boolean} [isRefunded] Filtered by if the order has been refunded
  * @apiParam (Query String) {integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all orders
  * @apiError {string} 401 Not authenticated, sign in first to get token 
@@ -25,7 +27,9 @@ orders.get('/', protect, async (ctx) => {
       limit: c.queryLimit,
       offset: General.getOffset(qs.page, c.queryLimit),
       order: [['updated_at', 'DESC']],
-      where: { $and: General.getFilter(qs, ['requestor_id', 'recipient_id', 'paid']) },
+      where: { $and: General.getFilter(qs, [
+        'requestor_id', 'recipient_id', 'isPaid', 'isReceived', 'isRefunded'
+      ]) },
     })
 
     ctx.status = 200

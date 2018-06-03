@@ -9,7 +9,7 @@ const userC = users[3].mobilephone
 const userD = users[4].mobilephone
 const password = '000000'
 
-describe('Follower_Following', () => {
+describe('Following', () => {
   it('Create by visitor should return 401', async () => {
     try {
       await request({
