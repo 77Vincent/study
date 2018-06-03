@@ -18,8 +18,8 @@ module.exports = {
 
   /**
    * Parse url querystring and return requesting querystring values
-   * @param {string} querystring - format: &key=value&key=value1,value2 
-   * @returns {object} each key-value pair is according to the querystring
+   * @param {String} querystring - format: &key=value&key=value1,value2 
+   * @returns {Object} each key-value pair is according to the querystring
    */
   parseQuerystring(querystring = '') {
     if (!querystring) { return {} }
@@ -50,8 +50,8 @@ module.exports = {
 
   /**
    * Count offset for database query pagination
-   * @param {number} [page=1] - page number, start = require(1
-   * @param {number} [limit=50] - items to display per page 
+   * @param {Number} [page=1] - page number, start = require(1
+   * @param {Number} [limit=50] - items to display per page 
    * @returns 
    */
   getOffset(page = 1, limit = 50) {
@@ -61,8 +61,8 @@ module.exports = {
 
   /**
    * Return an positive integer 
-   * @param {number} [input=1] input number
-   * @returns {number} positive integer
+   * @param {Number} [input=1] input number
+   * @returns {Number} positive integer
    */
   getPositiveInt(input = 1) {
     return R.is(Number, input) ? Math.round(Math.abs(input)) : 1
@@ -70,9 +70,9 @@ module.exports = {
 
   /**
    * Create a sequelize specific object for its filter
-   * @param {object} [object={}] - source normal object that needs to be converted
-   * @param {array} [keys=[]] - array of values that the object's keys to be included
-   * @returns {array} array contains objects in this format: [{key: value}, {key: value}]
+   * @param {Object} [object={}] - source normal object that needs to be converted
+   * @param {Array} [keys=[]] - array of values that the object's keys to be included
+   * @returns {Array} array contains objects in this format: [{key: value}, {key: value}]
    */
   getFilter(object = {}, keys = []) {
     let arr = []

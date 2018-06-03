@@ -11,9 +11,9 @@ const { protect } = Auth
 /** 
  * @api {get} /api/followings/ Get all targets followed by the current user
  * @apiGroup Follower_Following 
- * @apiParam (Query String) {integer} [follower_id] Filtered by user ID of followers
- * @apiParam (Query String) {integer} [following_id] Filtered by user ID of followings
- * @apiParam (Query String) {integer} [page=1] Pagination
+ * @apiParam (Query String) {Integer} [follower_id] Filtered by user ID of followers
+ * @apiParam (Query String) {Integer} [following_id] Filtered by user ID of followings
+ * @apiParam (Query String) {Integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all targets followed by the current user
  */
 followings.get('/', async (ctx) => {
@@ -35,9 +35,9 @@ followings.get('/', async (ctx) => {
 /** 
  * @api {put} /api/followings/ Create a major
  * @apiGroup Followings
- * @apiParam {string} following_id The user ID of the target
- * @apiSuccess (201) {object} void void
- * @apiError {string} 401 Not authenticated, sign in first to get token 
+ * @apiParam {String} following_id The user ID of the target
+ * @apiSuccess (201) {Object} void void
+ * @apiError {String} 401 Not authenticated, sign in first to get token 
  */
 followings.put('/', protect, async (ctx) => {
   try {
@@ -54,9 +54,9 @@ followings.put('/', protect, async (ctx) => {
 /** 
  * @api {delete} /api/followings/:id Unfollow
  * @apiGroup Followings 
- * @apiSuccess (200) {void} void void
- * @apiError {string} 401 Not authenticated, sign in first to get token 
- * @apiError {string} 404 The requested content is found
+ * @apiSuccess (200) {Void} void void
+ * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 404 The requested content is found
  */
 followings.delete('/:id', protect, async (ctx) => {
   const data = await FollowerFollowing.findOne({

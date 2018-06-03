@@ -13,12 +13,12 @@ const range = {
 /** 
  * @api {get} /api/schedules Get all schedules
  * @apiGroup Schedules 
- * @apiParam (Query String) {string} [teacher_id] Filtered by teacher ID
- * @apiParam (Query String) {string} [student_id] Filtered by student ID
+ * @apiParam (Query String) {String} [teacher_id] Filtered by teacher ID
+ * @apiParam (Query String) {String} [student_id] Filtered by student ID
  * @apiParam (Query String) {boolean=0,1} [finished=0,1] Filtered by if the schedule is finished 
- * @apiParam (Query String) {integer} [page=1] Pagination
+ * @apiParam (Query String) {Integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all schedules
- * @apiError {string} 401 Protected resource, use Authorization header to get access
+ * @apiError {String} 401 Protected resource, use Authorization header to get access
  */
 schedules.get('/', async (ctx) => {
   try {
@@ -47,13 +47,13 @@ schedules.get('/', async (ctx) => {
 /** 
  * @api {put} /api/schedules Create a schedule
  * @apiGroup Schedules 
- * @apiParam {string} [label] The schedule name
- * @apiParam {integer} teacher_id The teacher user ID
- * @apiParam {integer} student_id The student user ID
+ * @apiParam {String} [label] The schedule name
+ * @apiParam {Integer} teacher_id The teacher user ID
+ * @apiParam {Integer} student_id The student user ID
  * @apiParam {boolean=0,1} [finished=0] If the schedule is finished or not
- * @apiParam {integer} quota=1 The length of the schedule
- * @apiSuccess (201) {object} void The created schedule 
- * @apiError {string} 401 Protected resource, use Authorization header to get access
+ * @apiParam {Integer} quota=1 The length of the schedule
+ * @apiSuccess (201) {Object} void The created schedule 
+ * @apiError {String} 401 Protected resource, use Authorization header to get access
  */
 schedules.put('/', protect, async (ctx) => {
   try {
@@ -77,15 +77,15 @@ schedules.put('/', protect, async (ctx) => {
 /** 
  * @api {post} /api/schedules/:id Update a schedule
  * @apiGroup Schedules 
- * @apiParam {string} [label] The schedule name
- * @apiParam {integer} teacher_id The teacher user ID
- * @apiParam {integer} student_id The student user ID
+ * @apiParam {String} [label] The schedule name
+ * @apiParam {Integer} teacher_id The teacher user ID
+ * @apiParam {Integer} student_id The student user ID
  * @apiParam {boolean=0,1} [finished=0] If the schedule is finished or not
- * @apiParam {integer} quota=1 The length of the schedule
- * @apiSuccess (200) {object} void The updated schedule 
- * @apiError {string} 401 Not authenticated, sign in first to get token 
- * @apiError {string} 403 Not authorized, no access for the operation
- * @apiError {string} 404 The requested content is found
+ * @apiParam {Integer} quota=1 The length of the schedule
+ * @apiSuccess (200) {Object} void The updated schedule 
+ * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 403 Not authorized, no access for the operation
+ * @apiError {String} 404 The requested content is found
  */
 schedules.post('/:id', protect, async (ctx) => {
   await Auth.isAuthorized(ctx, Schedule, async (data) => {
@@ -104,10 +104,10 @@ schedules.post('/:id', protect, async (ctx) => {
 /** 
  * @api {delete} /api/schedules/:id Delete a schedule
  * @apiGroup Schedules
- * @apiSuccess (200) {void} void void
- * @apiError {string} 401 Not authenticated, sign in first to get token 
- * @apiError {string} 403 Not authorized, no access for the operation
- * @apiError {string} 404 The requested content is found
+ * @apiSuccess (200) {Void} void void
+ * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 403 Not authorized, no access for the operation
+ * @apiError {String} 404 The requested content is found
  */
 schedules.delete('/:id', protect, async (ctx) => {
   await Auth.isAuthorized(ctx, Schedule, async (data) => {

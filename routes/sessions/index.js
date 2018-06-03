@@ -10,10 +10,10 @@ const sessions = Router()
 /** 
  * @api {post} /api/sessions Sign in
  * @apiGroup Sessions
- * @apiParam {string} id User ID
- * @apiParam {string} password User password 
- * @apiSuccess (200) {object} void Object containing user object and token
- * @apiSuccess (401) {void} void Authentication failed
+ * @apiParam {String} id User ID
+ * @apiParam {String} password User password 
+ * @apiSuccess (200) {Object} void Object containing user object and token
+ * @apiSuccess (401) {Void} void Authentication failed
  */
 sessions.post('/', async (ctx) => {
   try {

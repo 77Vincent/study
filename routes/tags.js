@@ -25,10 +25,10 @@ tags.get('/', async (ctx) => {
 /** 
  * @api {put} /api/tags/ Create a tag
  * @apiGroup Tags
- * @apiParam {string} content Content of the tag
- * @apiParam {integer} user_id The creator's user ID
- * @apiSuccess (201) {object} void The created tag
- * @apiError {string} 401 Not authenticated, sign in first to get token 
+ * @apiParam {String} content Content of the tag
+ * @apiParam {Integer} user_id The creator's user ID
+ * @apiSuccess (201) {Object} void The created tag
+ * @apiError {String} 401 Not authenticated, sign in first to get token 
  */
 tags.put('/', protect, async (ctx) => {
   try {
@@ -46,11 +46,11 @@ tags.put('/', protect, async (ctx) => {
 /** 
  * @api {post} /api/tags/:id Update a tag
  * @apiGroup Tags
- * @apiParam {string} content Content of the tag
- * @apiSuccess (200) {object} void The Updated tag
- * @apiError {string} 401 Not authenticated, sign in first to get token 
- * @apiError {string} 403 Not authorized, no access for the operation
- * @apiError {string} 404 The requested content is found
+ * @apiParam {String} content Content of the tag
+ * @apiSuccess (200) {Object} void The Updated tag
+ * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 403 Not authorized, no access for the operation
+ * @apiError {String} 404 The requested content is found
  */
 tags.post('/:id', protect, async (ctx) => {
   await Auth.isAuthorized(ctx, Tag, async (data) => {
@@ -63,10 +63,10 @@ tags.post('/:id', protect, async (ctx) => {
 /** 
  * @api {delete} /api/tags/:id Delete a tag
  * @apiGroup Tags
- * @apiSuccess (200) {void} void void
- * @apiError {string} 401 Not authenticated, sign in first to get token 
- * @apiError {string} 403 Not authorized, no access for the operation
- * @apiError {string} 404 The requested content is found
+ * @apiSuccess (200) {Void} void void
+ * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 403 Not authorized, no access for the operation
+ * @apiError {String} 404 The requested content is found
  */
 tags.delete('/:id', protect, async (ctx) => {
   await Auth.isAuthorized(ctx, Tag, async (data) => {

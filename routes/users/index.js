@@ -19,17 +19,17 @@ const UserMajor = Database.model('user_major')
 /** 
  * @api {get} /api/users Get all users
  * @apiGroup Users 
- * @apiParam (Query String) {string} [id] Filtered by user ID
- * @apiParam (Query String) {string} [mobilephone] Filtered by user mobilephone
+ * @apiParam (Query String) {String} [id] Filtered by user ID
+ * @apiParam (Query String) {String} [mobilephone] Filtered by user mobilephone
  * @apiParam (Query String) {integer=1,2,3} [role_id=2,3] Filtered by user's role, 1=admin, 2=teacher, 3=student
  * @apiParam (Query String) {boolean=0,1} [gender=0,1] Filtered by user gender
  * @apiParam (Query String) {string=online, offline, both} [place=both] Filtered by the place to have the class
- * @apiParam (Query String) {string} [city] Filtered by the city a user is living in, check "Cities list"
- * @apiParam (Query String) {string} [province] Filtered by the province a user is living in, check "Provinces list"
- * @apiParam (Query String) {string} [countries] Filtered by the country a user is living in, check "Countries list"
+ * @apiParam (Query String) {String} [city] Filtered by the city a user is living in, check "Cities list"
+ * @apiParam (Query String) {String} [province] Filtered by the province a user is living in, check "Provinces list"
+ * @apiParam (Query String) {String} [countries] Filtered by the country a user is living in, check "Countries list"
  * @apiParam (Query String) {boolean=0,1} [active=0,1] Filtered by if a user wished to be found
  * @apiParam (Query String) {string=DESC, ASC} [cost] Sorting by cost
- * @apiParam (Query String) {integer} [page=1] Pagination
+ * @apiParam (Query String) {Integer} [page=1] Pagination
  * @apiParamExample {json} Request-example:
  * /api/users?id=1&gender=1,0&place=online&role_id=1&city=4503,1101
  * @apiSuccess (200) {object[]} void Array contains all users
@@ -89,8 +89,8 @@ users.get('/', async (ctx) => {
 /** 
  * @api {get} /api/users/:id Get a user
  * @apiGroup Users 
- * @apiSuccess (200) {object} void User object
- * @apiError {string} 404 The requested content is found
+ * @apiSuccess (200) {Object} void User object
+ * @apiError {String} 404 The requested content is found
  */
 users.get('/:id', async (ctx) => {
   try {
@@ -114,7 +114,7 @@ users.get('/:id', async (ctx) => {
  * @api {get} /api/users/:id/students Get a user's students
  * @apiGroup Users 
  * @apiParam (Query String) {boolean=0,1} [finished=0,1] Filtered by if the schedule has been finished
- * @apiParam (Query String) {integer} [page=1] Pagination
+ * @apiParam (Query String) {Integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains a user's students
  */
 users.get('/:id/students', async (ctx) => {
@@ -148,7 +148,7 @@ users.get('/:id/students', async (ctx) => {
  * @api {get} /api/users/:id/teachers Get a user's teachers
  * @apiGroup Users 
  * @apiParam (Query String) {boolean=0,1} [finished=0,1] Filtered by if the schedule has been finished
- * @apiParam (Query String) {integer} [page=1] Pagination
+ * @apiParam (Query String) {Integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains a user's teachers
  */
 users.get('/:id/teachers', async (ctx) => {
@@ -181,24 +181,24 @@ users.get('/:id/teachers', async (ctx) => {
 /** 
  * @api {put} /api/users Create a new user
  * @apiGroup Users 
- * @apiParam {string} [username=UUIDV1] The unique username
+ * @apiParam {String} [username=UUIDV1] The unique username
  * @apiParam {string=1,2,3} [role_id=3] User's role, 1=admin, 2=teacher, 3=student
- * @apiParam {string} mobilephone User unique mobilephone number
- * @apiParam {string} email User unique email address
- * @apiParam {string} password User password 
- * @apiParam {string} name User name for display purpose only 
- * @apiParam {string} [school] The school name
- * @apiParam {string} [title] The title 
- * @apiParam {string} [bio] The biography of the user
+ * @apiParam {String} mobilephone User unique mobilephone number
+ * @apiParam {String} email User unique email address
+ * @apiParam {String} password User password 
+ * @apiParam {String} name User name for display purpose only 
+ * @apiParam {String} [school] The school name
+ * @apiParam {String} [title] The title 
+ * @apiParam {String} [bio] The biography of the user
  * @apiParam {string=online, offline, both} [place=both] Where the user wish to have the class
- * @apiParam {string} [country] The code of country where the user lives in, check countries list
- * @apiParam {string} [province] The code of province where the user lives in, check provinces list
- * @apiParam {string} [city] The code of city where the user lives in, check cities list
- * @apiParam {boolean} [active=true] If user can be seached or not
- * @apiParam {boolean} [gender] User gender
- * @apiParam {number} [cost=0] The cost per hour of the user
- * @apiParam {number} [available=0] How much hours a user is opened for booking
- * @apiSuccess (201) {object} void The newly created user object
+ * @apiParam {String} [country] The code of country where the user lives in, check countries list
+ * @apiParam {String} [province] The code of province where the user lives in, check provinces list
+ * @apiParam {String} [city] The code of city where the user lives in, check cities list
+ * @apiParam {Boolean} [active=true] If user can be seached or not
+ * @apiParam {Boolean} [gender] User gender
+ * @apiParam {Number} [cost=0] The cost per hour of the user
+ * @apiParam {Number} [available=0] How much hours a user is opened for booking
+ * @apiSuccess (201) {Object} void The newly created user object
  */
 users.put('/', async (ctx) => {
   try {
@@ -222,28 +222,28 @@ users.put('/', async (ctx) => {
 /** 
  * @api {post} /api/users/:id Update a user
  * @apiGroup Users 
- * @apiParam {string} [username=UUIDV1] The unique username
+ * @apiParam {String} [username=UUIDV1] The unique username
  * @apiParam {string=1,2,3} [role_id=3] User's role, 1=admin, 2=teacher, 3=student
- * @apiParam {string} mobilephone User unique mobilephone number
- * @apiParam {string} email User unique email address
- * @apiParam {string} password User password 
- * @apiParam {string} name User name for display purpose only 
- * @apiParam {string} [school] The school name
- * @apiParam {string} [title] The title 
- * @apiParam {string} [bio] The biography of the user
+ * @apiParam {String} mobilephone User unique mobilephone number
+ * @apiParam {String} email User unique email address
+ * @apiParam {String} password User password 
+ * @apiParam {String} name User name for display purpose only 
+ * @apiParam {String} [school] The school name
+ * @apiParam {String} [title] The title 
+ * @apiParam {String} [bio] The biography of the user
  * @apiParam {string=online, offline, both} [place=both] Where the user wish to have the class
- * @apiParam {string} [country] The code of country where the user lives in, check countries list
- * @apiParam {string} [province] The code of province where the user lives in, check provinces list
- * @apiParam {string} [city] The code of city where the user lives in, check cities list
- * @apiParam {boolean} [active=true] If user can be seached or not
- * @apiParam {boolean} [gender] User gender
- * @apiParam {number} [cost=0] The cost per hour of the user
- * @apiParam {number} [available=0] How much hours a user is opened for booking
- * @apiSuccess (200) {object} void The updated user object
- * @apiError {string} 401 Not authenticated, sign in first to get token 
- * @apiError {string} 403 Not authorized, no access for the operation
- * @apiError {string} 404 The requested content is found
- * @apiError {string} 416 Range not satisfiable
+ * @apiParam {String} [country] The code of country where the user lives in, check countries list
+ * @apiParam {String} [province] The code of province where the user lives in, check provinces list
+ * @apiParam {String} [city] The code of city where the user lives in, check cities list
+ * @apiParam {Boolean} [active=true] If user can be seached or not
+ * @apiParam {Boolean} [gender] User gender
+ * @apiParam {Number} [cost=0] The cost per hour of the user
+ * @apiParam {Number} [available=0] How much hours a user is opened for booking
+ * @apiSuccess (200) {Object} void The updated user object
+ * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 403 Not authorized, no access for the operation
+ * @apiError {String} 404 The requested content is found
+ * @apiError {String} 416 Range not satisfiable
  */
 users.post('/:id', protect, async (ctx) => {
   try {
@@ -294,10 +294,10 @@ users.post('/:id', protect, async (ctx) => {
 /** 
  * @api {delete} /api/users/:id Delete a user
  * @apiGroup Users 
- * @apiSuccess (200) {void} void void
- * @apiError {string} 401 Not authenticated, sign in first to get token 
- * @apiError {string} 403 Not authorized, no access for the operation
- * @apiError {string} 404 The requested content is found
+ * @apiSuccess (200) {Void} void void
+ * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 403 Not authorized, no access for the operation
+ * @apiError {String} 404 The requested content is found
  */
 users.delete('/:id', protect, async (ctx) => {
   try {

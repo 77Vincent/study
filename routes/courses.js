@@ -11,10 +11,10 @@ const { protect } = Auth
 /** 
  * @api {get} /api/courses Get all courses
  * @apiGroup Courses 
- * @apiParam (Query String) {integer} [id] Filtered by the major ID
- * @apiParam (Query String) {integer} [user_id] Filtered by the creator's user ID
- * @apiParam (Query String) {string} [label] Search by course name
- * @apiParam (Query String) {integer} [page=1] Pagination
+ * @apiParam (Query String) {Integer} [id] Filtered by the major ID
+ * @apiParam (Query String) {Integer} [user_id] Filtered by the creator's user ID
+ * @apiParam (Query String) {String} [label] Search by course name
+ * @apiParam (Query String) {Integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all courses
  */
 courses.get('/', async (ctx) => {
@@ -53,11 +53,11 @@ courses.get('/', async (ctx) => {
 /** 
  * @api {put} /api/courses Create a course
  * @apiGroup Courses 
- * @apiParam {string} label The course name
- * @apiParam {string} [description] The course description
- * @apiParam {integer} user_id The creator's user ID
- * @apiSuccess (201) {object} void The created course
- * @apiError {string} 401 Protected resource, use Authorization header to get access
+ * @apiParam {String} label The course name
+ * @apiParam {String} [description] The course description
+ * @apiParam {Integer} user_id The creator's user ID
+ * @apiSuccess (201) {Object} void The created course
+ * @apiError {String} 401 Protected resource, use Authorization header to get access
  */
 courses.put('/', protect, async (ctx) => {
   try {
@@ -75,12 +75,12 @@ courses.put('/', protect, async (ctx) => {
 /** 
  * @api {post} /api/courses/:id Update a course
  * @apiGroup Courses 
- * @apiParam {string} label The course name
- * @apiParam {string} [description] The course description
- * @apiSuccess (200) {object} void The updated course
- * @apiError {string} 401 Not authenticated, sign in first to get token 
- * @apiError {string} 403 Not authorized, no access for the operation
- * @apiError {string} 404 The requested content is found
+ * @apiParam {String} label The course name
+ * @apiParam {String} [description] The course description
+ * @apiSuccess (200) {Object} void The updated course
+ * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 403 Not authorized, no access for the operation
+ * @apiError {String} 404 The requested content is found
  */
 courses.post('/:id', protect, async (ctx) => {
   await Auth.isAuthorized(ctx, Course, async (data) => {
@@ -93,10 +93,10 @@ courses.post('/:id', protect, async (ctx) => {
 /** 
  * @api {delete} /api/courses/:id Delete a course
  * @apiGroup Courses 
- * @apiSuccess (200) {void} void void
- * @apiError {string} 401 Not authenticated, sign in first to get token 
- * @apiError {string} 403 Not authorized, no access for the operation
- * @apiError {string} 404 The requested content is found
+ * @apiSuccess (200) {Void} void void
+ * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 403 Not authorized, no access for the operation
+ * @apiError {String} 404 The requested content is found
  */
 courses.delete('/:id', protect, async (ctx) => {
   await Auth.isAuthorized(ctx, Course, async (data) => {

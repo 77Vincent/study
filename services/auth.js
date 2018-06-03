@@ -15,9 +15,9 @@ const getToken = (authorization = '') => {
 module.exports = {
   /**
    * Koa middleware: Authenticate the user credentials
-   * @param {string} id user ID
-   * @param {string} password user password
-   * @param {string} token token from the authorization section of the request headers
+   * @param {String} id user ID
+   * @param {String} password user password
+   * @param {String} token token from the authorization section of the request headers
    */
   protect: async (ctx, next) => {
     try {
@@ -61,10 +61,10 @@ module.exports = {
    * Used in a protected route to check if the current operation is operated by a valid user 
    * If the operating user is authorized, run the callback function
    * If not, reject the request with 403 state code 
-   * @param {object} Model The model being modified
-   * @param {object} ctx The Koa context object
+   * @param {Object} Model The model being modified
+   * @param {Object} ctx The Koa context object
    * @param {function} callback The callback function for authorized user
-   * @returns {void} void
+   * @returns {Void} void
    * */  
   isAuthorized: async (ctx, Model, callback) => {
     try {

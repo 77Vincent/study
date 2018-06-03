@@ -11,7 +11,7 @@ const avatars = Router()
 /** 
  * @api {get} /api/avatars Get all avatars
  * @apiGroup Avatars
- * @apiParam (Query String) {integer} [page=1] Pagination
+ * @apiParam (Query String) {Integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all avatars
  */
 avatars.get('/', async (ctx) => {
@@ -34,7 +34,7 @@ avatars.get('/', async (ctx) => {
  * @api {get} /api/avatars/:id Get a user avatar
  * @apiGroup Avatars
  * @apiSuccess (200) {binary} void The image file of user avatar
- * @apiError {string} 404 The requested content is found
+ * @apiError {String} 404 The requested content is found
  */
 avatars.get('/:id', async (ctx) => {
   try {
@@ -56,10 +56,10 @@ avatars.get('/:id', async (ctx) => {
 /** 
  * @api {put} /api/avatars Create a avatar 
  * @apiGroup Avatars
- * @apiParam {string} content Content of the image file encoded in base64
- * @apiParam {string} mime The MIME of the file 
- * @apiSuccess (201) {object} void The created avatar
- * @apiError {string} 401 Not authenticated, sign in first to get token 
+ * @apiParam {String} content Content of the image file encoded in base64
+ * @apiParam {String} mime The MIME of the file 
+ * @apiSuccess (201) {Object} void The created avatar
+ * @apiError {String} 401 Not authenticated, sign in first to get token 
  */
 avatars.put('/', protect, async (ctx) => {
   try {
@@ -78,12 +78,12 @@ avatars.put('/', protect, async (ctx) => {
 /** 
  * @api {post} /api/avatars Update a avatar 
  * @apiGroup Avatars
- * @apiParam {string} content Content of the avatar file encoded in base64
- * @apiParam {string} mime The MIME of the file 
- * @apiSuccess (200) {object} void The updated avatar
- * @apiError {string} 401 Not authenticated, sign in first to get token 
- * @apiError {string} 403 Not authorized, no access for the operation
- * @apiError {string} 404 The requested content is found
+ * @apiParam {String} content Content of the avatar file encoded in base64
+ * @apiParam {String} mime The MIME of the file 
+ * @apiSuccess (200) {Object} void The updated avatar
+ * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 403 Not authorized, no access for the operation
+ * @apiError {String} 404 The requested content is found
  */
 avatars.post('/:id', protect, async (ctx) => {
   await Auth.isAuthorized(ctx, Avatar, async (data) => {
@@ -100,10 +100,10 @@ avatars.post('/:id', protect, async (ctx) => {
 /** 
  * @api {delete} /api/avatars Delete a avatar 
  * @apiGroup Avatars
- * @apiSuccess (200) {void} void void
- * @apiError {string} 401 Not authenticated, sign in first to get token 
- * @apiError {string} 403 Not authorized, no access for the operation
- * @apiError {string} 404 The requested content is found
+ * @apiSuccess (200) {Void} void void
+ * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 403 Not authorized, no access for the operation
+ * @apiError {String} 404 The requested content is found
  */
 avatars.delete('/:id', protect, async (ctx) => {
   await Auth.isAuthorized(ctx, Avatar, async (data) => {

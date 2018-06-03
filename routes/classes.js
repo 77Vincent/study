@@ -13,9 +13,9 @@ const range = { length: 99 }
  * @apiGroup Classes 
  * @apiDescription Class is ordered by date in ASC order by default
  * @apiParam (Query String) {boolean=0,1} [finished=0,1] Filtered by if the class is finished 
- * @apiParam (Query String) {integer} [page=1] Pagination
+ * @apiParam (Query String) {Integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all classes 
- * @apiError {string} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 401 Not authenticated, sign in first to get token 
  */
 classes.get('/', async (ctx) => {
   try {
@@ -43,10 +43,10 @@ classes.get('/', async (ctx) => {
  * @apiParam {date} [date] On which date the class will begin
  * @apiParam {double} length=1 Duration of the class in hours 
  * @apiParam {boolean=0,1} finished=0 If the class is finished or not 
- * @apiParam {integer} schedule_id Which schedule does this class belong to
- * @apiSuccess (201) {object} void The created class
- * @apiError {string} 401 Not authenticated, sign in first to get token 
- * @apiError {string} 416 Range not satisfiable
+ * @apiParam {Integer} schedule_id Which schedule does this class belong to
+ * @apiSuccess (201) {Object} void The created class
+ * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 416 Range not satisfiable
  */
 classes.put('/', protect, async (ctx) => {
   try {
@@ -74,12 +74,12 @@ classes.put('/', protect, async (ctx) => {
  * @apiParam {date} [date] On which date the class will begin
  * @apiParam {double} length=1 Duration of the class in hours 
  * @apiParam {boolean=0,1} finished=0 If the class is finished or not 
- * @apiParam {integer} schedule_id Which schedule does this class belong to
- * @apiSuccess (200) {object} void The updated class
- * @apiError {string} 401 Not authenticated, sign in first to get token 
- * @apiError {string} 403 Not authorized, no access for the operation
- * @apiError {string} 404 The requested content is found
- * @apiError {string} 416 Range not satisfiable
+ * @apiParam {Integer} schedule_id Which schedule does this class belong to
+ * @apiSuccess (200) {Object} void The updated class
+ * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 403 Not authorized, no access for the operation
+ * @apiError {String} 404 The requested content is found
+ * @apiError {String} 416 Range not satisfiable
  */
 classes.post('/:id', protect, async (ctx) => {
   try {
@@ -102,10 +102,10 @@ classes.post('/:id', protect, async (ctx) => {
 /** 
  * @api {delete} /api/classes/:id Delete a class
  * @apiGroup Classes 
- * @apiSuccess (200) {void} void void
- * @apiError {string} 401 Not authenticated, sign in first to get token 
- * @apiError {string} 403 Not authorized, no access for the operation
- * @apiError {string} 404 The requested content is found
+ * @apiSuccess (200) {Void} void void
+ * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 403 Not authorized, no access for the operation
+ * @apiError {String} 404 The requested content is found
  */
 classes.delete('/:id', protect, async (ctx) => {
   await Auth.isAuthorized(ctx, Class, async (data) => {

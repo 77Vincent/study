@@ -10,9 +10,9 @@ const { protect } = Auth
 /** 
  * @api {get} /api/comments/ Get all comments
  * @apiGroup Comments
- * @apiParam (Query String) {integer} [user_id] Filtered by creator's user ID
- * @apiParam (Query String) {integer} [post_id] Filtered by post's ID it belongs to 
- * @apiParam (Query String) {integer} [page=1] Pagination
+ * @apiParam (Query String) {Integer} [user_id] Filtered by creator's user ID
+ * @apiParam (Query String) {Integer} [post_id] Filtered by post's ID it belongs to 
+ * @apiParam (Query String) {Integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all comments
  */
 comments.get('/', async (ctx) => {
@@ -36,11 +36,11 @@ comments.get('/', async (ctx) => {
 /** 
  * @api {put} /api/comments/ Create a comment
  * @apiGroup Comments
- * @apiParam {integer} user_id The creator's user ID
- * @apiParam {integer} post_id The post ID it belongs to
- * @apiParam {string} content The content of the comment
- * @apiSuccess (201) {object} void The created comment
- * @apiError {string} 401 Protected resource, use Authorization header to get access
+ * @apiParam {Integer} user_id The creator's user ID
+ * @apiParam {Integer} post_id The post ID it belongs to
+ * @apiParam {String} content The content of the comment
+ * @apiSuccess (201) {Object} void The created comment
+ * @apiError {String} 401 Protected resource, use Authorization header to get access
  */
 comments.put('/', protect, async (ctx) => {
   try {
@@ -56,8 +56,8 @@ comments.put('/', protect, async (ctx) => {
 /** 
  * @api {delete} /api/comments/:id Delete a comment
  * @apiGroup Comments
- * @apiSuccess (200) {void} void void
- * @apiError {string} 401 Protected resource, use Authorization header to get access
+ * @apiSuccess (200) {Void} void void
+ * @apiError {String} 401 Protected resource, use Authorization header to get access
  */
 comments.delete('/:id', protect, async (ctx) => {
   try {

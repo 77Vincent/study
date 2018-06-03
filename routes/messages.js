@@ -10,12 +10,12 @@ const { protect } = Auth
 /** 
  * @api {get} /api/messages Get all messages
  * @apiGroup Messages 
- * @apiParam (Query String) {integer} [sender_id] Filtered by the sender's user ID 
- * @apiParam (Query String) {integer} [recipient_id] Filtered by the recipient's user ID
+ * @apiParam (Query String) {Integer} [sender_id] Filtered by the sender's user ID 
+ * @apiParam (Query String) {Integer} [recipient_id] Filtered by the recipient's user ID
  * @apiParam (Query String) {boolean=0,1} [read=0,1] Filtered by if the message is read 
- * @apiParam (Query String) {string} [content] Search by message content
+ * @apiParam (Query String) {String} [content] Search by message content
  * @apiSuccess (200) {object[]} void Array contains all messages 
- * @apiError {string} 401 Protected resource, use Authorization header to get access
+ * @apiError {String} 401 Protected resource, use Authorization header to get access
  */
 messages.get('/', protect, async (ctx) => {
   try {
@@ -45,12 +45,12 @@ messages.get('/', protect, async (ctx) => {
 /** 
  * @api {put} /api/messages Create a new message
  * @apiGroup Messages 
- * @apiParam {string} content Message content
- * @apiParam {integer} sender_id The sender's user ID 
- * @apiParam {integer} recipient_id The recipient's user ID
- * @apiParam {boolean} [read=0] If the message has been read or not
- * @apiSuccess (201) {object} void The newly created message
- * @apiError {string} 401 Protected resource, use Authorization header to get access
+ * @apiParam {String} content Message content
+ * @apiParam {Integer} sender_id The sender's user ID 
+ * @apiParam {Integer} recipient_id The recipient's user ID
+ * @apiParam {Boolean} [read=0] If the message has been read or not
+ * @apiSuccess (201) {Object} void The newly created message
+ * @apiError {String} 401 Protected resource, use Authorization header to get access
  */
 messages.put('/', protect, async (ctx) => {
   try {

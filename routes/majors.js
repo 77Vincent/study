@@ -25,10 +25,10 @@ majors.get('/', async (ctx) => {
 /** 
  * @api {put} /api/majors/ Create a major
  * @apiGroup Majors 
- * @apiParam {string} label The major name
- * @apiParam {string} [description] The major description
- * @apiSuccess (201) {object} void The created major 
- * @apiError {string} 401 Not authenticated, sign in first to get token 
+ * @apiParam {String} label The major name
+ * @apiParam {String} [description] The major description
+ * @apiSuccess (201) {Object} void The created major 
+ * @apiError {String} 401 Not authenticated, sign in first to get token 
  */
 majors.put('/', protect, async (ctx) => {
   try {
@@ -45,12 +45,12 @@ majors.put('/', protect, async (ctx) => {
 /** 
  * @api {post} /api/majors/:id Update a tag
  * @apiGroup Majors 
- * @apiParam {string} label The major name
- * @apiParam {string} [description] The major description
- * @apiSuccess (200) {object} void The Updated tag
- * @apiError {string} 401 Not authenticated, sign in first to get token 
- * @apiError {string} 403 Not authorized, no access for the operation
- * @apiError {string} 404 The requested content is found
+ * @apiParam {String} label The major name
+ * @apiParam {String} [description] The major description
+ * @apiSuccess (200) {Object} void The Updated tag
+ * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 403 Not authorized, no access for the operation
+ * @apiError {String} 404 The requested content is found
  */
 majors.post('/:id', protect, async (ctx) => {
   await Auth.isAuthorized(ctx, Major, async (data) => {
@@ -63,10 +63,10 @@ majors.post('/:id', protect, async (ctx) => {
 /** 
  * @api {delete} /api/majors/:id Delete a major 
  * @apiGroup Majors 
- * @apiSuccess (200) {void} void void
- * @apiError {string} 401 Not authenticated, sign in first to get token 
- * @apiError {string} 403 Not authorized, no access for the operation
- * @apiError {string} 404 The requested content is found
+ * @apiSuccess (200) {Void} void void
+ * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 403 Not authorized, no access for the operation
+ * @apiError {String} 404 The requested content is found
  */
 majors.delete('/:id', protect, async (ctx) => {
   await Auth.isAuthorized(ctx, Major, async (data) => {

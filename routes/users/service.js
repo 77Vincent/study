@@ -63,8 +63,8 @@ module.exports = {
   },
   /**
    * Give each user a weight for ordering based on several aspects
-   * @param {object} values each user model
-   * @returns {number} the weight to return
+   * @param {Object} values each user model
+   * @returns {Number} the weight to return
    */
   defaultOrder(values) {
     const origin = '2018/4/1'

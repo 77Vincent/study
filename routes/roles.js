@@ -27,8 +27,8 @@ roles.get('/', async (ctx) => {
  * @api {put} /api/roles/ Create a role 
  * @apiDescription 0=admin, 1=teacher, 2=student
  * @apiGroup Roles 
- * @apiSuccess (200) {object} void The created role 
- * @apiError {string} 401 Protected resource, use Authorization header to get access
+ * @apiSuccess (200) {Object} void The created role 
+ * @apiError {String} 401 Protected resource, use Authorization header to get access
  */
 roles.put('/', protect, async (ctx) => {
   try {

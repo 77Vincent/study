@@ -11,9 +11,9 @@ const { protect } = Auth
  * @api {get} /api/posts Get all posts
  * @apiGroup Posts 
  * @apiDescription Posts are ordered by updated time in DESC order by default
- * @apiParam (Query String) {integer} [user_id] Filtered by user ID
- * @apiParam (Query String) {string} [content] Search by posts' content
- * @apiParam (Query String) {integer} [page=1] Pagination
+ * @apiParam (Query String) {Integer} [user_id] Filtered by user ID
+ * @apiParam (Query String) {String} [content] Search by posts' content
+ * @apiParam (Query String) {Integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all posts
  */
 posts.get('/', async (ctx) => {
@@ -54,7 +54,7 @@ posts.get('/', async (ctx) => {
 /** 
  * @api {get} /api/posts/:id Get a post
  * @apiGroup Posts 
- * @apiSuccess (200) {object} void A post object
+ * @apiSuccess (200) {Object} void A post object
  */
 posts.get('/:id', async (ctx) => {
   try {
@@ -78,10 +78,10 @@ posts.get('/:id', async (ctx) => {
 /** 
  * @api {put} /api/posts Create a post
  * @apiGroup Posts 
- * @apiParam {string} user_id The creator's user ID
- * @apiParam {string} content The post content
- * @apiSuccess (201) {object} void The created post
- * @apiError {string} 401 Protected resource, use Authorization header to get access
+ * @apiParam {String} user_id The creator's user ID
+ * @apiParam {String} content The post content
+ * @apiSuccess (201) {Object} void The created post
+ * @apiError {String} 401 Protected resource, use Authorization header to get access
  */
 posts.put('/', protect, async (ctx) => {
   try {
@@ -98,8 +98,8 @@ posts.put('/', protect, async (ctx) => {
 /** 
  * @api {delete} /api/posts/:id Delete a post
  * @apiGroup Posts 
- * @apiSuccess (200) {void} void void
- * @apiError {string} 401 Protected resource, use Authorization header to get access
+ * @apiSuccess (200) {Void} void void
+ * @apiError {String} 401 Protected resource, use Authorization header to get access
  */
 posts.delete('/:id', protect, async (ctx) => {
   try {
