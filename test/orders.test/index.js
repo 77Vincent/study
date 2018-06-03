@@ -6,19 +6,20 @@ const config = require('../../config')
 const users = require('../users.test/data')
 const userA = users[1].mobilephone
 const userB = users[2].mobilephone
+const userC = users[3].mobilephone
 const password = '000000'
 const toUpdate = {
-  length: 99,
-  date: new Date('1990/06/29'),
-  finished: true
+  unit_price: 999,
+  total_price: 999,
+  length: 9
 }
 
-describe('Class', () => {
+describe('Orders', () => {
   it('Create by visitor should return 401', async () => {
     try {
       await request({
         method: 'PUT',
-        url: `${url}/classes`,
+        url: `${url}/orders`,
         body: data[0]
       })
     } catch (err) {
@@ -26,22 +27,37 @@ describe('Class', () => {
     }
   })
 
-  it('Create should return 201', async () => {
-    for (let i = 0; i < data.length; i++) {
-      const session = await login(userA, password)
+  it('Create by user should return 200', async () => {
+    try {
+      let session = await login(userA, password)
       await request({
         method: 'PUT',
-        url: `${url}/classes`,
+        url: `${url}/orders`,
         auth: { bearer: session.token },
-        body: data[i]
+        body: data[0]
       })
+      session = await login(userB, password)
+      await request({
+        method: 'PUT',
+        url: `${url}/orders`,
+        auth: { bearer: session.token },
+        body: data[1]
+      })
+      session = await login(userC, password)
+      await request({
+        method: 'PUT',
+        url: `${url}/orders`,
+        auth: { bearer: session.token },
+        body: data[2]
+      })
+    } catch (err) {
+      assert.equal(err.statusCode, 200)
     }
-    assert.ok(true)
   })
 
   it('Get by visitor should return 401', async () => {
     try {
-      await request({ url: `${url}/classes` })
+      await request({ url: `${url}/orders` })
     } catch (err) {
       assert.equal(err.statusCode, 401)
     }
@@ -51,7 +67,7 @@ describe('Class', () => {
     try {
       const session = await login(config.adminID, config.adminPassword)
       await request({
-        url: `${url}/classes`,
+        url: `${url}/orders`,
         auth: { bearer: session.token }
       })
     } catch (err) {
@@ -63,7 +79,7 @@ describe('Class', () => {
     try {
       const session = await login(userA, password)
       await request({
-        url: `${url}/classes`,
+        url: `${url}/orders`,
         auth: { bearer: session.token }
       })
     } catch (err) {
@@ -75,7 +91,7 @@ describe('Class', () => {
     try {
       await request({
         method: 'POST',
-        url: `${url}/classes/2`,
+        url: `${url}/orders/2`,
         body: toUpdate
       })
     } catch (err) {
@@ -83,42 +99,30 @@ describe('Class', () => {
     }
   })
 
-  it('Update by other user should return 403', async () => {
+  it('Update by admin user should return 200', async () => {
     try {
-      const session = await login(userB, password)
+      const session = await login(config.adminID, config.adminPassword)
+      const orders = await request({ url: `${url}/orders`, auth: { bearer: session.token } })
       await request({
         method: 'POST',
-        url: `${url}/classes/2`,
-        body: toUpdate,
-        auth: { bearer: session.token }
+        url: `${url}/orders/${orders.body[1].id}`,
+        auth: { bearer: session.token },
+        body: toUpdate
       })
     } catch (err) {
-      assert.equal(err.statusCode, 403)
-    }
-  })
-
-  it('Update with not satisfiable input should return 416', async () => {
-    try {
-      const session = await login(userA, password)
-      await request({
-        method: 'POST',
-        url: `${url}/classes/2`,
-        body: { length: 999 },
-        auth: { bearer: session.token }
-      })
-    } catch (err) {
-      assert.equal(err.statusCode, 416)
+      assert.equal(err.statusCode, 200)
     }
   })
 
   it('Update by owner should return 200', async () => {
     try {
-      const session = await login(userA, password)
+      const session = await login(userB, password)
+      const orders = await request({ url: `${url}/orders`, auth: { bearer: session.token } })
       await request({
         method: 'POST',
-        url: `${url}/classes/2`,
-        body: toUpdate,
-        auth: { bearer: session.token }
+        url: `${url}/orders/${orders.body[1].id}`,
+        auth: { bearer: session.token },
+        body: toUpdate
       })
     } catch (err) {
       assert.equal(err.statusCode, 200)
@@ -129,32 +133,20 @@ describe('Class', () => {
     try {
       await request({
         method: 'DELETE',
-        url: `${url}/classes/1`,
+        url: `${url}/orders/3`,
       })
     } catch (err) {
       assert.equal(err.statusCode, 401)
     }
   })
 
-  it('Delete by other user should return 403', async () => {
-    try {
-      const session = await login(userB, password)
-      await request({
-        method: 'DELETE',
-        url: `${url}/classes/1`,
-        auth: { bearer: session.token }
-      })
-    } catch (err) {
-      assert.equal(err.statusCode, 403)
-    }
-  })
-
   it('Delete by owner should return 200', async () => {
     try {
       const session = await login(userA, password)
+      const orders = await request({ url: `${url}/orders`, auth: { bearer: session.token } })
       await request({
         method: 'DELETE',
-        url: `${url}/classes/1`,
+        url: `${url}/orders/${orders.body[0].id}`,
         auth: { bearer: session.token }
       })
     } catch (err) {

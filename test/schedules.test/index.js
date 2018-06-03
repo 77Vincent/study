@@ -39,7 +39,7 @@ describe('Schedule', () => {
     assert.ok(true)
   })
 
-  it('Get all by visitor should return 401', async () => {
+  it('Get by visitor should return 401', async () => {
     try {
       await request({ url: `${url}/schedules` })
     } catch (err) {
@@ -47,7 +47,19 @@ describe('Schedule', () => {
     }
   })
 
-  it('Get all by user should return 200', async () => {
+  it('Get by admin user should return 200', async () => {
+    try {
+      const session = await login(userA, password)
+      await request({
+        url: `${url}/schedules`,
+        auth: { bearer: session.token }
+      })
+    } catch (err) {
+      assert.equal(err.statusCode, 200)
+    }
+  })
+
+  it('Get by user should return 200', async () => {
     try {
       const session = await login(config.adminID, config.adminPassword)
       await request({

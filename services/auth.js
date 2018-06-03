@@ -76,6 +76,7 @@ module.exports = {
       // Only the owner or admin user can update
       if (data.dataValues.user_id === ctx.state.currentUserID
         || data.dataValues.teacher_id === ctx.state.currentUserID
+        || data.dataValues.requestor_id === ctx.state.currentUserID
         || ctx.state.isAdmin
       ) {
         await callback(data)

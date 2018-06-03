@@ -7,11 +7,10 @@ module.exports = Database.define('order', {
     defaultValue: Sequelize.UUIDV1,
     primaryKey: true
   },
-  paid: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: 0 
-  },
   paid_at: {
+    type: Sequelize.DATE,
+  },
+  received_at: {
     type: Sequelize.DATE,
   },
   payment_method: {
@@ -32,10 +31,6 @@ module.exports = Database.define('order', {
     type: Sequelize.TINYINT,
     allowNull: false,
     defaultValue: 1 
-  },
-  income: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: 0 
   },
   refund: {
     type: Sequelize.BOOLEAN,

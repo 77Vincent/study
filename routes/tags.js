@@ -54,8 +54,7 @@ tags.put('/', protect, async (ctx) => {
  */
 tags.post('/:id', protect, async (ctx) => {
   await Auth.isAuthorized(ctx, Tag, async (data) => {
-    const { content } = ctx.request.body
-    data = await data.update({ content })
+    data = await data.update(ctx.request.body)
     ctx.status = 200
     ctx.body = General.prettyJSON(data)
   })

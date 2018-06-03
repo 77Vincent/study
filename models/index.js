@@ -31,8 +31,8 @@ Message.belongsTo(User, { as: 'Recipient', foreignKey: 'recipient_id' })
 Schedule.belongsTo(User, { as: 'Teacher', foreignKey: 'teacher_id' })
 Schedule.belongsTo(User, { as: 'Student', foreignKey: 'student_id' })
 
-Order.belongsTo(User, {as: 'Buyer', foreignKey: 'buyer_id'})
-Order.belongsTo(User, {as: 'Seller', foreignKey: 'seller_id'})
+Order.belongsTo(User, {as: 'Requestor', foreignKey: 'requestor_id'})
+Order.belongsTo(User, {as: 'Recipient', foreignKey: 'recipient_id'})
 
 Class.belongsToMany(Course, {through: 'class_course'})
 Course.belongsToMany(Class, {through: 'class_course'})
