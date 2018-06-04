@@ -14,7 +14,7 @@ describe('User', () => {
     }
     const users = await request({ method: 'GET', url: `${url}/users`})
     // Admin user is always created
-    assert.equal(users.body.length - 1, data.length)
+    assert.equal(users.body.length, data.length)
   })
 
   it('Update a user by visitor should return 401', async () => {

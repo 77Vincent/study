@@ -55,6 +55,9 @@ users.get('/', async (ctx) => {
       where: { $and: filter },
     })
 
+    // Do not expose admin user
+    data.shift(0)
+
     for (let i = 0; i < data.length; i++) {
       await service.processUserData(data[i].dataValues)
     }
