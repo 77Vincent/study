@@ -17,6 +17,14 @@ describe('User', () => {
     assert.equal(users.body.length, data.length)
   })
 
+  it('Create a existing one should return 409', async () => {
+    try {
+      await request({ method: 'PUT', url: `${url}/users`, body: data[0] })
+    } catch (err) {
+      assert.equal(err.statusCode, 409)
+    }
+  })
+
   it('Update a user by visitor should return 401', async () => {
     try {
       await request({

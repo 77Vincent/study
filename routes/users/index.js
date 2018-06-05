@@ -206,6 +206,15 @@ users.get('/:id/teachers', async (ctx) => {
 users.put('/', async (ctx) => {
   try {
     const input = ctx.request.body
+    const { username, mobilephone, email } = ctx.request.body
+    const account = username || mobilephone || email
+    const user = await service.getOneUser(account)
+
+    if (user) {
+      ctx.status = 409
+      return
+    }
+
     let data = await User.create(input)
     data = await service.getOneUser(data.id)
 
