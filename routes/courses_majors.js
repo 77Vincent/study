@@ -9,12 +9,12 @@ const CourseMajor = Database.model('course_major')
 const { protect } = Auth
 
 /** 
- * @api {get} /api/courses_majors/ Get all users and majors relations
+ * @api {get} /api/courses_majors/ Get all course and major relations
  * @apiGroup Users_Majors 
- * @apiParam (Query String) {Integer} [course_id] Filtered by user ID 
+ * @apiParam (Query String) {Integer} [course_id] Filtered by course ID 
  * @apiParam (Query String) {Integer} [major_id] Filtered by major ID
  * @apiParam (Query String) {Integer} [page=1] Pagination
- * @apiSuccess (200) {object[]} void Array contains all users and majors relations
+ * @apiSuccess (200) {object[]} void Array contains all courses and majors relations
  */
 courses_majors.get('/', async (ctx) => {
   try {
@@ -33,7 +33,7 @@ courses_majors.get('/', async (ctx) => {
 })
 
 /** 
- * @api {put} /api/courses_majors/ Create a major
+ * @api {put} /api/courses_majors/ Create a course and major relation
  * @apiGroup Users_Majors
  * @apiParam {String} course_id The course ID
  * @apiParam {String} major_id The major ID
@@ -52,7 +52,7 @@ courses_majors.put('/', protect, async (ctx) => {
 })
 
 /** 
- * @api {delete} /api/courses_majors/:major_id Remove a major
+ * @api {delete} /api/courses_majors/:major_id Remove a course and major relation 
  * @apiGroup Users_Majors 
  * @apiParam {Integer} course_id The course ID
  * @apiParam {Integer} major_id The major ID

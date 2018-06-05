@@ -9,12 +9,12 @@ const userC = users[3].mobilephone
 const userD = users[4].mobilephone
 const password = '000000'
 
-describe('Following', () => {
+describe('Follower_Following', () => {
   it('Create by visitor should return 401', async () => {
     try {
       await request({
         method: 'PUT',
-        url: `${url}/followings`,
+        url: `${url}/followers_followings`,
         body: data[0]
       })
     } catch (err) {
@@ -26,52 +26,52 @@ describe('Following', () => {
     let session = await login(userA, password)
     await request({
       method: 'PUT',
-      url: `${url}/followings`,
+      url: `${url}/followers_followings`,
       auth: { bearer: session.token },
       body: data[0]
     })
     await request({
       method: 'PUT',
-      url: `${url}/followings`,
+      url: `${url}/followers_followings`,
       auth: { bearer: session.token },
       body: data[1]
     })
     await request({
       method: 'PUT',
-      url: `${url}/followings`,
+      url: `${url}/followers_followings`,
       auth: { bearer: session.token },
       body: data[2]
     })
     session = await login(userB, password)
     await request({
       method: 'PUT',
-      url: `${url}/followings`,
+      url: `${url}/followers_followings`,
       auth: { bearer: session.token },
       body: data[1]
     })
     await request({
       method: 'PUT',
-      url: `${url}/followings`,
+      url: `${url}/followers_followings`,
       auth: { bearer: session.token },
       body: data[3]
     })
     session = await login(userC, password)
     await request({
       method: 'PUT',
-      url: `${url}/followings`,
+      url: `${url}/followers_followings`,
       auth: { bearer: session.token },
       body: data[2]
     })
     await request({
       method: 'PUT',
-      url: `${url}/followings`,
+      url: `${url}/followers_followings`,
       auth: { bearer: session.token },
       body: data[3]
     })
     session = await login(userD, password)
     await request({
       method: 'PUT',
-      url: `${url}/followings`,
+      url: `${url}/followers_followings`,
       auth: { bearer: session.token },
       body: data[3]
     })
@@ -83,7 +83,7 @@ describe('Following', () => {
       const session = await login(userA, password)
       await request({
         method: 'DELETE',
-        url: `${url}/followings/1`,
+        url: `${url}/followers_followings/1`,
         auth: { bearer: session.token }
       })
     } catch (err) {

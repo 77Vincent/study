@@ -9,7 +9,7 @@ const UserMajor = Database.model('user_major')
 const { protect } = Auth
 
 /** 
- * @api {get} /api/users_majors/ Get all users and majors relations
+ * @api {get} /api/users_majors/ Get all user and major relations
  * @apiGroup Users_Majors 
  * @apiParam (Query String) {Integer} [user_id] Filtered by user ID 
  * @apiParam (Query String) {Integer} [major_id] Filtered by major ID
@@ -33,7 +33,7 @@ users_majors.get('/', async (ctx) => {
 })
 
 /** 
- * @api {put} /api/users_majors/ Create a major
+ * @api {put} /api/users_majors/ Create a user and major relation
  * @apiGroup Users_Majors
  * @apiParam {String} major_id The major ID
  * @apiSuccess (201) {Object} void void
@@ -52,7 +52,7 @@ users_majors.put('/', protect, async (ctx) => {
 })
 
 /** 
- * @api {delete} /api/users_majors/:major_id Remove a major
+ * @api {delete} /api/users_majors/:major_id Remove a user and major relation 
  * @apiGroup Users_Majors 
  * @apiSuccess (200) {Void} void void
  * @apiError {String} 401 Not authenticated, sign in first to get token 
