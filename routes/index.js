@@ -5,7 +5,7 @@ const routes = [
   'messages', 'pictures', 'posts', 'roles',
   'schedules', 'sessions', 'tags', 'users',
   'orders', 'avatars', 'hooks', 'followers_followings',
-  'users_majors', 'courses_majors'
+  'users_majors', 'courses_majors', 'classes_courses'
 ]
 
 const router = Router({ prefix: '/api/' })

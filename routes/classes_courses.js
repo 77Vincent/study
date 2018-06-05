@@ -10,8 +10,8 @@ const { protect } = Auth
 
 /** 
  * @api {get} /api/classes_courses/ Get all classes and courses relations
- * @apiGroup Users_Majors 
- * @apiParam (Query String) {Integer} [class_id] Filtered by major ID
+ * @apiGroup Class_Course 
+ * @apiParam (Query String) {Integer} [class_id] Filtered by class ID
  * @apiParam (Query String) {Integer} [course_id] Filtered by course ID 
  * @apiSuccess (200) {object[]} void Array contains all classes and courses relations
  */
@@ -32,10 +32,10 @@ classes_courses.get('/', async (ctx) => {
 })
 
 /** 
- * @api {put} /api/classes_courses/ Create a major
- * @apiGroup Users_Majors
+ * @api {put} /api/classes_courses/ Create a class and course relation
+ * @apiGroup Class_Course
+ * @apiParam {String} class_id The class ID
  * @apiParam {String} course_id The course ID
- * @apiParam {String} class_id The major ID
  * @apiSuccess (201) {Object} void void
  * @apiError {String} 401 Not authenticated, sign in first to get token 
  */
@@ -51,10 +51,10 @@ classes_courses.put('/', protect, async (ctx) => {
 })
 
 /** 
- * @api {delete} /api/classes_courses/:class_id Remove a major
- * @apiGroup Users_Majors 
+ * @api {delete} /api/classes_courses/:class_id Remove a class and course relation
+ * @apiGroup Class_Course 
+ * @apiParam {Integer} class_id The class ID
  * @apiParam {Integer} course_id The course ID
- * @apiParam {Integer} class_id The major ID
  * @apiSuccess (200) {Void} void void
  * @apiError {String} 401 Not authenticated, sign in first to get token 
  * @apiError {String} 404 The requested content is found
