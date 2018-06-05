@@ -10,7 +10,7 @@ const { protect } = Auth
 
 /** 
  * @api {get} /api/classes_courses/ Get all classes and courses relations
- * @apiGroup Class_Course 
+ * @apiGroup Classes_Courses 
  * @apiParam (Query String) {Integer} [class_id] Filtered by class ID
  * @apiParam (Query String) {Integer} [course_id] Filtered by course ID 
  * @apiSuccess (200) {object[]} void Array contains all classes and courses relations
@@ -33,7 +33,7 @@ classes_courses.get('/', async (ctx) => {
 
 /** 
  * @api {put} /api/classes_courses/ Create a class and course relation
- * @apiGroup Class_Course
+ * @apiGroup Classes_Courses
  * @apiParam {String} class_id The class ID
  * @apiParam {String} course_id The course ID
  * @apiSuccess (201) {Object} void void
@@ -52,7 +52,7 @@ classes_courses.put('/', protect, async (ctx) => {
 
 /** 
  * @api {delete} /api/classes_courses/:class_id Remove a class and course relation
- * @apiGroup Class_Course 
+ * @apiGroup Classes_Courses 
  * @apiParam {Integer} class_id The class ID
  * @apiParam {Integer} course_id The course ID
  * @apiSuccess (200) {Void} void void

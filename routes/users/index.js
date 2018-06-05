@@ -202,6 +202,7 @@ users.get('/:id/teachers', async (ctx) => {
  * @apiParam {Number} [cost=0] The cost per hour of the user
  * @apiParam {Number} [available=0] How much hours a user is opened for booking
  * @apiSuccess (201) {Object} void The newly created user object
+ * @apiError {String} 409 The resource being created is already exist
  */
 users.put('/', async (ctx) => {
   try {
