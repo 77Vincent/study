@@ -10,7 +10,7 @@ const { protect } = Auth
 
 /** 
  * @api {get} /api/followings/ Get all targets followed by the current user
- * @apiGroup Follower_Following 
+ * @apiGroup Followings 
  * @apiParam (Query String) {Integer} [follower_id] Filtered by user ID of followers
  * @apiParam (Query String) {Integer} [following_id] Filtered by user ID of followings
  * @apiParam (Query String) {Integer} [page=1] Pagination
@@ -52,27 +52,21 @@ followings.put('/', protect, async (ctx) => {
 })
 
 /** 
- * @api {delete} /api/followings/:id Unfollow
+ * @api {delete} /api/followings/:following_id Unfollow
  * @apiGroup Followings 
  * @apiSuccess (200) {Void} void void
  * @apiError {String} 401 Not authenticated, sign in first to get token 
  * @apiError {String} 404 The requested content is found
  */
-followings.delete('/:id', protect, async (ctx) => {
-  const data = await FollowerFollowing.findOne({
-    where: {
-      follower_id: ctx.state.currentUserID,
-      following_id: ctx.params.id
-    }
-  })
+followings.delete('/:following_id', protect, async (ctx) => {
+  const where = {
+    follower_id: ctx.state.currentUserID,
+    following_id: ctx.params.following_id
+  }
+  const data = await FollowerFollowing.findOne({ where })
   if (!data) { return }
 
-  await FollowerFollowing.destroy({
-    where: {
-      follower_id: ctx.state.currentUserID,
-      following_id: ctx.params.id
-    }
-  })
+  await FollowerFollowing.destroy({ where })
   ctx.status = 200
 })
 

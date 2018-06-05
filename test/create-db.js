@@ -2,11 +2,6 @@ const Database = require('../database.js')
 
 const run = async () => {
   try {
-    await Database.model('user_major').bulkCreate([
-      { user_id: 2, major_id: 1 }, { user_id: 2, major_id: 2 }, { user_id: 2, major_id: 3 },
-      { user_id: 2, major_id: 4 }, { user_id: 3, major_id: 5 }, { user_id: 4, major_id: 6 },
-      { user_id: 5, major_id: 2 }, { user_id: 5, major_id: 3 }, { user_id: 6, major_id: 6 },
-    ])
     await Database.model('course_major').bulkCreate([
       { course_id: 1, major_id: 1 }, { course_id: 1, major_id: 2 }, { course_id: 1, major_id: 3 },
       { course_id: 1, major_id: 4 }, { course_id: 2, major_id: 3 }, { course_id: 2, major_id: 6 },

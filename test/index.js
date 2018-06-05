@@ -13,6 +13,7 @@ before(async () => {
 
 require('./majors.test')
 require('./users.test')
+require('./users_majors.test')
 require('./followings.test')
 require('./tags.test')
 require('./courses.test')
