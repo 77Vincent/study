@@ -90,8 +90,9 @@ users.get('/', async (ctx) => {
 })
 
 /** 
- * @api {get} /api/users/:id Get a user
- * @apiGroup Users 
+ * @api {get} /api/users/:account Get a user
+ * @apiGroup Users
+ * @apiDescription The account could be id, username, mobilephone, email 
  * @apiSuccess (200) {Object} void User object
  * @apiError {String} 404 The requested content is found
  */
@@ -104,7 +105,6 @@ users.get('/:id', async (ctx) => {
       await service.processUserData(data.dataValues)
       ctx.status = 200
       ctx.body = General.prettyJSON(data)
-
     } else {
       ctx.status = 404
     }
@@ -202,7 +202,7 @@ users.get('/:id/teachers', async (ctx) => {
  * @apiParam {Number} [cost=0] The cost per hour of the user
  * @apiParam {Number} [available=0] How much hours a user is opened for booking
  * @apiSuccess (201) {Object} void The newly created user object
- * @apiError {String} 409 The resource being created is already exist
+ * @apiError {String} 409 The resource being created already exists
  */
 users.put('/', async (ctx) => {
   try {

@@ -33,7 +33,7 @@ followers_followings.get('/', async (ctx) => {
 })
 
 /** 
- * @api {put} /api/followers_followings/ Create a follower and following relation for the current user
+ * @api {put} /api/followers_followings/ Create a follower and following relation
  * @apiGroup Followers_Followings
  * @apiParam {String} following_id The user ID of the followed user
  * @apiSuccess (201) {Object} void void
@@ -52,7 +52,7 @@ followers_followings.put('/', protect, async (ctx) => {
 })
 
 /** 
- * @api {delete} /api/followers_followings/:following_id Remove a follower and following relation from the current user
+ * @api {delete} /api/followers_followings/:following_id Remove a follower and following relation
  * @apiGroup Followers_Followings 
  * @apiSuccess (200) {Void} void void
  * @apiError {String} 401 Not authenticated, sign in first to get token 
