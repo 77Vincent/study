@@ -4,7 +4,7 @@ const routes = [
   'classes', 'comments', 'courses', 'majors',
   'messages', 'pictures', 'posts', 'roles',
   'schedules', 'sessions', 'tags', 'users',
-  'orders', 'avatars', 'hooks', 'followers_followings',
+  'orders', 'avatars', 'followers_followings',
   'users_majors', 'courses_majors', 'classes_courses'
 ]
 
