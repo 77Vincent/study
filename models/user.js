@@ -27,6 +27,9 @@ module.exports = Database.define('user', {
     type: Sequelize.TINYINT,
     defaultValue: 3,
   },
+  identity_number: {
+    type: Sequelize.STRING,
+  },
   active: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
@@ -48,6 +51,12 @@ module.exports = Database.define('user', {
   title: {
     type: Sequelize.STRING
   },
+  degree: {
+    type: Sequelize.STRING
+  },
+  country: {
+    type: Sequelize.STRING,
+  },
   province: {
     type: Sequelize.STRING
   },
@@ -58,9 +67,6 @@ module.exports = Database.define('user', {
     type: Sequelize.STRING,
     allowNull: false,
     defaultValue: 'both',
-  },
-  country: {
-    type: Sequelize.STRING,
   },
   email: {
     type: Sequelize.STRING

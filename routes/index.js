@@ -22,19 +22,25 @@ module.exports = router
  */
 
 /** 
- * @api {get} /locale/CN/cities.json Cities list
- * @apiGroup Locations 
- * @apiSuccess (200) {object[]} void Cities list
+ * @api {get} /resources/locale/CN/cities.json Cities list
+ * @apiGroup Resources 
+ * @apiSuccess (200) {object[]} void List of the recourse
  */
 
 /** 
- * @api {get} /locale/CN/provinces.json Provinces list
- * @apiGroup Locations 
- * @apiSuccess (200) {object[]} void Provinces list
+ * @api {get} /resources/locale/CN/provinces.json Provinces list
+ * @apiGroup Resources 
+ * @apiSuccess (200) {object[]} void List of the recourse
  */
 
 /** 
- * @api {get} /locale/countries.json Countries list
- * @apiGroup Locations 
- * @apiSuccess (200) {object[]} void Countries list
+ * @api {get} /resources/locale/countries.json Countries list
+ * @apiGroup Resources 
+ * @apiSuccess (200) {object[]} void List of the recourse
+ */
+
+/** 
+ * @api {get} /resources/degrees.json Degrees list
+ * @apiGroup Resources 
+ * @apiSuccess (200) {object[]} void List of the recourse
  */
