@@ -44,3 +44,9 @@ module.exports = router
  * @apiGroup Resources 
  * @apiSuccess (200) {object[]} void List of the recourse
  */
+
+/** 
+ * @api {get} /resources/roles.json User roles list
+ * @apiGroup Resources 
+ * @apiSuccess (200) {object[]} void List of the recourse
+ */
