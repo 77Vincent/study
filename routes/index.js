@@ -2,7 +2,7 @@ const Router = require('koa-router')
 
 const routes = [
   'classes', 'comments', 'courses', 'majors',
-  'messages', 'pictures', 'posts', 'roles',
+  'messages', 'pictures', 'posts',
   'schedules', 'sessions', 'tags', 'users',
   'orders', 'avatars', 'followers_followings',
   'users_majors', 'courses_majors', 'classes_courses'

@@ -21,7 +21,9 @@ const UserMajor = Database.model('user_major')
  * @apiGroup Users 
  * @apiParam (Query String) {String} [id] Filtered by user ID
  * @apiParam (Query String) {String} [mobilephone] Filtered by user mobilephone
- * @apiParam (Query String) {integer=1,2,3} [role_id=2,3] Filtered by user's role, 1=admin, 2=teacher, 3=student
+ * @apiParam (Query String) {integer=1,2} [role_id=1,2]
+ * @apiParam (Query String) {integer=0,1,2,3} [degree_id=0,1,2,3]
+ * Filtered by user's degree. (0=Associate's Degree, 1=Bachelor, 2=Master, 3=Doctor)
  * @apiParam (Query String) {Boolean=0,1} [gender=0,1] Filtered by user gender
  * @apiParam (Query String) {String=online, offline, both} [place=both] Filtered by the place to have the class
  * @apiParam (Query String) {String} [city] Filtered by the city a user is living in, check "Cities list"
@@ -30,13 +32,14 @@ const UserMajor = Database.model('user_major')
  * @apiParam (Query String) {Boolean=0,1} [active=0,1] Filtered by if a user wished to be found
  * @apiParam (Query String) {String=DESC, ASC} [cost] Sorting by cost
  * @apiParam (Query String) {Integer} [page=1] Pagination
- * @apiParamExample {json} Request-example:
- * /api/users?id=1&gender=1,0&place=online&role_id=1&city=4503,1101
  * @apiSuccess (200) {object[]} void Array contains all users
  */
 users.get('/', async (ctx) => {
   try {
-    const filters = ['id', 'mobilephone', 'role_id', 'gender', 'place', 'province', 'city', 'country', 'active']
+    const filters = [
+      'id', 'mobilephone', 'role_id', 'gender', 'place', 
+      'province', 'city', 'country', 'active', 'degree_id'
+    ]
     const qs = General.parseQuerystring(ctx.request.querystring)
     const filter = General.getFilter(qs, filters)
 
@@ -55,15 +58,12 @@ users.get('/', async (ctx) => {
       where: { $and: filter },
     })
 
-    // Do not expose admin user
-    data.shift(0)
-
     for (let i = 0; i < data.length; i++) {
       await service.processUserData(data[i].dataValues)
     }
 
     // Order for teacher 
-    if (qs.role_id === '2') {
+    if (qs.role_id === '1') {
       data.map(each => {
         each.dataValues.weight = service.defaultOrder(each.dataValues)
       })
@@ -185,7 +185,7 @@ users.get('/:id/teachers', async (ctx) => {
  * @api {put} /api/users Create a new user
  * @apiGroup Users 
  * @apiParam {String} [username=UUIDV1] The unique username
- * @apiParam {Number=1,2,3} [role_id=3] User's role, 1=admin, 2=teacher, 3=student
+ * @apiParam {Number=1,2} [role_id=2] User's role
  * @apiParam {String} mobilephone User unique mobilephone number
  * @apiParam {String} email User unique email address
  * @apiParam {String} password User password 
@@ -236,7 +236,7 @@ users.put('/', async (ctx) => {
  * @api {post} /api/users/:id Update a user
  * @apiGroup Users 
  * @apiParam {String} [username=UUIDV1] The unique username
- * @apiParam {Number=1,2,3} [role_id=3] User's role, 1=admin, 2=teacher, 3=student
+ * @apiParam {Number=1,2} role_id User's role
  * @apiParam {String} mobilephone User unique mobilephone number
  * @apiParam {String} email User unique email address
  * @apiParam {String} password User password 

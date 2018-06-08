@@ -25,7 +25,11 @@ module.exports = Database.define('user', {
   },
   role_id: {
     type: Sequelize.TINYINT,
-    defaultValue: 3,
+    defaultValue: 2,
+  },
+  degree_id: {
+    type: Sequelize.TINYINT,
+    defaultValue: 1,
   },
   identity_number: {
     type: Sequelize.STRING,
@@ -51,11 +55,8 @@ module.exports = Database.define('user', {
   title: {
     type: Sequelize.STRING
   },
-  degree: {
-    type: Sequelize.STRING
-  },
   country: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING
   },
   province: {
     type: Sequelize.STRING

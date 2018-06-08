@@ -26,13 +26,13 @@ module.exports = {
     data.avatar_url = avatar ? General.getDomain(`/api/avatars/${avatar.dataValues.id}`) : null
 
     // Add students info to teachers
-    if (data.role_id === 2) {
+    if (data.role_id === 1) {
       data.students_url = General.getDomain(`/api/users/${id}/students`)
       data.students_onboard_url = General.getDomain(`/api/users/${id}/students?finished=0`)
     } 
 
     // Add teachers info to students
-    if (data.role_id === 3) {
+    if (data.role_id === 2) {
       data.teachers_url = General.getDomain(`/api/users/${id}/teachers`)
       data.teachers_onboard_url = General.getDomain(`/api/users/${id}/teachers?finished=0`)
     }

@@ -1,7 +1,6 @@
 const User = require('./user')
 const Major = require('./major')
 const Course = require('./course')
-const Role = require('./role')
 const Post = require('./post')
 const Picture = require('./picture')
 const Comment = require('./comment')
@@ -13,7 +12,6 @@ const Order = require('./order')
 const Avatar = require('./avatar')
 
 // Table Relationship
-User.belongsTo(Role)
 Course.belongsTo(User)
 Post.belongsTo(User)
 Picture.belongsTo(Post)
@@ -49,7 +47,6 @@ Major.belongsToMany(Course, {through: 'course_major'})
 module.exports = {
   User,
   Major,
-  Role,
   Course,
   Post,
   Comment,
