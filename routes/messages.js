@@ -1,9 +1,11 @@
 const Router = require('koa-router')
+const Sequelize = require('sequelize')
 
 const { Message } = require('../models')
 const { General, Auth } = require('../services')
 const c = require('../config')
 
+const { Op } = Sequelize
 const messages = Router()
 const { protect } = Auth
 
@@ -25,14 +27,14 @@ messages.get('/', protect, async (ctx) => {
     // Search
     if (qs.search) {
       filter.push({
-        content: { $like: `%${decodeURI(qs.search)}%` }
+        content: { [Op.like]: `%${decodeURI(qs.search)}%` }
       })
     }
 
     const data = await Message.findAll({
       limit: c.queryLimit,
       offset: General.getOffset(qs.page, c.queryLimit),
-      where: { $and: filter }
+      where: { [Op.and]: filter }
     })
 
     ctx.status = 200

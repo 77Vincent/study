@@ -1,9 +1,11 @@
 const Router = require('koa-router')
+const Sequelize = require('sequelize')
 
 const Database = require('../database.js')
 const { General, Auth } = require('../services')
 const config = require('../config')
 
+const { Op } = Sequelize
 const followers_followings = Router()
 const FollowerFollowing = Database.model('follower_following')
 const { protect } = Auth
@@ -22,7 +24,7 @@ followers_followings.get('/', async (ctx) => {
     const data = await FollowerFollowing.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(qs.page, config.queryLimit),
-      where: { $and: General.getFilter(qs, ['follower_id', 'following_id']) }
+      where: { [Op.and]: General.getFilter(qs, ['follower_id', 'following_id']) }
     })
 
     ctx.status = 200

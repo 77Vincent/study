@@ -1,9 +1,11 @@
 const Router = require('koa-router')
+const Sequelize = require('sequelize')
 
 const { Schedule, Class } = require('../models')
 const { General, Auth } = require('../services')
 const config = require('../config')
 
+const { Op } = Sequelize
 const schedules = Router()
 const { protect } = Auth
 const range = {
@@ -26,7 +28,7 @@ schedules.get('/', async (ctx) => {
     const data = await Schedule.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(qs.page, config.queryLimit),
-      where: { $and: General.getFilter(qs, ['teacher_id', 'student_id', 'finished']) }
+      where: { [Op.and]: General.getFilter(qs, ['teacher_id', 'student_id', 'finished']) }
     })
 
     for (let i = 0; i < data.length; i++) {

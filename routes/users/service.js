@@ -1,3 +1,6 @@
+const Sequelize = require('sequelize')
+
+const { Op } = Sequelize
 const General = require('../../services/general')
 const Database = require('../../database')
 const { User, Tag, Post, Course, Avatar } = require('../../models')
@@ -5,7 +8,7 @@ const { User, Tag, Post, Course, Avatar } = require('../../models')
 module.exports = {
   getOneUser: async (id, config = {}) => {
     const param = {
-      where: { $or: [ 
+      where: { [Op.or]: [ 
         { id },
         { username: id },
         { mobilephone: id },

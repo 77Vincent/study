@@ -1,9 +1,11 @@
 const Router = require('koa-router')
+const Sequelize = require('sequelize')
 
 const { School } = require('../models')
 const { General, Auth } = require('../services')
 const config = require('../config')
 
+const { Op } = Sequelize
 const schools = Router()
 const { protect } = Auth
 
@@ -21,14 +23,14 @@ schools.get('/', async (ctx) => {
     // Search
     if (qs.search) {
       filter.push({
-        cn: { $like: `%${decodeURI(qs.search)}%` }
+        cn: { [Op.like]: `%${decodeURI(qs.search)}%` }
       })
     }
 
     const data = await School.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(qs.page, config.queryLimit),
-      where: { $and: filter }
+      where: { [Op.and]: filter }
     })
 
     ctx.status = 200

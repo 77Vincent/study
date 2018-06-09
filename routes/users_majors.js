@@ -1,9 +1,11 @@
 const Router = require('koa-router')
+const Sequelize = require('sequelize')
 
 const Database = require('../database.js')
 const { General, Auth } = require('../services')
 const config = require('../config')
 
+const { Op } = Sequelize
 const users_majors = Router()
 const UserMajor = Database.model('user_major')
 const { protect } = Auth
@@ -22,7 +24,7 @@ users_majors.get('/', async (ctx) => {
     const data = await UserMajor.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(qs.page, config.queryLimit),
-      where: { $and: General.getFilter(qs, ['user_id', 'major_id']) }
+      where: { [Op.and]: General.getFilter(qs, ['user_id', 'major_id']) }
     })
 
     ctx.status = 200

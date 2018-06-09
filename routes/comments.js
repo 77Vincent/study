@@ -1,9 +1,11 @@
 const Router = require('koa-router')
+const Sequelize = require('sequelize')
 
 const { Comment } = require('../models')
 const { General, Auth } = require('../services')
 const c = require('../config')
 
+const { Op } = Sequelize
 const comments = Router()
 const { protect } = Auth
 
@@ -23,7 +25,7 @@ comments.get('/', async (ctx) => {
     const data = await Comment.findAll({
       limit: c.queryLimit,
       offset: General.getOffset(qs.page, c.queryLimit),
-      where: { $and: filter },
+      where: { [Op.and]: filter },
     })
 
     ctx.status = 200

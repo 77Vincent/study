@@ -1,9 +1,11 @@
 const Router = require('koa-router')
+const Sequelize = require('sequelize')
 
 const Database = require('../database.js')
 const { General, Auth } = require('../services')
 const config = require('../config')
 
+const { Op } = Sequelize
 const courses_majors = Router()
 const CourseMajor = Database.model('course_major')
 const { protect } = Auth
@@ -22,7 +24,7 @@ courses_majors.get('/', async (ctx) => {
     const data = await CourseMajor.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(qs.page, config.queryLimit),
-      where: { $and: General.getFilter(qs, ['course_id', 'major_id']) }
+      where: { [Op.and]: General.getFilter(qs, ['course_id', 'major_id']) }
     })
 
     ctx.status = 200

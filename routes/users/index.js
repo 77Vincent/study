@@ -1,5 +1,6 @@
 const Router = require('koa-router')
 const R = require('ramda')
+const Sequelize = require('sequelize')
 
 const { User, Schedule } = require('../../models')
 const { General, Auth } = require('../../services')
@@ -8,6 +9,7 @@ const service = require('./service')
 const Database = require('../../database')
 const c = require('../../config.js')
 
+const { Op } = Sequelize
 const users = Router()
 const { protect } = Auth
 const range = {
@@ -55,7 +57,7 @@ users.get('/', async (ctx) => {
     let data = await User.findAll({ 
       limit: c.queryLimit,
       offset: General.getOffset(qs.page, c.queryLimit),
-      where: { $and: filter },
+      where: { [Op.and]: filter },
     })
 
     for (let i = 0; i < data.length; i++) {
@@ -127,7 +129,7 @@ users.get('/:id/students', async (ctx) => {
     filter.push({ teacher_id: ctx.params.id })
 
     let data = await Schedule.findAll({
-      where: { $and: filter }
+      where: { [Op.and]: filter }
     })
 
     data = await User.findAll({
@@ -161,7 +163,7 @@ users.get('/:id/teachers', async (ctx) => {
     filter.push({ student_id: ctx.params.id })
 
     let data = await Schedule.findAll({
-      where: { $and: filter }
+      where: { [Op.and]: filter }
     })
 
     data = await User.findAll({
