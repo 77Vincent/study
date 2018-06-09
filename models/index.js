@@ -10,6 +10,7 @@ const Message = require('./message')
 const Class = require('./class')
 const Order = require('./order')
 const Avatar = require('./avatar')
+const School = require('./school')
 
 // Table Relationship
 Course.belongsTo(User)
@@ -56,5 +57,6 @@ module.exports = {
   Message,
   Class,
   Order,
-  Avatar
+  Avatar,
+  School
 }
