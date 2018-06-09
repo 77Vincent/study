@@ -49,9 +49,6 @@ module.exports = Database.define('user', {
   name: {
     type: Sequelize.STRING
   },
-  school: {
-    type: Sequelize.STRING
-  },
   title: {
     type: Sequelize.STRING
   },

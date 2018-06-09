@@ -11,6 +11,7 @@ before(async () => {
 })
 
 require('./majors.test')
+require('./schools.test')
 require('./users.test')
 require('./users_majors.test')
 require('./courses.test')

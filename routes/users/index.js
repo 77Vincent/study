@@ -190,7 +190,7 @@ users.get('/:id/teachers', async (ctx) => {
  * @apiParam {String} email User unique email address
  * @apiParam {String} password User password 
  * @apiParam {String} name User name for display purpose only 
- * @apiParam {String} [school] The school name
+ * @apiParam {String} [school_id] School ID
  * @apiParam {String} [title] The title 
  * @apiParam {String} [bio] The biography of the user
  * @apiParam {String=online, offline, both} [place=both] Where the user wish to have the class
@@ -241,7 +241,7 @@ users.put('/', async (ctx) => {
  * @apiParam {String} email User unique email address
  * @apiParam {String} password User password 
  * @apiParam {String} name User name for display purpose only 
- * @apiParam {String} [school] The school name
+ * @apiParam {String} [school_id] The school ID
  * @apiParam {String} [title] The title 
  * @apiParam {String} [bio] The biography of the user
  * @apiParam {String=online, offline, both} [place=both] Where the user wish to have the class

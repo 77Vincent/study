@@ -10,6 +10,7 @@ module.exports = Database.define('school', {
   },
   website: {
     type: Sequelize.STRING,
+    allowNull: false,
     unique: true
   },
   en: {
@@ -21,8 +22,9 @@ module.exports = Database.define('school', {
     allowNull: false,
     unique: true
   },
-  country: {
+  country_code: {
     type: Sequelize.STRING,
+    allowNull: false,
   }
 }, {
   timestamps: false

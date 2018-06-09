@@ -27,13 +27,15 @@ schools.get('/', async (ctx) => {
  * @apiGroup Schools 
  * @apiParam {String} en The school's English name
  * @apiParam {String} cn The school's Chinese name
+ * @apiParam {String} website The school's website
+ * @apiParam {String} country_code The country code of the country where the school is located
  * @apiSuccess (201) {Object} void The created school 
  * @apiError {String} 401 Not authenticated, sign in first to get token 
  */
 schools.put('/', protect, async (ctx) => {
   try {
-    const { en, cn } = ctx.request.body
-    const data = await School.create({ en, cn })
+    const { en, cn, website, country_code } = ctx.request.body
+    const data = await School.create({ en, cn, website, country_code })
 
     ctx.body = General.prettyJSON(data)
     ctx.status = 201
@@ -47,6 +49,8 @@ schools.put('/', protect, async (ctx) => {
  * @apiGroup Schools 
  * @apiParam {String} en The school's English name
  * @apiParam {String} cn The school's Chinese name
+ * @apiParam {String} website The school's website
+ * @apiParam {String} country_code The country code of the country where the school is located
  * @apiSuccess (200) {Object} void The Updated tag
  * @apiError {String} 401 Not authenticated, sign in first to get token 
  * @apiError {String} 403 Not authorized, no access for the operation

@@ -20,6 +20,7 @@ Tag.belongsTo(User)
 Class.belongsTo(Schedule)
 Class.belongsTo(User)
 Avatar.belongsTo(User)
+User.belongsTo(School)
 
 Comment.belongsTo(User)
 Comment.belongsTo(Post)

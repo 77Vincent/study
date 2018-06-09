@@ -29,7 +29,7 @@ describe('User', () => {
     try {
       await request({
         url: `${url}/users/${user1}`,
-        body: { school: modified, cost: 9999, gender: true, name: modified, bio: modified },
+        body: { cost: 9999, gender: true, name: modified, bio: modified },
       })
     } catch (err) {
       assert.equal(err.statusCode, 401)
@@ -42,7 +42,7 @@ describe('User', () => {
       await request({
         url: `${url}/users/${user1}`,
         auth: { bearer: session.token },
-        body: { school: modified, cost: 9999, gender: true, name: modified, bio: modified },
+        body: { cost: 9999, gender: true, name: modified, bio: modified },
       })
     } catch (err) {
       assert.equal(err.statusCode, 403)
@@ -67,7 +67,7 @@ describe('User', () => {
     const response = await request({
       url: `${url}/users/${user1}`,
       auth: { bearer: session.token },
-      body: { school: modified, cost: 9999, gender: true, name: modified, bio: modified },
+      body: { cost: 9999, gender: true, name: modified, bio: modified },
     })
     assert.equal(response.statusCode, 200)
   })
@@ -77,7 +77,7 @@ describe('User', () => {
     const response = await request({
       url: `${url}/users/${user1}`,
       auth: { bearer: session.token },
-      body: { school: modified, cost: 9999, gender: true, name: modified, bio: modified },
+      body: { cost: 9999, gender: true, name: modified, bio: modified },
     })
     assert.equal(response.statusCode, 200)
   })
