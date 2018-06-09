@@ -1,11 +1,9 @@
 const Router = require('koa-router')
-const Sequelize = require('sequelize')
 
 const { School } = require('../models')
-const { General, Auth } = require('../services')
+const { General, Auth, Filter } = require('../services')
 const config = require('../config')
 
-const { Op } = Sequelize
 const schools = Router()
 const { protect } = Auth
 
@@ -13,24 +11,20 @@ const { protect } = Auth
  * @api {get} /api/schools/ Get all schools
  * @apiGroup Schools 
  * @apiParam (Query String) {String} [country_code] Filtered by country code
+ * @apiParam (Query String) {String} [search] Search by English and Chinese name
  * @apiSuccess (200) {object[]} void Array contains all schools
  */
 schools.get('/', async (ctx) => {
   try {
     const qs = General.parseQuerystring(ctx.request.querystring)
-    const filter = General.getFilter(qs, ['country_code'])
-
-    // Search
-    if (qs.search) {
-      filter.push({
-        cn: { [Op.like]: `%${decodeURI(qs.search)}%` }
-      })
-    }
-
     const data = await School.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(qs.page, config.queryLimit),
-      where: { [Op.and]: filter }
+      where: new Filter().
+        getQuery(qs).
+        filterBy('country_code').
+        searchBy('en', 'cn').
+        done()
     })
 
     ctx.status = 200

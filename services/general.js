@@ -1,4 +1,4 @@
-const c = require('../config')
+const config = require('../config')
 const R = require('ramda')
 
 module.exports = {
@@ -94,6 +94,6 @@ module.exports = {
   },
 
   getDomain(custom = '') {
-    return `${c.protocol}://${c.host}:${c.port}${custom}`
+    return `${config.protocol}://${config.host}:${config.port}${custom}`
   }
 }
