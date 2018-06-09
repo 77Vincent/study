@@ -13,7 +13,7 @@ const { protect } = Auth
  * @apiGroup Courses 
  * @apiParam (Query String) {Integer} [id] Filtered by the major ID
  * @apiParam (Query String) {Integer} [user_id] Filtered by the creator's user ID
- * @apiParam (Query String) {String} [label] Search by course name
+ * @apiParam (Query String) {String} [search] Search by course name
  * @apiParam (Query String) {Integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all courses
  */
@@ -31,9 +31,9 @@ courses.get('/', async (ctx) => {
     }
 
     // Search
-    if (qs.label) {
+    if (qs.search) {
       filter.push({
-        label: { $like: `%${decodeURI(qs.label)}%` }
+        label: { $like: `%${decodeURI(qs.search)}%` }
       })
     }
 

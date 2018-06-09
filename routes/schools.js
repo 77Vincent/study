@@ -2,6 +2,7 @@ const Router = require('koa-router')
 
 const { School } = require('../models')
 const { General, Auth } = require('../services')
+const config = require('../config')
 
 const schools = Router()
 const { protect } = Auth
@@ -9,11 +10,26 @@ const { protect } = Auth
 /** 
  * @api {get} /api/schools/ Get all schools
  * @apiGroup Schools 
+ * @apiParam (Query String) {String} [country_code] Filtered by country code
  * @apiSuccess (200) {object[]} void Array contains all schools
  */
 schools.get('/', async (ctx) => {
   try {
-    const data = await School.findAll()
+    const qs = General.parseQuerystring(ctx.request.querystring)
+    const filter = General.getFilter(qs, ['country_code'])
+
+    // Search
+    if (qs.search) {
+      filter.push({
+        cn: { $like: `%${decodeURI(qs.search)}%` }
+      })
+    }
+
+    const data = await School.findAll({
+      limit: config.queryLimit,
+      offset: General.getOffset(qs.page, config.queryLimit),
+      where: { $and: filter }
+    })
 
     ctx.status = 200
     ctx.body = General.prettyJSON(data)

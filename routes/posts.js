@@ -12,7 +12,7 @@ const { protect } = Auth
  * @apiGroup Posts 
  * @apiDescription Posts are ordered by updated time in DESC order by default
  * @apiParam (Query String) {Integer} [user_id] Filtered by user ID
- * @apiParam (Query String) {String} [content] Search by posts' content
+ * @apiParam (Query String) {String} [search] Search by posts' content
  * @apiParam (Query String) {Integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all posts
  */
@@ -22,9 +22,9 @@ posts.get('/', async (ctx) => {
     let filter = General.getFilter(qs, ['user_id'])
 
     // Search
-    if (qs.content) {
+    if (qs.search) {
       filter.push({
-        content: { $like: `%${decodeURI(qs.content)}%` }
+        content: { $like: `%${decodeURI(qs.search)}%` }
       })
     }
 
