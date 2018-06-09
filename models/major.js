@@ -8,13 +8,14 @@ module.exports = Database.define('major', {
     unique: true,
     primaryKey: true
   },
-  label: {
+  en: {
+    type: Sequelize.STRING,
+    unique: true
+  },
+  cn: {
     type: Sequelize.STRING,
     allowNull: false,
     unique: true
-  },
-  description: {
-    type: Sequelize.STRING
   }
 }, {
   timestamps: false

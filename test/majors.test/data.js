@@ -1,22 +1,22 @@
 module.exports = [{
-  label: '建筑',
-  description: '建筑设计'
+  en: 'Architecture',
+  cn: '建筑设计',
 }, {
-  label: '景观',
-  description: '景观设计'
+  en: 'Landscape Architecture',
+  cn: '景观建筑',
 }, {
-  label: '室内',
-  description: '室内，装潢设计'
+  en: 'Urban Design & Planning',
+  cn: '城市设计与规划',
 }, {
-  label: '平面',
-  description: '平面，视觉设计'
+  en: 'Industrial Design',
+  cn: '工业设计',
 }, {
-  label: '工业',
-  description: '工业产品设计'
+  en: 'Interior Design',
+  cn: '室内设计',
 }, {
-  label: '服装',
-  description: '服装设计'
+  en: 'Architecture History and Theory',
+  cn: '建筑历史于理论',
 }, {
-  label: 'UI/UX',
-  description: '界面及交互设计'
+  en: 'Landscape Studies',
+  cn: '景观研究',
 }]

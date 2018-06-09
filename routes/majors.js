@@ -25,15 +25,15 @@ majors.get('/', async (ctx) => {
 /** 
  * @api {put} /api/majors/ Create a major
  * @apiGroup Majors 
- * @apiParam {String} label The major name
- * @apiParam {String} [description] The major description
+ * @apiParam {String} en The major's English name
+ * @apiParam {String} cn The major's Chinese name
  * @apiSuccess (201) {Object} void The created major 
  * @apiError {String} 401 Not authenticated, sign in first to get token 
  */
 majors.put('/', protect, async (ctx) => {
   try {
-    const { label, description } = ctx.request.body
-    const data = await Major.create({ label, description })
+    const { en, cn } = ctx.request.body
+    const data = await Major.create({ en, cn })
 
     ctx.body = General.prettyJSON(data)
     ctx.status = 201
@@ -45,8 +45,8 @@ majors.put('/', protect, async (ctx) => {
 /** 
  * @api {post} /api/majors/:id Update a tag
  * @apiGroup Majors 
- * @apiParam {String} label The major name
- * @apiParam {String} [description] The major description
+ * @apiParam {String} en The major's English name
+ * @apiParam {String} cn The major's Chinese name
  * @apiSuccess (200) {Object} void The Updated tag
  * @apiError {String} 401 Not authenticated, sign in first to get token 
  * @apiError {String} 403 Not authorized, no access for the operation
