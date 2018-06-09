@@ -1,11 +1,9 @@
 const Router = require('koa-router')
-const Sequelize = require('sequelize')
 
 const { Schedule, Class } = require('../models')
-const { General, Auth } = require('../services')
+const { General, Auth, Filter } = require('../services')
 const config = require('../config')
 
-const { Op } = Sequelize
 const schedules = Router()
 const { protect } = Auth
 const range = {
@@ -18,17 +16,22 @@ const range = {
  * @apiParam (Query String) {String} [teacher_id] Filtered by teacher ID
  * @apiParam (Query String) {String} [student_id] Filtered by student ID
  * @apiParam (Query String) {Boolean=0,1} [finished=0,1] Filtered by if the schedule is finished 
+ * @apiParam (Query String) {String} [search] Search by label
  * @apiParam (Query String) {Integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all schedules
  * @apiError {String} 401 Protected resource, use Authorization header to get access
  */
 schedules.get('/', async (ctx) => {
   try {
-    const qs = General.parseQuerystring(ctx.request.querystring)
+    const query = General.parseQuerystring(ctx.request.querystring)
     const data = await Schedule.findAll({
       limit: config.queryLimit,
-      offset: General.getOffset(qs.page, config.queryLimit),
-      where: { [Op.and]: General.getFilter(qs, ['teacher_id', 'student_id', 'finished']) }
+      offset: General.getOffset(query.page, config.queryLimit),
+      where: new Filter().
+        getQuery(query).
+        filterBy('teacher_id', 'student_id', 'finished').
+        searchBy('label').
+        done()
     })
 
     for (let i = 0; i < data.length; i++) {

@@ -16,12 +16,12 @@ const { protect } = Auth
  */
 schools.get('/', async (ctx) => {
   try {
-    const qs = General.parseQuerystring(ctx.request.querystring)
+    const query = General.parseQuerystring(ctx.request.querystring)
     const data = await School.findAll({
       limit: config.queryLimit,
-      offset: General.getOffset(qs.page, config.queryLimit),
+      offset: General.getOffset(query.page, config.queryLimit),
       where: new Filter().
-        getQuery(qs).
+        getQuery(query).
         filterBy('country_code').
         searchBy('en', 'cn').
         done()

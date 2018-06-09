@@ -14,7 +14,7 @@ class Filter {
 
   filterBy(...keys) {
     R.forEachObjIndexed((value, key) => {
-      if (R.contains(key, ...keys)) {
+      if (R.contains(key, [...keys])) {
         let query = decodeURI(value)
         // Do not filter with empty string
         if (query !== '') {
@@ -26,11 +26,17 @@ class Filter {
   }
 
   searchBy(...keys) {
-    const arr = [];
-    [...keys].map((value) => {
-      arr.push({ [value]: { [Op.like]: `%${decodeURI(this.sourceObject.search)}%` } })
+    const arr = []
+    const searchBy = [...keys]
+    const { search } = this.sourceObject
+
+    searchBy.map((value) => {
+      arr.push({ [value]: { [Op.like]: `%${decodeURI(search)}%` } })
     })
-    this[Op.or] = arr 
+   
+    if (search) {
+      this[Op.or] = arr 
+    }
     return this
   }
 
@@ -40,7 +46,11 @@ class Filter {
     R.forEachObjIndexed((value, key) => {
       obj[key] = value
     }, this)
-    obj[Op.or] = this[Op.or]
+
+    if (this[Op.or]) {
+      obj[Op.or] = this[Op.or]
+    }
+
     delete obj.sourceObject
     return obj
   }
