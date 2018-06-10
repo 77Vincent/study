@@ -2,8 +2,8 @@ const Router = require('koa-router')
 const R = require('ramda')
 const Sequelize = require('sequelize')
 
-const { User, Schedule } = require('../../models')
-const { General, Auth } = require('../../services')
+const { User, Schedule, Major } = require('../../models')
+const { General, Auth, Filter } = require('../../services')
 const sessionsService = require('../sessions/service')
 const service = require('./service')
 const Database = require('../../database')
@@ -33,7 +33,7 @@ const UserMajor = Database.model('user_major')
  * @apiParam (Query String) {String} [countries] Filtered by the country a user is living in, check "Countries list"
  * @apiParam (Query String) {Boolean=0,1} [active=0,1] Filtered by if a user wished to be found
  * @apiParam (Query String) {String=DESC, ASC} [cost] Sorting by cost
- * @apiParam (Query String) {Integer} [page=1] Pagination
+//  * @apiParam (Query String) {Integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all users
  */
 users.get('/', async (ctx) => {
@@ -42,22 +42,16 @@ users.get('/', async (ctx) => {
       'id', 'mobilephone', 'role_id', 'gender', 'place', 
       'province', 'city', 'country', 'active', 'degree_id'
     ]
-    const qs = General.parseQuerystring(ctx.request.querystring)
-    const filter = General.getFilter(qs, filters)
-
-    // this part is for majors filtering
-    // if majors is given in the querystring then do the follow
-    if (qs.majors) {
-      const users_id = await UserMajor.findAll({
-        where: { major_id: qs.majors.split(',') }
-      })
-      filter.push({ id: users_id.map(user => user.dataValues.user_id) })
-    }
+    const query = General.parseQuerystring(ctx.request.querystring)
 
     let data = await User.findAll({ 
       limit: c.queryLimit,
-      offset: General.getOffset(qs.page, c.queryLimit),
-      where: { [Op.and]: filter },
+      offset: General.getOffset(query.page, c.queryLimit),
+      include: [{
+        model: Major,
+        where: new Filter(query).alias({ id: 'major_id' }).filterBy(['id']).done()
+      }],
+      where: new Filter(query).filterBy(filters).done()
     })
 
     for (let i = 0; i < data.length; i++) {
@@ -65,14 +59,14 @@ users.get('/', async (ctx) => {
     }
 
     // Order for teacher 
-    if (qs.role_id === '1') {
+    if (query.role_id === '1') {
       data.map(each => {
         each.dataValues.weight = service.defaultOrder(each.dataValues)
       })
 
-      if (R.has('cost')(qs)) {
+      if (R.has('cost')(query)) {
         // Sort by cost
-        if (qs.cost === 'ASC') {
+        if (query.cost === 'ASC') {
           data.sort((a, b) => a.dataValues.cost - b.dataValues.cost)
         } else {
           data.sort((a, b) => b.dataValues.cost - a.dataValues.cost)
@@ -124,8 +118,8 @@ users.get('/:id', async (ctx) => {
  */
 users.get('/:id/students', async (ctx) => {
   try {
-    const qs = General.parseQuerystring(ctx.request.querystring)
-    const filter = General.getFilter(qs, ['finished'])
+    const query = General.parseQuerystring(ctx.request.querystring)
+    const filter = General.getFilter(query, ['finished'])
     filter.push({ teacher_id: ctx.params.id })
 
     let data = await Schedule.findAll({
@@ -134,7 +128,7 @@ users.get('/:id/students', async (ctx) => {
 
     data = await User.findAll({
       limit: c.queryLimit,
-      offset: General.getOffset(qs.page, c.queryLimit),
+      offset: General.getOffset(query.page, c.queryLimit),
       where: { id: data.map(item => item.dataValues.student_id) },
     })
 
@@ -158,8 +152,8 @@ users.get('/:id/students', async (ctx) => {
  */
 users.get('/:id/teachers', async (ctx) => {
   try {
-    const qs = General.parseQuerystring(ctx.request.querystring)
-    const filter = General.getFilter(qs, ['finished'])
+    const query = General.parseQuerystring(ctx.request.querystring)
+    const filter = General.getFilter(query, ['finished'])
     filter.push({ student_id: ctx.params.id })
 
     let data = await Schedule.findAll({
@@ -168,7 +162,7 @@ users.get('/:id/teachers', async (ctx) => {
 
     data = await User.findAll({
       limit: c.queryLimit,
-      offset: General.getOffset(qs.page, c.queryLimit),
+      offset: General.getOffset(query.page, c.queryLimit),
       where: { id: data.map(item => item.dataValues.teacher_id) },
     })
 

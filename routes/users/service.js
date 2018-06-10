@@ -38,9 +38,7 @@ module.exports = {
     }
 
     // Add majors and tags
-    const majors = await Database.model('user_major').findAll({ where: { user_id: id } })
     const tags = await Tag.findAll({ where: { user_id: id } })
-    data.majors = majors.map(major => major.major_id)
     data.tags = tags.map(tag => tag.content)
 
 

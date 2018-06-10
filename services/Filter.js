@@ -82,8 +82,9 @@ class Filter {
     if (this[Op.or]) {
       obj[Op.or] = this[Op.or]
     }
-
+    
     delete obj.sourceObject
+    if (!Object.keys(obj).length) { return null }
     return obj
   }
 }
