@@ -17,10 +17,12 @@ Course.belongsTo(User)
 Post.belongsTo(User)
 Picture.belongsTo(Post)
 Tag.belongsTo(User)
+
+User.belongsTo(School)
+User.belongsTo(Avatar)
+
 Class.belongsTo(Schedule)
 Class.belongsTo(User)
-Avatar.belongsTo(User)
-User.belongsTo(School)
 
 Comment.belongsTo(User)
 Comment.belongsTo(Post)

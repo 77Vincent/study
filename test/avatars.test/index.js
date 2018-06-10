@@ -46,6 +46,20 @@ describe('Avatar', () => {
     assert.ok(true)
   })
 
+  it('Create a existing one should return 409', async () => {
+    try {
+      let session = await login(userA, password)
+      await request({
+        method: 'PUT',
+        url: `${url}/avatars`,
+        auth: { bearer: session.token },
+        body: data[1]
+      })
+    } catch (err) {
+      assert.equal(err.statusCode, 409)
+    }
+  })
+
   it('Update by visitor should return 401', async () => {
     try {
       await request({

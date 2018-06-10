@@ -3,7 +3,7 @@ const Sequelize = require('sequelize')
 const { Op } = Sequelize
 const General = require('../../services/general')
 const Database = require('../../database')
-const { User, Tag, Post, Course, Avatar } = require('../../models')
+const { User, Tag, Post, Course } = require('../../models')
 
 module.exports = {
   getOneUser: async (id, config = {}) => {
@@ -24,9 +24,6 @@ module.exports = {
 
     const { id } = data
     const urlsByQuerystring = ['posts', 'courses']
-
-    const avatar = await Avatar.findOne({ where: { user_id: id } })
-    data.avatar_url = avatar ? General.getDomain(`/api/avatars/${avatar.dataValues.id}`) : null
 
     // Add students info to teachers
     if (data.role_id === 1) {

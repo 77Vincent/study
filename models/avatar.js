@@ -8,6 +8,9 @@ module.exports = Database.define('avatar', {
     unique: true,
     primaryKey: true
   },
+  user_id: {
+    type: Sequelize.INTEGER
+  },
   path: {
     type: Sequelize.STRING
   }

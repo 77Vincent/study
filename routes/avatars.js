@@ -2,7 +2,7 @@ const Router = require('koa-router')
 const mime = require('mime')
 
 const config = require('../config.js')
-const { Avatar } = require('../models')
+const { Avatar, User } = require('../models')
 const { General, Storage, Auth } = require('../services')
 
 const { protect } = Auth
@@ -65,8 +65,20 @@ avatars.put('/', protect, async (ctx) => {
   try {
     const { content, mime } = ctx.request.body
     const user_id = ctx.state.currentUserID
-    const path = Storage.store('avatar', content, mime, user_id)
+    const avatar = await Avatar.findOne({ where: { user_id } })
+
+    if (avatar) {
+      ctx.status = 409
+      return
+    }
+
+    // Store file and create avatar instance
+    const path = Storage.store('avatar', content, mime)
     const data = await Avatar.create({ user_id, path })
+
+    // Update the corresponding user's avatar_id
+    const user = await User.findOne({ where: { id: user_id } })
+    await user.update({ avatar_id: data.dataValues.id })
 
     ctx.status = 201
     ctx.body = General.prettyJSON(data)
@@ -109,6 +121,10 @@ avatars.delete('/:id', protect, async (ctx) => {
   await Auth.isAuthorized(ctx, Avatar, async (data) => {
     Storage.remove(data.dataValues.path)
     await Avatar.destroy({ where: { id: ctx.params.id } })
+
+    // Delete the corresponding user's avatar_id
+    const user = await User.findOne({ where: { id: ctx.state.currentUserID } })
+    await user.update({ avatar_id: null })
 
     ctx.status = 200
   })
