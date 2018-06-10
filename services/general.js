@@ -1,6 +1,8 @@
 const config = require('../config')
 const R = require('ramda')
 
+const env = process.env.NODE_ENV
+
 module.exports = {
   msToDay(millisecond) {
     return Math.floor(millisecond / 1000 / 60 / 60) / 24
@@ -90,6 +92,10 @@ module.exports = {
   },
 
   getDomain(custom = '') {
-    return `${config.protocol}://${config.host}:${config.port}${custom}`
+    if (env === 'development') {
+      return `${config.protocol}://${config.host}:${config.port}${custom}`
+    } else if (env === 'production') {
+      return `${config.protocol}://${config.host}${custom}`
+    }
   }
 }

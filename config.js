@@ -1,12 +1,18 @@
 // All server configurations are stored here
 
 const path = require('path')
+const env = process.env.NODE_ENV
 
-module.exports = {
+const development = {
+  host: 'localhost',
+}
+const production = {
+  host: 'www.xfolio.cn',
+}
+
+const base = {
   // http
   protocol: 'http',
-  host: 'localhost',
-  domain: 'xfolio.cn',
   port: 3001,
 
   // Database basic config
@@ -27,3 +33,11 @@ module.exports = {
   // Store
   fileLocation: path.resolve('../xfolio-files') 
 }
+
+if (env === 'production') {
+  Object.assign(base, production)
+} else if (env === 'development') {
+  Object.assign(base, development)
+}
+
+module.exports = base

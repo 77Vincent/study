@@ -7,7 +7,7 @@ const { General, Auth, Filter } = require('../../services')
 const sessionsService = require('../sessions/service')
 const service = require('./service')
 const Database = require('../../database')
-const c = require('../../config.js')
+const config = require('../../config.js')
 
 const { Op } = Sequelize
 const users = Router()
@@ -45,8 +45,8 @@ users.get('/', async (ctx) => {
     const query = General.parseQuerystring(ctx.request.querystring)
 
     let data = await User.findAll({ 
-      limit: c.queryLimit,
-      offset: General.getOffset(query.page, c.queryLimit),
+      limit: config.queryLimit,
+      offset: General.getOffset(query.page, config.queryLimit),
       include: [{
         model: Major,
         where: new Filter(query).alias({ id: 'major_id' }).filterBy(['id']).done()
@@ -127,8 +127,8 @@ users.get('/:id/students', async (ctx) => {
     })
 
     data = await User.findAll({
-      limit: c.queryLimit,
-      offset: General.getOffset(query.page, c.queryLimit),
+      limit: config.queryLimit,
+      offset: General.getOffset(query.page, config.queryLimit),
       where: { id: data.map(item => item.dataValues.student_id) },
     })
 
@@ -161,8 +161,8 @@ users.get('/:id/teachers', async (ctx) => {
     })
 
     data = await User.findAll({
-      limit: c.queryLimit,
-      offset: General.getOffset(query.page, c.queryLimit),
+      limit: config.queryLimit,
+      offset: General.getOffset(query.page, config.queryLimit),
       where: { id: data.map(item => item.dataValues.teacher_id) },
     })
 
