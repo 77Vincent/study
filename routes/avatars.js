@@ -60,6 +60,7 @@ avatars.get('/:id', async (ctx) => {
  * @apiParam {String} mime The MIME of the file 
  * @apiSuccess (201) {Object} void The created avatar
  * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 409 The resource being created already exists
  */
 avatars.put('/', protect, async (ctx) => {
   try {
