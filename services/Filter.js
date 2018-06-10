@@ -14,7 +14,10 @@ const is = (input) => {
  */
 class Filter {
   constructor(sourceObject = {}) {
-    this.sourceObject = sourceObject
+    this.sourceObject = {}
+    // Clone and assign but not just assign
+    // Otherwise the input sourceObject will be modified later
+    Object.assign(this.sourceObject, sourceObject)
   }
 
   alias(aliasList = {}) {
@@ -26,12 +29,12 @@ class Filter {
         const alias = aliasList[key]
 
         // Remove the origin property 
-        if (this.sourceObject[key]) {
+        if (this.sourceObject.hasOwnProperty(key)) {
           delete this.sourceObject[key]
         }
 
         // Add a new property using alias and give it origin value
-        if (this.sourceObject[alias]) {
+        if (this.sourceObject.hasOwnProperty(alias)) {
           this.sourceObject[key] = this.sourceObject[alias]
           delete this.sourceObject[alias]
         }
