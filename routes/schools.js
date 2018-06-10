@@ -20,11 +20,7 @@ schools.get('/', async (ctx) => {
     const data = await School.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
-      where: new Filter().
-        getQuery(query).
-        filterBy('country_code').
-        searchBy('en', 'cn').
-        done()
+      where: new Filter(query).filterBy('country_code').searchBy('en', 'cn').done()
     })
 
     ctx.status = 200

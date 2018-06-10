@@ -3,13 +3,44 @@ const Sequelize = require('sequelize')
 const R = require('ramda')
 const { Op } = Sequelize
 
+const is = (input) => {
+  return Object.prototype.toString.call(input)
+}
+
+/**
+ * This is a Class used for quick filtering and searching in sequelize
+ * @class Filter
+ * @param {Object} sourceObject The source input of filtering or searching, key is label, value is content
+ * @return {Object} Plain object that can be directly used for sequelize query
+ */
 class Filter {
   constructor(sourceObject = {}) {
     this.sourceObject = sourceObject
   }
 
-  getQuery(sourceObject) {
-    return new Filter(sourceObject) 
+  alias(aliasList = {}) {
+    if (is(aliasList) !== '[object Object]') {
+      throw new Error('Input of alias should be an object')
+    }
+
+    for (let key in aliasList) {
+      if (aliasList.hasOwnProperty(key)) {
+        const alias = aliasList[key]
+
+        // Remove the origin property 
+        if (this.sourceObject[key]) {
+          delete this.sourceObject[key]
+        }
+
+        // Add a new property using alias and give it origin value
+        if (this.sourceObject[alias]) {
+          this.sourceObject[key] = this.sourceObject[alias]
+          delete this.sourceObject[alias]
+        }
+      }
+    }
+
+    return this
   }
 
   filterBy(...keys) {

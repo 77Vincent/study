@@ -1,19 +1,16 @@
 const Router = require('koa-router')
-const Sequelize = require('sequelize')
 
-const { Course } = require('../models')
-const { General, Auth } = require('../services')
-const Database = require('../database')
-const c = require('../config')
+const { Course, Major } = require('../models')
+const { General, Auth, Filter } = require('../services')
+const config = require('../config')
 
-const { Op } = Sequelize
 const courses = Router()
 const { protect } = Auth
 
 /** 
  * @api {get} /api/courses Get all courses
  * @apiGroup Courses 
- * @apiParam (Query String) {Integer} [id] Filtered by the major ID
+ * @apiParam (Query String) {Integer} [major_id] Filtered by the major ID
  * @apiParam (Query String) {Integer} [user_id] Filtered by the creator's user ID
  * @apiParam (Query String) {String} [search] Search by course name
  * @apiParam (Query String) {Integer} [page=1] Pagination
@@ -21,28 +18,17 @@ const { protect } = Auth
  */
 courses.get('/', async (ctx) => {
   try {
-    const qs = General.parseQuerystring(ctx.request.querystring)
-    const filter = General.getFilter(qs, ['id', 'user_id'])
-
-    // this part is for majors filtering
-    if (qs.majors) {
-      const courses_id = await Database.model('course_major').findAll({
-        where: { major_id: qs.majors.split(',') }
-      })
-      filter.push({ id: courses_id.map(item => item.dataValues.course_id) })
-    }
-
-    // Search
-    if (qs.search) {
-      filter.push({
-        label: { [Op.like]: `%${decodeURI(qs.search)}%` }
-      })
-    }
+    const query = General.parseQuerystring(ctx.request.querystring)
 
     const data = await Course.findAll({
-      limit: c.queryLimit,
-      offset: General.getOffset(qs.page, c.queryLimit),
-      where: { [Op.and]: filter }
+      limit: config.queryLimit,
+      offset: General.getOffset(query.page, config.queryLimit),
+      include: [{
+        model: Major,
+        attributes: ['id'],
+        where: new Filter(query).alias({ id: 'major_id' }).filterBy('id').done()
+      }],
+      where: new Filter(query).filterBy('user_id').searchBy('label').done()
     })
 
     ctx.status = 200
