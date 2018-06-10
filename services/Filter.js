@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize')
 
-const R = require('ramda')
 const { Op } = Sequelize
 
 const is = (input) => {
@@ -22,7 +21,6 @@ class Filter {
     if (is(aliasList) !== '[object Object]') {
       throw new Error('Input of alias should be an object')
     }
-
     for (let key in aliasList) {
       if (aliasList.hasOwnProperty(key)) {
         const alias = aliasList[key]
@@ -39,20 +37,22 @@ class Filter {
         }
       }
     }
-
     return this
   }
 
   filterBy(keys = []) {
-    R.forEachObjIndexed((value, key) => {
-      if (R.contains(key, keys)) {
-        let query = decodeURI(value)
-        // Do not filter with empty string
-        if (query !== '') {
-          this[key] = query.split(',')
+    const source = this.sourceObject
+    for (let key in source) {
+      if (source.hasOwnProperty(key)) {
+        if (keys.indexOf(key) !== -1) {
+          const query = decodeURI(source[key])
+          // Do not filter with empty string
+          if (query !== '') {
+            this[key] = query.split(',')
+          }
         }
       }
-    }, this.sourceObject)
+    }
     return this
   }
 
@@ -73,9 +73,11 @@ class Filter {
   done() {
     // Return plain object for sequelize
     let obj = {}
-    R.forEachObjIndexed((value, key) => {
-      obj[key] = value
-    }, this)
+    for (let key in this) {
+      if (this.hasOwnProperty(key)) {
+        obj[key] = this[key]
+      }
+    }
 
     if (this[Op.or]) {
       obj[Op.or] = this[Op.or]

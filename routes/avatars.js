@@ -76,7 +76,7 @@ avatars.put('/', protect, async (ctx) => {
 })
 
 /** 
- * @api {post} /api/avatars Update a avatar 
+ * @api {post} /api/avatars/:id Update a avatar 
  * @apiGroup Avatars
  * @apiParam {String} content Content of the avatar file encoded in base64
  * @apiParam {String} mime The MIME of the file 
