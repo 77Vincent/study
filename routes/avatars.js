@@ -65,6 +65,12 @@ avatars.get('/:id', async (ctx) => {
 avatars.put('/', protect, async (ctx) => {
   try {
     const { content, mime } = ctx.request.body
+    if (!content || !mime) {
+      ctx.status = 400
+      ctx.body = config.messages.invalidRequest
+      return
+    }
+
     const user_id = ctx.state.currentUserID
     const avatar = await Avatar.findOne({ where: { user_id } })
 
@@ -101,6 +107,12 @@ avatars.put('/', protect, async (ctx) => {
 avatars.post('/:id', protect, async (ctx) => {
   await Auth.isAuthorized(ctx, Avatar, async (data) => {
     const { content, mime } = ctx.request.body
+    if (!content || !mime) {
+      ctx.status = 400
+      ctx.body = config.messages.invalidRequest
+      return
+    }
+
     const path = Storage.store('avatar', content, mime)
     Storage.remove(data.dataValues.path)
     data = await data.update({ path })

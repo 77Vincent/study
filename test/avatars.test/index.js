@@ -21,6 +21,19 @@ describe('Avatar', () => {
     }
   })
 
+  it('Create without body eturn 400', async () => {
+    try {
+      let session = await login(userA, password)
+      await request({
+        method: 'PUT',
+        url: `${url}/avatars`,
+        auth: { bearer: session.token },
+      })
+    } catch (err) {
+      assert.equal(err.statusCode, 400)
+    }
+  })
+
   it('Create by user should return 201', async () => {
     let session = await login(config.adminID, config.adminPassword)
     await request({

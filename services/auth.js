@@ -45,7 +45,7 @@ module.exports = {
         await next()
       } else {
         ctx.status = 401
-        ctx.body = 'Protected resource, use Authorization header to get access\n'
+        ctx.body = config.messages.unauthorized
       }
     } catch (err) {
       // When token is given but invalid

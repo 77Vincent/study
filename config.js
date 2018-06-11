@@ -30,6 +30,12 @@ const base = {
   adminID: 'admin',
   adminPassword: '$Xf0li0Xf0li0',
 
+  // Messages
+  messages: {
+    invalidRequest: 'Bad request due to the lack of necessary content in the request body.\n',
+    unauthorized: 'Protected resource, use Authorization header to get access\n'
+  },
+
   // Store
   fileLocation: path.resolve('../xfolio-files') 
 }
