@@ -1,6 +1,5 @@
 const assert = require('assert')
 
-const data = require('./data')
 const { login, request, url } = require('../service')
 const users = require('../users.test/data')
 const userA = users[1].mobilephone
@@ -15,7 +14,7 @@ describe('User_Major', () => {
       await request({
         method: 'PUT',
         url: `${url}/users_majors`,
-        body: data[0]
+        body: { major_id: [1] } 
       })
     } catch (err) {
       assert.equal(err.statusCode, 401)
@@ -28,52 +27,28 @@ describe('User_Major', () => {
       method: 'PUT',
       url: `${url}/users_majors`,
       auth: { bearer: session.token },
-      body: data[0]
-    })
-    await request({
-      method: 'PUT',
-      url: `${url}/users_majors`,
-      auth: { bearer: session.token },
-      body: data[1]
-    })
-    await request({
-      method: 'PUT',
-      url: `${url}/users_majors`,
-      auth: { bearer: session.token },
-      body: data[2]
+      body: { major_id: [2, 3] } 
     })
     session = await login(userB, password)
     await request({
       method: 'PUT',
       url: `${url}/users_majors`,
       auth: { bearer: session.token },
-      body: data[1]
-    })
-    await request({
-      method: 'PUT',
-      url: `${url}/users_majors`,
-      auth: { bearer: session.token },
-      body: data[3]
+      body: { major_id: [3, 4, 5] } 
     })
     session = await login(userC, password)
     await request({
       method: 'PUT',
       url: `${url}/users_majors`,
       auth: { bearer: session.token },
-      body: data[2]
-    })
-    await request({
-      method: 'PUT',
-      url: `${url}/users_majors`,
-      auth: { bearer: session.token },
-      body: data[3]
+      body: { major_id: [5, 6] } 
     })
     session = await login(userD, password)
     await request({
       method: 'PUT',
       url: `${url}/users_majors`,
       auth: { bearer: session.token },
-      body: data[3]
+      body: { major_id: [3, 7] } 
     })
     assert.ok(true)
   })

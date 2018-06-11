@@ -37,7 +37,7 @@ users_majors.get('/', async (ctx) => {
 /** 
  * @api {put} /api/users_majors/ Create a user and major relation
  * @apiGroup Users_Majors
- * @apiParam {String} major_id The major ID
+ * @apiParam {string[]} major_id The array containing majors' ID 
  * @apiSuccess (201) {Object} void void
  * @apiError {String} 401 Not authenticated, sign in first to get token 
  */
@@ -45,7 +45,10 @@ users_majors.put('/', protect, async (ctx) => {
   try {
     const { major_id } = ctx.request.body
     const user_id = ctx.state.currentUserID
-    await UserMajor.create({ user_id, major_id })
+
+    for (let i = 0; i < major_id.length; i++) {
+      await UserMajor.create({ user_id, major_id: major_id[i] })
+    }
 
     ctx.status = 201
   } catch (err) {
