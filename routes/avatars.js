@@ -59,6 +59,7 @@ avatars.get('/:id', async (ctx) => {
  * @apiParam {String} content Content of the image file encoded in base64
  * @apiParam {String} mime The MIME of the file 
  * @apiSuccess (201) {Object} void The created avatar
+ * @apiError {String} 400 Bad request due to the lack of some necessary content in the request body
  * @apiError {String} 401 Not authenticated, sign in first to get token 
  * @apiError {String} 409 The resource being created already exists
  */
@@ -100,6 +101,7 @@ avatars.put('/', protect, async (ctx) => {
  * @apiParam {String} content Content of the avatar file encoded in base64
  * @apiParam {String} mime The MIME of the file 
  * @apiSuccess (200) {Object} void The updated avatar
+ * @apiError {String} 400 Bad request due to the lack of some necessary content in the request body
  * @apiError {String} 401 Not authenticated, sign in first to get token 
  * @apiError {String} 403 Not authorized, no access for the operation
  * @apiError {String} 404 The requested content is found
