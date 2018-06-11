@@ -87,7 +87,7 @@ class Filter {
     }
     
     delete obj.sourceObject
-    if (!Object.keys(obj).length) { return null }
+    if (!Object.keys(obj).length && !obj[Op.or]) { return null }
     return obj
   }
 }
