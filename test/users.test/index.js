@@ -40,6 +40,7 @@ describe('User', () => {
     const session = await login(user2, password)
     try {
       await request({
+        method: 'POST',
         url: `${url}/users/${user1}`,
         auth: { bearer: session.token },
         body: { cost: 9999, gender: true, name: modified, bio: modified },
@@ -53,6 +54,7 @@ describe('User', () => {
     const session = await login(user1, password)
     try {
       await request({
+        method: 'POST',
         url: `${url}/users/${user1}`,
         auth: { bearer: session.token },
         body: { cost: 99999 },
@@ -65,19 +67,31 @@ describe('User', () => {
   it('Update a user by admin should return 200', async () => {
     const session = await login(config.adminID, config.adminPassword)
     const response = await request({
+      method: 'POST',
       url: `${url}/users/${user1}`,
       auth: { bearer: session.token },
-      body: { cost: 9999, gender: true, name: modified, bio: modified },
+      body: {
+        cost: 9999,
+        gender: true,
+        name: modified,
+        bio: modified
+      },
     })
     assert.equal(response.statusCode, 200)
   })
 
   it('Update a user by its owner should return 200', async () => {
-    const session = await login(user1, password)
+    const session = await login(user2, password)
     const response = await request({
-      url: `${url}/users/${user1}`,
+      method: 'POST',
+      url: `${url}/users/${user2}`,
       auth: { bearer: session.token },
-      body: { cost: 9999, gender: true, name: modified, bio: modified },
+      body: {
+        cost: 9999,
+        gender: true,
+        name: modified,
+        bio: modified
+      },
     })
     assert.equal(response.statusCode, 200)
   })

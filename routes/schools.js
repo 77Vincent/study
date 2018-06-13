@@ -53,13 +53,13 @@ schools.put('/', protect, async (ctx) => {
 })
 
 /** 
- * @api {post} /api/schools/:id Update a tag
+ * @api {post} /api/schools/:id Update a school 
  * @apiGroup Schools 
  * @apiParam {String} en The school's English name
  * @apiParam {String} cn The school's Chinese name
  * @apiParam {String} website The school's website
  * @apiParam {String} country_code The country code of the country where the school is located
- * @apiSuccess (200) {Object} void The Updated tag
+ * @apiSuccess (200) {Object} void The Updated school 
  * @apiError {String} 401 Not authenticated, sign in first to get token 
  * @apiError {String} 403 Not authorized, no access for the operation
  * @apiError {String} 404 The requested content is found
