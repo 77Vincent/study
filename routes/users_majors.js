@@ -2,6 +2,7 @@ const Router = require('koa-router')
 
 const Database = require('../database.js')
 const { General, Auth, Filter } = require('../services')
+const { Major } = require('../models')
 const config = require('../config')
 
 const users_majors = Router()
@@ -44,15 +45,13 @@ users_majors.put('/', protect, async (ctx) => {
     const { major_id } = ctx.request.body
     const user_id = ctx.state.currentUserID
 
-    await UserMajor.destroy({
-      where: { user_id: ctx.state.currentUserID }
-    })
+    await UserMajor.destroy({ where: { user_id } })
 
     for (let i = 0; i < major_id.length; i++) {
       await UserMajor.create({ user_id, major_id: major_id[i] })
     }
 
-    const data = await UserMajor.findAll({ where: { user_id } })
+    const data = await Major.findAll({ where: { id: major_id } }) 
 
     ctx.body = General.prettyJSON(data)
     ctx.status = 201
