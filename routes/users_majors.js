@@ -52,6 +52,9 @@ users_majors.put('/', protect, async (ctx) => {
       await UserMajor.create({ user_id, major_id: major_id[i] })
     }
 
+    const data = await UserMajor.findAll({ where: { user_id } })
+
+    ctx.body = General.prettyJSON(data)
     ctx.status = 201
   } catch (err) {
     General.logError(ctx, err)
