@@ -2,10 +2,10 @@ const assert = require('assert')
 
 const { login, request, url } = require('./service')
 const users = require('./users.test/data')
-const userA = users[1].mobilephone
-const userB = users[2].mobilephone
-const userC = users[3].mobilephone
-const userD = users[4].mobilephone
+const user1 = users[1].mobilephone
+const user2 = users[2].mobilephone
+const user3 = users[3].mobilephone
+const user4 = users[4].mobilephone
 const password = '000000'
 
 describe('User_Major', () => {
@@ -22,28 +22,34 @@ describe('User_Major', () => {
   })
 
   it('Create should return 200', async () => {
-    let session = await login(userA, password)
+    let session = await login(user1, password)
     await request({
       method: 'PUT',
       url: `${url}/users_majors`,
       auth: { bearer: session.token },
-      body: { major_id: [2, 3] } 
+      body: { major_id: [2] } 
     })
-    session = await login(userB, password)
+    await request({
+      method: 'PUT',
+      url: `${url}/users_majors`,
+      auth: { bearer: session.token },
+      body: { major_id: [2, 3, 4, 5, 6] } 
+    })
+    session = await login(user2, password)
     await request({
       method: 'PUT',
       url: `${url}/users_majors`,
       auth: { bearer: session.token },
       body: { major_id: [3, 4, 5] } 
     })
-    session = await login(userC, password)
+    session = await login(user3, password)
     await request({
       method: 'PUT',
       url: `${url}/users_majors`,
       auth: { bearer: session.token },
       body: { major_id: [5, 6] } 
     })
-    session = await login(userD, password)
+    session = await login(user4, password)
     await request({
       method: 'PUT',
       url: `${url}/users_majors`,
@@ -55,7 +61,7 @@ describe('User_Major', () => {
 
   it('Delete should return 200', async () => {
     try {
-      const session = await login(userA, password)
+      const session = await login(user1, password)
       await request({
         method: 'DELETE',
         url: `${url}/users_majors/2`,

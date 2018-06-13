@@ -1,11 +1,9 @@
 const Router = require('koa-router')
-const Sequelize = require('sequelize')
 
 const Database = require('../database.js')
-const { General, Auth } = require('../services')
+const { General, Auth, Filter } = require('../services')
 const config = require('../config')
 
-const { Op } = Sequelize
 const users_majors = Router()
 const UserMajor = Database.model('user_major')
 const { protect } = Auth
@@ -20,11 +18,11 @@ const { protect } = Auth
  */
 users_majors.get('/', async (ctx) => {
   try {
-    const qs = General.parseQuerystring(ctx.request.querystring)
+    const query = General.parseQuerystring(ctx.request.querystring)
     const data = await UserMajor.findAll({
       limit: config.queryLimit,
-      offset: General.getOffset(qs.page, config.queryLimit),
-      where: { [Op.and]: General.getFilter(qs, ['user_id', 'major_id']) }
+      offset: General.getOffset(query.page, config.queryLimit),
+      where: new Filter(query).filterBy(['user_id', 'major_id']).done()
     })
 
     ctx.status = 200
@@ -45,6 +43,10 @@ users_majors.put('/', protect, async (ctx) => {
   try {
     const { major_id } = ctx.request.body
     const user_id = ctx.state.currentUserID
+
+    await UserMajor.destroy({
+      where: { user_id: ctx.state.currentUserID }
+    })
 
     for (let i = 0; i < major_id.length; i++) {
       await UserMajor.create({ user_id, major_id: major_id[i] })

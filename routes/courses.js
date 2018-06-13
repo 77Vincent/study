@@ -19,7 +19,6 @@ const { protect } = Auth
 courses.get('/', async (ctx) => {
   try {
     const query = General.parseQuerystring(ctx.request.querystring)
-
     const data = await Course.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),

@@ -36,12 +36,13 @@ describe('User', () => {
     }
   })
 
-  it('Update a user by other user should return 403', async () => {
-    const session = await login(user2, password)
+  it('Update by other user should return 403', async () => {
+    const session = await login(user1, password)
+    const user = await request({ url: `${url}/users/${user2}` })
     try {
       await request({
         method: 'POST',
-        url: `${url}/users/${user1}`,
+        url: `${url}/users/${user.body.id}`,
         auth: { bearer: session.token },
         body: { cost: 9999, gender: true, name: modified, bio: modified },
       })
@@ -51,11 +52,12 @@ describe('User', () => {
   })
 
   it('Update with not satisfiable input should return 416', async () => {
-    const session = await login(user1, password)
+    const session = await login(user2, password)
+    const user = await request({ url: `${url}/users/${user2}` })
     try {
       await request({
         method: 'POST',
-        url: `${url}/users/${user1}`,
+        url: `${url}/users/${user.body.id}`,
         auth: { bearer: session.token },
         body: { cost: 99999 },
       })
@@ -64,34 +66,26 @@ describe('User', () => {
     }
   })
 
-  it('Update a user by admin should return 200', async () => {
+  it('Update by admin should return 200', async () => {
     const session = await login(config.adminID, config.adminPassword)
+    const user = await request({ url: `${url}/users/${user2}` })
     const response = await request({
       method: 'POST',
-      url: `${url}/users/${user1}`,
+      url: `${url}/users/${user.body.id}`,
       auth: { bearer: session.token },
-      body: {
-        cost: 9999,
-        gender: true,
-        name: modified,
-        bio: modified
-      },
+      body: { cost: 9999, gender: true, name: modified, bio: modified },
     })
     assert.equal(response.statusCode, 200)
   })
 
-  it('Update a user by its owner should return 200', async () => {
+  it('Update by owner should return 200', async () => {
     const session = await login(user2, password)
+    const user = await request({ url: `${url}/users/${user2}` })
     const response = await request({
       method: 'POST',
-      url: `${url}/users/${user2}`,
+      url: `${url}/users/${user.body.id}`,
       auth: { bearer: session.token },
-      body: {
-        cost: 9999,
-        gender: true,
-        name: modified,
-        bio: modified
-      },
+      body: { cost: 9999, gender: true, name: modified, bio: modified },
     })
     assert.equal(response.statusCode, 200)
   })
