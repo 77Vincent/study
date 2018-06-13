@@ -40,7 +40,9 @@ module.exports = {
 
     // Add majors and tags
     const tags = await Tag.findAll({ where: { user_id: id } })
-    data.tags = tags.map(tag => tag.content)
+    data.tags = tags.map(tag => {
+      return { id: tag.id, content: tag.content }
+    })
 
 
     // Add these properties

@@ -25,8 +25,7 @@ tags.get('/', async (ctx) => {
 /** 
  * @api {put} /api/tags/ Create a tag
  * @apiGroup Tags
- * @apiParam {String} content Content of the tag
- * @apiParam {Integer} user_id The creator's user ID
+ * @apiParam {String[]} content Array of tags
  * @apiSuccess (201) {Object} void The created tag
  * @apiError {String} 401 Not authenticated, sign in first to get token 
  */
@@ -34,30 +33,15 @@ tags.put('/', protect, async (ctx) => {
   try {
     const { content } = ctx.request.body
     const user_id = ctx.state.currentUserID
-    const data = await Tag.create({ content, user_id })
 
-    ctx.body = General.prettyJSON(data)
+    for (let i = 0; i < content.length; i++) {
+      await Tag.create({ user_id, content: content[i] })
+    }
+
     ctx.status = 201
   } catch (err) {
     General.logError(ctx, err)
   }
-})
-
-/** 
- * @api {post} /api/tags/:id Update a tag
- * @apiGroup Tags
- * @apiParam {String} content Content of the tag
- * @apiSuccess (200) {Object} void The Updated tag
- * @apiError {String} 401 Not authenticated, sign in first to get token 
- * @apiError {String} 403 Not authorized, no access for the operation
- * @apiError {String} 404 The requested content is found
- */
-tags.post('/:id', protect, async (ctx) => {
-  await Auth.isAuthorized(ctx, Tag, async (data) => {
-    data = await data.update(ctx.request.body)
-    ctx.status = 200
-    ctx.body = General.prettyJSON(data)
-  })
 })
 
 /** 

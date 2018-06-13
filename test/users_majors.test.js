@@ -1,7 +1,7 @@
 const assert = require('assert')
 
-const { login, request, url } = require('../service')
-const users = require('../users.test/data')
+const { login, request, url } = require('./service')
+const users = require('./users.test/data')
 const userA = users[1].mobilephone
 const userB = users[2].mobilephone
 const userC = users[3].mobilephone
@@ -14,7 +14,7 @@ describe('User_Major', () => {
       await request({
         method: 'PUT',
         url: `${url}/users_majors`,
-        body: { major_id: [1] } 
+        body: { major_id: [2] } 
       })
     } catch (err) {
       assert.equal(err.statusCode, 401)

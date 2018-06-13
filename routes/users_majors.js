@@ -37,7 +37,7 @@ users_majors.get('/', async (ctx) => {
 /** 
  * @api {put} /api/users_majors/ Create a user and major relation
  * @apiGroup Users_Majors
- * @apiParam {string[]} major_id The array containing majors' ID 
+ * @apiParam {string[]} major_id The array of majors' ID
  * @apiSuccess (201) {Object} void void
  * @apiError {String} 401 Not authenticated, sign in first to get token 
  */
