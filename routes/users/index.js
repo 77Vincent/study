@@ -6,7 +6,6 @@ const { User, Schedule, Major } = require('../../models')
 const { General, Auth, Filter } = require('../../services')
 const sessionsService = require('../sessions/service')
 const service = require('./service')
-const Database = require('../../database')
 const config = require('../../config.js')
 
 const { Op } = Sequelize
@@ -16,7 +15,6 @@ const range = {
   cost: 9999,
   role_id: 10
 }
-const UserMajor = Database.model('user_major')
 
 /** 
  * @api {get} /api/users Get all users
@@ -255,49 +253,23 @@ users.put('/', async (ctx) => {
  * @apiError {String} 416 Range not satisfiable
  */
 users.post('/:id', protect, async (ctx) => {
-  try {
-    let data = await service.getOneUser(ctx.params.id)
+  await Auth.isAuthorized(ctx, User, async (user) => {
+    const input = ctx.request.body
+    const isOutRange = General.checkRange(range, input)
 
-    if (data) {
-      const input = ctx.request.body
-      const isOutRange = General.checkRange(range, input)
-      const user_id = data.dataValues.id
-
-      if (isOutRange) {
-        ctx.status = 416
-        ctx.body = isOutRange
-        return
-      }
-
-      if (input.majors) {
-        await UserMajor.destroy({ where: { user_id } })
-        input.majors.map(async major_id => { await UserMajor.create({ user_id, major_id }) })
-        await Database.sync()
-      }
-
-      if (user_id === ctx.state.currentUserID || ctx.state.isAdmin) {
-        // Delete majors because it's not updated here
-        delete input.majors
-        data = await data.update(input)
-
-        // do not send password to client
-        delete data.dataValues.password
-
-        // Add majors list
-        const majors = await Database.model('user_major').findAll({ where: { user_id } })
-        data.dataValues.majors = majors.map(each => each.major_id)
-
-        ctx.status = 200
-        ctx.body = General.prettyJSON(data)
-      } else {
-        ctx.status = 403
-      }
-    } else {
-      ctx.status = 404
+    if (isOutRange) {
+      ctx.status = 416
+      ctx.body = isOutRange
+      return
     }
-  } catch (err) {
-    General.logError(ctx, err)
-  }
+
+    const data = await user.update(input)
+
+    // do not send password to client
+    delete data.dataValues.password
+    ctx.status = 200
+    ctx.body = General.prettyJSON(data)
+  })
 })
 
 /** 
