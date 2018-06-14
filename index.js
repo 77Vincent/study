@@ -12,7 +12,7 @@ const app = new Koa()
 app.proxy = true
 app.use(convert(logger()))
 app.use(convert(cors()))
-app.use(convert(bodyParser()))
+app.use(convert(bodyParser({ jsonLimit: '5mb' })))
 app.use(serve('./static'))
 
 app.use(async (ctx, next) => {
