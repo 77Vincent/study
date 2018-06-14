@@ -24,7 +24,7 @@ schools.get('/', async (ctx) => {
     })
 
     ctx.status = 200
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -45,8 +45,8 @@ schools.put('/', protect, async (ctx) => {
     const { en, cn, website, country_code } = ctx.request.body
     const data = await School.create({ en, cn, website, country_code })
 
-    ctx.body = General.prettyJSON(data)
     ctx.status = 201
+    ctx.body= data
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -67,8 +67,9 @@ schools.put('/', protect, async (ctx) => {
 schools.post('/:id', protect, async (ctx) => {
   await Auth.isAuthorized(ctx, School, async (data) => {
     data = await data.update(ctx.request.body)
+
     ctx.status = 200
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data
   })
 })
 

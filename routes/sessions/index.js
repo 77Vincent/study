@@ -24,7 +24,7 @@ sessions.post('/', async (ctx) => {
       await usersService.processUserData(user)
       ctx.status = 200
       ctx.body = {
-        data: General.prettyJSON(user),
+        data: user,
         token: service.signToken({ id, password })
       }
     } else {

@@ -203,22 +203,22 @@ users.put('/', async (ctx) => {
     const input = ctx.request.body
     const { username, mobilephone, email } = ctx.request.body
     const account = username || mobilephone || email
-    const user = await service.getOneUser(account)
+    let user = await service.getOneUser(account)
 
     if (user) {
       ctx.status = 409
       return
     }
 
-    let data = await User.create(input)
-    data = await service.getOneUser(data.id)
+    user = await User.create(input)
+    user = await service.getOneUser(user.id)
 
-    await service.processUserData(data.dataValues)
-    const { id, password } = data.dataValues
+    await service.processUserData(user.dataValues)
+    const { id, password } = user.dataValues
 
     ctx.status = 201
     ctx.body = {
-      data: General.prettyJSON(data),
+      data: user,
       token: sessionsService.signToken({ id, password })
     }
   } catch (err) {
