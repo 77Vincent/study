@@ -22,6 +22,9 @@ module.exports = Database.define('school', {
     allowNull: false,
     unique: true
   },
+  pinyin: {
+    type: Sequelize.STRING,
+  },
   country_code: {
     type: Sequelize.STRING,
     allowNull: false,

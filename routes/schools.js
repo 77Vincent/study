@@ -21,7 +21,7 @@ schools.get('/', async (ctx) => {
     const data = await School.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
-      where: new Filter(query).filterBy(['id', 'country_code']).searchBy(['en', 'cn']).done()
+      where: new Filter(query).filterBy(['id', 'country_code']).searchBy(['pinyin', 'cn', 'en']).done()
     })
 
     ctx.status = 200
@@ -43,8 +43,8 @@ schools.get('/', async (ctx) => {
  */
 schools.put('/', protect, async (ctx) => {
   try {
-    const { en, cn, website, country_code } = ctx.request.body
-    const data = await School.create({ en, cn, website, country_code })
+    const { en, cn, pinyin, website, country_code } = ctx.request.body
+    const data = await School.create({ en, cn, pinyin, website, country_code })
 
     ctx.status = 201
     ctx.body= data
