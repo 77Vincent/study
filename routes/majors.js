@@ -16,7 +16,7 @@ majors.get('/', async (ctx) => {
     const data = await Major.findAll()
 
     ctx.status = 200
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data
   } catch (err) {
     General.logError(ctx, err)
   }
