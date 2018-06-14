@@ -3,7 +3,7 @@ const Sequelize = require('sequelize')
 const { Op } = Sequelize
 const General = require('../../services/general')
 const Database = require('../../database')
-const { User, Tag, Post, Course, Major } = require('../../models')
+const { User, Tag, Post, Course, Major, School } = require('../../models')
 
 module.exports = {
   getOneUser: async (id, config = {}) => {
@@ -38,7 +38,12 @@ module.exports = {
       data.teachers_onboard_url = General.getDomain(`/api/users/${id}/teachers?finished=0`)
     }
 
-    // Add majors and tags
+    // Add school
+    const school = await School.findAll({ where: { id: data.school_id } })
+    data.school = school[0]
+    delete data.school_id
+
+    // Add tags
     const tags = await Tag.findAll({ where: { user_id: id } })
     data.tags = tags.map(tag => {
       return { id: tag.id, content: tag.content }

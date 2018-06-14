@@ -262,11 +262,10 @@ users.post('/:id', protect, async (ctx) => {
     }
 
     const data = await user.update(input)
+    await service.processUserData(user.dataValues)
 
-    // do not send password to client
-    delete data.dataValues.password
     ctx.status = 200
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data
   })
 })
 

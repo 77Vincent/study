@@ -10,6 +10,7 @@ const { protect } = Auth
 /** 
  * @api {get} /api/schools/ Get all schools
  * @apiGroup Schools 
+ * @apiParam (Query String) {String} [id] Filtered by id
  * @apiParam (Query String) {String} [country_code] Filtered by country code
  * @apiParam (Query String) {String} [search] Search by English and Chinese name
  * @apiSuccess (200) {object[]} void Array contains all schools
@@ -20,7 +21,7 @@ schools.get('/', async (ctx) => {
     const data = await School.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
-      where: new Filter(query).filterBy(['country_code']).searchBy(['en', 'cn']).done()
+      where: new Filter(query).filterBy(['id', 'country_code']).searchBy(['en', 'cn']).done()
     })
 
     ctx.status = 200
