@@ -98,9 +98,7 @@ users.get('/:id', async (ctx) => {
     if (data) {
       await service.processUserData(data.dataValues)
       ctx.status = 200
-      ctx.body = General.prettyJSON(data)
-    } else {
-      ctx.status = 404
+      ctx.body = data
     }
   } catch (err) {
     General.logError(ctx, err)
