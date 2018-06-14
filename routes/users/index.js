@@ -199,7 +199,7 @@ users.get('/:id/teachers', async (ctx) => {
 users.put('/', async (ctx) => {
   try {
     const input = ctx.request.body
-    const { username, mobilephone, email } = ctx.request.body
+    const { username, mobilephone, email, password } = ctx.request.body
     const account = username || mobilephone || email
     let user = await service.getOneUser(account)
 
@@ -211,8 +211,8 @@ users.put('/', async (ctx) => {
     user = await User.create(input)
     user = await service.getOneUser(user.id)
 
+    const { id } = user.dataValues
     await service.processUserData(user.dataValues)
-    const { id, password } = user.dataValues
 
     ctx.status = 201
     ctx.body = {

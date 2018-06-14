@@ -5,7 +5,7 @@ const cors = require('koa-cors')
 const serve = require('koa-static')
 const bodyParser = require('koa-bodyparser')
 
-const c = require('./config')
+const config = require('./config')
 const routes = require('./routes')
 
 const app = new Koa()
@@ -26,4 +26,4 @@ app.on('error', (error) => {
   throw new Error(`Server Internal Error:${error}`)
 })
 
-app.listen(c.port)
+app.listen(config.port)
