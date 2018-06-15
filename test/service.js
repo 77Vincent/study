@@ -3,7 +3,7 @@ const config = require('../config')
 const USERS = require('./users.test/data')
 
 
-const modified = 'THIS FIELD HAS BEEN MODIFIED'
+const MODIFIED = 'MODIFIED DATA'
 const password = '000000'
 const url = `${config.protocol}://${config.host}:${config.port}/api`
 
@@ -31,7 +31,7 @@ const login = async (id = '', password = '') => {
 module.exports = { 
   login,
   request,
-  modified,
+  MODIFIED,
   url,
   password,
   USERS

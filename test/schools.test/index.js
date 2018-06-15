@@ -1,7 +1,7 @@
 const assert = require('assert')
 
 const data = require('./data')
-const { login, request, modified, url } = require('../service')
+const { login, request, MODIFIED, url } = require('../service')
 const config = require('../../config')
 
 describe('School', () => {
@@ -35,7 +35,7 @@ describe('School', () => {
       await request({
         method: 'POST',
         url: `${url}/schools/2`,
-        body: { description: modified, },
+        body: { description: MODIFIED, },
       })
     } catch (err) {
       assert.equal(err.statusCode, 401)
@@ -49,7 +49,7 @@ describe('School', () => {
         method: 'POST',
         url: `${url}/schools/2`,
         auth: { bearer: session.token },
-        body: { description: modified, },
+        body: { description: MODIFIED, },
       })
     } catch (err) {
       assert.equal(err.statusCode, 200)
@@ -61,7 +61,7 @@ describe('School', () => {
       await request({
         method: 'DELETE',
         url: `${url}/schools/1`,
-        body: { description: modified, },
+        body: { description: MODIFIED, },
       })
     } catch (err) {
       assert.equal(err.statusCode, 401)

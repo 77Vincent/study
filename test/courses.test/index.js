@@ -1,14 +1,14 @@
 const assert = require('assert')
 
 const data = require('./data')
-const { login, request, modified, url } = require('../service')
+const { login, request, MODIFIED, url } = require('../service')
 const users = require('../users.test/data')
 const userA = users[1].mobilephone
 const userB = users[2].mobilephone
 const password = '000000'
 const toUpdate = {
-  label: modified,
-  description: modified
+  label: MODIFIED,
+  description: MODIFIED
 }
 
 describe('Course', () => {
