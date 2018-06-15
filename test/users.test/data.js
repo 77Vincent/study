@@ -1,6 +1,9 @@
+const password = '000000'
+
 module.exports = [{
-  password: '000000',
-  name: '老师1',
+  // Teachers
+  password,
+  name: 'Vincent Wen',
   role_id: 1,
   school_id: 2,
   bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
@@ -11,8 +14,8 @@ module.exports = [{
   mobilephone: 18811111111,
   email: 'teacher1@xfolio.cn'
 }, {
-  password: '000000',
-  name: '老师2',
+  password,
+  name: 'Peter Pan',
   role_id: 1,
   school_id: 3,
   bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
@@ -26,8 +29,8 @@ module.exports = [{
   mobilephone: 18822222222,
   email: 'teacher2@xfolio.cn'
 }, {
-  password: '000000',
-  name: '老师3',
+  password,
+  name: 'Tony Zhange',
   role_id: 1,
   school_id: 4,
   bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
@@ -42,8 +45,8 @@ module.exports = [{
   mobilephone: 18833333333,
   email: 'teacher3@xfolio.cn'
 }, {
-  password: '000000',
-  name: '老师4',
+  password,
+  name: 'Wang Dachui',
   role_id: 1,
   school_id: 5,
   bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
@@ -56,8 +59,9 @@ module.exports = [{
   mobilephone: 18844444444,
   email: 'teacher4@xfolio.cn'
 }, {
-  password: '000000',
-  name: '学生1',
+  // Students
+  password,
+  name: '小明',
   bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
   gender: 1,
   mobilephone: 17711111111,
@@ -65,8 +69,8 @@ module.exports = [{
   city: '4503',
   email: 'student1@xfolio.cn'
 }, {
-  password: '000000',
-  name: '学生2',
+  password,
+  name: '小东',
   bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .',
   gender: 0,
   mobilephone: 17722222222,

@@ -10,9 +10,13 @@ before(async () => {
   await User.create({ role_id: 0, username: config.adminID, mobilephone: 123456789, password: config.adminPassword })
 })
 
+// Must be run before user
 require('./majors.test')
 require('./schools.test')
+
 require('./users.test')
+
+// Must be run after user
 require('./users_majors.test')
 require('./courses.test')
 require('./courses_majors.test')

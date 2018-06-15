@@ -2,10 +2,12 @@ const fs = require('fs')
 const path = require('path')
 const mime = require('mime')
 
+const filePath = path.resolve('static/resources/images')
 const files = [
-  { path: path.resolve('static/images'), name: 'logo.png' },
-  { path: path.resolve('static/images'), name: 'logo.png' },
-  { path: path.resolve('static/images'), name: 'test.jpg' }
+  { path: filePath, name: 'avatar-1.jpg' },
+  { path: filePath, name: 'avatar-2.jpg' },
+  { path: filePath, name: 'avatar-3.jpg' },
+  { path: filePath, name: 'avatar-4.jpg' }
 ]
 
 module.exports = files.map(each => {

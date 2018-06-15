@@ -1,8 +1,10 @@
 const rq = require('request-promise-native')
 const config = require('../config')
+const USERS = require('./users.test/data')
 
 
-const modified = 'THIS FIELD HAS BEEN MODIFIED FOR TESTING PURPOSE'
+const modified = 'THIS FIELD HAS BEEN MODIFIED'
+const password = '000000'
 const url = `${config.protocol}://${config.host}:${config.port}/api`
 
 const request = async (config) => {
@@ -26,4 +28,11 @@ const login = async (id = '', password = '') => {
   return data
 }
 
-module.exports = { login, request, modified, url }
+module.exports = { 
+  login,
+  request,
+  modified,
+  url,
+  password,
+  USERS
+}
