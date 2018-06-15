@@ -3,7 +3,7 @@ const Sequelize = require('sequelize')
 const { Op } = Sequelize
 const General = require('../../services/general')
 const Database = require('../../database')
-const { User, Tag, Post, Course, Major, School } = require('../../models')
+const { User, Tag, Post, Course, Major, School, Schedule } = require('../../models')
 
 module.exports = {
   getOneUser: async (id, config = {}) => {
@@ -28,6 +28,15 @@ module.exports = {
 
     // Add students info to teachers
     if (data.role_id === 1) {
+      const students = await Schedule.findAll({ where: {
+        teacher_id: user_id
+      }})
+      const students_onboard = await Schedule.findAll({ where: {
+        teacher_id: user_id,
+        finished: 1
+      }})
+      data.students = students.length
+      data.students_onboard = students_onboard.length
       data.students_url = General.getDomain(`/api/users/${user_id}/students`)
       data.students_onboard_url = General.getDomain(`/api/users/${user_id}/students?finished=0`)
     } 
@@ -39,7 +48,7 @@ module.exports = {
     }
 
     // Add school
-    const school = await School.findAll({ where: { id: data.school_id } })
+    const school = await School.findAll({where: { id: data.school_id }})
     data.school = school[0]
     delete data.school_id
 
