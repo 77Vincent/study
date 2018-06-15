@@ -16,7 +16,7 @@ tags.get('/', async (ctx) => {
     const data = await Tag.findAll()
 
     ctx.status = 200
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -25,7 +25,7 @@ tags.get('/', async (ctx) => {
 /** 
  * @api {put} /api/tags/ Create a tag
  * @apiGroup Tags
- * @apiParam {String[]} content Array of tags
+ * @apiParam {String} content Tag content
  * @apiSuccess (201) {Object} void The created tag
  * @apiError {String} 401 Not authenticated, sign in first to get token 
  */
@@ -33,12 +33,10 @@ tags.put('/', protect, async (ctx) => {
   try {
     const { content } = ctx.request.body
     const user_id = ctx.state.currentUserID
-
-    for (let i = 0; i < content.length; i++) {
-      await Tag.create({ user_id, content: content[i] })
-    }
+    const data = await Tag.create({ user_id, content })
 
     ctx.status = 201
+    ctx.body = data
   } catch (err) {
     General.logError(ctx, err)
   }

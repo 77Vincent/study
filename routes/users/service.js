@@ -23,19 +23,19 @@ module.exports = {
     // First remove password, do not pass password to client
     delete data.password
 
-    const { id } = data
+    const user_id = data.id
     const urlsByQuerystring = ['posts', 'courses']
 
     // Add students info to teachers
     if (data.role_id === 1) {
-      data.students_url = General.getDomain(`/api/users/${id}/students`)
-      data.students_onboard_url = General.getDomain(`/api/users/${id}/students?finished=0`)
+      data.students_url = General.getDomain(`/api/users/${user_id}/students`)
+      data.students_onboard_url = General.getDomain(`/api/users/${user_id}/students?finished=0`)
     } 
 
     // Add teachers info to students
     if (data.role_id === 2) {
-      data.teachers_url = General.getDomain(`/api/users/${id}/teachers`)
-      data.teachers_onboard_url = General.getDomain(`/api/users/${id}/teachers?finished=0`)
+      data.teachers_url = General.getDomain(`/api/users/${user_id}/teachers`)
+      data.teachers_onboard_url = General.getDomain(`/api/users/${user_id}/teachers?finished=0`)
     }
 
     // Add school
@@ -44,28 +44,28 @@ module.exports = {
     delete data.school_id
 
     // Add tags
-    const tags = await Tag.findAll({ where: { user_id: id } })
+    const tags = await Tag.findAll({ where: { user_id } })
     data.tags = tags.map(tag => {
       return { id: tag.id, content: tag.content }
     })
 
 
     // Add these properties
-    const followers = await Database.model('follower_following').findAll({ where: { following_id: id } })
-    const followings = await Database.model('follower_following').findAll({ where: { follower_id: id } })
-    const courses = await Course.findAll({ where: { user_id: id } })
-    const posts = await Post.findAll({ where: { user_id: id} })
+    const followers = await Database.model('follower_following').findAll({ where: { following_id: user_id } })
+    const followings = await Database.model('follower_following').findAll({ where: { follower_id: user_id } })
+    const courses = await Course.findAll({ where: { user_id: user_id } })
+    const posts = await Post.findAll({ where: { user_id: user_id} })
     data.followers = followers.length
     data.followings = followings.length
     data.posts = posts.length
     data.courses = courses.length
 
     urlsByQuerystring.map(each => {
-      data[`${each}_url`] = General.getDomain(`/api/${each}?user_id=${id}`)
+      data[`${each}_url`] = General.getDomain(`/api/${each}?user_id=${user_id}`)
     })
 
-    data.followings_url = General.getDomain(`/api/followings?follower_id=${id}`)
-    data.followers_url = General.getDomain(`/api/followings?following_id=${id}`)
+    data.followings_url = General.getDomain(`/api/followings?follower_id=${user_id}`)
+    data.followers_url = General.getDomain(`/api/followings?following_id=${user_id}`)
   },
   /**
    * Give each user a weight for ordering based on several aspects
