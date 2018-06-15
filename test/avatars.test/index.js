@@ -27,15 +27,21 @@ describe('Avatar', () => {
 
     session = await login(USERS[1].mobilephone, PASSWORD)
     await request({ method: 'PUT', url: `${URL}/avatars`, auth: { bearer: session.token }, body: data[1] })
+
     session = await login(USERS[2].mobilephone, PASSWORD)
-
     await request({ method: 'PUT', url: `${URL}/avatars`, auth: { bearer: session.token }, body: data[2] })
-    session = await login(USERS[3].mobilephone, PASSWORD)
 
+    session = await login(USERS[3].mobilephone, PASSWORD)
     await request({ method: 'PUT', url: `${URL}/avatars`, auth: { bearer: session.token }, body: data[3] })
 
+    session = await login(USERS[4].mobilephone, PASSWORD)
+    await request({ method: 'PUT', url: `${URL}/avatars`, auth: { bearer: session.token }, body: data[0] })
+
+    session = await login(USERS[5].mobilephone, PASSWORD)
+    await request({ method: 'PUT', url: `${URL}/avatars`, auth: { bearer: session.token }, body: data[1] })
+
     const res = await request({ url: `${URL}/avatars` })
-    assert.equal(res.body.length, data.length)
+    assert.equal(res.body.length, USERS.length)
   })
 
   it('Create a existing one should return 409', async () => {
