@@ -32,7 +32,7 @@ classes.get('/', async (ctx) => {
     })
 
     ctx.status = 200
-    ctx.body = General.prettyJSON(data) 
+    ctx.body = data 
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -62,7 +62,7 @@ classes.put('/', protect, async (ctx) => {
       const { date, length, finished, schedule_id } = ctx.request.body
       const user_id = ctx.state.currentUserID
       const data = await Class.create({ date, length, finished, schedule_id, user_id })
-      ctx.body = General.prettyJSON(data)
+      ctx.body = data
       ctx.status = 201
     }
   } catch (err) {
@@ -94,7 +94,7 @@ classes.post('/:id', protect, async (ctx) => {
       }
       data = await data.update(ctx.request.body)
       ctx.status = 200
-      ctx.body = General.prettyJSON(data)
+      ctx.body = data
     })
   } catch (err) {
     General.logError(ctx, err)

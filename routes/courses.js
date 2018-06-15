@@ -31,7 +31,7 @@ courses.get('/', async (ctx) => {
     })
 
     ctx.status = 200
-    ctx.body = General.prettyJSON(data) 
+    ctx.body = data 
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -52,7 +52,7 @@ courses.put('/', protect, async (ctx) => {
     const user_id = ctx.state.currentUserID
     const data = await Course.create({ label, description, user_id })
 
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data
     ctx.status = 201
   } catch (err) {
     General.logError(ctx, err)
@@ -73,7 +73,7 @@ courses.post('/:id', protect, async (ctx) => {
   await Auth.isAuthorized(ctx, Course, async (data) => {
     await data.update(ctx.request.body)
     ctx.status = 200
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data
   })
 })
 

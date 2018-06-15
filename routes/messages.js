@@ -38,7 +38,7 @@ messages.get('/', protect, async (ctx) => {
     })
 
     ctx.status = 200
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -59,7 +59,7 @@ messages.put('/', protect, async (ctx) => {
     const data = await Message.create(ctx.request.body)
 
     ctx.status = 201
-    ctx.body = General.prettyJSON(data) 
+    ctx.body = data 
   } catch (err) {
     General.logError(ctx, err)
   }

@@ -133,7 +133,7 @@ users.get('/:id/students', async (ctx) => {
     }
 
     ctx.status = 200
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -167,7 +167,7 @@ users.get('/:id/teachers', async (ctx) => {
     }
 
     ctx.status = 200
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data
   } catch (err) {
     General.logError(ctx, err)
   }

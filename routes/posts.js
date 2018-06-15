@@ -47,7 +47,7 @@ posts.get('/', async (ctx) => {
     }
 
     ctx.status = 200
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -71,7 +71,7 @@ posts.get('/:id', async (ctx) => {
     }
 
     ctx.status = 200
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -90,7 +90,7 @@ posts.put('/', protect, async (ctx) => {
     const { content, user_id } = ctx.request.body
     const data = await Post.create({ content, user_id })
 
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data
     ctx.status = 201
   } catch (err) {
     General.logError(ctx, err)

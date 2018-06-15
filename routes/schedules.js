@@ -39,7 +39,7 @@ schedules.get('/', async (ctx) => {
     }
 
     ctx.status = 200
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -67,7 +67,7 @@ schedules.put('/', protect, async (ctx) => {
       const { label, quota, finished, student_id } = ctx.request.body
       const teacher_id = ctx.state.currentUserID
       const data = await Schedule.create({ label, quota, finished, student_id, teacher_id})
-      ctx.body = General.prettyJSON(data)
+      ctx.body = data
       ctx.status = 201
     }
   } catch (err) {
@@ -98,7 +98,7 @@ schedules.post('/:id', protect, async (ctx) => {
     }
     data = await data.update(ctx.request.body)
     ctx.status = 200
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data
   })
 })
 

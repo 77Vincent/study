@@ -7,9 +7,6 @@ module.exports = {
   msToDay(millisecond) {
     return Math.floor(millisecond / 1000 / 60 / 60) / 24
   },
-  prettyJSON(json) {
-    return JSON.stringify(json, null, 2)
-  },
   timer(hours = 0) {
     return new Date(new Date().getTime() + Number(hours * 3600 * 1000))
   },

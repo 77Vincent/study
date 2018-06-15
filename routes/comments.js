@@ -29,7 +29,7 @@ comments.get('/', async (ctx) => {
     })
 
     ctx.status = 200
-    ctx.body = General.prettyJSON(data) 
+    ctx.body = data 
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -48,7 +48,7 @@ comments.put('/', protect, async (ctx) => {
   try {
     const data = await Comment.create(ctx.request.body)
 
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data
     ctx.status = 201
   } catch (err) {
     General.logError(ctx, err)

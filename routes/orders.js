@@ -36,7 +36,7 @@ orders.get('/', protect, async (ctx) => {
     })
 
     ctx.status = 200
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -59,7 +59,7 @@ orders.put('/', protect, async (ctx) => {
     const requestor_id = ctx.state.currentUserID
     const data = await Order.create({ requestor_id, recipient_id, length, unit_price, total_price, payment_method})
 
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data
     ctx.status = 201
   } catch (err) {
     General.logError(ctx, err)
@@ -90,7 +90,7 @@ orders.post('/:id', protect, async (ctx) => {
   await Auth.isAuthorized(ctx, Order, async (data) => {
     data = await data.update(ctx.request.body)
     ctx.status = 200
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data
   })
 })
 

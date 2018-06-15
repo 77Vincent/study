@@ -35,7 +35,7 @@ majors.put('/', protect, async (ctx) => {
     const { en, cn } = ctx.request.body
     const data = await Major.create({ en, cn })
 
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data
     ctx.status = 201
   } catch (err) {
     General.logError(ctx, err)
@@ -56,7 +56,7 @@ majors.post('/:id', protect, async (ctx) => {
   await Auth.isAuthorized(ctx, Major, async (data) => {
     data = await data.update(ctx.request.body)
     ctx.status = 200
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data
   })
 })
 
