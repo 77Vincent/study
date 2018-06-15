@@ -1,7 +1,7 @@
 const assert = require('assert')
 
 const data = require('./data')
-const { login, request, url, password, USERS } = require('../service')
+const { login, request, URL, PASSWORD, USERS } = require('../service')
 const user1 = USERS[0].mobilephone
 const user2 = USERS[1].mobilephone
 const user3 = USERS[2].mobilephone
@@ -12,7 +12,7 @@ describe('Avatar', () => {
     try {
       await request({
         method: 'PUT',
-        url: `${url}/avatars`,
+        url: `${URL}/avatars`,
         body: data[0]
       })
     } catch (err) {
@@ -22,10 +22,10 @@ describe('Avatar', () => {
 
   it('Create without body eturn 400', async () => {
     try {
-      let session = await login(user1, password)
+      let session = await login(user1, PASSWORD)
       await request({
         method: 'PUT',
-        url: `${url}/avatars`,
+        url: `${URL}/avatars`,
         auth: { bearer: session.token },
       })
     } catch (err) {
@@ -34,31 +34,31 @@ describe('Avatar', () => {
   })
 
   it('Create by user should return 201', async () => {
-    let session = await login(user1, password)
+    let session = await login(user1, PASSWORD)
     await request({
       method: 'PUT',
-      url: `${url}/avatars`,
+      url: `${URL}/avatars`,
       auth: { bearer: session.token },
       body: data[0]
     })
-    session = await login(user2, password)
+    session = await login(user2, PASSWORD)
     await request({
       method: 'PUT',
-      url: `${url}/avatars`,
+      url: `${URL}/avatars`,
       auth: { bearer: session.token },
       body: data[1]
     })
-    session = await login(user3, password)
+    session = await login(user3, PASSWORD)
     await request({
       method: 'PUT',
-      url: `${url}/avatars`,
+      url: `${URL}/avatars`,
       auth: { bearer: session.token },
       body: data[2]
     })
-    session = await login(user4, password)
+    session = await login(user4, PASSWORD)
     await request({
       method: 'PUT',
-      url: `${url}/avatars`,
+      url: `${URL}/avatars`,
       auth: { bearer: session.token },
       body: data[3]
     })
@@ -67,10 +67,10 @@ describe('Avatar', () => {
 
   it('Create a existing one should return 409', async () => {
     try {
-      let session = await login(user1, password)
+      let session = await login(user1, PASSWORD)
       await request({
         method: 'PUT',
-        url: `${url}/avatars`,
+        url: `${URL}/avatars`,
         auth: { bearer: session.token },
         body: data[1]
       })
@@ -83,7 +83,7 @@ describe('Avatar', () => {
     try {
       await request({
         method: 'POST',
-        url: `${url}/avatars/2`,
+        url: `${URL}/avatars/2`,
         body: data[2]
       })
     } catch (err) {
@@ -93,10 +93,10 @@ describe('Avatar', () => {
 
   it('Update by owner should return 200', async () => {
     try {
-      const session = await login(user1, password)
+      const session = await login(user1, PASSWORD)
       await request({
         method: 'POST',
-        url: `${url}/avatars/${session.data.avatar_id}`,
+        url: `${URL}/avatars/${session.data.avatar_id}`,
         auth: { bearer: session.token },
         body: data[0]
       })

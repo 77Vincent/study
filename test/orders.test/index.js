@@ -1,13 +1,13 @@
 const assert = require('assert')
 
 const data = require('./data')
-const { login, request, url } = require('../service')
+const { login, request, URL } = require('../service')
 const config = require('../../config')
 const users = require('../users.test/data')
 const userA = users[1].mobilephone
 const userB = users[2].mobilephone
 const userC = users[3].mobilephone
-const password = '000000'
+const PASSWORD = '000000'
 const toUpdate = {
   unit_price: 999,
   total_price: 999,
@@ -19,7 +19,7 @@ describe('Orders', () => {
     try {
       await request({
         method: 'PUT',
-        url: `${url}/orders`,
+        url: `${URL}/orders`,
         body: data[0]
       })
     } catch (err) {
@@ -29,24 +29,24 @@ describe('Orders', () => {
 
   it('Create by user should return 200', async () => {
     try {
-      let session = await login(userA, password)
+      let session = await login(userA, PASSWORD)
       await request({
         method: 'PUT',
-        url: `${url}/orders`,
+        url: `${URL}/orders`,
         auth: { bearer: session.token },
         body: data[0]
       })
-      session = await login(userB, password)
+      session = await login(userB, PASSWORD)
       await request({
         method: 'PUT',
-        url: `${url}/orders`,
+        url: `${URL}/orders`,
         auth: { bearer: session.token },
         body: data[1]
       })
-      session = await login(userC, password)
+      session = await login(userC, PASSWORD)
       await request({
         method: 'PUT',
-        url: `${url}/orders`,
+        url: `${URL}/orders`,
         auth: { bearer: session.token },
         body: data[2]
       })
@@ -57,7 +57,7 @@ describe('Orders', () => {
 
   it('Get by visitor should return 401', async () => {
     try {
-      await request({ url: `${url}/orders` })
+      await request({ url: `${URL}/orders` })
     } catch (err) {
       assert.equal(err.statusCode, 401)
     }
@@ -67,7 +67,7 @@ describe('Orders', () => {
     try {
       const session = await login(config.adminID, config.adminPassword)
       await request({
-        url: `${url}/orders`,
+        url: `${URL}/orders`,
         auth: { bearer: session.token }
       })
     } catch (err) {
@@ -77,9 +77,9 @@ describe('Orders', () => {
 
   it('Get by user should return 200', async () => {
     try {
-      const session = await login(userA, password)
+      const session = await login(userA, PASSWORD)
       await request({
-        url: `${url}/orders`,
+        url: `${URL}/orders`,
         auth: { bearer: session.token }
       })
     } catch (err) {
@@ -91,7 +91,7 @@ describe('Orders', () => {
     try {
       await request({
         method: 'POST',
-        url: `${url}/orders/2`,
+        url: `${URL}/orders/2`,
         body: toUpdate
       })
     } catch (err) {
@@ -102,10 +102,10 @@ describe('Orders', () => {
   it('Update by admin user should return 200', async () => {
     try {
       const session = await login(config.adminID, config.adminPassword)
-      const orders = await request({ url: `${url}/orders`, auth: { bearer: session.token } })
+      const orders = await request({ url: `${URL}/orders`, auth: { bearer: session.token } })
       await request({
         method: 'POST',
-        url: `${url}/orders/${orders.body[1].id}`,
+        url: `${URL}/orders/${orders.body[1].id}`,
         auth: { bearer: session.token },
         body: toUpdate
       })
@@ -116,11 +116,11 @@ describe('Orders', () => {
 
   it('Update by owner should return 200', async () => {
     try {
-      const session = await login(userB, password)
-      const orders = await request({ url: `${url}/orders`, auth: { bearer: session.token } })
+      const session = await login(userB, PASSWORD)
+      const orders = await request({ url: `${URL}/orders`, auth: { bearer: session.token } })
       await request({
         method: 'POST',
-        url: `${url}/orders/${orders.body[1].id}`,
+        url: `${URL}/orders/${orders.body[1].id}`,
         auth: { bearer: session.token },
         body: toUpdate
       })
@@ -133,7 +133,7 @@ describe('Orders', () => {
     try {
       await request({
         method: 'DELETE',
-        url: `${url}/orders/3`,
+        url: `${URL}/orders/3`,
       })
     } catch (err) {
       assert.equal(err.statusCode, 401)
@@ -142,11 +142,11 @@ describe('Orders', () => {
 
   it('Delete by owner should return 200', async () => {
     try {
-      const session = await login(userA, password)
-      const orders = await request({ url: `${url}/orders`, auth: { bearer: session.token } })
+      const session = await login(userA, PASSWORD)
+      const orders = await request({ url: `${URL}/orders`, auth: { bearer: session.token } })
       await request({
         method: 'DELETE',
-        url: `${url}/orders/${orders.body[0].id}`,
+        url: `${URL}/orders/${orders.body[0].id}`,
         auth: { bearer: session.token }
       })
     } catch (err) {

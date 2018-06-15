@@ -1,7 +1,7 @@
 const assert = require('assert')
 
 const data = require('./data')
-const { login, request, url } = require('../service')
+const { login, request, URL } = require('../service')
 const config = require('../../config')
 
 describe('Class_Course', () => {
@@ -9,7 +9,7 @@ describe('Class_Course', () => {
     try {
       await request({
         method: 'PUT',
-        url: `${url}/classes_courses`,
+        url: `${URL}/classes_courses`,
         body: data[0]
       })
     } catch (err) {
@@ -22,7 +22,7 @@ describe('Class_Course', () => {
       const session = await login(config.adminID, config.adminPassword)
       await request({
         method: 'PUT',
-        url: `${url}/classes_courses`,
+        url: `${URL}/classes_courses`,
         auth: { bearer: session.token },
         body: data[i]
       })
@@ -35,7 +35,7 @@ describe('Class_Course', () => {
       const session = await login(config.adminID, config.adminPassword)
       await request({
         method: 'DELETE',
-        url: `${url}/classes_courses`,
+        url: `${URL}/classes_courses`,
         auth: { bearer: session.token },
         body: { course_id: 2, class_id: 2 }
       })

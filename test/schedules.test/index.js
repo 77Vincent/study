@@ -1,12 +1,12 @@
 const assert = require('assert')
 
 const data = require('./data')
-const { login, request, MODIFIED, url } = require('../service')
+const { login, request, MODIFIED, URL } = require('../service')
 const config = require('../../config')
 const users = require('../users.test/data')
 const userA = users[1].mobilephone
 const userB = users[2].mobilephone
-const password = '000000'
+const PASSWORD = '000000'
 const toUpdate = {
   label: MODIFIED,
   quota: 99,
@@ -18,7 +18,7 @@ describe('Schedule', () => {
     try {
       await request({
         method: 'PUT',
-        url: `${url}/schedules`,
+        url: `${URL}/schedules`,
         body: data[0]
       })
     } catch (err) {
@@ -28,10 +28,10 @@ describe('Schedule', () => {
 
   it('Create by user should return 201', async () => {
     for (let i = 0; i < data.length; i++) {
-      const session = await login(userA, password)
+      const session = await login(userA, PASSWORD)
       await request({
         method: 'PUT',
-        url: `${url}/schedules`,
+        url: `${URL}/schedules`,
         auth: { bearer: session.token },
         body: data[i]
       })
@@ -41,7 +41,7 @@ describe('Schedule', () => {
 
   it('Get by visitor should return 401', async () => {
     try {
-      await request({ url: `${url}/schedules` })
+      await request({ url: `${URL}/schedules` })
     } catch (err) {
       assert.equal(err.statusCode, 401)
     }
@@ -49,9 +49,9 @@ describe('Schedule', () => {
 
   it('Get by admin user should return 200', async () => {
     try {
-      const session = await login(userA, password)
+      const session = await login(userA, PASSWORD)
       await request({
-        url: `${url}/schedules`,
+        url: `${URL}/schedules`,
         auth: { bearer: session.token }
       })
     } catch (err) {
@@ -63,7 +63,7 @@ describe('Schedule', () => {
     try {
       const session = await login(config.adminID, config.adminPassword)
       await request({
-        url: `${url}/schedules`,
+        url: `${URL}/schedules`,
         auth: { bearer: session.token }
       })
     } catch (err) {
@@ -75,7 +75,7 @@ describe('Schedule', () => {
     try {
       await request({
         method: 'POST',
-        url: `${url}/schedules/2`,
+        url: `${URL}/schedules/2`,
         body: toUpdate
       })
     } catch (err) {
@@ -85,10 +85,10 @@ describe('Schedule', () => {
 
   it('Update by other user should return 403', async () => {
     try {
-      const session = await login(userB, password)
+      const session = await login(userB, PASSWORD)
       await request({
         method: 'POST',
-        url: `${url}/schedules/2`,
+        url: `${URL}/schedules/2`,
         body: toUpdate,
         auth: { bearer: session.token }
       })
@@ -99,10 +99,10 @@ describe('Schedule', () => {
 
   it('Update with not satisfiable input should return 416', async () => {
     try {
-      const session = await login(userA, password)
+      const session = await login(userA, PASSWORD)
       await request({
         method: 'POST',
-        url: `${url}/schedules/2`,
+        url: `${URL}/schedules/2`,
         body: { quota: 999 },
         auth: { bearer: session.token }
       })
@@ -113,10 +113,10 @@ describe('Schedule', () => {
 
   it('Update by owner should return 200', async () => {
     try {
-      const session = await login(userA, password)
+      const session = await login(userA, PASSWORD)
       await request({
         method: 'POST',
-        url: `${url}/schedules/2`,
+        url: `${URL}/schedules/2`,
         body: toUpdate,
         auth: { bearer: session.token }
       })
@@ -129,7 +129,7 @@ describe('Schedule', () => {
     try {
       await request({
         method: 'DELETE',
-        url: `${url}/schedules/1`,
+        url: `${URL}/schedules/1`,
       })
     } catch (err) {
       assert.equal(err.statusCode, 401)
@@ -138,10 +138,10 @@ describe('Schedule', () => {
 
   it('Delete by other user should return 403', async () => {
     try {
-      const session = await login(userB, password)
+      const session = await login(userB, PASSWORD)
       await request({
         method: 'DELETE',
-        url: `${url}/schedules/1`,
+        url: `${URL}/schedules/1`,
         auth: { bearer: session.token }
       })
     } catch (err) {
@@ -151,10 +151,10 @@ describe('Schedule', () => {
 
   it('Delete by owner should return 200', async () => {
     try {
-      const session = await login(userA, password)
+      const session = await login(userA, PASSWORD)
       await request({
         method: 'DELETE',
-        url: `${url}/schedules/1`,
+        url: `${URL}/schedules/1`,
         auth: { bearer: session.token }
       })
     } catch (err) {

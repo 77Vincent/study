@@ -28,4 +28,22 @@ module.exports = [{
   pinyin: 'gelunbiyadaxue',
   website: 'https://www.columbia.edu/',
   country_code: 'US'
+}, {
+  en: 'Test University',
+  cn: '测试大学',
+  pinyin: 'ceshidaxue',
+  website: 'https://www.columbia.edu/',
+  country_code: 'CN'
+}, {
+  en: 'Home University',
+  cn: '家里蹲大学',
+  pinyin: 'jialidundaxue',
+  website: 'https://www.columbia.edu/',
+  country_code: 'CN'
+}, {
+  en: 'Lanxiang College',
+  cn: '蓝翔技术学校',
+  pinyin: 'lanxiangjishuxuexiao',
+  website: 'https://www.columbia.edu/',
+  country_code: 'CN'
 }]
