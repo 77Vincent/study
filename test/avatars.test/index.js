@@ -2,19 +2,11 @@ const assert = require('assert')
 
 const data = require('./data')
 const { login, request, URL, PASSWORD, USERS } = require('../service')
-const user1 = USERS[0].mobilephone
-const user2 = USERS[1].mobilephone
-const user3 = USERS[2].mobilephone
-const user4 = USERS[3].mobilephone
 
 describe('Avatar', () => {
   it('Create by visitor should return 401', async () => {
     try {
-      await request({
-        method: 'PUT',
-        url: `${URL}/avatars`,
-        body: data[0]
-      })
+      await request({ method: 'PUT', url: `${URL}/avatars`, body: data[0] })
     } catch (err) {
       assert.equal(err.statusCode, 401)
     }
@@ -22,58 +14,34 @@ describe('Avatar', () => {
 
   it('Create without body eturn 400', async () => {
     try {
-      let session = await login(user1, PASSWORD)
-      await request({
-        method: 'PUT',
-        url: `${URL}/avatars`,
-        auth: { bearer: session.token },
-      })
+      let session = await login(USERS[0].mobilephone, PASSWORD)
+      await request({ method: 'PUT', url: `${URL}/avatars`, auth: { bearer: session.token }})
     } catch (err) {
       assert.equal(err.statusCode, 400)
     }
   })
 
   it('Create by user should return 201', async () => {
-    let session = await login(user1, PASSWORD)
-    await request({
-      method: 'PUT',
-      url: `${URL}/avatars`,
-      auth: { bearer: session.token },
-      body: data[0]
-    })
-    session = await login(user2, PASSWORD)
-    await request({
-      method: 'PUT',
-      url: `${URL}/avatars`,
-      auth: { bearer: session.token },
-      body: data[1]
-    })
-    session = await login(user3, PASSWORD)
-    await request({
-      method: 'PUT',
-      url: `${URL}/avatars`,
-      auth: { bearer: session.token },
-      body: data[2]
-    })
-    session = await login(user4, PASSWORD)
-    await request({
-      method: 'PUT',
-      url: `${URL}/avatars`,
-      auth: { bearer: session.token },
-      body: data[3]
-    })
-    assert.ok(true)
+    let session = await login(USERS[0].mobilephone, PASSWORD)
+    await request({ method: 'PUT', url: `${URL}/avatars`, auth: { bearer: session.token }, body: data[0] })
+
+    session = await login(USERS[1].mobilephone, PASSWORD)
+    await request({ method: 'PUT', url: `${URL}/avatars`, auth: { bearer: session.token }, body: data[1] })
+    session = await login(USERS[2].mobilephone, PASSWORD)
+
+    await request({ method: 'PUT', url: `${URL}/avatars`, auth: { bearer: session.token }, body: data[2] })
+    session = await login(USERS[3].mobilephone, PASSWORD)
+
+    await request({ method: 'PUT', url: `${URL}/avatars`, auth: { bearer: session.token }, body: data[3] })
+
+    const res = await request({ url: `${URL}/avatars` })
+    assert.equal(res.body.length, data.length)
   })
 
   it('Create a existing one should return 409', async () => {
     try {
-      let session = await login(user1, PASSWORD)
-      await request({
-        method: 'PUT',
-        url: `${URL}/avatars`,
-        auth: { bearer: session.token },
-        body: data[1]
-      })
+      let session = await login(USERS[0].mobilephone, PASSWORD)
+      await request({ method: 'PUT', url: `${URL}/avatars`, auth: { bearer: session.token }, body: data[1] })
     } catch (err) {
       assert.equal(err.statusCode, 409)
     }
@@ -81,11 +49,7 @@ describe('Avatar', () => {
 
   it('Update by visitor should return 401', async () => {
     try {
-      await request({
-        method: 'POST',
-        url: `${URL}/avatars/2`,
-        body: data[2]
-      })
+      await request({ method: 'POST', url: `${URL}/avatars/2`, body: data[2] })
     } catch (err) {
       assert.equal(err.statusCode, 401)
     }
@@ -93,13 +57,9 @@ describe('Avatar', () => {
 
   it('Update by owner should return 200', async () => {
     try {
-      const session = await login(user1, PASSWORD)
-      await request({
-        method: 'POST',
-        url: `${URL}/avatars/${session.data.avatar_id}`,
-        auth: { bearer: session.token },
-        body: data[0]
-      })
+      const session = await login(USERS[0].mobilephone, PASSWORD)
+      const auth = { bearer: session.token }
+      await request({ method: 'POST', url: `${URL}/avatars/${session.data.avatar_id}`, auth, body: data[0] })
     } catch (err) {
       assert.equal(err.statusCode, 200)
     }
