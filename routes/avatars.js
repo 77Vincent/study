@@ -24,7 +24,7 @@ avatars.get('/', async (ctx) => {
     })
 
     ctx.status = 200
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data 
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -45,8 +45,6 @@ avatars.get('/:id', async (ctx) => {
       ctx.status = 200
       ctx.type = mime.getType(path.split('.')[1])
       ctx.body = Storage.restore(path)
-    } else {
-      ctx.status = 404
     }
   } catch (err) {
     General.logError(ctx, err)
@@ -89,7 +87,7 @@ avatars.put('/', protect, async (ctx) => {
     await user.update({ avatar_id: data.dataValues.id })
 
     ctx.status = 201
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data
   } catch (err) {
     General.logError(ctx, err)
   }
@@ -120,7 +118,7 @@ avatars.post('/:id', protect, async (ctx) => {
     data = await data.update({ path })
 
     ctx.status = 200
-    ctx.body = General.prettyJSON(data)
+    ctx.body = data
   })
 })
 
