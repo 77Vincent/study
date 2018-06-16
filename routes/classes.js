@@ -1,11 +1,9 @@
 const Router = require('koa-router')
-const Sequelize = require('sequelize')
 
 const { Class, Course } = require('../models')
-const { General, Auth } = require('../services')
+const { General, Auth, Filter } = require('../services')
 const config = require('../config')
 
-const { Op } = Sequelize
 const classes = Router()
 const { protect } = Auth
 const range = { length: 99 }
@@ -13,7 +11,6 @@ const range = { length: 99 }
 /** 
  * @api {get} /api/classes Get all classes
  * @apiGroup Classes 
- * @apiDescription Class is ordered by date in ASC order by default
  * @apiParam (Query String) {Boolean=0,1} [finished=0,1] Filtered by if the class is finished 
  * @apiParam (Query String) {Integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all classes 
@@ -21,13 +18,12 @@ const range = { length: 99 }
  */
 classes.get('/', async (ctx) => {
   try {
-    const qs = General.parseQuerystring(ctx.request.querystring)
+    const query = General.parseQuerystring(ctx.request.querystring)
 
     const data = await Class.findAll({
       limit: config.queryLimit,
-      offset: General.getOffset(qs.page, config.queryLimit),
-      where: { [Op.and]: General.getFilter(qs, ['finished', 'schedule_id']) },
-      order: [['date', 'ASC']],
+      offset: General.getOffset(query.page, config.queryLimit),
+      where: new Filter(query).filterBy(['finished', 'schedule_id']).done(),
       include: [{ model: Course, attributes: ['label', 'description'] }]
     })
 
