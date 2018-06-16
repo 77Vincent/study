@@ -21,9 +21,10 @@ module.exports = {
     const arr = querystring.split('&')
     let obj = {}
     for (let i = 0; i < arr.length; i++) {
-      if (arr[i].indexOf('=') === -1) { break }
-      const pair = arr[i].split('=')
-      obj[pair[0]] = pair[1]
+      if (arr[i].indexOf('=') !== -1) {
+        const pair = arr[i].split('=')
+        obj[pair[0]] = pair[1]
+      }
     }
     return obj
   },
