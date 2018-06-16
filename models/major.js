@@ -16,7 +16,11 @@ module.exports = Database.define('major', {
     type: Sequelize.STRING,
     allowNull: false,
     unique: true
-  }
+  },
+  pinyin: {
+    type: Sequelize.STRING,
+    unique: true
+  },
 }, {
   timestamps: false
 })

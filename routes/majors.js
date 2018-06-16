@@ -1,7 +1,7 @@
 const Router = require('koa-router')
 
 const { Major } = require('../models')
-const { General, Auth } = require('../services')
+const { General, Auth, Filter } = require('../services')
 
 const majors = Router()
 const { protect } = Auth
@@ -13,7 +13,10 @@ const { protect } = Auth
  */
 majors.get('/', async (ctx) => {
   try {
-    const data = await Major.findAll()
+    const query = General.parseQuerystring(ctx.request.querystring)
+    const data = await Major.findAll({
+      where: new Filter(query).searchBy(['pinyin', 'cn', 'en']).done()
+    })
 
     ctx.status = 200
     ctx.body = data
@@ -32,8 +35,8 @@ majors.get('/', async (ctx) => {
  */
 majors.put('/', protect, async (ctx) => {
   try {
-    const { en, cn } = ctx.request.body
-    const data = await Major.create({ en, cn })
+    const { en, cn, pinyin } = ctx.request.body
+    const data = await Major.create({ en, cn, pinyin })
 
     ctx.body = data
     ctx.status = 201

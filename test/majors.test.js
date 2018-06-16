@@ -1,8 +1,8 @@
 const assert = require('assert')
 
-const data = require('./data')
-const { login, request, MODIFIED, URL } = require('../service')
-const config = require('../../config')
+const data = require('../static/resources/majors')
+const { login, request, MODIFIED, URL } = require('./service')
+const config = require('../config')
 
 describe('Major', () => {
   it('Create = 201', async () => {
