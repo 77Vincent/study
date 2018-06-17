@@ -11,6 +11,7 @@ const Class = require('./class')
 const Order = require('./order')
 const Avatar = require('./avatar')
 const School = require('./school')
+const Country = require('./country')
 
 // Table Relationship
 Course.belongsTo(User)
@@ -61,5 +62,6 @@ module.exports = {
   Class,
   Order,
   Avatar,
-  School
+  School,
+  Country,
 }

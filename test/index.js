@@ -11,6 +11,7 @@ before(async () => {
 })
 
 // Must be run before user
+require('./countries.test')
 require('./majors.test')
 require('./schools.test')
 

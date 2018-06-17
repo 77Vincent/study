@@ -3,7 +3,7 @@ const Database = require( '../database')
 
 module.exports = Database.define('school', {
   id: {
-    type: Sequelize.TINYINT,
+    type: Sequelize.SMALLINT,
     autoIncrement: true,
     unique: true,
     primaryKey: true

@@ -1,11 +1,25 @@
 const Router = require('koa-router')
 
 const routes = [
-  'classes', 'comments', 'courses', 'majors',
-  'messages', 'pictures', 'posts', 'schools',
-  'schedules', 'sessions', 'tags', 'users',
-  'orders', 'avatars', 'followers_followings',
-  'users_majors', 'courses_majors', 'classes_courses'
+  'classes',
+  'comments',
+  'courses',
+  'majors',
+  'messages',
+  'pictures',
+  'posts',
+  'schools',
+  'schedules',
+  'sessions',
+  'tags',
+  'users',
+  'orders',
+  'avatars',
+  'followers_followings',
+  'users_majors',
+  'courses_majors',
+  'classes_courses',
+  'locations',
 ]
 
 const router = Router({ prefix: '/api/' })

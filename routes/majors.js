@@ -1,4 +1,5 @@
 const Router = require('koa-router')
+const py = require('pinyin')
 
 const { Major } = require('../models')
 const { General, Auth, Filter } = require('../services')
@@ -7,9 +8,10 @@ const majors = Router()
 const { protect } = Auth
 
 /** 
- * @api {get} /api/majors/ Get all majors
+ * @api {get} /api/majors/ Get all
  * @apiGroup Majors 
- * @apiSuccess (200) {object[]} void Array contains all majors
+ * @apiParam (Query String) {String} [search] Search by Chinese phonetic alphabet, Chinese name or English name
+ * @apiSuccess (200) {object[]} void Array contains all results
  */
 majors.get('/', async (ctx) => {
   try {
@@ -26,16 +28,20 @@ majors.get('/', async (ctx) => {
 })
 
 /** 
- * @api {put} /api/majors/ Create a major
+ * @api {put} /api/majors/ Create one
  * @apiGroup Majors 
- * @apiParam {String} en The major's English name
- * @apiParam {String} cn The major's Chinese name
- * @apiSuccess (201) {Object} void The created major 
+ * @apiParam {String} en The English name
+ * @apiParam {String} cn The Chinese name
+ * @apiParam {String} pinyin The Chinese phonetic alphabet
+ * @apiSuccess (201) {Object} void The created one
  * @apiError {String} 401 Not authenticated, sign in first to get token 
  */
 majors.put('/', protect, async (ctx) => {
   try {
-    const { en, cn, pinyin } = ctx.request.body
+    let { en, cn, pinyin } = ctx.request.body
+    pinyin = pinyin || py(cn, {
+      style: py.STYLE_NORMAL
+    }).join('')
     const data = await Major.create({ en, cn, pinyin })
 
     ctx.body = data
@@ -46,13 +52,13 @@ majors.put('/', protect, async (ctx) => {
 })
 
 /** 
- * @api {post} /api/majors/:id Update a tag
+ * @api {post} /api/majors/:id Update one
  * @apiGroup Majors 
- * @apiParam {String} en The major's English name
- * @apiParam {String} cn The major's Chinese name
- * @apiSuccess (200) {Object} void The Updated tag
+ * @apiParam {String} en The English name
+ * @apiParam {String} cn The Chinese name
+ * @apiParam {String} pinyin The Chinese phonetic alphabet
+ * @apiSuccess (200) {Object} void The Updated one
  * @apiError {String} 401 Not authenticated, sign in first to get token 
- * @apiError {String} 403 Not authorized, no access for the operation
  * @apiError {String} 404 The requested content is found
  */
 majors.post('/:id', protect, async (ctx) => {
@@ -64,11 +70,10 @@ majors.post('/:id', protect, async (ctx) => {
 })
 
 /** 
- * @api {delete} /api/majors/:id Delete a major 
+ * @api {delete} /api/majors/:id Delete one
  * @apiGroup Majors 
  * @apiSuccess (200) {Void} void void
  * @apiError {String} 401 Not authenticated, sign in first to get token 
- * @apiError {String} 403 Not authorized, no access for the operation
  * @apiError {String} 404 The requested content is found
  */
 majors.delete('/:id', protect, async (ctx) => {

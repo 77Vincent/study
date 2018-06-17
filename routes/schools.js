@@ -1,4 +1,5 @@
 const Router = require('koa-router')
+const py = require('pinyin')
 
 const { School } = require('../models')
 const { General, Auth, Filter } = require('../services')
@@ -8,12 +9,12 @@ const schools = Router()
 const { protect } = Auth
 
 /** 
- * @api {get} /api/schools/ Get all schools
+ * @api {get} /api/schools/ Get all
  * @apiGroup Schools 
  * @apiParam (Query String) {String} [id] Filtered by id
  * @apiParam (Query String) {String} [country_code] Filtered by country code
- * @apiParam (Query String) {String} [search] Search by English and Chinese name
- * @apiSuccess (200) {object[]} void Array contains all schools
+ * @apiParam (Query String) {String} [search] Search by Chinese phonetic alphabet, Chinese name or English name
+ * @apiSuccess (200) {object[]} void Array contains all
  */
 schools.get('/', async (ctx) => {
   try {
@@ -34,16 +35,20 @@ schools.get('/', async (ctx) => {
 /** 
  * @api {put} /api/schools/ Create a school
  * @apiGroup Schools 
- * @apiParam {String} en The school's English name
- * @apiParam {String} cn The school's Chinese name
- * @apiParam {String} website The school's website
- * @apiParam {String} country_code The country code of the country where the school is located
- * @apiSuccess (201) {Object} void The created school 
+ * @apiParam {String} en The English name
+ * @apiParam {String} cn The Chinese name
+ * @apiParam {String} pinyin The Chinese phonetic alphabet
+ * @apiParam {String} website The website URL
+ * @apiParam {String} country_code The country code of the school
+ * @apiSuccess (201) {Object} void The created one 
  * @apiError {String} 401 Not authenticated, sign in first to get token 
  */
 schools.put('/', protect, async (ctx) => {
   try {
-    const { en, cn, pinyin, website, country_code } = ctx.request.body
+    let { en, cn, pinyin, website, country_code } = ctx.request.body
+    pinyin = pinyin || py(cn, {
+      style: py.STYLE_NORMAL
+    }).join('')
     const data = await School.create({ en, cn, pinyin, website, country_code })
 
     ctx.status = 201
@@ -54,15 +59,15 @@ schools.put('/', protect, async (ctx) => {
 })
 
 /** 
- * @api {post} /api/schools/:id Update a school 
+ * @api {post} /api/schools/:id Update one 
  * @apiGroup Schools 
- * @apiParam {String} en The school's English name
- * @apiParam {String} cn The school's Chinese name
- * @apiParam {String} website The school's website
- * @apiParam {String} country_code The country code of the country where the school is located
- * @apiSuccess (200) {Object} void The Updated school 
+ * @apiParam {String} en The English name
+ * @apiParam {String} cn The Chinese name
+ * @apiParam {String} pinyin The Chinese phonetic alphabet
+ * @apiParam {String} website The website URL
+ * @apiParam {String} country_code The country code of the school
+ * @apiSuccess (200) {Object} void The Updated one 
  * @apiError {String} 401 Not authenticated, sign in first to get token 
- * @apiError {String} 403 Not authorized, no access for the operation
  * @apiError {String} 404 The requested content is found
  */
 schools.post('/:id', protect, async (ctx) => {
@@ -75,11 +80,10 @@ schools.post('/:id', protect, async (ctx) => {
 })
 
 /** 
- * @api {delete} /api/schools/:id Delete a school 
+ * @api {delete} /api/schools/:id Delete one
  * @apiGroup Schools 
  * @apiSuccess (200) {Void} void void
  * @apiError {String} 401 Not authenticated, sign in first to get token 
- * @apiError {String} 403 Not authorized, no access for the operation
  * @apiError {String} 404 The requested content is found
  */
 schools.delete('/:id', protect, async (ctx) => {
