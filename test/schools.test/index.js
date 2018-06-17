@@ -14,10 +14,12 @@ describe('School', () => {
   })
 
   it('Create by user = 201', async () => {
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i += 1) {
       const session = await login(config.adminID, config.adminPassword)
       const auth = { bearer: session.token }
-      await request({ method: 'PUT', url: `${URL}/schools`, auth, body: data[i] })
+      await request({
+        method: 'PUT', url: `${URL}/schools`, auth, body: data[i],
+      })
     }
     const res = await request({ url: `${URL}/schools` })
     assert.equal(res.body.length, data.length)

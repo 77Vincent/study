@@ -22,12 +22,10 @@ const files = [
   { path: path.resolve('static/images'), name: 'logo.png', post_id: 17 },
 ]
 
-const dummyPictures = files.map(each => {
-  return {
-    mime: mime.getType(each.name.split('.')[1]),
-    content: fs.readFileSync(`${each.path}/${each.name}`, 'base64'),
-    post_id: each.post_id, 
-  }
-})
+const dummyPictures = files.map(each => ({
+  mime: mime.getType(each.name.split('.')[1]),
+  content: fs.readFileSync(`${each.path}/${each.name}`, 'base64'),
+  post_id: each.post_id,
+}))
 
 module.exports = { dummyPictures }

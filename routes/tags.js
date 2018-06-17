@@ -6,7 +6,7 @@ const { General, Auth } = require('../services')
 const tags = Router()
 const { protect } = Auth
 
-/** 
+/**
  * @api {get} /api/tags/ Get all tags
  * @apiGroup Tags
  * @apiSuccess (200) {object[]} void Array contains all tags
@@ -22,12 +22,12 @@ tags.get('/', async (ctx) => {
   }
 })
 
-/** 
+/**
  * @api {put} /api/tags/ Create a tag
  * @apiGroup Tags
  * @apiParam {String} content Tag content
  * @apiSuccess (201) {Object} void The created tag
- * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 401 Not authenticated, sign in first to get token
  */
 tags.put('/', protect, async (ctx) => {
   try {
@@ -42,11 +42,11 @@ tags.put('/', protect, async (ctx) => {
   }
 })
 
-/** 
+/**
  * @api {delete} /api/tags/:id Delete a tag
  * @apiGroup Tags
  * @apiSuccess (200) {Void} void void
- * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 401 Not authenticated, sign in first to get token
  * @apiError {String} 403 Not authorized, no access for the operation
  * @apiError {String} 404 The requested content is found
  */

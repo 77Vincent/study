@@ -14,11 +14,11 @@ module.exports = Database.define('class', {
   length: {
     type: Sequelize.FLOAT,
     allowNull: false,
-    defaultValue: 1, 
+    defaultValue: 1,
   },
   finished: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
-    defaultValue: false,    
+    defaultValue: false,
   },
 })

@@ -7,7 +7,9 @@ before(async () => {
   await Database.dropAllSchemas()
   await Database.sync({ force: true })
   // Create the admin user
-  await User.create({ role_id: 0, username: config.adminID, mobilephone: 123456789, password: config.adminPassword })
+  await User.create({
+    role_id: 0, username: config.adminID, mobilephone: 123456789, password: config.adminPassword,
+  })
 })
 
 // Must be run before user

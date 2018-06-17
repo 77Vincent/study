@@ -1,7 +1,10 @@
 const assert = require('assert')
 
-const { login, request, MODIFIED, URL, PASSWORD } = require('../service')
+const {
+  login, request, MODIFIED, URL, PASSWORD,
+} = require('../service')
 const USERS = require('./data')
+
 const toUpdate = {
   cost: 666,
   gender: true,
@@ -11,10 +14,10 @@ const toUpdate = {
 
 describe('User', () => {
   it('Create = 200', async () => {
-    for (let i = 0; i < USERS.length; i++) {
+    for (let i = 0; i < USERS.length; i += 1) {
       await request({ method: 'PUT', url: `${URL}/users`, body: USERS[i] })
     }
-    const res = await request({ url: `${URL}/users`})
+    const res = await request({ url: `${URL}/users` })
     // Admin user is always created
     assert.equal(res.body.length - 1, USERS.length)
   })
@@ -39,7 +42,9 @@ describe('User', () => {
     try {
       const session = await login(USERS[0].mobilephone, PASSWORD)
       const auth = { bearer: session.token }
-      await request({ method: 'POST', url: `${URL}/users/4`, auth, body: toUpdate })
+      await request({
+        method: 'POST', url: `${URL}/users/4`, auth, body: toUpdate,
+      })
     } catch (err) {
       assert.equal(err.statusCode, 403)
     }
@@ -49,7 +54,9 @@ describe('User', () => {
     try {
       const session = await login(USERS[0].mobilephone, PASSWORD)
       const auth = { bearer: session.token }
-      await request({ method: 'POST', url: `${URL}/users/${session.data.id}`, auth, body: { cost: 99999 }})
+      await request({
+        method: 'POST', url: `${URL}/users/${session.data.id}`, auth, body: { cost: 99999 },
+      })
     } catch (err) {
       assert.equal(err.statusCode, 416)
     }
@@ -59,7 +66,9 @@ describe('User', () => {
     try {
       const session = await login(USERS[0].mobilephone, PASSWORD)
       const auth = { bearer: session.token }
-      await request({ method: 'POST', url: `${URL}/users/${session.data.id}`, auth, body: toUpdate })
+      await request({
+        method: 'POST', url: `${URL}/users/${session.data.id}`, auth, body: toUpdate,
+      })
     } catch (err) {
       assert.equal(err.statusCode, 200)
     }

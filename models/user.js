@@ -83,7 +83,8 @@ module.exports = Database.define('user', {
 }, {
   paranoid: true,
   hooks: {
-    afterValidate(input) {
+    afterValidate(sourceInput) {
+      const input = sourceInput
       if (input.password) {
         input.password = bcrypt.hashSync(input.password, 8)
       }

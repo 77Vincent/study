@@ -27,9 +27,9 @@ module.exports = {
 
       // If token exists, get user credentials from the decoded token
       if (token) {
-        const parsed = jwt.verify(token, config.tokenSecret)
-        id = parsed.id
-        password = parsed.password
+        const parsed = jwt.verify(token, config.tokenSecret);
+        ({ id } = parsed);
+        ({ password } = parsed)
       }
 
       // Always try to get the user by id
@@ -41,7 +41,7 @@ module.exports = {
       if (isCorrect) {
         // Authentication passed
         ctx.state.currentUserID = user.dataValues.id
-        ctx.state.isAdmin = user.dataValues.role_id === 0 ? true : false
+        ctx.state.isAdmin = user.dataValues.role_id === 0
         await next()
       } else {
         ctx.status = 401
@@ -58,14 +58,14 @@ module.exports = {
     }
   },
   /**
-   * Used in a protected route to check if the current operation is operated by a valid user 
+   * Used in a protected route to check if the current operation is operated by a valid user
    * If the operating user is authorized, run the callback function
-   * If not, reject the request with 403 state code 
+   * If not, reject the request with 403 state code
    * @param {Object} Model The model being modified
    * @param {Object} ctx The Koa context object
    * @param {function} callback The callback function for authorized user
    * @returns {Void} void
-   * */  
+   * */
   isAuthorized: async (ctx, Model, callback) => {
     try {
       const data = await Model.findOne({ where: { id: ctx.params.id } })

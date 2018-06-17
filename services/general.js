@@ -13,14 +13,14 @@ module.exports = {
 
   /**
    * Parse url querystring and return requesting querystring values
-   * @param {String} querystring - format: &key=value&key=value1,value2 
+   * @param {String} querystring - format: &key=value&key=value1,value2
    * @returns {Object} each key-value pair is according to the querystring
    */
   parseQuerystring(querystring = '') {
     if (!querystring) { return {} }
     const arr = querystring.split('&')
-    let obj = {}
-    for (let i = 0; i < arr.length; i++) {
+    const obj = {}
+    for (let i = 0; i < arr.length; i += 1) {
       if (arr[i].indexOf('=') !== -1) {
         const pair = arr[i].split('=')
         obj[pair[0]] = pair[1]
@@ -30,7 +30,7 @@ module.exports = {
   },
 
   checkRange(range = {}, input = {}) {
-    let result = {}
+    const result = {}
     R.forEachObjIndexed((value, key) => {
       if (input[key] > value) {
         result[key] = `Field "${key}" should not be bigger than ${value}`
@@ -39,24 +39,23 @@ module.exports = {
 
     if (Object.keys(result).length) {
       return result
-    } else {
-      return false
     }
+    return false
   },
 
   /**
    * Count offset for database query pagination
    * @param {Number} [page=1] - page number, start = require(1
-   * @param {Number} [limit=50] - items to display per page 
-   * @returns 
+   * @param {Number} [limit=50] - items to display per page
+   * @returns
    */
-  getOffset(page = 1, limit = 50) {
-    page = this.getPositiveInt(page)
-    return page ? ( page - 1 ) * limit : 0
+  getOffset(inputPage = 1, limit = 50) {
+    const page = this.getPositiveInt(inputPage)
+    return page ? (page - 1) * limit : 0
   },
 
   /**
-   * Return an positive integer 
+   * Return an positive integer
    * @param {Number} [input=1] input number
    * @returns {Number} positive integer
    */
@@ -71,10 +70,10 @@ module.exports = {
    * @returns {Array} array contains objects in this format: [{key: value}, {key: value}]
    */
   getFilter(object = {}, keys = []) {
-    let arr = []
+    const arr = []
     R.forEachObjIndexed((value, key) => {
       if (R.contains(key, keys)) {
-        let query = decodeURI(value)
+        const query = decodeURI(value)
         // Do not filter with empty string
         if (query !== '') {
           arr.push({ [key]: query.split(',') })
@@ -92,8 +91,7 @@ module.exports = {
   getDomain(custom = '') {
     if (env === 'development') {
       return `${config.protocol}://${config.host}:${config.port}${custom}`
-    } else if (env === 'production') {
-      return `${config.protocol}://${config.host}${custom}`
     }
+    return `${config.protocol}://${config.host}${custom}`
   },
 }

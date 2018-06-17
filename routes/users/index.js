@@ -16,9 +16,9 @@ const range = {
   role_id: 10,
 }
 
-/** 
+/**
  * @api {get} /api/users Get all users
- * @apiGroup Users 
+ * @apiGroup Users
  * @apiParam (Query String) {String} [id] Filtered by user ID
  * @apiParam (Query String) {String} [mobilephone] Filtered by user mobilephone
  * @apiParam (Query String) {integer=1,2} [role_id=1,2]
@@ -37,12 +37,12 @@ const range = {
 users.get('/', async (ctx) => {
   try {
     const filters = [
-      'id', 'mobilephone', 'role_id', 'gender', 'place', 
+      'id', 'mobilephone', 'role_id', 'gender', 'place',
       'province', 'city', 'country', 'active', 'degree_id',
     ]
     const query = General.parseQuerystring(ctx.request.querystring)
 
-    let data = await User.findAll({ 
+    const data = await User.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
       include: [{
@@ -52,15 +52,15 @@ users.get('/', async (ctx) => {
       where: new Filter(query).filterBy(filters).done(),
     })
 
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i += 1) {
       await service.processUserData(data[i].dataValues)
     }
 
-    // Order for teacher 
+    // Order for teacher
     if (query.role_id === '1') {
-      data.map(each => {
-        each.dataValues.weight = service.defaultOrder(each.dataValues)
-      })
+      for (let i = 0; i < data.length; i += 1) {
+        data[i].dataValues.weight = service.defaultOrder(data[i].dataValues)
+      }
 
       if (R.has('cost')(query)) {
         // Sort by cost
@@ -69,7 +69,6 @@ users.get('/', async (ctx) => {
         } else {
           data.sort((a, b) => b.dataValues.cost - a.dataValues.cost)
         }
-
       } else {
         // Sort by weight by default
         data.sort((a, b) => b.dataValues.weight - a.dataValues.weight)
@@ -83,10 +82,10 @@ users.get('/', async (ctx) => {
   }
 })
 
-/** 
+/**
  * @api {get} /api/users/:account Get a user
  * @apiGroup Users
- * @apiDescription The account could be id, username, mobilephone, email 
+ * @apiDescription The account could be id, username, mobilephone, email
  * @apiSuccess (200) {Object} void User object
  * @apiError {String} 404 The requested content is found
  */
@@ -105,9 +104,9 @@ users.get('/:id', async (ctx) => {
   }
 })
 
-/** 
+/**
  * @api {get} /api/users/:id/students Get a user's students
- * @apiGroup Users 
+ * @apiGroup Users
  * @apiParam (Query String) {Boolean=0,1} [finished=0,1] Filtered by if the schedule has been finished
  * @apiParam (Query String) {Integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains a user's students
@@ -128,7 +127,7 @@ users.get('/:id/students', async (ctx) => {
       where: { id: data.map(item => item.dataValues.student_id) },
     })
 
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i += 1) {
       await service.processUserData(data[i].dataValues)
     }
 
@@ -139,9 +138,9 @@ users.get('/:id/students', async (ctx) => {
   }
 })
 
-/** 
+/**
  * @api {get} /api/users/:id/teachers Get a user's teachers
- * @apiGroup Users 
+ * @apiGroup Users
  * @apiParam (Query String) {Boolean=0,1} [finished=0,1] Filtered by if the schedule has been finished
  * @apiParam (Query String) {Integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains a user's teachers
@@ -162,7 +161,7 @@ users.get('/:id/teachers', async (ctx) => {
       where: { id: data.map(item => item.dataValues.teacher_id) },
     })
 
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i += 1) {
       await service.processUserData(data[i].dataValues)
     }
 
@@ -173,17 +172,17 @@ users.get('/:id/teachers', async (ctx) => {
   }
 })
 
-/** 
+/**
  * @api {put} /api/users Create a new user
- * @apiGroup Users 
+ * @apiGroup Users
  * @apiParam {String} [username=UUIDV1] The unique username
  * @apiParam {Number=1,2} [role_id=2] User's role
  * @apiParam {String} mobilephone User unique mobilephone number
  * @apiParam {String} email User unique email address
- * @apiParam {String} password User password 
- * @apiParam {String} name User name for display purpose only 
+ * @apiParam {String} password User password
+ * @apiParam {String} name User name for display purpose only
  * @apiParam {String} [school_id] School ID
- * @apiParam {String} [title] The title 
+ * @apiParam {String} [title] The title
  * @apiParam {String} [bio] The biography of the user
  * @apiParam {String=online, offline, both} [place=both] Where the user wish to have the class
  * @apiParam {String} [country] The code of country where the user lives in, check countries list
@@ -199,7 +198,9 @@ users.get('/:id/teachers', async (ctx) => {
 users.put('/', async (ctx) => {
   try {
     const input = ctx.request.body
-    const { username, mobilephone, email, password } = ctx.request.body
+    const {
+      username, mobilephone, email, password,
+    } = ctx.request.body
     const account = username || mobilephone || email
     let user = await service.getOneUser(account)
 
@@ -224,17 +225,17 @@ users.put('/', async (ctx) => {
   }
 })
 
-/** 
+/**
  * @api {post} /api/users/:id Update a user
- * @apiGroup Users 
+ * @apiGroup Users
  * @apiParam {String} [username=UUIDV1] The unique username
  * @apiParam {Number=1,2} role_id User's role
  * @apiParam {String} mobilephone User unique mobilephone number
  * @apiParam {String} email User unique email address
- * @apiParam {String} password User password 
- * @apiParam {String} name User name for display purpose only 
+ * @apiParam {String} password User password
+ * @apiParam {String} name User name for display purpose only
  * @apiParam {String} [school_id] The school ID
- * @apiParam {String} [title] The title 
+ * @apiParam {String} [title] The title
  * @apiParam {String} [bio] The biography of the user
  * @apiParam {String=online, offline, both} [place=both] Where the user wish to have the class
  * @apiParam {String} [country] The code of country where the user lives in, check countries list
@@ -245,7 +246,7 @@ users.put('/', async (ctx) => {
  * @apiParam {Number} [cost=0] The cost per hour of the user
  * @apiParam {Number} [available=0] How much hours a user is opened for booking
  * @apiSuccess (200) {Object} void The updated user object
- * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 401 Not authenticated, sign in first to get token
  * @apiError {String} 403 Not authorized, no access for the operation
  * @apiError {String} 404 The requested content is found
  * @apiError {String} 416 Range not satisfiable
@@ -269,11 +270,11 @@ users.post('/:id', protect, async (ctx) => {
   })
 })
 
-/** 
+/**
  * @api {delete} /api/users/:id Delete a user
- * @apiGroup Users 
+ * @apiGroup Users
  * @apiSuccess (200) {Void} void void
- * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 401 Not authenticated, sign in first to get token
  * @apiError {String} 403 Not authorized, no access for the operation
  * @apiError {String} 404 The requested content is found
  */

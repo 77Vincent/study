@@ -9,10 +9,10 @@ const users_majors = Router()
 const UserMajor = Database.model('user_major')
 const { protect } = Auth
 
-/** 
+/**
  * @api {get} /api/users_majors/ Get all user and major relations
- * @apiGroup Users_Majors 
- * @apiParam (Query String) {Integer} [user_id] Filtered by user ID 
+ * @apiGroup Users_Majors
+ * @apiParam (Query String) {Integer} [user_id] Filtered by user ID
  * @apiParam (Query String) {Integer} [major_id] Filtered by major ID
  * @apiParam (Query String) {Integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all users and majors relations
@@ -33,12 +33,12 @@ users_majors.get('/', async (ctx) => {
   }
 })
 
-/** 
+/**
  * @api {put} /api/users_majors/ Create a user and major relation
  * @apiGroup Users_Majors
  * @apiParam {string[]} major_id The array of majors' ID
  * @apiSuccess (201) {Object} void void
- * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 401 Not authenticated, sign in first to get token
  */
 users_majors.put('/', protect, async (ctx) => {
   try {
@@ -47,11 +47,11 @@ users_majors.put('/', protect, async (ctx) => {
 
     await UserMajor.destroy({ where: { user_id } })
 
-    for (let i = 0; i < major_id.length; i++) {
+    for (let i = 0; i < major_id.length; i += 1) {
       await UserMajor.create({ user_id, major_id: major_id[i] })
     }
 
-    const data = await Major.findAll({ where: { id: major_id } }) 
+    const data = await Major.findAll({ where: { id: major_id } })
 
     ctx.body = data
     ctx.status = 201
@@ -60,11 +60,11 @@ users_majors.put('/', protect, async (ctx) => {
   }
 })
 
-/** 
+/**
  * @api {delete} /api/users_majors/:major_id Remove a user and major relation
- * @apiGroup Users_Majors 
+ * @apiGroup Users_Majors
  * @apiSuccess (200) {Void} void void
- * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 401 Not authenticated, sign in first to get token
  * @apiError {String} 404 The requested content is found
  */
 users_majors.delete('/:major_id', protect, async (ctx) => {

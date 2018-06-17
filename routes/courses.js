@@ -7,9 +7,9 @@ const config = require('../config')
 const courses = Router()
 const { protect } = Auth
 
-/** 
+/**
  * @api {get} /api/courses Get all courses
- * @apiGroup Courses 
+ * @apiGroup Courses
  * @apiParam (Query String) {Integer} [major_id] Filtered by the major ID
  * @apiParam (Query String) {Integer} [user_id] Filtered by the creator's user ID
  * @apiParam (Query String) {String} [search] Search by course name
@@ -31,15 +31,15 @@ courses.get('/', async (ctx) => {
     })
 
     ctx.status = 200
-    ctx.body = data 
+    ctx.body = data
   } catch (err) {
     General.logError(ctx, err)
   }
 })
 
-/** 
+/**
  * @api {put} /api/courses Create a course
- * @apiGroup Courses 
+ * @apiGroup Courses
  * @apiParam {String} label The course name
  * @apiParam {String} [description] The course description
  * @apiParam {Integer} user_id The creator's user ID
@@ -59,13 +59,13 @@ courses.put('/', protect, async (ctx) => {
   }
 })
 
-/** 
+/**
  * @api {post} /api/courses/:id Update a course
- * @apiGroup Courses 
+ * @apiGroup Courses
  * @apiParam {String} label The course name
  * @apiParam {String} [description] The course description
  * @apiSuccess (200) {Object} void The updated course
- * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 401 Not authenticated, sign in first to get token
  * @apiError {String} 403 Not authorized, no access for the operation
  * @apiError {String} 404 The requested content is found
  */
@@ -77,11 +77,11 @@ courses.post('/:id', protect, async (ctx) => {
   })
 })
 
-/** 
+/**
  * @api {delete} /api/courses/:id Delete a course
- * @apiGroup Courses 
+ * @apiGroup Courses
  * @apiSuccess (200) {Void} void void
- * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 401 Not authenticated, sign in first to get token
  * @apiError {String} 403 Not authorized, no access for the operation
  * @apiError {String} 404 The requested content is found
  */

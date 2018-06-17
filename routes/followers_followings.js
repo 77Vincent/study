@@ -10,9 +10,9 @@ const followers_followings = Router()
 const FollowerFollowing = Database.model('follower_following')
 const { protect } = Auth
 
-/** 
+/**
  * @api {get} /api/followers_followings/ Get all follower and following relations
- * @apiGroup Followers_Followings 
+ * @apiGroup Followers_Followings
  * @apiParam (Query String) {Integer} [follower_id] Filtered by user ID of followers
  * @apiParam (Query String) {Integer} [following_id] Filtered by user ID of followings
  * @apiParam (Query String) {Integer} [page=1] Pagination
@@ -34,12 +34,12 @@ followers_followings.get('/', async (ctx) => {
   }
 })
 
-/** 
+/**
  * @api {put} /api/followers_followings/ Create a follower and following relation
  * @apiGroup Followers_Followings
  * @apiParam {String} following_id The user ID of the followed user
  * @apiSuccess (201) {Object} void void
- * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 401 Not authenticated, sign in first to get token
  */
 followers_followings.put('/', protect, async (ctx) => {
   try {
@@ -53,11 +53,11 @@ followers_followings.put('/', protect, async (ctx) => {
   }
 })
 
-/** 
+/**
  * @api {delete} /api/followers_followings/:following_id Remove a follower and following relation
- * @apiGroup Followers_Followings 
+ * @apiGroup Followers_Followings
  * @apiSuccess (200) {Void} void void
- * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 401 Not authenticated, sign in first to get token
  * @apiError {String} 404 The requested content is found
  */
 followers_followings.delete('/:following_id', protect, async (ctx) => {

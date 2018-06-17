@@ -3,6 +3,7 @@ const assert = require('assert')
 const data = require('./data')
 const { login, request, URL } = require('../service')
 const users = require('../users.test/data')
+
 const userA = users[1].mobilephone
 const userB = users[2].mobilephone
 const userC = users[3].mobilephone

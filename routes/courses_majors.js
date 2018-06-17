@@ -10,10 +10,10 @@ const courses_majors = Router()
 const CourseMajor = Database.model('course_major')
 const { protect } = Auth
 
-/** 
+/**
  * @api {get} /api/courses_majors/ Get all course and major relations
- * @apiGroup Courses_Majors 
- * @apiParam (Query String) {Integer} [course_id] Filtered by course ID 
+ * @apiGroup Courses_Majors
+ * @apiParam (Query String) {Integer} [course_id] Filtered by course ID
  * @apiParam (Query String) {Integer} [major_id] Filtered by major ID
  * @apiParam (Query String) {Integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains all courses and majors relations
@@ -34,13 +34,13 @@ courses_majors.get('/', async (ctx) => {
   }
 })
 
-/** 
+/**
  * @api {put} /api/courses_majors/ Create a course and major relation
  * @apiGroup Courses_Majors
  * @apiParam {String} course_id The course ID
  * @apiParam {String} major_id The major ID
  * @apiSuccess (201) {Object} void void
- * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 401 Not authenticated, sign in first to get token
  */
 courses_majors.put('/', protect, async (ctx) => {
   try {
@@ -53,13 +53,13 @@ courses_majors.put('/', protect, async (ctx) => {
   }
 })
 
-/** 
- * @api {delete} /api/courses_majors/:major_id Remove a course and major relation 
- * @apiGroup Courses_Majors 
+/**
+ * @api {delete} /api/courses_majors/:major_id Remove a course and major relation
+ * @apiGroup Courses_Majors
  * @apiParam {Integer} course_id The course ID
  * @apiParam {Integer} major_id The major ID
  * @apiSuccess (200) {Void} void void
- * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 401 Not authenticated, sign in first to get token
  * @apiError {String} 404 The requested content is found
  */
 courses_majors.delete('/', protect, async (ctx) => {

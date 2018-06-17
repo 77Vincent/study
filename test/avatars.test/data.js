@@ -10,9 +10,7 @@ const files = [
   { path: filePath, name: 'avatar-4.jpg' },
 ]
 
-module.exports = files.map(each => {
-  return {
-    mime: mime.getType(each.name.split('.')[1]),
-    content: fs.readFileSync(`${each.path}/${each.name}`, 'base64'),
-  }
-})
+module.exports = files.map(each => ({
+  mime: mime.getType(each.name.split('.')[1]),
+  content: fs.readFileSync(`${each.path}/${each.name}`, 'base64'),
+}))

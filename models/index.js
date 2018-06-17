@@ -34,20 +34,20 @@ Message.belongsTo(User, { as: 'Recipient', foreignKey: 'recipient_id' })
 Schedule.belongsTo(User, { as: 'Teacher', foreignKey: 'teacher_id' })
 Schedule.belongsTo(User, { as: 'Student', foreignKey: 'student_id' })
 
-Order.belongsTo(User, {as: 'Requestor', foreignKey: 'requestor_id'})
-Order.belongsTo(User, {as: 'Recipient', foreignKey: 'recipient_id'})
+Order.belongsTo(User, { as: 'Requestor', foreignKey: 'requestor_id' })
+Order.belongsTo(User, { as: 'Recipient', foreignKey: 'recipient_id' })
 
-Class.belongsToMany(Course, {through: 'class_course'})
-Course.belongsToMany(Class, {through: 'class_course'})
+Class.belongsToMany(Course, { through: 'class_course' })
+Course.belongsToMany(Class, { through: 'class_course' })
 
-User.belongsToMany(Major, {through: 'user_major'})
-Major.belongsToMany(User, {through: 'user_major'})
+User.belongsToMany(Major, { through: 'user_major' })
+Major.belongsToMany(User, { through: 'user_major' })
 
-User.belongsToMany(User, {as: 'Follower', through: 'follower_following', foreignKey: 'follower_id'})
-User.belongsToMany(User, {as: 'Following', through: 'follower_following', foreignKey: 'following_id'})
+User.belongsToMany(User, { as: 'Follower', through: 'follower_following', foreignKey: 'follower_id' })
+User.belongsToMany(User, { as: 'Following', through: 'follower_following', foreignKey: 'following_id' })
 
-Course.belongsToMany(Major, {through: 'course_major'})
-Major.belongsToMany(Course, {through: 'course_major'})
+Course.belongsToMany(Major, { through: 'course_major' })
+Major.belongsToMany(Course, { through: 'course_major' })
 
 module.exports = {
   User,

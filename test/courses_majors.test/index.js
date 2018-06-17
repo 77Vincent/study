@@ -18,7 +18,7 @@ describe('Course_Major', () => {
   })
 
   it('Create should return 200', async () => {
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i += 1) {
       const session = await login(config.adminID, config.adminPassword)
       await request({
         method: 'PUT',

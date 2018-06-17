@@ -1,6 +1,7 @@
 // All server configurations are stored here
 
 const path = require('path')
+
 const env = process.env.NODE_ENV
 
 const development = {
@@ -37,7 +38,7 @@ const base = {
   },
 
   // Store
-  fileLocation: path.resolve('../xfolio-files'), 
+  fileLocation: path.resolve('../xfolio-files'),
 }
 
 if (env === 'production') {

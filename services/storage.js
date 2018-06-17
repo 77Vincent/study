@@ -7,11 +7,12 @@ const fs = require('fs')
 
 module.exports = {
   store(stuff, base64, mimeType) {
+    let where = ''
     if (base64 && mimeType) {
-      const where = path.resolve(`${c.fileLocation}/${stuff}s/${stuff}_${uuidv1()}.${mime.getExtension(mimeType)}`)
-      fs.writeFileSync(where, new Buffer(base64, 'base64'))
-      return where
+      where = path.resolve(`${c.fileLocation}/${stuff}s/${stuff}_${uuidv1()}.${mime.getExtension(mimeType)}`)
+      fs.writeFileSync(where, Buffer.from(base64, 'base64'))
     }
+    return where
   },
   restore(where) {
     try {

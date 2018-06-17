@@ -4,6 +4,7 @@ const data = require('./data')
 const { login, request, URL } = require('../service')
 const config = require('../../config')
 const users = require('../users.test/data')
+
 const userA = users[1].mobilephone
 const userB = users[2].mobilephone
 const PASSWORD = '000000'
@@ -27,7 +28,7 @@ describe('Class', () => {
   })
 
   it('Create should return 201', async () => {
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i += 1) {
       const session = await login(userA, PASSWORD)
       await request({
         method: 'PUT',

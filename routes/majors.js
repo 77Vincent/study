@@ -7,9 +7,9 @@ const { General, Auth, Filter } = require('../services')
 const majors = Router()
 const { protect } = Auth
 
-/** 
+/**
  * @api {get} /api/majors/ Get all
- * @apiGroup Majors 
+ * @apiGroup Majors
  * @apiParam (Query String) {String} [search] Search by Chinese phonetic alphabet, Chinese name or English name
  * @apiSuccess (200) {object[]} void Array contains all results
  */
@@ -27,21 +27,19 @@ majors.get('/', async (ctx) => {
   }
 })
 
-/** 
+/**
  * @api {put} /api/majors/ Create one
- * @apiGroup Majors 
+ * @apiGroup Majors
  * @apiParam {String} en The English name
  * @apiParam {String} cn The Chinese name
  * @apiParam {String} pinyin The Chinese phonetic alphabet
  * @apiSuccess (201) {Object} void The created one
- * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 401 Not authenticated, sign in first to get token
  */
 majors.put('/', protect, async (ctx) => {
   try {
-    let { en, cn, pinyin } = ctx.request.body
-    pinyin = pinyin || py(cn, {
-      style: py.STYLE_NORMAL,
-    }).join('')
+    const { en, cn } = ctx.request.body
+    const pinyin = ctx.request.body.pinyin || py(cn, { style: py.STYLE_NORMAL }).join('')
     const data = await Major.create({ en, cn, pinyin })
 
     ctx.body = data
@@ -51,29 +49,29 @@ majors.put('/', protect, async (ctx) => {
   }
 })
 
-/** 
+/**
  * @api {post} /api/majors/:id Update one
- * @apiGroup Majors 
+ * @apiGroup Majors
  * @apiParam {String} en The English name
  * @apiParam {String} cn The Chinese name
  * @apiParam {String} pinyin The Chinese phonetic alphabet
  * @apiSuccess (200) {Object} void The Updated one
- * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 401 Not authenticated, sign in first to get token
  * @apiError {String} 404 The requested content is found
  */
 majors.post('/:id', protect, async (ctx) => {
-  await Auth.isAuthorized(ctx, Major, async (data) => {
-    data = await data.update(ctx.request.body)
+  await Auth.isAuthorized(ctx, Major, async (current) => {
+    const data = await current.update(ctx.request.body)
     ctx.status = 200
     ctx.body = data
   })
 })
 
-/** 
+/**
  * @api {delete} /api/majors/:id Delete one
- * @apiGroup Majors 
+ * @apiGroup Majors
  * @apiSuccess (200) {Void} void void
- * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 401 Not authenticated, sign in first to get token
  * @apiError {String} 404 The requested content is found
  */
 majors.delete('/:id', protect, async (ctx) => {

@@ -37,21 +37,21 @@ module.exports = Database.define('order', {
   total_price: {
     type: Sequelize.DOUBLE,
     allowNull: false,
-    defaultValue: 0, 
+    defaultValue: 0,
   },
   unit_price: {
     type: Sequelize.DOUBLE,
     allowNull: false,
-    defaultValue: 0, 
+    defaultValue: 0,
   },
   length: {
     type: Sequelize.TINYINT,
     allowNull: false,
-    defaultValue: 1, 
+    defaultValue: 1,
   },
   isRefunded: {
     type: Sequelize.BOOLEAN,
-    defaultValue: 0, 
+    defaultValue: 0,
   },
 }, {
   paranoid: true,

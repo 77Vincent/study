@@ -8,7 +8,7 @@ const { General, Storage, Auth } = require('../services')
 const { protect } = Auth
 const avatars = Router()
 
-/** 
+/**
  * @api {get} /api/avatars Get all avatars
  * @apiGroup Avatars
  * @apiParam (Query String) {Integer} [page=1] Pagination
@@ -24,13 +24,13 @@ avatars.get('/', async (ctx) => {
     })
 
     ctx.status = 200
-    ctx.body = data 
+    ctx.body = data
   } catch (err) {
     General.logError(ctx, err)
   }
 })
 
-/** 
+/**
  * @api {get} /api/avatars/:id Get a user avatar
  * @apiGroup Avatars
  * @apiSuccess (200) {binary} void The image file of user avatar
@@ -51,14 +51,14 @@ avatars.get('/:id', async (ctx) => {
   }
 })
 
-/** 
- * @api {put} /api/avatars Create a avatar 
+/**
+ * @api {put} /api/avatars Create a avatar
  * @apiGroup Avatars
  * @apiParam {String} content Content of the image file encoded in base64
- * @apiParam {String} mime The MIME of the file 
+ * @apiParam {String} mime The MIME of the file
  * @apiSuccess (201) {Object} void The created avatar
  * @apiError {String} 400 Bad request due to the lack of some necessary content in the request body
- * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 401 Not authenticated, sign in first to get token
  * @apiError {String} 409 The resource being created already exists
  */
 avatars.put('/', protect, async (ctx) => {
@@ -96,19 +96,19 @@ avatars.put('/', protect, async (ctx) => {
   }
 })
 
-/** 
- * @api {post} /api/avatars/:id Update a avatar 
+/**
+ * @api {post} /api/avatars/:id Update a avatar
  * @apiGroup Avatars
  * @apiParam {String} content Content of the avatar file encoded in base64
- * @apiParam {String} mime The MIME of the file 
+ * @apiParam {String} mime The MIME of the file
  * @apiSuccess (200) {Object} void The updated avatar
  * @apiError {String} 400 Bad request due to the lack of some necessary content in the request body
- * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 401 Not authenticated, sign in first to get token
  * @apiError {String} 403 Not authorized, no access for the operation
  * @apiError {String} 404 The requested content is found
  */
 avatars.post('/:id', protect, async (ctx) => {
-  await Auth.isAuthorized(ctx, Avatar, async (data) => {
+  await Auth.isAuthorized(ctx, Avatar, async (current) => {
     const { content } = ctx.request.body
     const mimeType = ctx.request.body.mime
     if (!content || !mimeType) {
@@ -118,19 +118,19 @@ avatars.post('/:id', protect, async (ctx) => {
     }
 
     const path = Storage.store('avatar', content, mimeType)
-    Storage.remove(data.dataValues.path)
-    data = await data.update({ path })
+    Storage.remove(current.dataValues.path)
+    const data = await current.update({ path })
 
     ctx.status = 200
     ctx.body = data
   })
 })
 
-/** 
- * @api {delete} /api/avatars Delete a avatar 
+/**
+ * @api {delete} /api/avatars Delete a avatar
  * @apiGroup Avatars
  * @apiSuccess (200) {Void} void void
- * @apiError {String} 401 Not authenticated, sign in first to get token 
+ * @apiError {String} 401 Not authenticated, sign in first to get token
  * @apiError {String} 403 Not authorized, no access for the operation
  * @apiError {String} 404 The requested content is found
  */

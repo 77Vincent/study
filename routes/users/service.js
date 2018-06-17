@@ -3,43 +3,50 @@ const Sequelize = require('sequelize')
 const { Op } = Sequelize
 const General = require('../../services/general')
 const Database = require('../../database')
-const { User, Tag, Post, Course, Major, School, Schedule } = require('../../models')
+const {
+  User, Tag, Post, Course, Major, School, Schedule,
+} = require('../../models')
 
 module.exports = {
   getOneUser: async (id, config = {}) => {
     const param = {
-      where: { [Op.or]: [ 
-        { id },
-        { username: id },
-        { mobilephone: id },
-        { email: id }],
+      where: {
+        [Op.or]: [
+          { id },
+          { username: id },
+          { mobilephone: id },
+          { email: id }],
       },
       include: [{ model: Major }],
     }
     const data = await User.findOne(Object.assign(param, config))
     return data
   },
-  processUserData: async (data) => {
+  processUserData: async (inputUserData = {}) => {
+    const data = inputUserData
     // First remove password, do not pass password to client
     delete data.password
 
     const user_id = data.id
-    const urlsByQuerystring = ['posts', 'courses']
 
     // Add students info to teachers
     if (data.role_id === 1) {
-      const students = await Schedule.findAll({ where: {
-        teacher_id: user_id,
-      }})
-      const students_onboard = await Schedule.findAll({ where: {
-        teacher_id: user_id,
-        finished: 1,
-      }})
+      const students = await Schedule.findAll({
+        where: {
+          teacher_id: user_id,
+        },
+      })
+      const students_onboard = await Schedule.findAll({
+        where: {
+          teacher_id: user_id,
+          finished: 1,
+        },
+      })
       data.students = students.length
       data.students_onboard = students_onboard.length
       data.students_url = General.getDomain(`/api/users/${user_id}/students`)
       data.students_onboard_url = General.getDomain(`/api/users/${user_id}/students?finished=0`)
-    } 
+    }
 
     // Add teachers info to students
     if (data.role_id === 2) {
@@ -48,32 +55,31 @@ module.exports = {
     }
 
     // Add school
-    const school = await School.findAll({where: { id: data.school_id }})
+    const school = await School.findAll({ where: { id: data.school_id } })
     data.school = school[0]
     delete data.school_id
 
     // Add tags
     const tags = await Tag.findAll({ where: { user_id } })
-    data.tags = tags.map(tag => {
-      return { id: tag.id, content: tag.content }
-    })
+    data.tags = tags.map(tag => ({ id: tag.id, content: tag.content }))
 
 
     // Add these properties
     const followers = await Database.model('follower_following').findAll({ where: { following_id: user_id } })
     const followings = await Database.model('follower_following').findAll({ where: { follower_id: user_id } })
-    const courses = await Course.findAll({ where: { user_id: user_id } })
-    const posts = await Post.findAll({ where: { user_id: user_id} })
-    data.followers = followers.length
-    data.followings = followings.length
+    const courses = await Course.findAll({ where: { user_id } })
+    const posts = await Post.findAll({ where: { user_id } })
+
     data.posts = posts.length
+    data.posts_url = General.getDomain(`/api/posts?user_id=${user_id}`)
+
     data.courses = courses.length
+    data.courses_url = General.getDomain(`/api/courses?user_id=${user_id}`)
 
-    urlsByQuerystring.map(each => {
-      data[`${each}_url`] = General.getDomain(`/api/${each}?user_id=${user_id}`)
-    })
-
+    data.followings = followings.length
     data.followings_url = General.getDomain(`/api/followings?follower_id=${user_id}`)
+
+    data.followers = followers.length
     data.followers_url = General.getDomain(`/api/followings?following_id=${user_id}`)
   },
   /**
@@ -99,11 +105,10 @@ module.exports = {
     }
 
     let weight = 0
-    for (let key in aspects) {
-      if (Object.prototype.hasOwnProperty.call(aspects, key)) {
-        weight += aspects[key]
-      }
-    }
+    Object.keys(aspects).map((key) => {
+      weight += aspects[key]
+      return null
+    })
 
     return weight
   },

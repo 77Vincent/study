@@ -8,7 +8,7 @@ module.exports = {
    * @param {Object} credentials User Credentials
    * @return {Object} token
    */
-  signToken (credentials = {}) {
-    return jwt.sign(credentials, c.tokenSecret, { expiresIn: c.cookiesTimeout }) 
+  signToken(credentials = {}) {
+    return jwt.sign(credentials, c.tokenSecret, { expiresIn: c.cookiesTimeout })
   },
 }

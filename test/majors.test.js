@@ -1,14 +1,18 @@
 const assert = require('assert')
 
 const data = require('../static/resources/majors')
-const { login, request, MODIFIED, URL } = require('./service')
+const {
+  login, request, MODIFIED, URL,
+} = require('./service')
 const config = require('../config')
 
 describe('Major', () => {
   it('Create = 201', async () => {
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i += 1) {
       const session = await login(config.adminID, config.adminPassword)
-      await request({ method: 'PUT', url: `${URL}/majors`, auth: { bearer: session.token }, body: data[i] })
+      await request({
+        method: 'PUT', url: `${URL}/majors`, auth: { bearer: session.token }, body: data[i],
+      })
     }
     const res = await request({ url: `${URL}/majors` })
     assert.equal(res.body.length, data.length)

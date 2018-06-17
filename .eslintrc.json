@@ -1,71 +1,23 @@
 {
-  "env": {
-    "node": true,
-    "commonjs": true,
-    "mocha": true
-  },
-  "extends": "eslint:recommended",
-  "parserOptions": {
-    "ecmaVersion": 2017,
-    "sourceType": "module"
-  },
-  "rules": {
-    "indent": ["error", 2],
-    "init-declarations": ["error", "always"],
-    "quotes": ["error", "single"],
-    "semi": ["error", "never"],
-    "no-var": "error",
-    "no-prototype-builtins": "error",
-    "curly": "error",
-    "no-undef-init": "error",
-    "no-undef": "error",
-    "no-undefined": "error",
-    "no-use-before-define": "error",
-    "no-catch-shadow": "error",
-    "no-shadow": "error",
-    "no-new": "error",
-    "no-empty-function": "error",
-    "no-extend-native": "error",
-    "no-floating-decimal": "error",
-    "no-implicit-coercion": "error",
-    "no-implied-eval": "error",
-    "no-invalid-this": "error",
-    "no-loop-func": "error",
-    "no-multi-spaces": "error",
-    "no-new-func": "error",
-    "no-new-wrappers": "error",
-    "no-sequences": "error",
-    "no-throw-literal": "error",
-    "no-unmodified-loop-condition": "error",
-    "no-unused-expressions": "error",
-    "require-await": "error",
-    "vars-on-top": "error",
-    "yoda": "error",
-    "wrap-iife": ["error", "outside"],
-    "no-console": ["error", {
-      "allow": ["warn", "error"]
-    }],
-    "accessor-pairs": "error",
-    "block-scoped-var": "error",
-    "complexity": ["error", 10],
-    "dot-location": ["error", "object"],
-    "dot-notation": "error",
-    "eqeqeq": "error",
-    "guard-for-in": "error",
-    "array-bracket-spacing": ["error", "never"],
-    "block-spacing": "error",
-    "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
-    "comma-spacing": ["error", { "before": false, "after": true }],
-    "comma-style": ["error", "last"],
-    "comma-dangle": ["error", "always-multiline"],
-    "computed-property-spacing": ["error", "never"],
-    "func-call-spacing": ["error", "never"],
-    "func-style": ["error", "expression"],
-    "id-length": ["error", { "max": 24, "min": 1 }],
-    "key-spacing": ["error", { "afterColon": true }],
-    "keyword-spacing": ["error", { "after": true }],
-    "max-len": ["error", {
-      "code": 120 
-    }]
-  }
+    "env": {
+        "node": true,
+        "commonjs": true,
+        "mocha": true
+    },
+    "extends": "airbnb-base",
+    "rules": {
+        "init-declarations": ["error", "always"],
+        "camelcase": "off",
+        "semi": ["error", "never"],
+        "prefer-destructuring": ["error", {
+            "object": true
+        }],
+        "no-await-in-loop": "off",
+        "no-console": ["error", {
+            "allow": ["warn", "error"]
+        }],
+        "max-len": ["error", {
+            "code": 120 
+        }]
+    }
 }
