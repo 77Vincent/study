@@ -25,7 +25,7 @@ sessions.post('/', async (ctx) => {
       ctx.status = 200
       ctx.body = {
         data: user,
-        token: service.signToken({ id, password })
+        token: service.signToken({ id, password }),
       }
     } else {
       ctx.status = 401

@@ -10,7 +10,7 @@ const PASSWORD = '000000'
 const toUpdate = {
   label: MODIFIED,
   quota: 99,
-  finished: 1
+  finished: 1,
 }
 
 describe('Schedule', () => {
@@ -19,7 +19,7 @@ describe('Schedule', () => {
       await request({
         method: 'PUT',
         url: `${URL}/schedules`,
-        body: data[0]
+        body: data[0],
       })
     } catch (err) {
       assert.equal(err.statusCode, 401)
@@ -33,7 +33,7 @@ describe('Schedule', () => {
         method: 'PUT',
         url: `${URL}/schedules`,
         auth: { bearer: session.token },
-        body: data[i]
+        body: data[i],
       })
     }
     assert.ok(true)
@@ -52,7 +52,7 @@ describe('Schedule', () => {
       const session = await login(userA, PASSWORD)
       await request({
         url: `${URL}/schedules`,
-        auth: { bearer: session.token }
+        auth: { bearer: session.token },
       })
     } catch (err) {
       assert.equal(err.statusCode, 200)
@@ -64,7 +64,7 @@ describe('Schedule', () => {
       const session = await login(config.adminID, config.adminPassword)
       await request({
         url: `${URL}/schedules`,
-        auth: { bearer: session.token }
+        auth: { bearer: session.token },
       })
     } catch (err) {
       assert.equal(err.statusCode, 200)
@@ -76,7 +76,7 @@ describe('Schedule', () => {
       await request({
         method: 'POST',
         url: `${URL}/schedules/2`,
-        body: toUpdate
+        body: toUpdate,
       })
     } catch (err) {
       assert.equal(err.statusCode, 401)
@@ -90,7 +90,7 @@ describe('Schedule', () => {
         method: 'POST',
         url: `${URL}/schedules/2`,
         body: toUpdate,
-        auth: { bearer: session.token }
+        auth: { bearer: session.token },
       })
     } catch (err) {
       assert.equal(err.statusCode, 403)
@@ -104,7 +104,7 @@ describe('Schedule', () => {
         method: 'POST',
         url: `${URL}/schedules/2`,
         body: { quota: 999 },
-        auth: { bearer: session.token }
+        auth: { bearer: session.token },
       })
     } catch (err) {
       assert.equal(err.statusCode, 416)
@@ -118,7 +118,7 @@ describe('Schedule', () => {
         method: 'POST',
         url: `${URL}/schedules/2`,
         body: toUpdate,
-        auth: { bearer: session.token }
+        auth: { bearer: session.token },
       })
     } catch (err) {
       assert.equal(err.statusCode, 200)
@@ -142,7 +142,7 @@ describe('Schedule', () => {
       await request({
         method: 'DELETE',
         url: `${URL}/schedules/1`,
-        auth: { bearer: session.token }
+        auth: { bearer: session.token },
       })
     } catch (err) {
       assert.equal(err.statusCode, 403)
@@ -155,7 +155,7 @@ describe('Schedule', () => {
       await request({
         method: 'DELETE',
         url: `${URL}/schedules/1`,
-        auth: { bearer: session.token }
+        auth: { bearer: session.token },
       })
     } catch (err) {
       assert.equal(err.statusCode, 200)

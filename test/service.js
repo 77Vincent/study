@@ -6,23 +6,23 @@ const MODIFIED = 'MODIFIED DATA'
 const PASSWORD = '000000'
 const URL = `${config.protocol}://${config.host}:${config.port}/api`
 
-const request = async (config) => {
+const request = async (options) => {
   const response = await rq(Object.assign({
     json: true,
-    resolveWithFullResponse: true
-  }, config))
+    resolveWithFullResponse: true,
+  }, options))
   return response
 }
 
-const login = async (id = '', PASSWORD = '') => {
+const login = async (id = '', password = '') => {
   const data = await rq({
     method: 'POST',
     url: `${URL}/sessions`,
     body: {
       id: String(id),
-      password: String(PASSWORD)
+      password: String(password),
     },
-    json: true
+    json: true,
   })
   return data
 }
@@ -33,5 +33,5 @@ module.exports = {
   MODIFIED,
   URL,
   PASSWORD,
-  USERS
+  USERS,
 }

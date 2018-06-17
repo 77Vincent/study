@@ -6,11 +6,11 @@ module.exports = Database.define('comment', {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     unique: true,
-    primaryKey: true
+    primaryKey: true,
   },
   content: {
     type: Sequelize.STRING,
-  }
+  },
 }, {
-  paranoid: true
+  paranoid: true,
 })

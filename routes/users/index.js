@@ -13,7 +13,7 @@ const users = Router()
 const { protect } = Auth
 const range = {
   cost: 9999,
-  role_id: 10
+  role_id: 10,
 }
 
 /** 
@@ -38,7 +38,7 @@ users.get('/', async (ctx) => {
   try {
     const filters = [
       'id', 'mobilephone', 'role_id', 'gender', 'place', 
-      'province', 'city', 'country', 'active', 'degree_id'
+      'province', 'city', 'country', 'active', 'degree_id',
     ]
     const query = General.parseQuerystring(ctx.request.querystring)
 
@@ -47,9 +47,9 @@ users.get('/', async (ctx) => {
       offset: General.getOffset(query.page, config.queryLimit),
       include: [{
         model: Major,
-        where: new Filter(query).alias({ id: 'major_id' }).filterBy(['id']).done()
+        where: new Filter(query).alias({ id: 'major_id' }).filterBy(['id']).done(),
       }],
-      where: new Filter(query).filterBy(filters).done()
+      where: new Filter(query).filterBy(filters).done(),
     })
 
     for (let i = 0; i < data.length; i++) {
@@ -119,7 +119,7 @@ users.get('/:id/students', async (ctx) => {
     filter.push({ teacher_id: ctx.params.id })
 
     let data = await Schedule.findAll({
-      where: { [Op.and]: filter }
+      where: { [Op.and]: filter },
     })
 
     data = await User.findAll({
@@ -153,7 +153,7 @@ users.get('/:id/teachers', async (ctx) => {
     filter.push({ student_id: ctx.params.id })
 
     let data = await Schedule.findAll({
-      where: { [Op.and]: filter }
+      where: { [Op.and]: filter },
     })
 
     data = await User.findAll({
@@ -217,7 +217,7 @@ users.put('/', async (ctx) => {
     ctx.status = 201
     ctx.body = {
       data: user,
-      token: sessionsService.signToken({ id, password })
+      token: sessionsService.signToken({ id, password }),
     }
   } catch (err) {
     General.logError(ctx, err)

@@ -71,8 +71,9 @@ pictures.get('/:id', async (ctx) => {
  */
 pictures.put('/', protect, async (ctx) => {
   try {
-    const { content, mime, post_id } = ctx.request.body
-    const path = Storage.store('picture', content, mime, post_id)
+    const { content, post_id } = ctx.request.body
+    const mimeType = ctx.request.body.mime
+    const path = Storage.store('picture', content, mimeType, post_id)
     const data = await Picture.create({ post_id, path })
 
     ctx.status = 201

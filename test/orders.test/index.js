@@ -11,7 +11,7 @@ const PASSWORD = '000000'
 const toUpdate = {
   unit_price: 999,
   total_price: 999,
-  length: 9
+  length: 9,
 }
 
 describe('Orders', () => {
@@ -20,7 +20,7 @@ describe('Orders', () => {
       await request({
         method: 'PUT',
         url: `${URL}/orders`,
-        body: data[0]
+        body: data[0],
       })
     } catch (err) {
       assert.equal(err.statusCode, 401)
@@ -34,21 +34,21 @@ describe('Orders', () => {
         method: 'PUT',
         url: `${URL}/orders`,
         auth: { bearer: session.token },
-        body: data[0]
+        body: data[0],
       })
       session = await login(userB, PASSWORD)
       await request({
         method: 'PUT',
         url: `${URL}/orders`,
         auth: { bearer: session.token },
-        body: data[1]
+        body: data[1],
       })
       session = await login(userC, PASSWORD)
       await request({
         method: 'PUT',
         url: `${URL}/orders`,
         auth: { bearer: session.token },
-        body: data[2]
+        body: data[2],
       })
     } catch (err) {
       assert.equal(err.statusCode, 200)
@@ -68,7 +68,7 @@ describe('Orders', () => {
       const session = await login(config.adminID, config.adminPassword)
       await request({
         url: `${URL}/orders`,
-        auth: { bearer: session.token }
+        auth: { bearer: session.token },
       })
     } catch (err) {
       assert.equal(err.statusCode, 200)
@@ -80,7 +80,7 @@ describe('Orders', () => {
       const session = await login(userA, PASSWORD)
       await request({
         url: `${URL}/orders`,
-        auth: { bearer: session.token }
+        auth: { bearer: session.token },
       })
     } catch (err) {
       assert.equal(err.statusCode, 200)
@@ -92,7 +92,7 @@ describe('Orders', () => {
       await request({
         method: 'POST',
         url: `${URL}/orders/2`,
-        body: toUpdate
+        body: toUpdate,
       })
     } catch (err) {
       assert.equal(err.statusCode, 401)
@@ -107,7 +107,7 @@ describe('Orders', () => {
         method: 'POST',
         url: `${URL}/orders/${orders.body[1].id}`,
         auth: { bearer: session.token },
-        body: toUpdate
+        body: toUpdate,
       })
     } catch (err) {
       assert.equal(err.statusCode, 200)
@@ -122,7 +122,7 @@ describe('Orders', () => {
         method: 'POST',
         url: `${URL}/orders/${orders.body[1].id}`,
         auth: { bearer: session.token },
-        body: toUpdate
+        body: toUpdate,
       })
     } catch (err) {
       assert.equal(err.statusCode, 200)
@@ -147,7 +147,7 @@ describe('Orders', () => {
       await request({
         method: 'DELETE',
         url: `${URL}/orders/${orders.body[0].id}`,
-        auth: { bearer: session.token }
+        auth: { bearer: session.token },
       })
     } catch (err) {
       assert.equal(err.statusCode, 200)

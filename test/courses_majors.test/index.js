@@ -10,7 +10,7 @@ describe('Course_Major', () => {
       await request({
         method: 'PUT',
         url: `${URL}/courses_majors`,
-        body: data[0]
+        body: data[0],
       })
     } catch (err) {
       assert.equal(err.statusCode, 401)
@@ -24,7 +24,7 @@ describe('Course_Major', () => {
         method: 'PUT',
         url: `${URL}/courses_majors`,
         auth: { bearer: session.token },
-        body: data[i]
+        body: data[i],
       })
     }
     assert.ok(true)
@@ -37,7 +37,7 @@ describe('Course_Major', () => {
         method: 'DELETE',
         url: `${URL}/courses_majors`,
         auth: { bearer: session.token },
-        body: { course_id: 2, major_id: 3 }
+        body: { course_id: 2, major_id: 3 },
       })
     } catch (err) {
       assert.equal(err.statusCode, 200)

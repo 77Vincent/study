@@ -26,7 +26,7 @@ const dummyPictures = files.map(each => {
   return {
     mime: mime.getType(each.name.split('.')[1]),
     content: fs.readFileSync(`${each.path}/${each.name}`, 'base64'),
-    post_id: each.post_id 
+    post_id: each.post_id, 
   }
 })
 

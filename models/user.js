@@ -12,12 +12,12 @@ module.exports = Database.define('user', {
     type: Sequelize.STRING,
     defaultValue: Sequelize.UUIDV1,
     allowNull: false,
-    unique: true
+    unique: true,
   },
   mobilephone: {
     type: Sequelize.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
   },
   password: {
     type: Sequelize.STRING,
@@ -37,29 +37,29 @@ module.exports = Database.define('user', {
   active: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
-    defaultValue: true
+    defaultValue: true,
   },
   available: {
     type: Sequelize.SMALLINT,
-    defaultValue: 0
+    defaultValue: 0,
   },
   gender: {
-    type: Sequelize.BOOLEAN
+    type: Sequelize.BOOLEAN,
   },
   name: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
   },
   title: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
   },
   country: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
   },
   province: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
   },
   city: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
   },
   place: {
     type: Sequelize.STRING,
@@ -67,10 +67,10 @@ module.exports = Database.define('user', {
     defaultValue: 'both',
   },
   email: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
   },
   bio: {
-    type: Sequelize.TEXT
+    type: Sequelize.TEXT,
   },
   cost: {
     type: Sequelize.SMALLINT,
@@ -78,7 +78,7 @@ module.exports = Database.define('user', {
   },
   last_signin: {
     type: Sequelize.DATE,
-    defaultValue: new Date()
+    defaultValue: new Date(),
   },
 }, {
   paranoid: true,
@@ -87,6 +87,6 @@ module.exports = Database.define('user', {
       if (input.password) {
         input.password = bcrypt.hashSync(input.password, 8)
       }
-    }
-  }
+    },
+  },
 })

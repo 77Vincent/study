@@ -7,5 +7,5 @@ module.exports = {
   General,
   Storage,
   Auth,
-  Filter
+  Filter,
 }

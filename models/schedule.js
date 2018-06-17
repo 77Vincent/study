@@ -6,7 +6,7 @@ module.exports = Database.define('schedule', {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     unique: true,
-    primaryKey: true
+    primaryKey: true,
   },
   label: {
     type: Sequelize.STRING,
@@ -14,13 +14,13 @@ module.exports = Database.define('schedule', {
   quota: {
     type: Sequelize.TINYINT,
     allowNull: false,
-    defaultValue: 1
+    defaultValue: 1,
   },
   finished: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
-    defaultValue: false
-  }
+    defaultValue: false,
+  },
 }, {
-  paranoid: true
+  paranoid: true,
 })

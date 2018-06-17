@@ -15,7 +15,7 @@ describe('Follower_Following', () => {
       await request({
         method: 'PUT',
         url: `${URL}/followers_followings`,
-        body: data[0]
+        body: data[0],
       })
     } catch (err) {
       assert.equal(err.statusCode, 401)
@@ -28,52 +28,52 @@ describe('Follower_Following', () => {
       method: 'PUT',
       url: `${URL}/followers_followings`,
       auth: { bearer: session.token },
-      body: data[0]
+      body: data[0],
     })
     await request({
       method: 'PUT',
       url: `${URL}/followers_followings`,
       auth: { bearer: session.token },
-      body: data[1]
+      body: data[1],
     })
     await request({
       method: 'PUT',
       url: `${URL}/followers_followings`,
       auth: { bearer: session.token },
-      body: data[2]
+      body: data[2],
     })
     session = await login(userB, PASSWORD)
     await request({
       method: 'PUT',
       url: `${URL}/followers_followings`,
       auth: { bearer: session.token },
-      body: data[1]
+      body: data[1],
     })
     await request({
       method: 'PUT',
       url: `${URL}/followers_followings`,
       auth: { bearer: session.token },
-      body: data[3]
+      body: data[3],
     })
     session = await login(userC, PASSWORD)
     await request({
       method: 'PUT',
       url: `${URL}/followers_followings`,
       auth: { bearer: session.token },
-      body: data[2]
+      body: data[2],
     })
     await request({
       method: 'PUT',
       url: `${URL}/followers_followings`,
       auth: { bearer: session.token },
-      body: data[3]
+      body: data[3],
     })
     session = await login(userD, PASSWORD)
     await request({
       method: 'PUT',
       url: `${URL}/followers_followings`,
       auth: { bearer: session.token },
-      body: data[3]
+      body: data[3],
     })
     assert.ok(true)
   })
@@ -84,7 +84,7 @@ describe('Follower_Following', () => {
       await request({
         method: 'DELETE',
         url: `${URL}/followers_followings/1`,
-        auth: { bearer: session.token }
+        auth: { bearer: session.token },
       })
     } catch (err) {
       assert.equal(err.statusCode, 200)

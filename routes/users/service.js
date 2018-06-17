@@ -12,7 +12,7 @@ module.exports = {
         { id },
         { username: id },
         { mobilephone: id },
-        { email: id }]
+        { email: id }],
       },
       include: [{ model: Major }],
     }
@@ -29,11 +29,11 @@ module.exports = {
     // Add students info to teachers
     if (data.role_id === 1) {
       const students = await Schedule.findAll({ where: {
-        teacher_id: user_id
+        teacher_id: user_id,
       }})
       const students_onboard = await Schedule.findAll({ where: {
         teacher_id: user_id,
-        finished: 1
+        finished: 1,
       }})
       data.students = students.length
       data.students_onboard = students_onboard.length
@@ -100,11 +100,11 @@ module.exports = {
 
     let weight = 0
     for (let key in aspects) {
-      if (aspects.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(aspects, key)) {
         weight += aspects[key]
       }
     }
 
     return weight
-  }
+  },
 }

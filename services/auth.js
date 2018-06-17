@@ -88,5 +88,5 @@ module.exports = {
     } catch (err) {
       General.logError(ctx, err)
     }
-  }
+  },
 }

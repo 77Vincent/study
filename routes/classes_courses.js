@@ -23,7 +23,7 @@ classes_courses.get('/', async (ctx) => {
     const data = await ClassCourse.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(qs.page, config.queryLimit),
-      where: { [Op.and]: General.getFilter(qs, ['course_id', 'class_id']) }
+      where: { [Op.and]: General.getFilter(qs, ['course_id', 'class_id']) },
     })
 
     ctx.status = 200

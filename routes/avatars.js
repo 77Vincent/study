@@ -63,8 +63,11 @@ avatars.get('/:id', async (ctx) => {
  */
 avatars.put('/', protect, async (ctx) => {
   try {
-    const { content, mime } = ctx.request.body
-    if (!content || !mime) {
+    const { content } = ctx.request.body
+    const mimeType = ctx.request.body.mime
+
+    // Stop the request if any input is missing
+    if (!content || !mimeType) {
       ctx.status = 400
       ctx.body = config.messages.invalidRequest
       return
@@ -79,7 +82,7 @@ avatars.put('/', protect, async (ctx) => {
     }
 
     // Store file and create avatar instance
-    const path = Storage.store('avatar', content, mime)
+    const path = Storage.store('avatar', content, mimeType)
     const data = await Avatar.create({ user_id, path })
 
     // Update the corresponding user's avatar_id
@@ -106,14 +109,15 @@ avatars.put('/', protect, async (ctx) => {
  */
 avatars.post('/:id', protect, async (ctx) => {
   await Auth.isAuthorized(ctx, Avatar, async (data) => {
-    const { content, mime } = ctx.request.body
-    if (!content || !mime) {
+    const { content } = ctx.request.body
+    const mimeType = ctx.request.body.mime
+    if (!content || !mimeType) {
       ctx.status = 400
       ctx.body = config.messages.invalidRequest
       return
     }
 
-    const path = Storage.store('avatar', content, mime)
+    const path = Storage.store('avatar', content, mimeType)
     Storage.remove(data.dataValues.path)
     data = await data.update({ path })
 

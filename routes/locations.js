@@ -18,7 +18,7 @@ locations.get('/', async (ctx) => {
   try {
     const query = General.parseQuerystring(ctx.request.querystring)
     const data = await Country.findAll({
-      where: new Filter(query).searchBy(['pinyin', 'cn', 'en']).done()
+      where: new Filter(query).searchBy(['pinyin', 'cn', 'en']).done(),
     })
 
     ctx.status = 200
@@ -41,9 +41,7 @@ locations.get('/', async (ctx) => {
 locations.put('/', protect, async (ctx) => {
   try {
     let { code, en, cn, pinyin } = ctx.request.body
-    pinyin = pinyin || py(cn, {
-      style: py.STYLE_NORMAL
-    }).join('')
+    pinyin = pinyin || py(cn, { style: py.STYLE_NORMAL }).join('')
     const data = await Country.create({ code, en, cn, pinyin })
 
     ctx.body = data
@@ -62,7 +60,7 @@ locations.get('/cn/cities', async (ctx) => {
   try {
     // const query = General.parseQuerystring(ctx.request.querystring)
     const data = await request({
-      url: `https://apis.map.qq.com/ws/district/v1/list?key=${key}`
+      url: `https://apis.map.qq.com/ws/district/v1/list?key=${key}`,
     })
 
     ctx.status = 200

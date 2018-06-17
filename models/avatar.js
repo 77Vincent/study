@@ -6,14 +6,14 @@ module.exports = Database.define('avatar', {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     unique: true,
-    primaryKey: true
+    primaryKey: true,
   },
   user_id: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
   },
   path: {
-    type: Sequelize.STRING
-  }
+    type: Sequelize.STRING,
+  },
 }, {
-  paranoid: true
+  paranoid: true,
 })

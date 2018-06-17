@@ -27,14 +27,14 @@ messages.get('/', protect, async (ctx) => {
     // Search
     if (qs.search) {
       filter.push({
-        content: { [Op.like]: `%${decodeURI(qs.search)}%` }
+        content: { [Op.like]: `%${decodeURI(qs.search)}%` },
       })
     }
 
     const data = await Message.findAll({
       limit: c.queryLimit,
       offset: General.getOffset(qs.page, c.queryLimit),
-      where: { [Op.and]: filter }
+      where: { [Op.and]: filter },
     })
 
     ctx.status = 200

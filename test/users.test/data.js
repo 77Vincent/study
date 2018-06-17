@@ -12,7 +12,7 @@ module.exports = [{
   country: 'US',
   place: 'online',
   mobilephone: 18811111111,
-  email: 'teacher1@xfolio.cn'
+  email: 'teacher1@xfolio.cn',
 }, {
   password,
   name: 'Peter Pan',
@@ -27,7 +27,7 @@ module.exports = [{
   city: '3101',
   place: 'offline',
   mobilephone: 18822222222,
-  email: 'teacher2@xfolio.cn'
+  email: 'teacher2@xfolio.cn',
 }, {
   password,
   name: 'Tony Zhange',
@@ -43,7 +43,7 @@ module.exports = [{
   country: 'AU',
   city: '1101',
   mobilephone: 18833333333,
-  email: 'teacher3@xfolio.cn'
+  email: 'teacher3@xfolio.cn',
 }, {
   password,
   name: 'Wang Dachui',
@@ -57,7 +57,7 @@ module.exports = [{
   country: 'GB',
   city: '4501',
   mobilephone: 18844444444,
-  email: 'teacher4@xfolio.cn'
+  email: 'teacher4@xfolio.cn',
 }, {
   // Students
   password,
@@ -67,7 +67,7 @@ module.exports = [{
   mobilephone: 17711111111,
   province: '45',
   city: '4503',
-  email: 'student1@xfolio.cn'
+  email: 'student1@xfolio.cn',
 }, {
   password,
   name: '小东',
@@ -76,5 +76,5 @@ module.exports = [{
   mobilephone: 17722222222,
   province: '22',
   city: '2201',
-  email: 'student2@xfolio.cn'
+  email: 'student2@xfolio.cn',
 }]

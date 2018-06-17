@@ -6,7 +6,7 @@ module.exports = Database.define('class', {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     unique: true,
-    primaryKey: true
+    primaryKey: true,
   },
   date: {
     type: Sequelize.DATE,
@@ -14,11 +14,11 @@ module.exports = Database.define('class', {
   length: {
     type: Sequelize.FLOAT,
     allowNull: false,
-    defaultValue: 1 
+    defaultValue: 1, 
   },
   finished: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
-    defaultValue: false    
-  }
+    defaultValue: false,    
+  },
 })

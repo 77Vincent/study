@@ -26,7 +26,7 @@ posts.get('/', async (ctx) => {
     // Search
     if (qs.search) {
       filter.push({
-        content: { [Op.like]: `%${decodeURI(qs.search)}%` }
+        content: { [Op.like]: `%${decodeURI(qs.search)}%` },
       })
     }
 
@@ -34,7 +34,7 @@ posts.get('/', async (ctx) => {
       limit: c.queryLimit,
       offset: General.getOffset(qs.page, c.queryLimit),
       where: { [Op.and]: filter },
-      order: [['updated_at', 'DESC']]
+      order: [['updated_at', 'DESC']],
     })
 
     for (let i = 0; i < data.length; i++) {
@@ -106,7 +106,7 @@ posts.put('/', protect, async (ctx) => {
 posts.delete('/:id', protect, async (ctx) => {
   try {
     await Post.destroy({ 
-      where: { id: ctx.params.id }
+      where: { id: ctx.params.id },
     })
     ctx.status = 200
   } catch (err) {

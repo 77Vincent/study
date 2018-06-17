@@ -6,11 +6,11 @@ module.exports = Database.define('tag', {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     unique: true,
-    primaryKey: true
+    primaryKey: true,
   },
   content: {
     type: Sequelize.STRING,
-  }
+  },
 }, {
-  timestamps: false
+  timestamps: false,
 })

@@ -10,9 +10,9 @@ module.exports = new Sequelize(c.databaseName, c.databaseUser, c.databasePasswor
     underscored: true,
     freezeTableName: true,
     collate: 'utf8_general_ci',
-    charset: 'utf8'
+    charset: 'utf8',
   },
   dialectOptions: {
     ssl: false,
-  }
+  },
 })

@@ -17,7 +17,7 @@ majors.get('/', async (ctx) => {
   try {
     const query = General.parseQuerystring(ctx.request.querystring)
     const data = await Major.findAll({
-      where: new Filter(query).searchBy(['pinyin', 'cn', 'en']).done()
+      where: new Filter(query).searchBy(['pinyin', 'cn', 'en']).done(),
     })
 
     ctx.status = 200
@@ -40,7 +40,7 @@ majors.put('/', protect, async (ctx) => {
   try {
     let { en, cn, pinyin } = ctx.request.body
     pinyin = pinyin || py(cn, {
-      style: py.STYLE_NORMAL
+      style: py.STYLE_NORMAL,
     }).join('')
     const data = await Major.create({ en, cn, pinyin })
 

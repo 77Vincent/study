@@ -7,7 +7,7 @@ const files = [
   { path: filePath, name: 'avatar-1.jpg' },
   { path: filePath, name: 'avatar-2.jpg' },
   { path: filePath, name: 'avatar-3.jpg' },
-  { path: filePath, name: 'avatar-4.jpg' }
+  { path: filePath, name: 'avatar-4.jpg' },
 ]
 
 module.exports = files.map(each => {

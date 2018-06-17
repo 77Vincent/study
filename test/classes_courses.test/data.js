@@ -23,5 +23,5 @@ module.exports = [
   { class_id: 9, course_id: 7 },
   { class_id: 10, course_id: 2 },
   { class_id: 10, course_id: 5 },
-  { class_id: 10, course_id: 6 }
+  { class_id: 10, course_id: 6 },
 ]

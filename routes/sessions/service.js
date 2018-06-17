@@ -10,5 +10,5 @@ module.exports = {
    */
   signToken (credentials = {}) {
     return jwt.sign(credentials, c.tokenSecret, { expiresIn: c.cookiesTimeout }) 
-  }
+  },
 }

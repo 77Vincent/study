@@ -6,23 +6,23 @@ module.exports = Database.define('order', {
   id: {
     type: Sequelize.UUID,
     defaultValue: Sequelize.UUIDV1,
-    primaryKey: true
+    primaryKey: true,
   },
   isExpired: {
     type: Sequelize.BOOLEAN,
-    defaultValue: false
+    defaultValue: false,
   },
   isPaid: {
     type: Sequelize.BOOLEAN,
-    defaultValue: false
+    defaultValue: false,
   },
   isReceived: {
     type: Sequelize.BOOLEAN,
-    defaultValue: false
+    defaultValue: false,
   },
   expired_at: {
     type: Sequelize.DATE,
-    defaultValue: Generral.timer(1)
+    defaultValue: Generral.timer(1),
   },
   paid_at: {
     type: Sequelize.DATE,
@@ -37,22 +37,22 @@ module.exports = Database.define('order', {
   total_price: {
     type: Sequelize.DOUBLE,
     allowNull: false,
-    defaultValue: 0 
+    defaultValue: 0, 
   },
   unit_price: {
     type: Sequelize.DOUBLE,
     allowNull: false,
-    defaultValue: 0 
+    defaultValue: 0, 
   },
   length: {
     type: Sequelize.TINYINT,
     allowNull: false,
-    defaultValue: 1 
+    defaultValue: 1, 
   },
   isRefunded: {
     type: Sequelize.BOOLEAN,
-    defaultValue: 0 
-  }
+    defaultValue: 0, 
+  },
 }, {
-  paranoid: true
+  paranoid: true,
 })

@@ -6,7 +6,7 @@ module.exports = Database.define('message', {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     unique: true,
-    primaryKey: true
+    primaryKey: true,
   },
   content: {
     type: Sequelize.STRING,
@@ -14,8 +14,8 @@ module.exports = Database.define('message', {
   read: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
-    defaultValue: false
-  }
+    defaultValue: false,
+  },
 }, {
-  paranoid: true
+  paranoid: true,
 })

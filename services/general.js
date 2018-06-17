@@ -95,5 +95,5 @@ module.exports = {
     } else if (env === 'production') {
       return `${config.protocol}://${config.host}${custom}`
     }
-  }
+  },
 }

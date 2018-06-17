@@ -7,7 +7,7 @@ const config = require('../config')
 const schedules = Router()
 const { protect } = Auth
 const range = {
-  quota: 99
+  quota: 99,
 }
 
 /** 
@@ -27,7 +27,7 @@ schedules.get('/', async (ctx) => {
     const data = await Schedule.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
-      where: new Filter(query).filterBy(['teacher_id', 'student_id', 'finished']).searchBy(['label']).done()
+      where: new Filter(query).filterBy(['teacher_id', 'student_id', 'finished']).searchBy(['label']).done(),
     })
 
     for (let i = 0; i < data.length; i++) {

@@ -24,7 +24,7 @@ followers_followings.get('/', async (ctx) => {
     const data = await FollowerFollowing.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(qs.page, config.queryLimit),
-      where: { [Op.and]: General.getFilter(qs, ['follower_id', 'following_id']) }
+      where: { [Op.and]: General.getFilter(qs, ['follower_id', 'following_id']) },
     })
 
     ctx.status = 200
@@ -63,7 +63,7 @@ followers_followings.put('/', protect, async (ctx) => {
 followers_followings.delete('/:following_id', protect, async (ctx) => {
   const where = {
     follower_id: ctx.state.currentUserID,
-    following_id: ctx.params.following_id
+    following_id: ctx.params.following_id,
   }
   const data = await FollowerFollowing.findOne({ where })
   if (!data) { return }

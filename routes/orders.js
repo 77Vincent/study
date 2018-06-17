@@ -31,7 +31,7 @@ orders.get('/', protect, async (ctx) => {
       offset: General.getOffset(qs.page, c.queryLimit),
       order: [['updated_at', 'DESC']],
       where: { [Op.and]: General.getFilter(qs, [
-        'requestor_id', 'recipient_id', 'isPaid', 'isReceived', 'isRefunded'
+        'requestor_id', 'recipient_id', 'isPaid', 'isReceived', 'isRefunded',
       ]) },
     })
 

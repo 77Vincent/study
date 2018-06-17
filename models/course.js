@@ -6,17 +6,17 @@ module.exports = Database.define('course', {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     unique: true,
-    primaryKey: true
+    primaryKey: true,
   },
   label: {
     type: Sequelize.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
   },
   description: {
-    type: Sequelize.STRING
-  }
+    type: Sequelize.STRING,
+  },
 }, {
   paranoid: true,
-  timestamps: false
+  timestamps: false,
 })

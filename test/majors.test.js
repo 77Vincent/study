@@ -16,7 +16,7 @@ describe('Major', () => {
 
   it('Update by visitor = 401', async () => {
     try {
-      await request({ method: 'POST', url: `${URL}/majors/2`, body: { description: MODIFIED, } })
+      await request({ method: 'POST', url: `${URL}/majors/2`, body: { description: MODIFIED } })
     } catch (err) {
       assert.equal(err.statusCode, 401)
     }

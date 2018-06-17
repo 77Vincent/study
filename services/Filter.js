@@ -25,16 +25,16 @@ class Filter {
       throw new Error('Input of alias should be an object')
     }
     for (let key in aliasList) {
-      if (aliasList.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(aliasList, key)) {
         const alias = aliasList[key]
 
         // Remove the origin property 
-        if (this.sourceObject.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(this.sourceObject, key)) {
           delete this.sourceObject[key]
         }
 
         // Add a new property using alias and give it origin value
-        if (this.sourceObject.hasOwnProperty(alias)) {
+        if (Object.prototype.hasOwnProperty.call(this.sourceObject, alias)) {
           this.sourceObject[key] = this.sourceObject[alias]
           delete this.sourceObject[alias]
         }
@@ -46,7 +46,7 @@ class Filter {
   filterBy(keys = []) {
     const source = this.sourceObject
     for (let key in source) {
-      if (source.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
         if (keys.indexOf(key) !== -1) {
           const query = decodeURI(source[key])
           // Do not filter with empty string
@@ -77,7 +77,7 @@ class Filter {
     // Return plain object for sequelize
     let obj = {}
     for (let key in this) {
-      if (this.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(this, key)) {
         obj[key] = this[key]
       }
     }

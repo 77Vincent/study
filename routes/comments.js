@@ -64,7 +64,7 @@ comments.put('/', protect, async (ctx) => {
 comments.delete('/:id', protect, async (ctx) => {
   try {
     await Comment.destroy({ 
-      where: { id: ctx.params.id }
+      where: { id: ctx.params.id },
     })
     ctx.status = 200
   } catch (err) {

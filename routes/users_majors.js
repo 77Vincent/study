@@ -23,7 +23,7 @@ users_majors.get('/', async (ctx) => {
     const data = await UserMajor.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
-      where: new Filter(query).filterBy(['user_id', 'major_id']).done()
+      where: new Filter(query).filterBy(['user_id', 'major_id']).done(),
     })
 
     ctx.status = 200
@@ -70,7 +70,7 @@ users_majors.put('/', protect, async (ctx) => {
 users_majors.delete('/:major_id', protect, async (ctx) => {
   const where = {
     user_id: ctx.state.currentUserID,
-    major_id: ctx.params.major_id
+    major_id: ctx.params.major_id,
   }
   const data = await UserMajor.findOne({ where })
   if (!data) { return }

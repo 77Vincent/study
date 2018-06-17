@@ -6,20 +6,20 @@ module.exports = Database.define('major', {
     type: Sequelize.TINYINT,
     autoIncrement: true,
     unique: true,
-    primaryKey: true
+    primaryKey: true,
   },
   en: {
     type: Sequelize.STRING,
-    unique: true
+    unique: true,
   },
   cn: {
     type: Sequelize.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
   },
   pinyin: {
     type: Sequelize.STRING,
   },
 }, {
-  timestamps: false
+  timestamps: false,
 })

@@ -24,7 +24,7 @@ classes.get('/', async (ctx) => {
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
       where: new Filter(query).filterBy(['finished', 'schedule_id']).done(),
-      include: [{ model: Course, attributes: ['label', 'description'] }]
+      include: [{ model: Course, attributes: ['label', 'description'] }],
     })
 
     ctx.status = 200

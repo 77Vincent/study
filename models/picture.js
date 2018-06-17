@@ -6,12 +6,12 @@ module.exports = Database.define('picture', {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     unique: true,
-    primaryKey: true
+    primaryKey: true,
   },
   path: {
-    type: Sequelize.STRING
-  }
+    type: Sequelize.STRING,
+  },
 }, {
   paranoid: true,
-  timestamps: false
+  timestamps: false,
 })

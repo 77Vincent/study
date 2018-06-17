@@ -6,25 +6,25 @@ module.exports = Database.define('country', {
     type: Sequelize.SMALLINT,
     autoIncrement: true,
     unique: true,
-    primaryKey: true
+    primaryKey: true,
   },
   code: {
     type: Sequelize.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
   },
   en: {
     type: Sequelize.STRING,
-    unique: true
+    unique: true,
   },
   cn: {
     type: Sequelize.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
   },
   pinyin: {
     type: Sequelize.STRING,
   },
 }, {
-  timestamps: false
+  timestamps: false,
 })

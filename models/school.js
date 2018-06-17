@@ -6,26 +6,26 @@ module.exports = Database.define('school', {
     type: Sequelize.SMALLINT,
     autoIncrement: true,
     unique: true,
-    primaryKey: true
+    primaryKey: true,
   },
   website: {
     type: Sequelize.STRING,
   },
   en: {
     type: Sequelize.STRING,
-    unique: true
+    unique: true,
   },
   cn: {
     type: Sequelize.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
   },
   pinyin: {
     type: Sequelize.STRING,
   },
   country_code: {
     type: Sequelize.STRING,
-  }
+  },
 }, {
-  timestamps: false
+  timestamps: false,
 })

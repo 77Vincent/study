@@ -8,7 +8,7 @@ const userB = users[2].mobilephone
 const PASSWORD = '000000'
 const toUpdate = {
   label: MODIFIED,
-  description: MODIFIED
+  description: MODIFIED,
 }
 
 describe('Course', () => {
@@ -17,7 +17,7 @@ describe('Course', () => {
       await request({
         method: 'PUT',
         url: `${URL}/courses`,
-        body: data[0]
+        body: data[0],
       })
     } catch (err) {
       assert.equal(err.statusCode, 401)
@@ -31,7 +31,7 @@ describe('Course', () => {
         method: 'PUT',
         url: `${URL}/courses`,
         auth: { bearer: session.token },
-        body: data[i]
+        body: data[i],
       })
     }
     assert.ok(true)
@@ -42,7 +42,7 @@ describe('Course', () => {
       await request({
         method: 'POST',
         url: `${URL}/courses/2`,
-        body: toUpdate
+        body: toUpdate,
       })
     } catch (err) {
       assert.equal(err.statusCode, 401)
@@ -56,7 +56,7 @@ describe('Course', () => {
         method: 'POST',
         url: `${URL}/courses/2`,
         body: toUpdate,
-        auth: { bearer: session.token }
+        auth: { bearer: session.token },
       })
     } catch (err) {
       assert.equal(err.statusCode, 403)
@@ -70,7 +70,7 @@ describe('Course', () => {
         method: 'POST',
         url: `${URL}/courses/2`,
         body: toUpdate,
-        auth: { bearer: session.token }
+        auth: { bearer: session.token },
       })
     } catch (err) {
       assert.equal(err.statusCode, 200)
@@ -94,7 +94,7 @@ describe('Course', () => {
       await request({
         method: 'DELETE',
         url: `${URL}/courses/1`,
-        auth: { bearer: session.token }
+        auth: { bearer: session.token },
       })
     } catch (err) {
       assert.equal(err.statusCode, 403)
@@ -107,7 +107,7 @@ describe('Course', () => {
       await request({
         method: 'DELETE',
         url: `${URL}/courses/1`,
-        auth: { bearer: session.token }
+        auth: { bearer: session.token },
       })
     } catch (err) {
       assert.equal(err.statusCode, 200)

@@ -22,7 +22,7 @@ schools.get('/', async (ctx) => {
     const data = await School.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
-      where: new Filter(query).filterBy(['id', 'country_code']).searchBy(['pinyin', 'cn', 'en']).done()
+      where: new Filter(query).filterBy(['id', 'country_code']).searchBy(['pinyin', 'cn', 'en']).done(),
     })
 
     ctx.status = 200
@@ -47,7 +47,7 @@ schools.put('/', protect, async (ctx) => {
   try {
     let { en, cn, pinyin, website, country_code } = ctx.request.body
     pinyin = pinyin || py(cn, {
-      style: py.STYLE_NORMAL
+      style: py.STYLE_NORMAL,
     }).join('')
     const data = await School.create({ en, cn, pinyin, website, country_code })
 
