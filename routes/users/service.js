@@ -17,7 +17,7 @@ module.exports = {
           { mobilephone: id },
           { email: id }],
       },
-      include: [{ model: Major }, { model: Country }],
+      include: [{ model: Major }, { model: Country }, { model: School }],
     }
     const data = await User.findOne(Object.assign(param, config))
     return data
@@ -53,11 +53,6 @@ module.exports = {
       data.teachers_url = General.getDomain(`/api/users/${user_id}/teachers`)
       data.teachers_onboard_url = General.getDomain(`/api/users/${user_id}/teachers?finished=0`)
     }
-
-    // Add school
-    const school = await School.findAll({ where: { id: data.school_id } })
-    data.school = school[0]
-    delete data.school_id
 
     // Add tags
     const tags = await Tag.findAll({ where: { user_id } })

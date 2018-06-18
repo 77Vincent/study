@@ -19,7 +19,6 @@ Post.belongsTo(User)
 Picture.belongsTo(Post)
 Tag.belongsTo(User)
 
-User.belongsTo(School)
 User.belongsTo(Avatar)
 
 Class.belongsTo(Schedule)
@@ -45,6 +44,9 @@ Major.belongsToMany(User, { through: 'user_major' })
 
 User.belongsToMany(Country, { through: 'user_country' })
 Country.belongsToMany(User, { through: 'user_country' })
+
+User.belongsToMany(School, { through: 'user_school' })
+School.belongsToMany(User, { through: 'user_school' })
 
 User.belongsToMany(User, { as: 'Follower', through: 'follower_following', foreignKey: 'follower_id' })
 User.belongsToMany(User, { as: 'Following', through: 'follower_following', foreignKey: 'following_id' })

@@ -20,6 +20,7 @@ const { tags } = require('./tags')
 const { users } = require('./users')
 const { users_majors } = require('./users_majors')
 const { users_countries } = require('./users_countries')
+const { users_schools } = require('./users_schools')
 
 const router = Router({ prefix: '/api/' })
 
@@ -43,6 +44,7 @@ router.use('tags', tags.routes())
 router.use('users', users.routes())
 router.use('users_majors', users_majors.routes())
 router.use('users_countries', users_countries.routes())
+router.use('users_schools', users_schools.routes())
 
 module.exports = router
 
@@ -58,12 +60,6 @@ module.exports = router
 
 /**
  * @api {get} /resources/locale/CN/provinces.json Provinces list
- * @apiGroup Resources
- * @apiSuccess (200) {object[]} void List of the recourse
- */
-
-/**
- * @api {get} /resources/locale/countries.json Countries list
  * @apiGroup Resources
  * @apiSuccess (200) {object[]} void List of the recourse
  */

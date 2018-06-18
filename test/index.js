@@ -22,6 +22,7 @@ require('./users.test')
 // Must be run after user
 require('./users_majors.test')
 require('./users_countries.test')
+require('./users_schools.test')
 require('./courses.test')
 require('./courses_majors.test')
 require('./schedules.test')

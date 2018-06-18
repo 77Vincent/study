@@ -4,7 +4,7 @@ const Sequelize = require('sequelize')
 const queryString = require('query-string')
 
 const {
-  User, Schedule, Major, Country,
+  User, Schedule, Major, Country, School,
 } = require('../../models')
 const { General, Auth, Filter } = require('../../services')
 const sessionsService = require('../sessions/service')
@@ -60,6 +60,9 @@ users.get('/', async (ctx) => {
       }, {
         model: Country,
         where: new Filter(query).alias({ id: 'country_id' }).filterBy(['id']).done(),
+      }, {
+        model: School,
+        where: new Filter(query).alias({ id: 'school_id' }).filterBy(['id']).done(),
       }],
       where: new Filter(query).filterBy(filters).done(),
     })
