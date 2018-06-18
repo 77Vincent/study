@@ -1,3 +1,5 @@
+const queryString = require('query-string')
+
 const config = require('../config')
 const R = require('ramda')
 
@@ -17,16 +19,7 @@ module.exports = {
    * @returns {Object} each key-value pair is according to the querystring
    */
   parseQuerystring(querystring = '') {
-    if (!querystring) { return {} }
-    const arr = querystring.split('&')
-    const obj = {}
-    for (let i = 0; i < arr.length; i += 1) {
-      if (arr[i].indexOf('=') !== -1) {
-        const pair = arr[i].split('=')
-        obj[pair[0]] = pair[1]
-      }
-    }
-    return obj
+    return queryString.parse(querystring)
   },
 
   checkRange(range = {}, input = {}) {

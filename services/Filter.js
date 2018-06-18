@@ -42,10 +42,15 @@ class Filter {
     const source = this.sourceObject
     Object.keys(source).map((key) => {
       if (keys.indexOf(key) !== -1) {
-        const query = decodeURI(source[key])
-        // Do not filter with empty string
-        if (query !== '') {
-          this[key] = query.split(',')
+        const queryValue = source[key]
+        if (queryValue !== undefined && queryValue !== null && queryValue !== '') {
+          switch (is(queryValue)) {
+            case '[object Array]':
+              this[key] = decodeURI(queryValue).split(',')
+              break
+            default:
+              this[key] = decodeURI(queryValue)
+          }
         }
       }
       return null

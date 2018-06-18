@@ -17,40 +17,40 @@ describe('User_Country', () => {
     let session = await login(USERS[0].mobilephone, PASSWORD)
     let auth = { bearer: session.token }
     await request({
-      method: 'PUT', url: `${URL}/users_countries`, auth, body: { country_id: [1, 2] },
+      method: 'PUT', url: `${URL}/users_countries`, auth, body: { country_id: [1] },
     })
     await request({
-      method: 'PUT', url: `${URL}/users_countries`, auth, body: { country_id: [1, 7] },
+      method: 'PUT', url: `${URL}/users_countries`, auth, body: { country_id: [2] },
     })
 
     session = await login(USERS[1].mobilephone, PASSWORD)
     auth = { bearer: session.token }
     await request({
-      method: 'PUT', url: `${URL}/users_countries`, auth, body: { country_id: [2, 3] },
+      method: 'PUT', url: `${URL}/users_countries`, auth, body: { country_id: [3] },
     })
 
     session = await login(USERS[2].mobilephone, PASSWORD)
     auth = { bearer: session.token }
     await request({
-      method: 'PUT', url: `${URL}/users_countries`, auth, body: { country_id: [3, 4] },
+      method: 'PUT', url: `${URL}/users_countries`, auth, body: { country_id: [4] },
     })
 
     session = await login(USERS[3].mobilephone, PASSWORD)
     auth = { bearer: session.token }
     await request({
-      method: 'PUT', url: `${URL}/users_countries`, auth, body: { country_id: [4, 5] },
+      method: 'PUT', url: `${URL}/users_countries`, auth, body: { country_id: [5] },
     })
 
     session = await login(USERS[4].mobilephone, PASSWORD)
     auth = { bearer: session.token }
     await request({
-      method: 'PUT', url: `${URL}/users_countries`, auth, body: { country_id: [5, 6] },
+      method: 'PUT', url: `${URL}/users_countries`, auth, body: { country_id: [1, 3, 5] },
     })
 
     session = await login(USERS[5].mobilephone, PASSWORD)
     auth = { bearer: session.token }
     await request({
-      method: 'PUT', url: `${URL}/users_countries`, auth, body: { country_id: [6, 7] },
+      method: 'PUT', url: `${URL}/users_countries`, auth, body: { country_id: [2, 4, 6] },
     })
 
     const res = await request({ url: `${URL}/users_countries` })

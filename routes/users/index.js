@@ -39,8 +39,15 @@ const range = {
 users.get('/', async (ctx) => {
   try {
     const filters = [
-      'id', 'mobilephone', 'role_id', 'gender', 'place',
-      'province', 'city', 'country', 'active', 'degree_id',
+      'id',
+      'mobilephone',
+      'role_id',
+      'gender',
+      'place',
+      'province',
+      'city',
+      'active',
+      'degree_id',
     ]
     const query = General.parseQuerystring(ctx.request.querystring)
 
