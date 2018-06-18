@@ -1,5 +1,6 @@
 const Router = require('koa-router')
 const py = require('pinyin')
+const queryString = require('query-string')
 
 const { Major } = require('../models')
 const { General, Auth, Filter } = require('../services')
@@ -15,7 +16,7 @@ const { protect } = Auth
  */
 majors.get('/', async (ctx) => {
   try {
-    const query = General.parseQuerystring(ctx.request.querystring)
+    const query = queryString.parse(ctx.request.querystring)
     const data = await Major.findAll({
       where: new Filter(query).searchBy(['pinyin', 'cn', 'en']).done(),
     })

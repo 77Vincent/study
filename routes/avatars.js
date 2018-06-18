@@ -1,3 +1,4 @@
+const queryString = require('query-string')
 const Router = require('koa-router')
 const mime = require('mime')
 
@@ -16,11 +17,10 @@ const avatars = Router()
  */
 avatars.get('/', async (ctx) => {
   try {
-    const qs = General.parseQuerystring(ctx.request.querystring)
-
+    const query = queryString.parse(ctx.request.querystring)
     const data = await Avatar.findAll({
       limit: config.queryLimit,
-      offset: General.getOffset(qs.page, config.queryLimit),
+      offset: General.getOffset(query.page, config.queryLimit),
     })
 
     ctx.status = 200

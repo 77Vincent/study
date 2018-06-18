@@ -1,5 +1,6 @@
 const Router = require('koa-router')
 const Sequelize = require('sequelize')
+const queryString = require('query-string')
 
 const { Message } = require('../models')
 const { General, Auth } = require('../services')
@@ -21,19 +22,19 @@ const { protect } = Auth
  */
 messages.get('/', protect, async (ctx) => {
   try {
-    const qs = General.parseQuerystring(ctx.request.querystring)
-    const filter = General.getFilter(qs, ['sender_id', 'recipient_id', 'read'])
+    const query = queryString.parse(ctx.request.querystring)
+    const filter = General.getFilter(query, ['sender_id', 'recipient_id', 'read'])
 
     // Search
-    if (qs.search) {
+    if (query.search) {
       filter.push({
-        content: { [Op.like]: `%${decodeURI(qs.search)}%` },
+        content: { [Op.like]: `%${decodeURI(query.search)}%` },
       })
     }
 
     const data = await Message.findAll({
       limit: c.queryLimit,
-      offset: General.getOffset(qs.page, c.queryLimit),
+      offset: General.getOffset(query.page, c.queryLimit),
       where: { [Op.and]: filter },
     })
 

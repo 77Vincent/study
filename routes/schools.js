@@ -1,4 +1,5 @@
 const Router = require('koa-router')
+const queryString = require('query-string')
 const py = require('pinyin')
 
 const { School } = require('../models')
@@ -18,7 +19,7 @@ const { protect } = Auth
  */
 schools.get('/', async (ctx) => {
   try {
-    const query = General.parseQuerystring(ctx.request.querystring)
+    const query = queryString.parse(ctx.request.querystring)
     const data = await School.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),

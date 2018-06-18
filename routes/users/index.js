@@ -1,6 +1,7 @@
 const Router = require('koa-router')
 const R = require('ramda')
 const Sequelize = require('sequelize')
+const queryString = require('query-string')
 
 const {
   User, Schedule, Major, Country,
@@ -49,8 +50,7 @@ users.get('/', async (ctx) => {
       'active',
       'degree_id',
     ]
-    const query = General.parseQuerystring(ctx.request.querystring)
-
+    const query = queryString.parse(ctx.request.querystring)
     const data = await User.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
@@ -125,7 +125,7 @@ users.get('/:id', async (ctx) => {
  */
 users.get('/:id/students', async (ctx) => {
   try {
-    const query = General.parseQuerystring(ctx.request.querystring)
+    const query = queryString.parse(ctx.request.querystring)
     const filter = General.getFilter(query, ['finished'])
     filter.push({ teacher_id: ctx.params.id })
 
@@ -159,7 +159,7 @@ users.get('/:id/students', async (ctx) => {
  */
 users.get('/:id/teachers', async (ctx) => {
   try {
-    const query = General.parseQuerystring(ctx.request.querystring)
+    const query = queryString.parse(ctx.request.querystring)
     const filter = General.getFilter(query, ['finished'])
     filter.push({ student_id: ctx.params.id })
 

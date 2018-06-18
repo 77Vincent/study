@@ -1,6 +1,7 @@
 const Router = require('koa-router')
 const Sequelize = require('sequelize')
 const mime = require('mime')
+const queryString = require('query-string')
 
 const { Picture } = require('../models')
 const { General, Storage, Auth } = require('../services')
@@ -19,12 +20,11 @@ const { protect } = Auth
  */
 pictures.get('/', async (ctx) => {
   try {
-    const qs = General.parseQuerystring(ctx.request.querystring)
-
+    const query = queryString.parse(ctx.request.querystring)
     const data = await Picture.findAll({
       limit: c.queryLimit,
-      offset: General.getOffset(qs.page, c.queryLimit),
-      where: { [Op.and]: General.getFilter(qs, ['post_id']) },
+      offset: General.getOffset(query.page, c.queryLimit),
+      where: { [Op.and]: General.getFilter(query, ['post_id']) },
     })
 
     ctx.status = 200

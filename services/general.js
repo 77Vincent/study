@@ -1,5 +1,3 @@
-const queryString = require('query-string')
-
 const config = require('../config')
 const R = require('ramda')
 
@@ -11,15 +9,6 @@ module.exports = {
   },
   timer(hours = 0) {
     return new Date(new Date().getTime() + Number(hours * 3600 * 1000))
-  },
-
-  /**
-   * Parse url querystring and return requesting querystring values
-   * @param {String} querystring - format: &key=value&key=value1,value2
-   * @returns {Object} each key-value pair is according to the querystring
-   */
-  parseQuerystring(querystring = '') {
-    return queryString.parse(querystring)
   },
 
   checkRange(range = {}, input = {}) {
@@ -53,7 +42,7 @@ module.exports = {
    * @returns {Number} positive integer
    */
   getPositiveInt(input = 1) {
-    return R.is(Number, input) ? Math.round(Math.abs(input)) : 1
+    return R.is(Number, Number(input)) ? Math.round(Math.abs(input)) : 1
   },
 
   /**
