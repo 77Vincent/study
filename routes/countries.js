@@ -1,4 +1,3 @@
-const request = require('request-promise-native')
 const Router = require('koa-router')
 const py = require('pinyin')
 
@@ -7,15 +6,14 @@ const { Country } = require('../models')
 
 const { protect } = Auth
 
-const locations = Router()
-const key = '74OBZ-IPQRV-YXJPL-UGYMF-EIMU3-XPFNP'
+const countries = Router()
 
 /**
- * @api {get} /api/locations/ Get all countries
- * @apiGroup Locations
+ * @api {get} /api/countries/ Get all countries
+ * @apiGroup Countries
  * @apiSuccess (200) {Object[]} void Array contains all countries
  */
-locations.get('/', async (ctx) => {
+countries.get('/', async (ctx) => {
   try {
     const query = General.parseQuerystring(ctx.request.querystring)
     const data = await Country.findAll({
@@ -30,8 +28,8 @@ locations.get('/', async (ctx) => {
 })
 
 /**
- * @api {put} /api/locations/ Create a country
- * @apiGroup Locations
+ * @api {put} /api/countries/ Create a country
+ * @apiGroup Countries
  * @apiParam {String} code The Country code
  * @apiParam {String} en The English name
  * @apiParam {String} cn The Chinese name
@@ -39,7 +37,7 @@ locations.get('/', async (ctx) => {
  * @apiSuccess (201) {Object} void The created one
  * @apiError {String} 401 Not authenticated, sign in first to get token
  */
-locations.put('/', protect, async (ctx) => {
+countries.put('/', protect, async (ctx) => {
   try {
     const {
       code, en, cn,
@@ -56,23 +54,4 @@ locations.put('/', protect, async (ctx) => {
   }
 })
 
-/**
- * @api {get} /api/locations/cities Get all cities
- * @apiGroup Locations
- * @apiSuccess (200) {object[]} void Array contains all locations
- */
-locations.get('/cn/cities', async (ctx) => {
-  try {
-    // const query = General.parseQuerystring(ctx.request.querystring)
-    const data = await request({
-      url: `https://apis.map.qq.com/ws/district/v1/list?key=${key}`,
-    })
-
-    ctx.status = 200
-    ctx.body = data
-  } catch (err) {
-    General.logError(ctx, err)
-  }
-})
-
-module.exports = { locations }
+module.exports = { countries }

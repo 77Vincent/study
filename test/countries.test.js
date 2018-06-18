@@ -9,10 +9,10 @@ describe('Country', () => {
     for (let i = 0; i < data.length; i += 1) {
       const session = await login(config.adminID, config.adminPassword)
       await request({
-        method: 'PUT', url: `${URL}/locations`, auth: { bearer: session.token }, body: data[i],
+        method: 'PUT', url: `${URL}/countries`, auth: { bearer: session.token }, body: data[i],
       })
     }
-    const res = await request({ url: `${URL}/locations` })
+    const res = await request({ url: `${URL}/countries` })
     assert.equal(res.body.length, data.length)
   })
 })

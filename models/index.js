@@ -43,6 +43,9 @@ Course.belongsToMany(Class, { through: 'class_course' })
 User.belongsToMany(Major, { through: 'user_major' })
 Major.belongsToMany(User, { through: 'user_major' })
 
+User.belongsToMany(Country, { through: 'user_country' })
+Country.belongsToMany(User, { through: 'user_country' })
+
 User.belongsToMany(User, { as: 'Follower', through: 'follower_following', foreignKey: 'follower_id' })
 User.belongsToMany(User, { as: 'Following', through: 'follower_following', foreignKey: 'following_id' })
 

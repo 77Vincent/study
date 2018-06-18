@@ -52,9 +52,6 @@ module.exports = Database.define('user', {
   title: {
     type: Sequelize.STRING,
   },
-  country: {
-    type: Sequelize.STRING,
-  },
   province: {
     type: Sequelize.STRING,
   },

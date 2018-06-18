@@ -2,7 +2,9 @@ const Router = require('koa-router')
 const R = require('ramda')
 const Sequelize = require('sequelize')
 
-const { User, Schedule, Major } = require('../../models')
+const {
+  User, Schedule, Major, Country,
+} = require('../../models')
 const { General, Auth, Filter } = require('../../services')
 const sessionsService = require('../sessions/service')
 const service = require('./service')
@@ -48,6 +50,9 @@ users.get('/', async (ctx) => {
       include: [{
         model: Major,
         where: new Filter(query).alias({ id: 'major_id' }).filterBy(['id']).done(),
+      }, {
+        model: Country,
+        where: new Filter(query).alias({ id: 'country_id' }).filterBy(['id']).done(),
       }],
       where: new Filter(query).filterBy(filters).done(),
     })
