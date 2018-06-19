@@ -1,12 +1,10 @@
 const Router = require('koa-router')
-const Sequelize = require('sequelize')
 const queryString = require('query-string')
 
 const { Order } = require('../models')
-const { General, Auth } = require('../services')
-const c = require('../config.js')
+const { General, Auth, Filter } = require('../services')
+const config = require('../config.js')
 
-const { Op } = Sequelize
 const orders = Router()
 const { protect } = Auth
 
@@ -27,14 +25,12 @@ orders.get('/', protect, async (ctx) => {
   try {
     const query = queryString.parse(ctx.request.querystring)
     const data = await Order.findAll({
-      limit: c.queryLimit,
-      offset: General.getOffset(query.page, c.queryLimit),
+      limit: config.queryLimit,
+      offset: General.getOffset(query.page, config.queryLimit),
       order: [['updated_at', 'DESC']],
-      where: {
-        [Op.and]: General.getFilter(query, [
-          'requestor_id', 'recipient_id', 'isPaid', 'isReceived', 'isRefunded',
-        ]),
-      },
+      where: new Filter(ctx.request.querystring)
+        .filterBy(['requestor_id', 'recipient_id', 'isPaid', 'isReceived', 'isRefunded'])
+        .done(),
     })
 
     ctx.status = 200

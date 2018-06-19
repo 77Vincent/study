@@ -1,12 +1,10 @@
 const Router = require('koa-router')
-const Sequelize = require('sequelize')
 const queryString = require('query-string')
 
-const c = require('../config')
+const config = require('../config')
 const { Post, Comment } = require('../models')
-const { General, Auth } = require('../services')
+const { General, Auth, Filter } = require('../services')
 
-const { Op } = Sequelize
 const posts = Router()
 const { protect } = Auth
 
@@ -22,20 +20,11 @@ const { protect } = Auth
 posts.get('/', async (ctx) => {
   try {
     const query = queryString.parse(ctx.request.querystring)
-    const filter = General.getFilter(query, ['user_id'])
-
-    // Search
-    if (query.search) {
-      filter.push({
-        content: { [Op.like]: `%${decodeURI(query.search)}%` },
-      })
-    }
-
     const data = await Post.findAll({
-      limit: c.queryLimit,
-      offset: General.getOffset(query.page, c.queryLimit),
-      where: { [Op.and]: filter },
+      limit: config.queryLimit,
+      offset: General.getOffset(query.page, config.queryLimit),
       order: [['updated_at', 'DESC']],
+      where: new Filter(ctx.request.querystring).filterBy(['user_id']).searchBy(['content']).done(),
     })
 
     for (let i = 0; i < data.length; i += 1) {

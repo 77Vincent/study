@@ -45,26 +45,6 @@ module.exports = {
     return R.is(Number, Number(input)) ? Math.round(Math.abs(input)) : 1
   },
 
-  /**
-   * Create a sequelize specific object for its filter
-   * @param {Object} [object={}] - source normal object that needs to be converted
-   * @param {Array} [keys=[]] - array of values that the object's keys to be included
-   * @returns {Array} array contains objects in this format: [{key: value}, {key: value}]
-   */
-  getFilter(object = {}, keys = []) {
-    const arr = []
-    R.forEachObjIndexed((value, key) => {
-      if (R.contains(key, keys)) {
-        const query = decodeURI(value)
-        // Do not filter with empty string
-        if (query !== '') {
-          arr.push({ [key]: query.split(',') })
-        }
-      }
-    }, object)
-    return arr
-  },
-
   logError(ctx, err) {
     console.error(err)
     ctx.throw(500, err)
