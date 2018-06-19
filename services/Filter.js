@@ -7,28 +7,38 @@ const is = input => Object.prototype.toString.call(input)
 
 /**
  * This is a Class used for quick filtering and searching in sequelize
- * @class Filter
- * @param {Object} queryObject The source input of filtering or searching, key is label, value is content
- * @return {Object} Plain object that can be directly used for sequelize query
+ * @class SequelizeQuickQuery
+ * @param {String} rawQuerystring The raw querystring from client
+ * @param {Object} options Options and configurations
+ * @returns {Object} Plain object that can be directly used for sequelize query
  */
-class Filter {
-  constructor(inputQuerystring = '', options = {}) {
-    if (is(inputQuerystring) !== '[object String]') {
+class SequelizeQuickQuery {
+  constructor(rawQuerystring = '', configs = {}) {
+    if (is(rawQuerystring) !== '[object String]') {
       throw new Error('The first argument: the input querystring should be type of String')
     }
-    if (is(options) !== '[object Object]') {
+    if (is(configs) !== '[object Object]') {
       throw new Error('The second argument: options should be type of Object')
     }
 
-    const readyQuerystring = `${inputQuerystring}&${querystring.stringify(options.preFilter)}`
+    this.options = {}
+    this.options.preFilter = configs.preFilter || {}
+    this.options.alias = configs.alias || {}
+    this.options.search = configs.search || null
 
-    this.options = options
+    const readyQuerystring = `${rawQuerystring}&${querystring.stringify(this.options.preFilter)}`
+
     this.queryObject = {}
     Object.assign(this.queryObject, querystring.parse(readyQuerystring))
 
+    // Add pre-search
+    if (this.options.search) {
+      this.queryObject.search = this.options.search
+    }
+
     // Process alias
-    Object.keys(options.alias || []).map((key) => {
-      const alias = options.alias[key]
+    Object.keys(this.options.alias).map((key) => {
+      const alias = this.options.alias[key]
       // Remove the origin property
       if (Object.prototype.hasOwnProperty.call(this.queryObject, key)) {
         delete this.queryObject[key]
@@ -43,8 +53,7 @@ class Filter {
   }
 
   filterBy(keys = []) {
-    // Add keys in preFilter
-    Object.keys(this.options.preFilter || []).map((key) => {
+    Object.keys(this.options.preFilter).map((key) => {
       keys.push(key)
       return null
     })
@@ -85,21 +94,21 @@ class Filter {
 
   done() {
     // Return plain object for sequelize
-    const obj = {}
+    const outputQuery = {}
     Object.keys(this).map((key) => {
-      obj[key] = this[key]
+      outputQuery[key] = this[key]
       return null
     })
 
     if (this[Op.or]) {
-      obj[Op.or] = this[Op.or]
+      outputQuery[Op.or] = this[Op.or]
     }
 
-    delete obj.queryObject
-    delete obj.options
-    if (!Object.keys(obj).length && !obj[Op.or]) { return null }
-    return obj
+    delete outputQuery.queryObject
+    delete outputQuery.options
+    if (!Object.keys(outputQuery).length && !outputQuery[Op.or]) { return null }
+    return outputQuery
   }
 }
 
-module.exports = Filter
+module.exports = SequelizeQuickQuery
