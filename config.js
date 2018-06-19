@@ -39,6 +39,10 @@ const base = {
 
   // Store
   fileLocation: path.resolve('../xfolio-files'),
+
+  // 腾讯地图SDK key
+  MAP_SERVICE_API_URL: 'http://apis.map.qq.com/ws/district/v1/',
+  MAP_SERVICE_API_KEY: '74OBZ-IPQRV-YXJPL-UGYMF-EIMU3-XPFNP',
 }
 
 if (env === 'production') {

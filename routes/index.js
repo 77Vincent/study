@@ -3,6 +3,7 @@ const Router = require('koa-router')
 const { avatars } = require('./avatars')
 const { classes } = require('./classes')
 const { classes_courses } = require('./classes_courses')
+const { districts } = require('./districts')
 const { comments } = require('./comments')
 const { courses } = require('./courses')
 const { courses_majors } = require('./courses_majors')
@@ -27,6 +28,7 @@ const router = Router({ prefix: '/api/' })
 router.use('avatars', avatars.routes())
 router.use('classes', classes.routes())
 router.use('classes_courses', classes_courses.routes())
+router.use('districts', districts.routes())
 router.use('comments', comments.routes())
 router.use('courses', courses.routes())
 router.use('courses_majors', courses_majors.routes())
@@ -50,18 +52,6 @@ module.exports = router
 
 /*
  * Never delete these comments, these are for API documentation generation !!!
- */
-
-/**
- * @api {get} /resources/locale/CN/cities.json Cities list
- * @apiGroup Resources
- * @apiSuccess (200) {object[]} void List of the recourse
- */
-
-/**
- * @api {get} /resources/locale/CN/provinces.json Provinces list
- * @apiGroup Resources
- * @apiSuccess (200) {object[]} void List of the recourse
  */
 
 /**
