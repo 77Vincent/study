@@ -1,7 +1,6 @@
 const Router = require('koa-router')
 const R = require('ramda')
-const Sequelize = require('sequelize')
-const queryString = require('query-string')
+const querystring = require('querystring')
 
 const {
   User, Schedule, Major, Country, School,
@@ -11,7 +10,6 @@ const sessionsService = require('../sessions/service')
 const service = require('./service')
 const config = require('../../config.js')
 
-const { Op } = Sequelize
 const users = Router()
 const { protect } = Auth
 const range = {
@@ -50,21 +48,27 @@ users.get('/', async (ctx) => {
       'active',
       'degree_id',
     ]
-    const query = queryString.parse(ctx.request.querystring)
+    const query = querystring.parse(ctx.request.querystring)
     const data = await User.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
       include: [{
         model: Major,
-        where: new Filter(query).alias({ id: 'major_id' }).filterBy(['id']).done(),
+        where: new Filter(ctx.request.querystring, {
+          alias: { id: 'major_id' },
+        }).filterBy(['id']).done(),
       }, {
         model: Country,
-        where: new Filter(query).alias({ id: 'country_id' }).filterBy(['id']).done(),
+        where: new Filter(ctx.request.querystring, {
+          alias: { id: 'country_id' },
+        }).filterBy(['id']).done(),
       }, {
         model: School,
-        where: new Filter(query).alias({ id: 'school_id' }).filterBy(['id']).done(),
+        where: new Filter(ctx.request.querystring, {
+          alias: { id: 'school_id' },
+        }).filterBy(['id']).done(),
       }],
-      where: new Filter(query).filterBy(filters).done(),
+      where: new Filter(ctx.request.querystring).filterBy(filters).done(),
     })
 
     for (let i = 0; i < data.length; i += 1) {
@@ -122,24 +126,23 @@ users.get('/:id', async (ctx) => {
 /**
  * @api {get} /api/users/:id/students Get a user's students
  * @apiGroup Users
- * @apiParam (Query String) {Boolean=0,1} [finished=0,1] Filtered by if the schedule has been finished
+ * @apiParam (Query String) {Boolean=0,1} [finished=0,1] Filtered by if the schedule is finished
  * @apiParam (Query String) {Integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains a user's students
  */
 users.get('/:id/students', async (ctx) => {
   try {
-    const query = queryString.parse(ctx.request.querystring)
-    const filter = General.getFilter(query, ['finished'])
-    filter.push({ teacher_id: ctx.params.id })
-
-    let data = await Schedule.findAll({
-      where: { [Op.and]: filter },
+    const query = querystring.parse(ctx.request.querystring)
+    const schedules = await Schedule.findAll({
+      where: new Filter(ctx.request.querystring, {
+        preFilter: { teacher_id: ctx.params.id },
+      }).filterBy(['finished']).done(),
     })
 
-    data = await User.findAll({
+    const data = await User.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
-      where: { id: data.map(item => item.dataValues.student_id) },
+      where: { id: schedules.map(each => each.dataValues.student_id) },
     })
 
     for (let i = 0; i < data.length; i += 1) {
@@ -156,24 +159,23 @@ users.get('/:id/students', async (ctx) => {
 /**
  * @api {get} /api/users/:id/teachers Get a user's teachers
  * @apiGroup Users
- * @apiParam (Query String) {Boolean=0,1} [finished=0,1] Filtered by if the schedule has been finished
+ * @apiParam (Query String) {Boolean=0,1} [finished=0,1] Filtered by if the schedule is finished
  * @apiParam (Query String) {Integer} [page=1] Pagination
  * @apiSuccess (200) {object[]} void Array contains a user's teachers
  */
 users.get('/:id/teachers', async (ctx) => {
   try {
-    const query = queryString.parse(ctx.request.querystring)
-    const filter = General.getFilter(query, ['finished'])
-    filter.push({ student_id: ctx.params.id })
-
-    let data = await Schedule.findAll({
-      where: { [Op.and]: filter },
+    const query = querystring.parse(ctx.request.querystring)
+    const schedules = await Schedule.findAll({
+      where: new Filter(ctx.request.querystring, {
+        preFilter: { student_id: ctx.params.id },
+      }).filterBy(['finished']).done(),
     })
 
-    data = await User.findAll({
+    const data = await User.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
-      where: { id: data.map(item => item.dataValues.teacher_id) },
+      where: { id: schedules.map(each => each.dataValues.teacher_id) },
     })
 
     for (let i = 0; i < data.length; i += 1) {

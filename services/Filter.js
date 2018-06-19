@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize')
+const querystring = require('querystring')
 
 const { Op } = Sequelize
 
@@ -7,39 +8,48 @@ const is = input => Object.prototype.toString.call(input)
 /**
  * This is a Class used for quick filtering and searching in sequelize
  * @class Filter
- * @param {Object} sourceObject The source input of filtering or searching, key is label, value is content
+ * @param {Object} queryObject The source input of filtering or searching, key is label, value is content
  * @return {Object} Plain object that can be directly used for sequelize query
  */
 class Filter {
-  constructor(sourceObject = {}) {
-    this.sourceObject = {}
-    // Clone and assign but not just assign
-    // Otherwise the input sourceObject will be modified later
-    Object.assign(this.sourceObject, sourceObject)
-  }
-
-  alias(aliasList = {}) {
-    if (is(aliasList) !== '[object Object]') {
-      throw new Error('Input of alias should be an object')
+  constructor(inputQuerystring = '', options = {}) {
+    if (is(inputQuerystring) !== '[object String]') {
+      throw new Error('The first argument: the input querystring should be type of String')
     }
-    Object.keys(aliasList).map((key) => {
-      const alias = aliasList[key]
+    if (is(options) !== '[object Object]') {
+      throw new Error('The second argument: options should be type of Object')
+    }
+
+    const readyQuerystring = `${inputQuerystring}&${querystring.stringify(options.preFilter)}`
+
+    this.options = options
+    this.queryObject = {}
+    Object.assign(this.queryObject, querystring.parse(readyQuerystring))
+
+    // Process alias
+    Object.keys(options.alias || []).map((key) => {
+      const alias = options.alias[key]
       // Remove the origin property
-      if (Object.prototype.hasOwnProperty.call(this.sourceObject, key)) {
-        delete this.sourceObject[key]
+      if (Object.prototype.hasOwnProperty.call(this.queryObject, key)) {
+        delete this.queryObject[key]
       }
       // Add a new property using alias and give it origin value
-      if (Object.prototype.hasOwnProperty.call(this.sourceObject, alias)) {
-        this.sourceObject[key] = this.sourceObject[alias]
-        delete this.sourceObject[alias]
+      if (Object.prototype.hasOwnProperty.call(this.queryObject, alias)) {
+        this.queryObject[key] = this.queryObject[alias]
+        delete this.queryObject[alias]
       }
       return null
     })
-    return this
   }
 
   filterBy(keys = []) {
-    const source = this.sourceObject
+    // Add keys in preFilter
+    Object.keys(this.options.preFilter || []).map((key) => {
+      keys.push(key)
+      return null
+    })
+
+    const source = this.queryObject
     Object.keys(source).map((key) => {
       if (keys.indexOf(key) !== -1) {
         const queryValue = source[key]
@@ -59,7 +69,7 @@ class Filter {
   }
 
   searchBy(keys = []) {
-    const { search } = this.sourceObject
+    const { search } = this.queryObject
 
     const arr = keys.map(value => ({
       [value]: {
@@ -85,7 +95,8 @@ class Filter {
       obj[Op.or] = this[Op.or]
     }
 
-    delete obj.sourceObject
+    delete obj.queryObject
+    delete obj.options
     if (!Object.keys(obj).length && !obj[Op.or]) { return null }
     return obj
   }

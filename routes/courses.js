@@ -26,7 +26,9 @@ courses.get('/', async (ctx) => {
       include: [{
         model: Major,
         attributes: ['id'],
-        where: new Filter(query).alias({ id: 'major_id' }).filterBy(['id']).done(),
+        where: new Filter(query, {
+          alias: { id: 'major_id' },
+        }).filterBy(['id']).done(),
       }],
       where: new Filter(query).filterBy(['user_id']).searchBy(['label']).done(),
     })
