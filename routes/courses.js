@@ -1,5 +1,5 @@
 const Router = require('koa-router')
-const queryString = require('query-string')
+const querystring = require('querystring')
 
 const { Course, Major } = require('../models')
 const { General, Auth, Filter } = require('../services')
@@ -19,7 +19,7 @@ const { protect } = Auth
  */
 courses.get('/', async (ctx) => {
   try {
-    const query = queryString.parse(ctx.request.querystring)
+    const query = querystring.parse(ctx.request.querystring)
     const data = await Course.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),

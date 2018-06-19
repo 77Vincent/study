@@ -1,6 +1,6 @@
 const Router = require('koa-router')
 const mime = require('mime')
-const queryString = require('query-string')
+const querystring = require('querystring')
 
 const { Picture } = require('../models')
 const {
@@ -20,7 +20,7 @@ const { protect } = Auth
  */
 pictures.get('/', async (ctx) => {
   try {
-    const query = queryString.parse(ctx.request.querystring)
+    const query = querystring.parse(ctx.request.querystring)
     const data = await Picture.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
