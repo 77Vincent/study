@@ -24,7 +24,7 @@ users_schools.get('/', async (ctx) => {
     const data = await UserSchool.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
-      where: new Filter(query).filterBy(['user_id', 'school_id']).done(),
+      where: new Filter(ctx.request.querystring).filterBy(['user_id', 'school_id']).done(),
     })
 
     ctx.status = 200

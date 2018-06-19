@@ -12,7 +12,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development nodemon index.js",
     "start-production": "cross-env NODE_ENV=production nodemon index.js",
-    "test": "cross-env NODE_ENV=development mocha ./test/index.js --timeout 60000 --exit",
+    "test": "cross-env NODE_ENV=development mocha ./test/index.js --timeout 600000 --exit",
     "lint": "eslint ./",
     "doc": "apidoc -i routes/ -o static/doc/",
     "server": "cross-env NODE_ENV=production pm2 start index.js --watch"

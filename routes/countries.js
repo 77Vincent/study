@@ -1,6 +1,5 @@
 const Router = require('koa-router')
 const py = require('pinyin')
-const querystring = require('querystring')
 
 const { General, Auth, Filter } = require('../services')
 const { Country } = require('../models')
@@ -16,9 +15,8 @@ const countries = Router()
  */
 countries.get('/', async (ctx) => {
   try {
-    const query = querystring.parse(ctx.request.querystring)
     const data = await Country.findAll({
-      where: new Filter(query).searchBy(['pinyin', 'cn', 'en']).done(),
+      where: new Filter(ctx.request.querystring).searchBy(['pinyin', 'cn', 'en']).done(),
     })
 
     ctx.status = 200

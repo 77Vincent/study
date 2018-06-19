@@ -24,7 +24,7 @@ users_majors.get('/', async (ctx) => {
     const data = await UserMajor.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
-      where: new Filter(query).filterBy(['user_id', 'major_id']).done(),
+      where: new Filter(ctx.request.querystring).filterBy(['user_id', 'major_id']).done(),
     })
 
     ctx.status = 200

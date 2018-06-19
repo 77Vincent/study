@@ -23,7 +23,7 @@ classes.get('/', async (ctx) => {
     const data = await Class.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
-      where: new Filter(query).filterBy(['finished', 'schedule_id']).done(),
+      where: new Filter(ctx.request.querystring).filterBy(['finished', 'schedule_id']).done(),
       include: [{ model: Course, attributes: ['label', 'description'] }],
     })
 

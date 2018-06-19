@@ -23,7 +23,10 @@ schools.get('/', async (ctx) => {
     const data = await School.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
-      where: new Filter(query).filterBy(['id', 'country_code']).searchBy(['pinyin', 'cn', 'en']).done(),
+      where: new Filter(ctx.request.querystring)
+        .filterBy(['id', 'country_code'])
+        .searchBy(['pinyin', 'cn', 'en'])
+        .done(),
     })
 
     ctx.status = 200
