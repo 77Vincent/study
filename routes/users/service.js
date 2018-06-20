@@ -2,6 +2,7 @@ const Sequelize = require('sequelize')
 
 const { Op } = Sequelize
 const General = require('../../services/general')
+const Filter = require('../../services/Filter')
 const Database = require('../../database')
 const {
   User, Tag, Post, Course, Major, School, Schedule, Country, Place,
@@ -27,6 +28,31 @@ module.exports = {
     const data = await User.findOne(Object.assign(param, config))
     return data
   },
+
+  include(ctx) {
+    return [{
+      model: Major,
+      where: new Filter(ctx.request.querystring, {
+        alias: { id: 'major_id' },
+      }).filterBy(['id']).done(),
+    }, {
+      model: Country,
+      where: new Filter(ctx.request.querystring, {
+        alias: { id: 'country_id' },
+      }).filterBy(['id']).done(),
+    }, {
+      model: School,
+      where: new Filter(ctx.request.querystring, {
+        alias: { id: 'school_id' },
+      }).filterBy(['id']).done(),
+    }, {
+      model: Place,
+      where: new Filter(ctx.request.querystring, {
+        alias: { id: 'place_id' },
+      }).filterBy(['id']).done(),
+    }]
+  },
+
   processUserData: async (inputUserData = {}) => {
     const data = inputUserData
     // First remove password, do not pass password to client

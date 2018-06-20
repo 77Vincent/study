@@ -2,9 +2,7 @@ const Router = require('koa-router')
 const R = require('ramda')
 const querystring = require('querystring')
 
-const {
-  User, Schedule, Major, Country, School, Place,
-} = require('../../models')
+const { User, Schedule } = require('../../models')
 const { General, Auth, Filter } = require('../../services')
 const sessionsService = require('../sessions/service')
 const service = require('./service')
@@ -52,27 +50,7 @@ users.get('/', async (ctx) => {
     const data = await User.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
-      include: [{
-        model: Major,
-        where: new Filter(ctx.request.querystring, {
-          alias: { id: 'major_id' },
-        }).filterBy(['id']).done(),
-      }, {
-        model: Country,
-        where: new Filter(ctx.request.querystring, {
-          alias: { id: 'country_id' },
-        }).filterBy(['id']).done(),
-      }, {
-        model: School,
-        where: new Filter(ctx.request.querystring, {
-          alias: { id: 'school_id' },
-        }).filterBy(['id']).done(),
-      }, {
-        model: Place,
-        where: new Filter(ctx.request.querystring, {
-          alias: { id: 'place_id' },
-        }).filterBy(['id']).done(),
-      }],
+      include: service.include(ctx),
       where: new Filter(ctx.request.querystring).filterBy(filters).done(),
     })
 
@@ -147,6 +125,7 @@ users.get('/:id/students', async (ctx) => {
     const data = await User.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
+      include: service.include(ctx),
       where: { id: schedules.map(each => each.dataValues.student_id) },
     })
 
@@ -180,6 +159,7 @@ users.get('/:id/teachers', async (ctx) => {
     const data = await User.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
+      include: service.include(ctx),
       where: { id: schedules.map(each => each.dataValues.teacher_id) },
     })
 
