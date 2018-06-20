@@ -4,7 +4,7 @@ const { Op } = Sequelize
 const General = require('../../services/general')
 const Database = require('../../database')
 const {
-  User, Tag, Post, Course, Major, School, Schedule, Country,
+  User, Tag, Post, Course, Major, School, Schedule, Country, Place,
 } = require('../../models')
 
 module.exports = {
@@ -17,7 +17,12 @@ module.exports = {
           { mobilephone: id },
           { email: id }],
       },
-      include: [{ model: Major }, { model: Country }, { model: School }],
+      include: [
+        { model: Major },
+        { model: Country },
+        { model: School },
+        { model: Place },
+      ],
     }
     const data = await User.findOne(Object.assign(param, config))
     return data

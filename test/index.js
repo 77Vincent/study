@@ -16,6 +16,7 @@ before(async () => {
 require('./countries.test')
 require('./majors.test')
 require('./schools.test')
+require('./places.test')
 
 require('./users.test')
 
@@ -23,6 +24,7 @@ require('./users.test')
 require('./users_majors.test')
 require('./users_countries.test')
 require('./users_schools.test')
+require('./users_places.test')
 require('./courses.test')
 require('./courses_majors.test')
 require('./schedules.test')

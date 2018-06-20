@@ -3,7 +3,7 @@ const R = require('ramda')
 const querystring = require('querystring')
 
 const {
-  User, Schedule, Major, Country, School,
+  User, Schedule, Major, Country, School, Place,
 } = require('../../models')
 const { General, Auth, Filter } = require('../../services')
 const sessionsService = require('../sessions/service')
@@ -66,6 +66,11 @@ users.get('/', async (ctx) => {
         model: School,
         where: new Filter(ctx.request.querystring, {
           alias: { id: 'school_id' },
+        }).filterBy(['id']).done(),
+      }, {
+        model: Place,
+        where: new Filter(ctx.request.querystring, {
+          alias: { id: 'place_id' },
         }).filterBy(['id']).done(),
       }],
       where: new Filter(ctx.request.querystring).filterBy(filters).done(),

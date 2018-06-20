@@ -13,11 +13,11 @@ describe('User_School', () => {
     }
   })
 
-  it('Create = 200', async () => {
+  it('Create by user = 200', async () => {
     let session = await login(USERS[0].mobilephone, PASSWORD)
     let auth = { bearer: session.token }
     await request({
-      method: 'PUT', url: `${URL}/users_schools`, auth, body: { school_id: [1] },
+      method: 'PUT', url: `${URL}/users_schools`, auth, body: { school_id: [2, 1] },
     })
 
     session = await login(USERS[1].mobilephone, PASSWORD)
@@ -51,10 +51,10 @@ describe('User_School', () => {
     })
 
     const res = await request({ url: `${URL}/users_schools` })
-    assert.equal(res.body.length, 10)
+    assert.equal(res.body.length, 11)
   })
 
-  it('Delete = 200', async () => {
+  it('Delete by user = 200', async () => {
     try {
       const session = await login(USERS[0].mobilephone, PASSWORD)
       await request({ method: 'DELETE', url: `${URL}/users_schools/1`, auth: { bearer: session.token } })

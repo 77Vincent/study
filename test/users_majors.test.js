@@ -5,15 +5,15 @@ const {
 } = require('./service')
 
 describe('User_Major', () => {
-  it('Create by visitor should return 401', async () => {
+  it('Create by visitor = 401', async () => {
     try {
-      await request({ method: 'PUT', url: `${URL}/users_majors`, body: { major_id: [2] } })
+      await request({ method: 'PUT', url: `${URL}/users_majors`, body: { major_id: [1, 2] } })
     } catch (err) {
       assert.equal(err.statusCode, 401)
     }
   })
 
-  it('Create should return 200', async () => {
+  it('Create by user = 200', async () => {
     let session = await login(USERS[0].mobilephone, PASSWORD)
     let auth = { bearer: session.token }
     await request({
@@ -57,7 +57,7 @@ describe('User_Major', () => {
     assert.equal(res.body.length, 12)
   })
 
-  it('Delete should return 200', async () => {
+  it('Delete by user = 200', async () => {
     try {
       const session = await login(USERS[0].mobilephone, PASSWORD)
       await request({ method: 'DELETE', url: `${URL}/users_majors/1`, auth: { bearer: session.token } })

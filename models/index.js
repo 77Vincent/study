@@ -12,6 +12,7 @@ const Order = require('./order')
 const Avatar = require('./avatar')
 const School = require('./school')
 const Country = require('./country')
+const Place = require('./place')
 
 // Table Relationship
 Course.belongsTo(User)
@@ -48,6 +49,9 @@ Country.belongsToMany(User, { through: 'user_country' })
 User.belongsToMany(School, { through: 'user_school' })
 School.belongsToMany(User, { through: 'user_school' })
 
+User.belongsToMany(Place, { through: 'user_place' })
+Place.belongsToMany(User, { through: 'place_user' })
+
 User.belongsToMany(User, { as: 'Follower', through: 'follower_following', foreignKey: 'follower_id' })
 User.belongsToMany(User, { as: 'Following', through: 'follower_following', foreignKey: 'following_id' })
 
@@ -69,4 +73,5 @@ module.exports = {
   Avatar,
   School,
   Country,
+  Place,
 }
