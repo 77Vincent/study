@@ -3,7 +3,7 @@ const querystring = require('querystring')
 
 const Database = require('../database.js')
 const { General, Auth, Filter } = require('../services')
-const { School } = require('../models')
+const { Place } = require('../models')
 const config = require('../config')
 
 const users_places = Router()
@@ -12,7 +12,7 @@ const { protect } = Auth
 
 /**
  * @api {get} /api/users_places/ Get all user and place relations
- * @apiGroup Users_Schools
+ * @apiGroup Users_Places
  * @apiParam (Query String) {Integer} [user_id] Filtered by user ID
  * @apiParam (Query String) {Integer} [place_id] Filtered by place ID
  * @apiParam (Query String) {Integer} [page=1] Pagination
@@ -36,7 +36,7 @@ users_places.get('/', async (ctx) => {
 
 /**
  * @api {put} /api/users_places/ Create a user and place relation
- * @apiGroup Users_Schools
+ * @apiGroup Users_Places
  * @apiParam {string[]} place_id The array of places' ID
  * @apiSuccess (201) {Object} void void
  * @apiError {String} 401 Not authenticated, sign in first to get token
@@ -52,7 +52,7 @@ users_places.put('/', protect, async (ctx) => {
       await UserPlace.create({ user_id, place_id: place_id[i] })
     }
 
-    const data = await School.findAll({ where: { id: place_id } })
+    const data = await Place.findAll({ where: { id: place_id } })
 
     ctx.body = data
     ctx.status = 201
@@ -63,7 +63,7 @@ users_places.put('/', protect, async (ctx) => {
 
 /**
  * @api {delete} /api/users_places/:place_id Remove a user and place relation
- * @apiGroup Users_Schools
+ * @apiGroup Users_Places
  * @apiSuccess (200) {Void} void void
  * @apiError {String} 401 Not authenticated, sign in first to get token
  * @apiError {String} 404 The requested content is found
