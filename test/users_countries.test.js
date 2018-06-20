@@ -53,13 +53,4 @@ describe('User_Country', () => {
     const res = await request({ url: `${URL}/users_countries` })
     assert.equal(res.body.length, 10)
   })
-
-  it('Delete = 200', async () => {
-    try {
-      const session = await login(USERS[0].mobilephone, PASSWORD)
-      await request({ method: 'DELETE', url: `${URL}/users_countries/1`, auth: { bearer: session.token } })
-    } catch (err) {
-      assert.equal(err.statusCode, 200)
-    }
-  })
 })

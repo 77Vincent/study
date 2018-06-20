@@ -19,6 +19,10 @@ module.exports = Database.define('user', {
     allowNull: false,
     unique: true,
   },
+  email: {
+    type: Sequelize.STRING,
+    unique: true,
+  },
   password: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -29,7 +33,6 @@ module.exports = Database.define('user', {
   },
   degree_id: {
     type: Sequelize.TINYINT,
-    defaultValue: 1,
   },
   identity_number: {
     type: Sequelize.STRING,
@@ -49,21 +52,7 @@ module.exports = Database.define('user', {
   name: {
     type: Sequelize.STRING,
   },
-  title: {
-    type: Sequelize.STRING,
-  },
-  province: {
-    type: Sequelize.STRING,
-  },
   city: {
-    type: Sequelize.STRING,
-  },
-  place: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    defaultValue: 'both',
-  },
-  email: {
     type: Sequelize.STRING,
   },
   bio: {
