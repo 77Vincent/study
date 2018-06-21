@@ -13,6 +13,7 @@ const Avatar = require('./avatar')
 const School = require('./school')
 const Country = require('./country')
 const Place = require('./place')
+const Portfolio = require('./portfolio')
 
 // Table Relationship
 Course.belongsTo(User)
@@ -21,6 +22,7 @@ Picture.belongsTo(Post)
 Tag.belongsTo(User)
 
 User.belongsTo(Avatar)
+User.belongsTo(Portfolio)
 
 Class.belongsTo(Schedule)
 Class.belongsTo(User)
@@ -74,4 +76,5 @@ module.exports = {
   School,
   Country,
   Place,
+  Portfolio,
 }
