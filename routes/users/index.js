@@ -3,7 +3,7 @@ const R = require('ramda')
 const querystring = require('querystring')
 
 const { User, Schedule } = require('../../models')
-const { General, Auth, Filter } = require('../../services')
+const { General, Auth, sequelizeWhere } = require('../../services')
 const sessionsService = require('../sessions/service')
 const service = require('./service')
 const config = require('../../config.js')
@@ -18,40 +18,31 @@ const range = {
 /**
  * @api {get} /api/users Get all users
  * @apiGroup Users
- * @apiParam (Query String) {String} [id] Filtered by user ID
- * @apiParam (Query String) {String} [mobilephone] Filtered by user mobilephone
- * @apiParam (Query String) {integer=1,2} [role_id=1,2]
- * @apiParam (Query String) {integer=0,1,2,3} [degree_id=0,1,2,3]
- * Filtered by user's degree. (0=Associate's Degree, 1=Bachelor, 2=Master, 3=Doctor)
- * @apiParam (Query String) {Boolean=0,1} [gender=0,1] Filtered by user gender
- * @apiParam (Query String) {String=online, offline, both} [place=both] Filtered by the place to have the class
- * @apiParam (Query String) {String} [city] Filtered by the city a user is living in, check "Cities list"
- * @apiParam (Query String) {String} [province] Filtered by the province a user is living in, check "Provinces list"
- * @apiParam (Query String) {String} [countries] Filtered by the country a user is living in, check "Countries list"
- * @apiParam (Query String) {Boolean=0,1} [active=0,1] Filtered by if a user wished to be found
- * @apiParam (Query String) {String=DESC, ASC} [cost] Sorting by cost
-//  * @apiParam (Query String) {Integer} [page=1] Pagination
- * @apiSuccess (200) {object[]} void Array contains all users
+ * @apiParam (Query String) {String} [id]
+ * @apiParam (Query String) {Integer} [role_id=1,2]
+ * @apiParam (Query String) {Boolean=0,1} [gender=0,1]
+ * @apiParam (Query String) {Boolean=0,1} [active=1]
+ * @apiParam (Query String) {String} [city]
+ * @apiParam (Query String) {Integer} [country_id]
+ * @apiParam (Query String) {Integer} [school_id]
+ * @apiParam (Query String) {Integer} [major_id]
+ * @apiParam (Query String) {Integer=1,2,3,4} [place_id=1,2,3,4]
+ * @apiParam (Query String) {Integer=0,1,2,3} [degree_id=0,1,2,3]
+ * @apiParam (Query String) {Integer=0,1,2,3} [status_id=0,1,2,3]
+ * @apiParam (Query String) {String=DESC, ASC} [cost]
+ * @apiParam (Query String) {Integer} [page=1]
+ * @apiSuccess (200) {object[]} void Array contains all
  */
 users.get('/', async (ctx) => {
   try {
-    const filters = [
-      'id',
-      'mobilephone',
-      'role_id',
-      'gender',
-      'place',
-      'province',
-      'city',
-      'active',
-      'degree_id',
-    ]
     const query = querystring.parse(ctx.request.querystring)
     const data = await User.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
       include: service.include(ctx),
-      where: new Filter(ctx.request.querystring).filterBy(filters).done(),
+      where: sequelizeWhere(ctx.request.querystring, {
+        filterBy: ['id', 'role_id', 'gender', 'city', 'active', 'degree_id', 'status'],
+      }),
     })
 
     for (let i = 0; i < data.length; i += 1) {
@@ -117,9 +108,10 @@ users.get('/:id/students', async (ctx) => {
   try {
     const query = querystring.parse(ctx.request.querystring)
     const schedules = await Schedule.findAll({
-      where: new Filter(ctx.request.querystring, {
-        preFilter: { teacher_id: ctx.params.id },
-      }).filterBy(['finished']).done(),
+      where: sequelizeWhere(ctx.request.querystring, {
+        prefilter: { teacher_id: ctx.params.id },
+        filterBy: ['finished'],
+      }),
     })
 
     const data = await User.findAll({
@@ -151,9 +143,10 @@ users.get('/:id/teachers', async (ctx) => {
   try {
     const query = querystring.parse(ctx.request.querystring)
     const schedules = await Schedule.findAll({
-      where: new Filter(ctx.request.querystring, {
-        preFilter: { student_id: ctx.params.id },
-      }).filterBy(['finished']).done(),
+      where: sequelizeWhere(ctx.request.querystring, {
+        prefilter: { student_id: ctx.params.id },
+        filterBy: ['finished'],
+      }),
     })
 
     const data = await User.findAll({

@@ -2,7 +2,7 @@ const Router = require('koa-router')
 const querystring = require('querystring')
 
 const { Message } = require('../models')
-const { General, Auth, Filter } = require('../services')
+const { General, Auth, sequelizeWhere } = require('../services')
 const config = require('../config')
 
 const messages = Router()
@@ -24,10 +24,10 @@ messages.get('/', protect, async (ctx) => {
     const data = await Message.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
-      where: new Filter(ctx.request.querystring)
-        .filterBy(['sender_id', 'recipient_id', 'read'])
-        .searchBy(['content'])
-        .done(),
+      where: sequelizeWhere(ctx.request.querystring, {
+        filterBy: ['sender_id', 'recipient_id', 'read'],
+        searchBy: ['content'],
+      }),
     })
 
     ctx.status = 200

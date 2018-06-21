@@ -2,7 +2,7 @@ const Router = require('koa-router')
 const querystring = require('querystring')
 
 const { Order } = require('../models')
-const { General, Auth, Filter } = require('../services')
+const { General, Auth, sequelizeWhere } = require('../services')
 const config = require('../config.js')
 
 const orders = Router()
@@ -28,9 +28,9 @@ orders.get('/', protect, async (ctx) => {
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
       order: [['updated_at', 'DESC']],
-      where: new Filter(ctx.request.querystring)
-        .filterBy(['requestor_id', 'recipient_id', 'isPaid', 'isReceived', 'isRefunded'])
-        .done(),
+      where: sequelizeWhere(ctx.request.querystring, {
+        filterBy: ['requestor_id', 'recipient_id', 'isPaid', 'isReceived', 'isRefunded'],
+      }),
     })
 
     ctx.status = 200

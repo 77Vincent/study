@@ -3,7 +3,7 @@ const querystring = require('querystring')
 const py = require('pinyin')
 
 const { School } = require('../models')
-const { General, Auth, Filter } = require('../services')
+const { General, Auth, sequelizeWhere } = require('../services')
 const config = require('../config')
 
 const schools = Router()
@@ -23,10 +23,10 @@ schools.get('/', async (ctx) => {
     const data = await School.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
-      where: new Filter(ctx.request.querystring)
-        .filterBy(['id', 'country_code'])
-        .searchBy(['pinyin', 'cn', 'en'])
-        .done(),
+      where: sequelizeWhere(ctx.request.querystring, {
+        filterBy: ['id', 'country_code'],
+        searchBy: ['pinyin', 'cn', 'en'],
+      }),
     })
 
     ctx.status = 200
