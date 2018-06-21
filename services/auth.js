@@ -40,6 +40,7 @@ module.exports = {
 
       if (isCorrect) {
         // Authentication passed
+        await user.update({ last_signin: new Date() })
         ctx.state.currentUserID = user.dataValues.id
         ctx.state.isAdmin = user.dataValues.role_id === 0
         await next()

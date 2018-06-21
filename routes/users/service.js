@@ -55,12 +55,13 @@ module.exports = {
 
   processUserData: async (inputUserData = {}) => {
     const data = inputUserData
-    // First remove password, do not pass password to client
+    // Do not pass these fields to client
     delete data.password
+    delete data.identity_number
 
     const user_id = data.id
 
-    // Add students info to teachers
+    // To teachers
     if (data.role_id === 1) {
       const students = await Schedule.findAll({
         where: {
@@ -79,7 +80,7 @@ module.exports = {
       data.students_onboard_url = General.getDomain(`/api/users/${user_id}/students?finished=0`)
     }
 
-    // Add teachers info to students
+    // To students
     if (data.role_id === 2) {
       data.teachers_url = General.getDomain(`/api/users/${user_id}/teachers`)
       data.teachers_onboard_url = General.getDomain(`/api/users/${user_id}/teachers?finished=0`)
