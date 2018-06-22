@@ -52,8 +52,8 @@ module.exports = {
 
   getDomain(custom = '') {
     if (env === 'development') {
-      return `${config.protocol}://${config.host}:${config.port}${custom}`
+      return `${config.PROTOCOL}://${config.HOST}:${config.PORT}${custom}`
     }
-    return `${config.protocol}://${config.host}${custom}`
+    return `${config.PROTOCOL}://${config.HOST}${custom}`
   },
 }

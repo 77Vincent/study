@@ -20,8 +20,8 @@ classes_courses.get('/', async (ctx) => {
   try {
     const query = querystring.parse(ctx.request.querystring)
     const data = await ClassCourse.findAll({
-      limit: config.queryLimit,
-      offset: General.getOffset(query.page, config.queryLimit),
+      limit: config.LIMIT,
+      offset: General.getOffset(query.page, config.LIMIT),
       where: sequelizeQuery.where(ctx.request.querystring, {
         filterBy: ['course_id', 'class_id'],
       }),

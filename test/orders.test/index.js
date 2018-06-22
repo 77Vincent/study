@@ -66,7 +66,7 @@ describe('Orders', () => {
 
   it('Get by admin user should return 200', async () => {
     try {
-      const session = await login(config.adminID, config.adminPassword)
+      const session = await login(config.ADMIN_ID, config.ADMIN_PASSWORD)
       await request({
         url: `${URL}/orders`,
         auth: { bearer: session.token },
@@ -102,7 +102,7 @@ describe('Orders', () => {
 
   it('Update by admin user should return 200', async () => {
     try {
-      const session = await login(config.adminID, config.adminPassword)
+      const session = await login(config.ADMIN_ID, config.ADMIN_PASSWORD)
       const orders = await request({ url: `${URL}/orders`, auth: { bearer: session.token } })
       await request({
         method: 'POST',

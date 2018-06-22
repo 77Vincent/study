@@ -5,40 +5,40 @@ const path = require('path')
 const env = process.env.NODE_ENV
 
 const development = {
-  host: 'localhost',
+  HOST: 'localhost',
 }
 const production = {
-  host: 'www.xfolio.cn',
+  HOST: 'www.xfolio.cn',
 }
 
 const base = {
   // http
-  protocol: 'http',
-  port: 3001,
+  PROTOCOL: 'http',
+  PORT: 3001,
 
   // Database basic config
-  database: 'mysql',
-  databaseName: 'xfolio',
-  databaseUser: 'root',
-  databaseTimezone: '+8:00',
-  databasePassword: '$Xf0li0Xf0li0',
-  databasePort: 3306,
-  queryLimit: 50,
+  DATABASE: 'mysql',
+  DATABASE_NAME: 'xfolio',
+  DATABASE_USER: 'root',
+  TIMEZONE: '+8:00',
+  DATABASE_PASSWORD: '$Xf0li0Xf0li0',
+  DATABASE_PORT: 3306,
+  LIMIT: 50,
 
   // Token
-  cookiesTimeout: 60 * 60 * 1000,
-  tokenSecret: 'Jessie',
-  adminID: 'admin',
-  adminPassword: '$Xf0li0Xf0li0',
+  TOKEN_TIMEOUT: 60 * 60 * 1000,
+  TOKEN_SECRET: 'Jessie',
+  ADMIN_ID: 'admin',
+  ADMIN_PASSWORD: '$Xf0li0Xf0li0',
 
   // Messages
   messages: {
-    invalidRequest: 'Bad request due to the lack of necessary content in the request body.\n',
-    unauthorized: 'Protected resource, use Authorization header to get access\n',
+    INVALID_REQUEST: 'Bad request due to the lack of necessary content in the request body.\n',
+    UNAUTHORIZED: 'Protected resource, use Authorization header to get access\n',
   },
 
   // Store
-  fileLocation: path.resolve('../xfolio-files'),
+  FILE_LOCATION: path.resolve('../xfolio-files'),
 
   // 腾讯地图SDK key
   MAP_SERVICE_API_URL: 'http://apis.map.qq.com/ws/district/v1/',

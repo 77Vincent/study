@@ -27,7 +27,7 @@ module.exports = {
 
       // If token exists, get user credentials from the decoded token
       if (token) {
-        const parsed = jwt.verify(token, config.tokenSecret);
+        const parsed = jwt.verify(token, config.TOKEN_SECRET);
         ({ id } = parsed);
         ({ password } = parsed)
       }
@@ -46,7 +46,7 @@ module.exports = {
         await next()
       } else {
         ctx.status = 401
-        ctx.body = config.messages.unauthorized
+        ctx.body = config.messages.UNAUTHORIZED
       }
     } catch (err) {
       // When token is given but invalid

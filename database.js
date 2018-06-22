@@ -1,11 +1,11 @@
 const Sequelize = require('sequelize')
-const c = require('./config')
+const config = require('./config')
 
-module.exports = new Sequelize(c.databaseName, c.databaseUser, c.databasePassword, {
-  host: c.host,
-  dialect: c.database,
-  port: c.databasePort,
-  timezone: c.databaseTimezone,
+module.exports = new Sequelize(config.DATABASE_NAME, config.DATABASE_USER, config.DATABASE_PASSWORD, {
+  host: config.host,
+  dialect: config.DATABASE,
+  port: config.DATABASE_PORT,
+  timezone: config.TIMEZONE,
   define: {
     underscored: true,
     freezeTableName: true,

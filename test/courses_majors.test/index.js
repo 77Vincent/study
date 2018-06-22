@@ -19,7 +19,7 @@ describe('Course_Major', () => {
 
   it('Create should return 200', async () => {
     for (let i = 0; i < data.length; i += 1) {
-      const session = await login(config.adminID, config.adminPassword)
+      const session = await login(config.ADMIN_ID, config.ADMIN_PASSWORD)
       await request({
         method: 'PUT',
         url: `${URL}/courses_majors`,
@@ -32,7 +32,7 @@ describe('Course_Major', () => {
 
   it('Delete should return 200', async () => {
     try {
-      const session = await login(config.adminID, config.adminPassword)
+      const session = await login(config.ADMIN_ID, config.ADMIN_PASSWORD)
       await request({
         method: 'DELETE',
         url: `${URL}/courses_majors`,

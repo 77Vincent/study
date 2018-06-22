@@ -26,4 +26,4 @@ app.on('error', (error) => {
   throw new Error(`Server Internal Error:${error}`)
 })
 
-app.listen(config.port)
+app.listen(config.PORT)

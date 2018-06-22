@@ -50,7 +50,7 @@ describe('Class', () => {
 
   it('Get by admin user should return 200', async () => {
     try {
-      const session = await login(config.adminID, config.adminPassword)
+      const session = await login(config.ADMIN_ID, config.ADMIN_PASSWORD)
       await request({
         url: `${URL}/classes`,
         auth: { bearer: session.token },

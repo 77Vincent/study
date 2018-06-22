@@ -9,6 +9,6 @@ module.exports = {
    * @return {Object} token
    */
   signToken(credentials = {}) {
-    return jwt.sign(credentials, c.tokenSecret, { expiresIn: c.cookiesTimeout })
+    return jwt.sign(credentials, c.TOKEN_SECRET, { expiresIn: c.TOKEN_TIMEOUT })
   },
 }

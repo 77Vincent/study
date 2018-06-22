@@ -5,7 +5,7 @@ const USERS = require('./users.test/data')
 
 const MODIFIED = 'MODIFIED DATA'
 const PASSWORD = '000000'
-const URL = `${config.protocol}://${config.host}:${config.port}/api`
+const URL = `${config.PROTOCOL}://${config.HOST}:${config.PORT}/api`
 
 const request = async (options) => {
   const response = await rq(Object.assign({

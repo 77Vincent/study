@@ -64,7 +64,7 @@ describe('Schedule', () => {
 
   it('Get by user should return 200', async () => {
     try {
-      const session = await login(config.adminID, config.adminPassword)
+      const session = await login(config.ADMIN_ID, config.ADMIN_PASSWORD)
       await request({
         url: `${URL}/schedules`,
         auth: { bearer: session.token },

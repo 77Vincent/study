@@ -15,7 +15,7 @@ describe('School', () => {
 
   it('Create by user = 201', async () => {
     for (let i = 0; i < data.length; i += 1) {
-      const session = await login(config.adminID, config.adminPassword)
+      const session = await login(config.ADMIN_ID, config.ADMIN_PASSWORD)
       const auth = { bearer: session.token }
       await request({
         method: 'PUT', url: `${URL}/schools`, auth, body: data[i],

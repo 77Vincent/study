@@ -8,7 +8,7 @@ before(async () => {
   await Database.sync({ force: true })
   // Create the admin user
   await User.create({
-    role_id: 0, username: config.adminID, mobilephone: 123456789, password: config.adminPassword,
+    role_id: 0, username: config.ADMIN_ID, mobilephone: 123456789, password: config.ADMIN_PASSWORD,
   })
 })
 

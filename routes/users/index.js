@@ -35,8 +35,8 @@ users.get('/', async (ctx) => {
   try {
     const query = querystring.parse(ctx.request.querystring)
     const data = await User.findAll({
-      limit: config.queryLimit,
-      offset: General.getOffset(query.page, config.queryLimit),
+      limit: config.LIMIT,
+      offset: General.getOffset(query.page, config.LIMIT),
       include: service.include(ctx),
       where: sequelizeQuery.where(ctx.request.querystring, {
         filterBy: ['role_id', 'gender', 'city', 'active', 'degree_id', 'status'],
@@ -104,8 +104,8 @@ users.get('/:id/students', async (ctx) => {
     })
 
     const data = await User.findAll({
-      limit: config.queryLimit,
-      offset: General.getOffset(query.page, config.queryLimit),
+      limit: config.LIMIT,
+      offset: General.getOffset(query.page, config.LIMIT),
       include: service.include(ctx),
       where: { id: schedules.map(each => each.dataValues.student_id) },
     })
@@ -139,8 +139,8 @@ users.get('/:id/teachers', async (ctx) => {
     })
 
     const data = await User.findAll({
-      limit: config.queryLimit,
-      offset: General.getOffset(query.page, config.queryLimit),
+      limit: config.LIMIT,
+      offset: General.getOffset(query.page, config.LIMIT),
       include: service.include(ctx),
       where: { id: schedules.map(each => each.dataValues.teacher_id) },
     })

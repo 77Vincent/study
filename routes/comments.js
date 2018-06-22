@@ -21,8 +21,8 @@ comments.get('/', async (ctx) => {
     const query = querystring.parse(ctx.request.querystring)
 
     const data = await Comment.findAll({
-      limit: config.queryLimit,
-      offset: General.getOffset(query.page, config.queryLimit),
+      limit: config.LIMIT,
+      offset: General.getOffset(query.page, config.LIMIT),
       where: sequelizeQuery.where(ctx.request.querystring, {
         filterBy: ['user_id', 'post_id'],
       }),

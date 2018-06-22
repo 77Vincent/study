@@ -21,8 +21,8 @@ courses.get('/', async (ctx) => {
   try {
     const query = querystring.parse(ctx.request.querystring)
     const data = await Course.findAll({
-      limit: config.queryLimit,
-      offset: General.getOffset(query.page, config.queryLimit),
+      limit: config.LIMIT,
+      offset: General.getOffset(query.page, config.LIMIT),
       include: [{
         model: Major,
         attributes: ['id'],

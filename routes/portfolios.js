@@ -19,8 +19,8 @@ portfolios.get('/', async (ctx) => {
   try {
     const query = querystring.parse(ctx.request.querystring)
     const data = await Portfolio.findAll({
-      limit: config.queryLimit,
-      offset: General.getOffset(query.page, config.queryLimit),
+      limit: config.LIMIT,
+      offset: General.getOffset(query.page, config.LIMIT),
     })
 
     ctx.status = 200
@@ -69,7 +69,7 @@ portfolios.put('/', protect, async (ctx) => {
     // Stop the request if any input is missing
     if (!content || !mimeType) {
       ctx.status = 400
-      ctx.body = config.messages.invalidRequest
+      ctx.body = config.messages.INVALID_REQUEST
       return
     }
 
@@ -113,7 +113,7 @@ portfolios.post('/:id', protect, async (ctx) => {
     const mimeType = ctx.request.body.mime
     if (!content || !mimeType) {
       ctx.status = 400
-      ctx.body = config.messages.invalidRequest
+      ctx.body = config.messages.INVALID_REQUEST
       return
     }
 

@@ -15,7 +15,7 @@ describe('Major', () => {
 
   it('Create by user = 201', async () => {
     for (let i = 0; i < data.length; i += 1) {
-      const session = await login(config.adminID, config.adminPassword)
+      const session = await login(config.ADMIN_ID, config.ADMIN_PASSWORD)
       await request({
         method: 'PUT', url: `${URL}/majors`, auth: { bearer: session.token }, body: data[i],
       })

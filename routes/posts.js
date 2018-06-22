@@ -21,8 +21,8 @@ posts.get('/', async (ctx) => {
   try {
     const query = querystring.parse(ctx.request.querystring)
     const data = await Post.findAll({
-      limit: config.queryLimit,
-      offset: General.getOffset(query.page, config.queryLimit),
+      limit: config.LIMIT,
+      offset: General.getOffset(query.page, config.LIMIT),
       order: [['updated_at', 'DESC']],
       where: sequelizeQuery.where(ctx.request.querystring, {
         filterBy: ['user_id'],
