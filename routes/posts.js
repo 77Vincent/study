@@ -3,7 +3,7 @@ const querystring = require('querystring')
 
 const config = require('../config')
 const { Post, Comment } = require('../models')
-const { General, Auth, sequelizeWhere } = require('../services')
+const { General, Auth, sequelizeQuery } = require('../services')
 
 const posts = Router()
 const { protect } = Auth
@@ -24,7 +24,7 @@ posts.get('/', async (ctx) => {
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
       order: [['updated_at', 'DESC']],
-      where: sequelizeWhere(ctx.request.querystring, {
+      where: sequelizeQuery.where(ctx.request.querystring, {
         filterBy: ['user_id'],
         searchBy: ['content'],
       }),

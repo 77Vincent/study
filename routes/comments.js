@@ -2,7 +2,7 @@ const Router = require('koa-router')
 const querystring = require('querystring')
 
 const { Comment } = require('../models')
-const { General, Auth, sequelizeWhere } = require('../services')
+const { General, Auth, sequelizeQuery } = require('../services')
 const config = require('../config')
 
 const comments = Router()
@@ -23,7 +23,7 @@ comments.get('/', async (ctx) => {
     const data = await Comment.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
-      where: sequelizeWhere(ctx.request.querystring, {
+      where: sequelizeQuery.where(ctx.request.querystring, {
         filterBy: ['user_id', 'post_id'],
       }),
     })

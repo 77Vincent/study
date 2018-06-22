@@ -2,7 +2,7 @@ const Router = require('koa-router')
 const querystring = require('querystring')
 
 const { Course, Major } = require('../models')
-const { General, Auth, sequelizeWhere } = require('../services')
+const { General, Auth, sequelizeQuery } = require('../services')
 const config = require('../config')
 
 const courses = Router()
@@ -26,12 +26,12 @@ courses.get('/', async (ctx) => {
       include: [{
         model: Major,
         attributes: ['id'],
-        where: sequelizeWhere(ctx.request.querystring, {
+        where: sequelizeQuery.where(ctx.request.querystring, {
           alias: { id: 'major_id' },
           filterBy: ['id'],
         }),
       }],
-      where: sequelizeWhere(ctx.request.querystring, {
+      where: sequelizeQuery.where(ctx.request.querystring, {
         filterBy: ['user_id'],
         searchBy: ['label'],
       }),

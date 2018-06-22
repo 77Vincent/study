@@ -2,7 +2,7 @@ const Sequelize = require('sequelize')
 
 const { Op } = Sequelize
 const General = require('../../services/general')
-const sequelizeWhere = require('../../services/sequelizeWhere')
+const { sequelizeQuery } = require('../../services/sequelize-query')
 const Database = require('../../database')
 const {
   User, Tag, Post, Course, Major, School, Schedule, Country, Place,
@@ -32,25 +32,25 @@ module.exports = {
   include(ctx) {
     return [{
       model: Major,
-      where: sequelizeWhere(ctx.request.querystring, {
+      where: sequelizeQuery.where(ctx.request.querystring, {
         alias: { id: 'major_id' },
         filterBy: ['id'],
       }),
     }, {
       model: Country,
-      where: sequelizeWhere(ctx.request.querystring, {
+      where: sequelizeQuery.where(ctx.request.querystring, {
         alias: { id: 'country_id' },
         filterBy: ['id'],
       }),
     }, {
       model: School,
-      where: sequelizeWhere(ctx.request.querystring, {
+      where: sequelizeQuery.where(ctx.request.querystring, {
         alias: { id: 'school_id' },
         filterBy: ['id'],
       }),
     }, {
       model: Place,
-      where: sequelizeWhere(ctx.request.querystring, {
+      where: sequelizeQuery.where(ctx.request.querystring, {
         alias: { id: 'place_id' },
         filterBy: ['id'],
       }),

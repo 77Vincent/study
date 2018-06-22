@@ -1,9 +1,8 @@
 const Router = require('koa-router')
-const R = require('ramda')
 const querystring = require('querystring')
 
 const { User, Schedule } = require('../../models')
-const { General, Auth, sequelizeWhere } = require('../../services')
+const { General, Auth, sequelizeQuery } = require('../../services')
 const sessionsService = require('../sessions/service')
 const service = require('./service')
 const config = require('../../config.js')
@@ -18,7 +17,6 @@ const range = {
 /**
  * @api {get} /api/users Get all users
  * @apiGroup Users
- * @apiParam (Query String) {String} [id]
  * @apiParam (Query String) {Integer} [role_id=1,2]
  * @apiParam (Query String) {Boolean=0,1} [gender=0,1]
  * @apiParam (Query String) {Boolean=0,1} [active=1]
@@ -26,7 +24,7 @@ const range = {
  * @apiParam (Query String) {Integer} [country_id]
  * @apiParam (Query String) {Integer} [school_id]
  * @apiParam (Query String) {Integer} [major_id]
- * @apiParam (Query String) {Integer=1,2,3,4} [place_id=1,2,3,4]
+ * @apiParam (Query String) {Integer} [place_id]
  * @apiParam (Query String) {Integer=0,1,2,3} [degree_id=0,1,2,3]
  * @apiParam (Query String) {Integer=0,1,2,3} [status_id=0,1,2,3]
  * @apiParam (Query String) {String=DESC, ASC} [cost]
@@ -40,8 +38,11 @@ users.get('/', async (ctx) => {
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
       include: service.include(ctx),
-      where: sequelizeWhere(ctx.request.querystring, {
-        filterBy: ['id', 'role_id', 'gender', 'city', 'active', 'degree_id', 'status'],
+      where: sequelizeQuery.where(ctx.request.querystring, {
+        filterBy: ['role_id', 'gender', 'city', 'active', 'degree_id', 'status'],
+      }),
+      order: sequelizeQuery.order(ctx.request.querystring, {
+        orderBy: ['cost'],
       }),
     })
 
@@ -50,22 +51,11 @@ users.get('/', async (ctx) => {
     }
 
     // Order for teacher
-    if (query.role_id === '1') {
+    if (query.role_id === '1' && !query.cost) {
       for (let i = 0; i < data.length; i += 1) {
         data[i].dataValues.weight = service.defaultOrder(data[i].dataValues)
       }
-
-      if (R.has('cost')(query)) {
-        // Sort by cost
-        if (query.cost === 'ASC') {
-          data.sort((a, b) => a.dataValues.cost - b.dataValues.cost)
-        } else {
-          data.sort((a, b) => b.dataValues.cost - a.dataValues.cost)
-        }
-      } else {
-        // Sort by weight by default
-        data.sort((a, b) => b.dataValues.weight - a.dataValues.weight)
-      }
+      data.sort((a, b) => b.dataValues.weight - a.dataValues.weight)
     }
 
     ctx.status = 200
@@ -108,7 +98,7 @@ users.get('/:id/students', async (ctx) => {
   try {
     const query = querystring.parse(ctx.request.querystring)
     const schedules = await Schedule.findAll({
-      where: sequelizeWhere(ctx.request.querystring, {
+      where: sequelizeQuery.where(ctx.request.querystring, {
         prefilter: { teacher_id: ctx.params.id },
         filterBy: ['finished'],
       }),
@@ -143,7 +133,7 @@ users.get('/:id/teachers', async (ctx) => {
   try {
     const query = querystring.parse(ctx.request.querystring)
     const schedules = await Schedule.findAll({
-      where: sequelizeWhere(ctx.request.querystring, {
+      where: sequelizeQuery.where(ctx.request.querystring, {
         prefilter: { student_id: ctx.params.id },
         filterBy: ['finished'],
       }),
