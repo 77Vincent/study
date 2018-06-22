@@ -4,7 +4,7 @@ const querystring = require('querystring')
 
 const { Picture } = require('../models')
 const {
-  General, Storage, Auth, Filter,
+  General, Storage, Auth, sequelizeWhere,
 } = require('../services')
 const config = require('../config')
 
@@ -24,7 +24,9 @@ pictures.get('/', async (ctx) => {
     const data = await Picture.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
-      where: new Filter(ctx.request.querystring).filterBy(['post_id']).done(),
+      where: sequelizeWhere(ctx.request.querystring, {
+        filterBy: ['post_id'],
+      }),
     })
 
     ctx.status = 200

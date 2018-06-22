@@ -2,7 +2,7 @@ const Router = require('koa-router')
 const querystring = require('querystring')
 
 const Database = require('../database.js')
-const { General, Auth, Filter } = require('../services')
+const { General, Auth, sequelizeWhere } = require('../services')
 const { Major } = require('../models')
 const config = require('../config')
 
@@ -24,7 +24,9 @@ users_majors.get('/', async (ctx) => {
     const data = await UserMajor.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
-      where: new Filter(ctx.request.querystring).filterBy(['user_id', 'major_id']).done(),
+      where: sequelizeWhere(ctx.request.querystring, {
+        filterBy: ['user_id', 'major_id'],
+      }),
     })
 
     ctx.status = 200

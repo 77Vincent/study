@@ -2,7 +2,7 @@ const Router = require('koa-router')
 const querystring = require('querystring')
 
 const { Schedule, Class } = require('../models')
-const { General, Auth, Filter } = require('../services')
+const { General, Auth, sequelizeWhere } = require('../services')
 const config = require('../config')
 
 const schedules = Router()
@@ -28,10 +28,10 @@ schedules.get('/', async (ctx) => {
     const data = await Schedule.findAll({
       limit: config.queryLimit,
       offset: General.getOffset(query.page, config.queryLimit),
-      where: new Filter(ctx.request.querystring)
-        .filterBy(['teacher_id', 'student_id', 'finished'])
-        .searchBy(['label'])
-        .done(),
+      where: sequelizeWhere(ctx.request.querystring, {
+        filterBy: ['teacher_id', 'student_id', 'finished'],
+        searchBy: ['label'],
+      }),
     })
 
     for (let i = 0; i < data.length; i += 1) {
