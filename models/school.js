@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-const Database = require('../database')
+const Database = require('../services/database')
 
 module.exports = Database.define('school', {
   id: {

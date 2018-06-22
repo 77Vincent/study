@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const bcrypt = require('bcryptjs')
-const Database = require('../database')
+const Database = require('../services/database')
 
 module.exports = Database.define('user', {
   id: {

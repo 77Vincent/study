@@ -3,7 +3,7 @@ const Sequelize = require('sequelize')
 const { Op } = Sequelize
 const General = require('../../services/general')
 const { sequelizeQuery } = require('../../services/sequelize-query')
-const Database = require('../../database')
+const Database = require('../../services/database')
 const {
   User, Tag, Post, Course, Major, School, Schedule, Country, Place,
 } = require('../../models')

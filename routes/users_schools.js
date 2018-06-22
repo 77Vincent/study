@@ -1,7 +1,7 @@
 const Router = require('koa-router')
 const querystring = require('querystring')
 
-const Database = require('../database.js')
+const Database = require('../services/database')
 const { General, Auth, sequelizeQuery } = require('../services')
 const { School } = require('../models')
 const config = require('../config')

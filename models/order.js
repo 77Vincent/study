@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-const Database = require('../database')
+const Database = require('../services/database')
 const Generral = require('../services/general')
 
 module.exports = Database.define('order', {
