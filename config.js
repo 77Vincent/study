@@ -47,7 +47,7 @@ const base = {
 
 if (env === 'production') {
   Object.assign(base, production)
-} else if (env === 'development') {
+} else {
   Object.assign(base, development)
 }
 
