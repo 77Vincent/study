@@ -66,9 +66,8 @@ users.get('/', async (ctx) => {
 })
 
 /**
- * @api {get} /api/users/:account Get a user
+ * @api {get} /api/users/:account(id, username, mobilephone, email) Get a user
  * @apiGroup Users
- * @apiDescription The account could be id, username, mobilephone, email
  * @apiSuccess (200) {Object} void User object
  * @apiError {String} 404 The requested content is found
  */
@@ -88,11 +87,11 @@ users.get('/:id', async (ctx) => {
 })
 
 /**
- * @api {get} /api/users/:id/students Get a user's students
+ * @api {get} /api/users/:id/students Get students list
  * @apiGroup Users
- * @apiParam (Query String) {Boolean=0,1} [finished=0,1] Filtered by if the schedule is finished
+ * @apiParam (Query String) {Boolean=0,1} [finished=0,1]
  * @apiParam (Query String) {Integer} [page=1] Pagination
- * @apiSuccess (200) {object[]} void Array contains a user's students
+ * @apiSuccess (200) {object[]} void Array of students list
  */
 users.get('/:id/students', async (ctx) => {
   try {
@@ -123,11 +122,11 @@ users.get('/:id/students', async (ctx) => {
 })
 
 /**
- * @api {get} /api/users/:id/teachers Get a user's teachers
+ * @api {get} /api/users/:id/teachers Get teachers list
  * @apiGroup Users
- * @apiParam (Query String) {Boolean=0,1} [finished=0,1] Filtered by if the schedule is finished
+ * @apiParam (Query String) {Boolean=0,1} [finished=0,1]
  * @apiParam (Query String) {Integer} [page=1] Pagination
- * @apiSuccess (200) {object[]} void Array contains a user's teachers
+ * @apiSuccess (200) {object[]} void Array of teachers list
  */
 users.get('/:id/teachers', async (ctx) => {
   try {
@@ -256,7 +255,7 @@ users.post('/:id', protect, async (ctx) => {
 })
 
 /**
- * @api {delete} /api/users/:id Delete a user
+ * @api {delete} /api/users/:id Delete one
  * @apiGroup Users
  * @apiSuccess (200) {Void} void void
  * @apiError {String} 401 Not authenticated, sign in first to get token
