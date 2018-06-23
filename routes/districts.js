@@ -1,13 +1,12 @@
 const Router = require('koa-router')
-const request = require('request-promise-native')
 const querystring = require('querystring')
+const fs = require('fs')
+const path = require('path')
+const R = require('ramda')
 
 const { General } = require('../services')
-const config = require('../config')
 
 const districts = Router()
-const URL = config.MAP_SERVICE_API_URL
-const KEY = config.MAP_SERVICE_API_KEY
 
 /**
  * @api {get} /api/districts/ Get all districts
@@ -16,23 +15,21 @@ const KEY = config.MAP_SERVICE_API_KEY
  */
 districts.get('/', async (ctx) => {
   try {
-    let data = null
     const qs = querystring.parse(ctx.request.querystring)
+    const data = JSON.parse(fs.readFileSync(path.resolve('./static/resources/locale/CN/cities.json'), 'utf8'))
 
     if (qs.search) {
-      const raw = await request({
-        url: `${URL}search?&keyword=${encodeURI(qs.search)}&key=${KEY}`,
-      })
-      data = JSON.parse(raw).result[0].filter(each => (each.level <= 2))
+      const result = data.filter(each => (
+        R.contains(decodeURI(qs.search), each.id) ||
+        R.contains(decodeURI(qs.search), each.fullname) ||
+        R.contains(decodeURI(qs.search), each.pinyin.join(''))
+      ))
+      ctx.body = result
     } else {
-      const raw = await request({
-        url: `${URL}list?key=${KEY}`,
-      })
-      data = JSON.parse(raw).result[1]
+      ctx.body = data
     }
 
     ctx.status = 200
-    ctx.body = data
   } catch (err) {
     General.logError(ctx, err)
   }

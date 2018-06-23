@@ -170,7 +170,6 @@ users.get('/:id/teachers', async (ctx) => {
  * @apiParam {String} [bio] The biography of the user
  * @apiParam {String=online, offline, both} [place=both] Where the user wish to have the class
  * @apiParam {String} [country] The code of country where the user lives in, check countries list
- * @apiParam {String} [province] The code of province where the user lives in, check provinces list
  * @apiParam {String} [city] The code of city where the user lives in, check cities list
  * @apiParam {Boolean} [active=true] If user can be seached or not
  * @apiParam {Boolean} [gender] User gender
@@ -223,7 +222,6 @@ users.put('/', async (ctx) => {
  * @apiParam {String} [bio] The biography of the user
  * @apiParam {String=online, offline, both} [place=both] Where the user wish to have the class
  * @apiParam {String} [country] The code of country where the user lives in, check countries list
- * @apiParam {String} [province] The code of province where the user lives in, check provinces list
  * @apiParam {String} [city] The code of city where the user lives in, check cities list
  * @apiParam {Boolean} [active=true] If user can be seached or not
  * @apiParam {Boolean} [gender] User gender
