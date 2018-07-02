@@ -39,7 +39,7 @@ users.get('/', async (ctx) => {
       offset: General.getOffset(query.page, config.LIMIT),
       include: service.include(ctx),
       where: sequelizeQuery.where(ctx.request.querystring, {
-        filterBy: ['role_id', 'gender', 'city', 'active', 'degree_id', 'status'],
+        filterBy: ['role_id', 'gender', 'city', 'active', 'degree_id', 'status_id'],
       }),
       order: sequelizeQuery.order(ctx.request.querystring, {
         orderBy: ['cost'],

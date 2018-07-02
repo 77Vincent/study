@@ -31,6 +31,9 @@ module.exports = Database.define('user', {
     type: Sequelize.TINYINT,
     defaultValue: 2,
   },
+  status_id: {
+    type: Sequelize.TINYINT,
+  },
   degree_id: {
     type: Sequelize.TINYINT,
   },
