@@ -5,6 +5,8 @@ const { Op } = Sequelize
 
 const is = input => Object.prototype.toString.call(input)
 
+const isEmpty = input => input !== undefined && input !== null && input !== ''
+
 const paramsValidate = (object) => {
   if (is(object) !== '[object Object]') {
     throw new Error('The second parameter: options should be type of Object')
@@ -15,6 +17,9 @@ const processAlias = (alias, inputQueryObject) => {
   const outputQueryObject = Object.assign({}, inputQueryObject)
   Object.keys(alias).map((key) => {
     const newKey = alias[key]
+    if (newKey === key) {
+      return null
+    }
     // Remove the origin property
     if (Object.prototype.hasOwnProperty.call(outputQueryObject, key)) {
       delete outputQueryObject[key]
@@ -40,7 +45,7 @@ module.exports = {
 
     presearch = presearch || null
     prefilter = prefilter || {}
-    alias = alias || []
+    alias = alias || {}
     filterBy = filterBy || []
     searchBy = searchBy || []
 
@@ -51,8 +56,12 @@ module.exports = {
       queryObject.search = presearch
     }
 
-    // Prefilter
+    // Add keys in prefilter and alias to filterBy
     Object.keys(prefilter).map((key) => {
+      filterBy.push(key)
+      return null
+    })
+    Object.keys(alias).map((key) => {
       filterBy.push(key)
       return null
     })
@@ -61,10 +70,10 @@ module.exports = {
     Object.keys(queryObject).map((key) => {
       if (filterBy.indexOf(key) !== -1 && key !== 'search') {
         const queryValue = queryObject[key]
-        if (queryValue !== undefined && queryValue !== null && queryValue !== '') {
+        if (isEmpty(queryValue)) {
           switch (is(queryValue)) {
             case '[object Array]':
-              final[key] = decodeURI(queryValue).split(',')
+              final[key] = decodeURI(queryValue).split(',').filter(value => isEmpty(value))
               break
             default:
               final[key] = decodeURI(queryValue)
@@ -97,13 +106,17 @@ module.exports = {
     let { orderBy, alias, preorder } = options
 
     orderBy = orderBy || []
-    alias = alias || []
+    alias = alias || {}
     preorder = preorder || {}
 
     const queryObject = processAlias(alias, querystring.parse(`${rawQuerystring}&${querystring.stringify(preorder)}`))
 
-    // Preorder
+    // Add keys in prefilter and alias to orderBy
     Object.keys(preorder).map((key) => {
+      orderBy.push(key)
+      return null
+    })
+    Object.keys(alias).map((key) => {
       orderBy.push(key)
       return null
     })

@@ -34,25 +34,21 @@ module.exports = {
       model: Major,
       where: sequelizeQuery.where(ctx.request.querystring, {
         alias: { id: 'major_id' },
-        filterBy: ['id'],
       }),
     }, {
       model: Country,
       where: sequelizeQuery.where(ctx.request.querystring, {
         alias: { id: 'country_id' },
-        filterBy: ['id'],
       }),
     }, {
       model: School,
       where: sequelizeQuery.where(ctx.request.querystring, {
         alias: { id: 'school_id' },
-        filterBy: ['id'],
       }),
     }, {
       model: Place,
       where: sequelizeQuery.where(ctx.request.querystring, {
         alias: { id: 'place_id' },
-        filterBy: ['id'],
       }),
     }]
   },
