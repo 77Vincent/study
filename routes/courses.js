@@ -28,7 +28,6 @@ courses.get('/', async (ctx) => {
         attributes: ['id'],
         where: sequelizeQuery.where(ctx.request.querystring, {
           alias: { id: 'major_id' },
-          filterBy: ['id'],
         }),
       }],
       where: sequelizeQuery.where(ctx.request.querystring, {
