@@ -98,7 +98,7 @@ users.get('/:id/students', async (ctx) => {
     const query = querystring.parse(ctx.request.querystring)
     const schedules = await Schedule.findAll({
       where: sequelizeQuery.where(ctx.request.querystring, {
-        prefilter: { teacher_id: ctx.params.id },
+        filter: { teacher_id: ctx.params.id },
         filterBy: ['finished'],
       }),
     })
@@ -133,7 +133,7 @@ users.get('/:id/teachers', async (ctx) => {
     const query = querystring.parse(ctx.request.querystring)
     const schedules = await Schedule.findAll({
       where: sequelizeQuery.where(ctx.request.querystring, {
-        prefilter: { student_id: ctx.params.id },
+        filter: { student_id: ctx.params.id },
         filterBy: ['finished'],
       }),
     })

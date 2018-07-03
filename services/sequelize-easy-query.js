@@ -40,25 +40,24 @@ module.exports = {
 
     const final = {}
     let {
-      prefilter, filterByAlias, filterBy, searchBy, presearch,
+      filter, filterByAlias, filterBy, searchBy, search,
     } = options
 
-    presearch = presearch || null
-    prefilter = prefilter || {}
-    filterByAlias = filterByAlias || {}
+    filter = filter || {}
     filterBy = filterBy || []
+    filterByAlias = filterByAlias || {}
+    search = search || null
     searchBy = searchBy || []
 
     const queryObject = processAlias(filterByAlias, querystring
-      .parse(`${rawQuerystring}&${querystring.stringify(prefilter)}`))
+      .parse(`${rawQuerystring}&${querystring.stringify(filter)}`))
 
     // Presearch
-    if (presearch) {
-      queryObject.search = presearch
+    if (search) {
+      queryObject.search = search
     }
 
-    // Add keys in prefilter and filterByAlias to filterBy
-    Object.keys(prefilter).map((key) => {
+    Object.keys(filter).map((key) => {
       filterBy.push(key)
       return null
     })
@@ -85,12 +84,10 @@ module.exports = {
     })
 
     // Search by
-    const { search } = queryObject
-
-    if (searchBy.length && search) {
+    if (searchBy.length && queryObject.search) {
       const arrayForSearch = searchBy.map(value => ({
         [value]: {
-          [Op.like]: `%${decodeURI(search)}%`,
+          [Op.like]: `%${decodeURI(queryObject.search)}%`,
         },
       }))
       final[Op.or] = arrayForSearch
@@ -104,17 +101,16 @@ module.exports = {
     paramsValidate(options)
 
     const final = []
-    let { orderBy, orderByAlias, preorder } = options
+    let { orderBy, orderByAlias, order } = options
 
+    order = order || {}
     orderBy = orderBy || []
     orderByAlias = orderByAlias || {}
-    preorder = preorder || {}
 
     const queryObject = processAlias(orderByAlias, querystring
-      .parse(`${rawQuerystring}&${querystring.stringify(preorder)}`))
+      .parse(`${rawQuerystring}&${querystring.stringify(order)}`))
 
-    // Add keys in prefilter and orderByAlias to orderBy
-    Object.keys(preorder).map((key) => {
+    Object.keys(order).map((key) => {
       orderBy.push(key)
       return null
     })
