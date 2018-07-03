@@ -23,7 +23,7 @@ classes.get('/', async (ctx) => {
     const data = await Class.findAll({
       limit: config.LIMIT,
       offset: General.getOffset(query.page, config.LIMIT),
-      where: sequelizeQuery.where(ctx.request.querystring, {
+      where: sequelizeQuery(ctx.request.querystring, {
         filterBy: ['finished', 'schedule_id'],
       }),
       include: [{ model: Course, attributes: ['label', 'description'] }],

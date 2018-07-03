@@ -28,7 +28,7 @@ schedules.get('/', async (ctx) => {
     const data = await Schedule.findAll({
       limit: config.LIMIT,
       offset: General.getOffset(query.page, config.LIMIT),
-      where: sequelizeQuery.where(ctx.request.querystring, {
+      where: sequelizeQuery(ctx.request.querystring, {
         filterBy: ['teacher_id', 'student_id', 'finished'],
         searchBy: ['label'],
       }),

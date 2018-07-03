@@ -23,7 +23,7 @@ schools.get('/', async (ctx) => {
     const data = await School.findAll({
       limit: config.LIMIT,
       offset: General.getOffset(query.page, config.LIMIT),
-      where: sequelizeQuery.where(ctx.request.querystring, {
+      where: sequelizeQuery(ctx.request.querystring, {
         filterBy: ['id', 'country_code'],
         searchBy: ['pinyin', 'cn', 'en'],
       }),

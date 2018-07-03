@@ -32,22 +32,22 @@ module.exports = {
   include(ctx) {
     return [{
       model: Major,
-      where: sequelizeQuery.where(ctx.request.querystring, {
+      where: sequelizeQuery(ctx.request.querystring, {
         filterByAlias: { id: 'major_id' },
       }),
     }, {
       model: Country,
-      where: sequelizeQuery.where(ctx.request.querystring, {
+      where: sequelizeQuery(ctx.request.querystring, {
         filterByAlias: { id: 'country_id' },
       }),
     }, {
       model: School,
-      where: sequelizeQuery.where(ctx.request.querystring, {
+      where: sequelizeQuery(ctx.request.querystring, {
         filterByAlias: { id: 'school_id' },
       }),
     }, {
       model: Place,
-      where: sequelizeQuery.where(ctx.request.querystring, {
+      where: sequelizeQuery(ctx.request.querystring, {
         filterByAlias: { id: 'place_id' },
       }),
     }]

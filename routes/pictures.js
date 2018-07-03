@@ -24,7 +24,7 @@ pictures.get('/', async (ctx) => {
     const data = await Picture.findAll({
       limit: config.LIMIT,
       offset: General.getOffset(query.page, config.LIMIT),
-      where: sequelizeQuery.where(ctx.request.querystring, {
+      where: sequelizeQuery(ctx.request.querystring, {
         filterBy: ['post_id'],
       }),
     })

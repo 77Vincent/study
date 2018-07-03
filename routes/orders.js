@@ -28,7 +28,7 @@ orders.get('/', protect, async (ctx) => {
       limit: config.LIMIT,
       offset: General.getOffset(query.page, config.LIMIT),
       order: [['updated_at', 'DESC']],
-      where: sequelizeQuery.where(ctx.request.querystring, {
+      where: sequelizeQuery(ctx.request.querystring, {
         filterBy: ['requestor_id', 'recipient_id', 'isPaid', 'isReceived', 'isRefunded'],
       }),
     })

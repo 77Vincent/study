@@ -23,7 +23,7 @@ followers_followings.get('/', async (ctx) => {
     const data = await FollowerFollowing.findAll({
       limit: config.LIMIT,
       offset: General.getOffset(query.page, config.LIMIT),
-      where: sequelizeQuery.where(ctx.request.querystring, {
+      where: sequelizeQuery(ctx.request.querystring, {
         filterBy: ['follower_id', 'following_id'],
       }),
     })

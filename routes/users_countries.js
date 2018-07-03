@@ -24,7 +24,7 @@ users_countries.get('/', async (ctx) => {
     const data = await UserCountry.findAll({
       limit: config.LIMIT,
       offset: General.getOffset(query.page, config.LIMIT),
-      where: sequelizeQuery.where(ctx.request.querystring, {
+      where: sequelizeQuery(ctx.request.querystring, {
         filterBy: ['user_id', 'country_id'],
       }),
     })

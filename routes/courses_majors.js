@@ -23,7 +23,7 @@ courses_majors.get('/', async (ctx) => {
     const data = await CourseMajor.findAll({
       limit: config.LIMIT,
       offset: General.getOffset(query.page, config.LIMIT),
-      where: sequelizeQuery.where(ctx.request.querystring, {
+      where: sequelizeQuery(ctx.request.querystring, {
         filterBy: ['course_id', 'major_id'],
       }),
     })

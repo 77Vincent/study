@@ -7,13 +7,7 @@ const is = input => Object.prototype.toString.call(input)
 
 const isEmpty = input => input !== undefined && input !== null && input !== ''
 
-const paramsValidate = (object) => {
-  if (is(object) !== '[object Object]') {
-    throw new Error('The second parameter: options should be type of Object')
-  }
-}
-
-const processAlias = (alias, inputQueryObject) => {
+const processAlias = (alias = {}, inputQueryObject = {}) => {
   const outputQueryObject = Object.assign({}, inputQueryObject)
   Object.keys(alias).map((key) => {
     const newKey = alias[key]
@@ -34,100 +28,86 @@ const processAlias = (alias, inputQueryObject) => {
   return outputQueryObject
 }
 
-module.exports = {
-  where(rawQuerystring = '', options = {}) {
-    paramsValidate(options)
+module.exports = (rawQuerystring = '', options = {}) => {
+  if (is(options) !== '[object Object]') {
+    throw new Error('The second parameter: options should be type of Object')
+  }
 
-    const final = {}
-    let {
-      filter, filterByAlias, filterBy, searchBy, search,
-    } = options
+  let {
+    filter, filterBy, filterByAlias,
+    order, orderBy, orderByAlias,
+    search, searchBy,
+  } = options
 
-    filter = filter || {}
-    filterBy = filterBy || []
-    filterByAlias = filterByAlias || {}
-    search = search || null
-    searchBy = searchBy || []
+  if ((filter || filterBy || filterByAlias || search || searchBy) && (order || orderBy || orderByAlias)) {
+    throw new Error('Configurations for "order" clause cannot be used with those for "where" clause at the same time.')
+  }
 
-    const queryObject = processAlias(filterByAlias, querystring
-      .parse(`${rawQuerystring}&${querystring.stringify(filter)}`))
+  // Initial the output object
+  const output = order || orderBy || orderByAlias ? [] : {}
 
-    // Presearch
-    if (search) {
-      queryObject.search = search
-    }
+  // Default values
+  filter = filter || {}
+  filterBy = filterBy || []
+  filterByAlias = filterByAlias || {}
 
-    Object.keys(filter).map((key) => {
-      filterBy.push(key)
-      return null
-    })
-    Object.keys(filterByAlias).map((key) => {
-      filterBy.push(key)
-      return null
-    })
+  order = order || {}
+  orderBy = orderBy || []
+  orderByAlias = orderByAlias || {}
 
-    // Filter by
-    Object.keys(queryObject).map((key) => {
-      if (filterBy.indexOf(key) !== -1 && key !== 'search') {
-        const queryValue = queryObject[key]
-        if (isEmpty(queryValue)) {
-          switch (is(queryValue)) {
-            case '[object Array]':
-              final[key] = decodeURI(queryValue).split(',').filter(value => isEmpty(value))
-              break
-            default:
-              final[key] = decodeURI(queryValue)
-          }
+  search = search || null
+  searchBy = searchBy || []
+
+  const queryObject = processAlias(filterByAlias || orderByAlias, querystring
+    .parse(`${rawQuerystring}&${querystring.stringify(filter || order)}`))
+
+  if (search) {
+    queryObject.search = search
+  }
+
+  Object.keys(filter).map(key => filterBy.push(key))
+  Object.keys(filterByAlias).map(key => filterBy.push(key))
+  Object.keys(order).map(key => orderBy.push(key))
+  Object.keys(orderByAlias).map(key => orderBy.push(key))
+
+  // Filter by
+  Object.keys(queryObject).map((key) => {
+    if (filterBy.indexOf(key) !== -1 && key !== 'search') {
+      const queryValue = queryObject[key]
+      if (isEmpty(queryValue)) {
+        switch (is(queryValue)) {
+          case '[object Array]':
+            output[key] = decodeURI(queryValue).split(',').filter(value => isEmpty(value))
+            break
+          default:
+            output[key] = decodeURI(queryValue)
         }
       }
-      return null
-    })
-
-    // Search by
-    if (searchBy.length && queryObject.search) {
-      const arrayForSearch = searchBy.map(value => ({
-        [value]: {
-          [Op.like]: `%${decodeURI(queryObject.search)}%`,
-        },
-      }))
-      final[Op.or] = arrayForSearch
     }
+    return null
+  })
 
-    if (!Object.keys(final).length && !final[Op.or]) { return null }
-    return final
-  },
+  // Search by
+  if (searchBy.length && queryObject.search) {
+    const arrayForSearch = searchBy.map(value => ({
+      [value]: {
+        [Op.like]: `%${decodeURI(queryObject.search)}%`,
+      },
+    }))
+    output[Op.or] = arrayForSearch
+  }
 
-  order(rawQuerystring = '', options = {}) {
-    paramsValidate(options)
-
-    const final = []
-    let { orderBy, orderByAlias, order } = options
-
-    order = order || {}
-    orderBy = orderBy || []
-    orderByAlias = orderByAlias || {}
-
-    const queryObject = processAlias(orderByAlias, querystring
-      .parse(`${rawQuerystring}&${querystring.stringify(order)}`))
-
-    Object.keys(order).map((key) => {
-      orderBy.push(key)
-      return null
-    })
-    Object.keys(orderByAlias).map((key) => {
-      orderBy.push(key)
-      return null
-    })
-
-    Object.keys(queryObject).map((key) => {
-      if (orderBy.indexOf(key) !== -1) {
-        const queryValue = queryObject[key]
-        if (queryValue !== undefined && queryValue !== null && queryValue !== '') {
-          final.push([key, decodeURI(queryValue)])
-        }
+  // Order by
+  Object.keys(queryObject).map((key) => {
+    if (orderBy.indexOf(key) !== -1) {
+      const queryValue = queryObject[key]
+      if (isEmpty(queryValue)) {
+        output.push([key, decodeURI(queryValue)])
       }
-      return null
-    })
-    return final
-  },
+    }
+    return null
+  })
+
+  if (!Object.keys(output).length && !output[Op.or]) { return null }
+  return output
 }

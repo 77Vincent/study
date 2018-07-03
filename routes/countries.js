@@ -16,7 +16,7 @@ const countries = Router()
 countries.get('/', async (ctx) => {
   try {
     const data = await Country.findAll({
-      where: sequelizeQuery.where(ctx.request.querystring, {
+      where: sequelizeQuery(ctx.request.querystring, {
         searchBy: ['pinyin', 'cn', 'en'],
       }),
     })

@@ -26,11 +26,11 @@ courses.get('/', async (ctx) => {
       include: [{
         model: Major,
         attributes: ['id'],
-        where: sequelizeQuery.where(ctx.request.querystring, {
+        where: sequelizeQuery(ctx.request.querystring, {
           filterByAlias: { id: 'major_id' },
         }),
       }],
-      where: sequelizeQuery.where(ctx.request.querystring, {
+      where: sequelizeQuery(ctx.request.querystring, {
         filterBy: ['user_id'],
         searchBy: ['label'],
       }),

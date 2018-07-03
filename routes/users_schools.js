@@ -24,7 +24,7 @@ users_schools.get('/', async (ctx) => {
     const data = await UserSchool.findAll({
       limit: config.LIMIT,
       offset: General.getOffset(query.page, config.LIMIT),
-      where: sequelizeQuery.where(ctx.request.querystring, {
+      where: sequelizeQuery(ctx.request.querystring, {
         filterBy: ['user_id', 'school_id'],
       }),
     })

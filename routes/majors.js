@@ -16,7 +16,7 @@ const { protect } = Auth
 majors.get('/', async (ctx) => {
   try {
     const data = await Major.findAll({
-      where: sequelizeQuery.where(ctx.request.querystring, {
+      where: sequelizeQuery(ctx.request.querystring, {
         searchBy: ['pinyin', 'cn', 'en'],
       }),
     })
