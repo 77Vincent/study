@@ -40,28 +40,29 @@ module.exports = {
 
     const final = {}
     let {
-      prefilter, alias, filterBy, searchBy, presearch,
+      prefilter, filterByAlias, filterBy, searchBy, presearch,
     } = options
 
     presearch = presearch || null
     prefilter = prefilter || {}
-    alias = alias || {}
+    filterByAlias = filterByAlias || {}
     filterBy = filterBy || []
     searchBy = searchBy || []
 
-    const queryObject = processAlias(alias, querystring.parse(`${rawQuerystring}&${querystring.stringify(prefilter)}`))
+    const queryObject = processAlias(filterByAlias, querystring
+      .parse(`${rawQuerystring}&${querystring.stringify(prefilter)}`))
 
     // Presearch
     if (presearch) {
       queryObject.search = presearch
     }
 
-    // Add keys in prefilter and alias to filterBy
+    // Add keys in prefilter and filterByAlias to filterBy
     Object.keys(prefilter).map((key) => {
       filterBy.push(key)
       return null
     })
-    Object.keys(alias).map((key) => {
+    Object.keys(filterByAlias).map((key) => {
       filterBy.push(key)
       return null
     })
@@ -103,20 +104,21 @@ module.exports = {
     paramsValidate(options)
 
     const final = []
-    let { orderBy, alias, preorder } = options
+    let { orderBy, orderByAlias, preorder } = options
 
     orderBy = orderBy || []
-    alias = alias || {}
+    orderByAlias = orderByAlias || {}
     preorder = preorder || {}
 
-    const queryObject = processAlias(alias, querystring.parse(`${rawQuerystring}&${querystring.stringify(preorder)}`))
+    const queryObject = processAlias(orderByAlias, querystring
+      .parse(`${rawQuerystring}&${querystring.stringify(preorder)}`))
 
-    // Add keys in prefilter and alias to orderBy
+    // Add keys in prefilter and orderByAlias to orderBy
     Object.keys(preorder).map((key) => {
       orderBy.push(key)
       return null
     })
-    Object.keys(alias).map((key) => {
+    Object.keys(orderByAlias).map((key) => {
       orderBy.push(key)
       return null
     })

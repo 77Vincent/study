@@ -33,22 +33,22 @@ module.exports = {
     return [{
       model: Major,
       where: sequelizeQuery.where(ctx.request.querystring, {
-        alias: { id: 'major_id' },
+        filterByAlias: { id: 'major_id' },
       }),
     }, {
       model: Country,
       where: sequelizeQuery.where(ctx.request.querystring, {
-        alias: { id: 'country_id' },
+        filterByAlias: { id: 'country_id' },
       }),
     }, {
       model: School,
       where: sequelizeQuery.where(ctx.request.querystring, {
-        alias: { id: 'school_id' },
+        filterByAlias: { id: 'school_id' },
       }),
     }, {
       model: Place,
       where: sequelizeQuery.where(ctx.request.querystring, {
-        alias: { id: 'place_id' },
+        filterByAlias: { id: 'place_id' },
       }),
     }]
   },
