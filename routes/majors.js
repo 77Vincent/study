@@ -2,7 +2,7 @@ const Router = require('koa-router')
 const py = require('pinyin')
 
 const { Major } = require('../models')
-const { General, Auth, sequelizeQuery } = require('../services')
+const { General, Auth, seq } = require('../services')
 
 const majors = Router()
 const { protect } = Auth
@@ -16,7 +16,7 @@ const { protect } = Auth
 majors.get('/', async (ctx) => {
   try {
     const data = await Major.findAll({
-      where: sequelizeQuery(ctx.request.querystring, {
+      where: seq(ctx.request.querystring, {
         searchBy: ['pinyin', 'cn', 'en'],
       }),
     })

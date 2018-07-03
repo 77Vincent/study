@@ -2,7 +2,7 @@ const Router = require('koa-router')
 const querystring = require('querystring')
 
 const { Message } = require('../models')
-const { General, Auth, sequelizeQuery } = require('../services')
+const { General, Auth, seq } = require('../services')
 const config = require('../config')
 
 const messages = Router()
@@ -24,7 +24,7 @@ messages.get('/', protect, async (ctx) => {
     const data = await Message.findAll({
       limit: config.LIMIT,
       offset: General.getOffset(query.page, config.LIMIT),
-      where: sequelizeQuery(ctx.request.querystring, {
+      where: seq(ctx.request.querystring, {
         filterBy: ['sender_id', 'recipient_id', 'read'],
         searchBy: ['content'],
       }),

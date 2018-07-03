@@ -2,7 +2,7 @@ const Router = require('koa-router')
 const querystring = require('querystring')
 
 const Database = require('../services/database')
-const { General, Auth, sequelizeQuery } = require('../services')
+const { General, Auth, seq } = require('../services')
 const { Country } = require('../models')
 const config = require('../config')
 
@@ -24,7 +24,7 @@ users_countries.get('/', async (ctx) => {
     const data = await UserCountry.findAll({
       limit: config.LIMIT,
       offset: General.getOffset(query.page, config.LIMIT),
-      where: sequelizeQuery(ctx.request.querystring, {
+      where: seq(ctx.request.querystring, {
         filterBy: ['user_id', 'country_id'],
       }),
     })

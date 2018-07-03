@@ -2,7 +2,7 @@ const Router = require('koa-router')
 const querystring = require('querystring')
 
 const Database = require('../services/database')
-const { General, Auth, sequelizeQuery } = require('../services')
+const { General, Auth, seq } = require('../services')
 const { School } = require('../models')
 const config = require('../config')
 
@@ -24,7 +24,7 @@ users_schools.get('/', async (ctx) => {
     const data = await UserSchool.findAll({
       limit: config.LIMIT,
       offset: General.getOffset(query.page, config.LIMIT),
-      where: sequelizeQuery(ctx.request.querystring, {
+      where: seq(ctx.request.querystring, {
         filterBy: ['user_id', 'school_id'],
       }),
     })

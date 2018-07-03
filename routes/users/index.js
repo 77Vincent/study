@@ -2,7 +2,7 @@ const Router = require('koa-router')
 const querystring = require('querystring')
 
 const { User, Schedule } = require('../../models')
-const { General, Auth, sequelizeQuery } = require('../../services')
+const { General, Auth, seq } = require('../../services')
 const sessionsService = require('../sessions/service')
 const service = require('./service')
 const config = require('../../config.js')
@@ -38,10 +38,10 @@ users.get('/', async (ctx) => {
       limit: config.LIMIT,
       offset: General.getOffset(query.page, config.LIMIT),
       include: service.include(ctx),
-      where: sequelizeQuery(ctx.request.querystring, {
+      where: seq(ctx.request.querystring, {
         filterBy: ['role_id', 'gender', 'city', 'active', 'degree_id', 'status_id'],
       }),
-      order: sequelizeQuery(ctx.request.querystring, {
+      order: seq(ctx.request.querystring, {
         orderBy: ['cost'],
       }),
     })
@@ -97,7 +97,7 @@ users.get('/:id/students', async (ctx) => {
   try {
     const query = querystring.parse(ctx.request.querystring)
     const schedules = await Schedule.findAll({
-      where: sequelizeQuery(ctx.request.querystring, {
+      where: seq(ctx.request.querystring, {
         filter: { teacher_id: ctx.params.id },
         filterBy: ['finished'],
       }),
@@ -132,7 +132,7 @@ users.get('/:id/teachers', async (ctx) => {
   try {
     const query = querystring.parse(ctx.request.querystring)
     const schedules = await Schedule.findAll({
-      where: sequelizeQuery(ctx.request.querystring, {
+      where: seq(ctx.request.querystring, {
         filter: { student_id: ctx.params.id },
         filterBy: ['finished'],
       }),
