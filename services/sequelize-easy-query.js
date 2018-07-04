@@ -103,7 +103,13 @@ module.exports = (rawQuerystring = '', options = {}) => {
     if (orderBy.indexOf(key) !== -1) {
       const queryValue = queryObject[key]
       if (isEmpty(queryValue)) {
-        output.push([key, decodeURI(queryValue)])
+        switch (is(queryValue)) {
+          case '[object Array]':
+            output.push([key, decodeURI(queryValue).split(',')[0]])
+            break
+          default:
+            output.push([key, decodeURI(queryValue)])
+        }
       }
     }
     return null
