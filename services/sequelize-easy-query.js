@@ -46,6 +46,9 @@ module.exports = (rawQuerystring = '', options = {}) => {
   // Initial the output object
   const output = order || orderBy || orderByAlias ? [] : {}
 
+  const queryObject = processAlias(filterByAlias || orderByAlias, querystring
+    .parse(`${rawQuerystring}&${querystring.stringify(filter || order)}`))
+
   // Default values
   filter = filter || {}
   filterBy = filterBy || []
@@ -58,8 +61,6 @@ module.exports = (rawQuerystring = '', options = {}) => {
   search = search || null
   searchBy = searchBy || []
 
-  const queryObject = processAlias(filterByAlias || orderByAlias, querystring
-    .parse(`${rawQuerystring}&${querystring.stringify(filter || order)}`))
 
   if (search) {
     queryObject.search = search
