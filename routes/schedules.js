@@ -1,8 +1,9 @@
 const Router = require('koa-router')
 const querystring = require('querystring')
+const seq = require('sequelize-easy-query')
 
 const { Schedule, Class } = require('../models')
-const { General, Auth, seq } = require('../services')
+const { General, Auth } = require('../services')
 const config = require('../config')
 
 const schedules = Router()

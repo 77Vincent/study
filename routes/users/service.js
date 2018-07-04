@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize')
+const seq = require('sequelize-easy-query')
 
 const { Op } = Sequelize
 const General = require('../../services/general')
-const seq = require('../../services/sequelize-easy-query')
 const Database = require('../../services/database')
 const {
   User, Tag, Post, Course, Major, School, Schedule, Country, Place,

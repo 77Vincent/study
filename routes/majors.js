@@ -1,8 +1,9 @@
 const Router = require('koa-router')
 const py = require('pinyin')
+const seq = require('sequelize-easy-query')
 
 const { Major } = require('../models')
-const { General, Auth, seq } = require('../services')
+const { General, Auth } = require('../services')
 
 const majors = Router()
 const { protect } = Auth
