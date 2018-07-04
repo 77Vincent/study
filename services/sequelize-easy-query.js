@@ -92,10 +92,10 @@ module.exports = (rawQuerystring = '', options = {}) => {
   if (searchBy.length && queryObject.search) {
     const arrayForSearch = searchBy.map(value => ({
       [value]: {
-        [Op.like]: `%${decodeURI(queryObject.search)}%`,
+        [(Op ? Op.like : '$like')]: `%${decodeURI(queryObject.search)}%`,
       },
     }))
-    output[Op.or] = arrayForSearch
+    output[(Op ? Op.or : '$or')] = arrayForSearch
   }
 
   // Order by
@@ -115,6 +115,6 @@ module.exports = (rawQuerystring = '', options = {}) => {
     return null
   })
 
-  if (!Object.keys(output).length && !output[Op.or]) { return null }
+  if (!Object.keys(output).length && !output[(Op ? Op.or : '$or')]) { return null }
   return output
 }
