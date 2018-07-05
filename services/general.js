@@ -25,24 +25,8 @@ module.exports = {
     return false
   },
 
-  /**
-   * Count offset for database query pagination
-   * @param {Number} [page=1] - page number, start = require(1
-   * @param {Number} [limit=50] - items to display per page
-   * @returns
-   */
-  getOffset(inputPage = 1, limit = 50) {
-    const page = this.getPositiveInt(inputPage)
-    return page ? (page - 1) * limit : 0
-  },
-
-  /**
-   * Return an positive integer
-   * @param {Number} [input=1] input number
-   * @returns {Number} positive integer
-   */
-  getPositiveInt(input = 1) {
-    return R.is(Number, Number(input)) ? Math.round(Math.abs(input)) : 1
+  getOffset(page = 1, limit = 50) {
+    return Number(page) ? (page - 1) * limit : 0
   },
 
   logError(ctx, err) {
