@@ -47,7 +47,7 @@ module.exports = [{
   name: 'Wang Dachui',
   role_id: 1,
   degree_id: 3,
-  status_id: 4,
+  status_id: 0,
   gender: 0,
   cost: 999,
   available: 20,

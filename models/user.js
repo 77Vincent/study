@@ -31,15 +31,9 @@ module.exports = Database.define('user', {
     type: Sequelize.TINYINT,
     defaultValue: 2,
   },
-  status_id: {
-    type: Sequelize.TINYINT,
-  },
-  degree_id: {
-    type: Sequelize.TINYINT,
-  },
-  identity_number: {
-    type: Sequelize.STRING,
-  },
+  status_id: Sequelize.TINYINT,
+  degree_id: Sequelize.TINYINT,
+  identity_number: Sequelize.STRING,
   active: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
@@ -49,18 +43,11 @@ module.exports = Database.define('user', {
     type: Sequelize.SMALLINT,
     defaultValue: 0,
   },
-  gender: {
-    type: Sequelize.BOOLEAN,
-  },
-  name: {
-    type: Sequelize.STRING,
-  },
-  city: {
-    type: Sequelize.STRING,
-  },
-  bio: {
-    type: Sequelize.TEXT,
-  },
+  gender: Sequelize.BOOLEAN,
+  name: Sequelize.STRING,
+  city: Sequelize.STRING,
+  company: Sequelize.STRING,
+  bio: Sequelize.TEXT,
   cost: {
     type: Sequelize.SMALLINT,
     defaultValue: 0,
