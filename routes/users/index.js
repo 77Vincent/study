@@ -41,6 +41,7 @@ users.get('/', async (ctx) => {
       include: service.include(ctx),
       where: seq(ctx.request.querystring, {
         filterBy: ['role_id', 'gender', 'city', 'active', 'degree_id', 'status_id'],
+        searchBy: ['bio', 'name'],
       }),
       order: seq(ctx.request.querystring, {
         orderBy: ['cost'],
