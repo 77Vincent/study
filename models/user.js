@@ -52,6 +52,10 @@ module.exports = Database.define('user', {
     type: Sequelize.SMALLINT,
     defaultValue: 0,
   },
+  commission: {
+    type: Sequelize.TINYINT,
+    defaultValue: 80,
+  },
   last_signin: {
     type: Sequelize.DATE,
     defaultValue: new Date(),
