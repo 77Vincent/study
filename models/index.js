@@ -13,6 +13,7 @@ const Avatar = require('./avatar')
 const School = require('./school')
 const Country = require('./country')
 const Place = require('./place')
+const Event = require('./event')
 // const Portfolio = require('./portfolio')
 
 // Table Relationship
@@ -76,5 +77,6 @@ module.exports = {
   School,
   Country,
   Place,
+  Event,
   // Portfolio,
 }
